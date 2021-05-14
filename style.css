@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
 }
 .header{
     min-height: 100vh;
@@ -153,6 +154,7 @@ nav .fa{
 .howWeHelpBG{
     width: 100%;
     background: rgb(1, 0, 65);
+    scroll-behavior: smooth;
 }
 
 .howWeHelp{
@@ -542,5 +544,144 @@ nav{
     padding: 2px;
 
     text-align: center;
+}
+
+/* ------------------ Directory ----------------------*/
+.cat-btn{
+    display: inline-block;
+    text-decoration: none;
+    color: rgb(26, 1, 54);
+    border: 1px solid rgb(26, 1, 54);
+    font-size: 16px;
+    padding: 12px 34px;
+    margin: 2%;
+    background: transparent;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.5s;
+    width: 20vh;
+    height: 3vh;
+}
+
+.top-btn{
+    display: inline-block;
+    text-decoration: none;
+    color: rgb(26, 1, 54);
+    border: 1px solid rgb(26, 1, 54);
+    font-size: 16px;
+    padding: 12px 34px;
+    margin: 2%;
+    background: transparent;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.5s;
+    width: 80%;
+    height: 3vh;
+}
+
+.FS-btn{
+    display: inline-block;
+    text-decoration: none;
+    color: rgb(26, 1, 54);
+    border: 1px solid rgb(26, 1, 54);
+    font-size: 16px;
+    padding: 12px 34px;
+    margin: 2%;
+    background: transparent;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.5s;
+    width: 8vh;
+    height: 3vh;
+}
+
+
+.directoryCategories{
+    width: 100%;
+    align-self: center;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+    margin-top: 0%;
+    text-align:center;
+    background-color: #fff;
+
+
+}
+
+#directoryCategories .row{
+    justify-content:space-evenly;
+    text-align: center;
+}
+
+.categories-col{
+    flex-basis: 10%;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 0%;
+    margin-top: 1%;
+    box-sizing: border-box;
+    transition: 0.25s;
+    padding: 5px 5px;
+}
+
+.cat-btn:hover{
+    color: #fff;
+    background: rgb(26, 1, 54);
+}
+
+.directoryGridContainer{
+    width:80%;
+    background-color:white;
+    display: inline-block;
+    margin-bottom:2%;
+    margin-top:2%;
+}
+
+.directoryGrid{
+    display: grid;
+    width: 100%;
+    grid-gap: 10px;
+    grid-template-columns: repeat(4, auto);
+    grid-auto-rows: 1fr;
+    align-items: center;
+    justify-items: center;
+    position: relative;
+}
+
+.directoryBG{
+    text-align: center;
+    background-color: rgb(1, 0, 65);
+}
+
+.directory-category{
+    width:80%;
+    padding: 10px;
+    display: inline-block;
+    background-color: white;
+}
+
+.categoryH1{
+    font-size: 40px;
+    font-weight: 600;
+    color: rgb(1, 0, 65);
+    text-align: center;
+    margin-top:4%;
+}
+
+.directory-col-lnks{
+    text-align: left;
+}
+
+.directory-col-abt {
+    margin-right:1%;
+}
+
+.directory-col-abt p{
+    text-align: justify;
+    color:black
 }
 
