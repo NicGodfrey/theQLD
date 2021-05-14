@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Queensland Legal Directory -- About Us</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <section class="header-about">
+            <nav>
+                <a href="index.html"><img src="images/logo.JPG"></a>
+                <i class="fa fa-bars" onclick="showMenu()"></i>
+                <div class="nav-links" id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="">DIRECTORY</a></li>
+                        <li><a href="about.html">ABOUT US</a></li>
+                    </ul>
+                </div>
+                
+            </nav>
+            <div class="text-box">
+                <h1>ABOUT US</h1>
+            </div>
+        </section>
+
+        <!------ WHAT WE DO ------>
+        <section class="whatWeDoBG">
+            <section class="row">
+                <section class="whatWeDo-col">
+                    <h1>WHAT WE DO</h1>
+                </section>
+                <section class="whatWeDo-col">
+                    <p>The Queensland Legal Directory is designed as a tool to increase access to justice in Queensland. Specifically, the Directory promotes and refers those in need of free legal assistance to the most appropriate organisations. Visitors to the Directory can search our Fact Sheets to educate themselves on their options, or contact us directly for assistance. 
+                        <br><br>
+                        While our primary goal is to assist Queenslanders in need in finding the most appropriate legal organisation, we also seek to assist the organisations themselves. To achieve this, the Queensland Legal Directory also offers to prepare the client's application. This consists of preliminary, non-advisory work, such as asking relevant follow-up questions, and running through means and merits tests where appropriate.
+                        </p>
+                </section>
+            </section>
+            <section class="row">
+                <section class="whatWeDo-col">
+                    <h1>WHY WE DO IT</h1>
+                </section>
+                <section class="whatWeDo-col">
+                    <p>We believe that everyone, regardless of their history, financial circumstances, or otherwise, is entitled to legal information and assistance where necessary. Unfortunately, this is not always the case. The Queensland Law Society's annual Access to Justice Scorecard consistently returns overall scores around or below 5 out of 10. Further, it consistently highlights lack of accessible online legal information or information regarding referral services as ways in which access to justice could be improved.
+                        <br><br>
+                        Further, the inaffordability of legal representation and lack of support for pro-bono services means charitable legal organisations are overworked, and as a result, unable to assist everyone in need. By providing free legal information, and referring Queenslanders to the most appropriate service, we hope to save those organisations valuable time that might otherwise be spent simply redirecting clients to more appropriate sources of legal assistance. We further aim to decrease the strain on legal organisations by preparing client applications for them, saving time on preliminary work.
+                        </p>
+                </section>
+            </section>
+        </section>
+
+        <!------ FOOTER ------>
+        <section class="footerBG">
+            <section class="footer">
+                <div class="icons">
+                    <a href="about.html"><i class="fa fa-facebook-square"></i></a>
+                    <i class="fa fa-instagram"></i>
+                    <i class="fa fa-twitter-square"></i>
+                    <i class="fa fa-linkedin-square"></i>
+                    <i class="fa fa-envelope"></i>
+                    <i class="fa fa-phone-square"></i>
+                </div>
+                <div class="administrative">
+                    <p>Copyright &copy; The Queensland Legal Directory | [EMAIL@theQLD.com] | [PHONE NUMBER]</p>
+                    <p><a href="">Contact Us</a> | <a href="">Disclaimer</a> | <a href="">Acknowledgement</a></p>
+                </div>
+
+            </section>
+        </section>
+
+
+
+
+        <!------ JavaScript: Toggle Mobile Menu ------>
+        <script>
+            var navLinks = document.getElementById("navLinks")
+
+            function showMenu(){
+                navLinks.style.right = "0";
+            }
+            function hideMenu(){
+                navLinks.style.right = "-200px"
+            }
+            
+        </script>
+    </body>
+</html>

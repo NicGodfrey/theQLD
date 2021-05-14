@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Queensland Legal Directory</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <section class="header">
+            <nav>
+                <a href="index.html"><img src="images/logo.JPG"></a>
+                <i class="fa fa-bars" onclick="showMenu()"></i>
+                <div class="nav-links" id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="">HOME</a></li>
+                        <li><a href="">DIRECTORY</a></li>
+                        <li><a href="about.html">ABOUT US</a></li>
+                    </ul>
+                </div>
+                
+            </nav>
+        <div class="text-box">
+            <h1>Connecting you with justice.</h1>
+            <p>The Queensland Legal Directory refers and assists in applying to organisations which can provide you with free legal assistance. 
+                ​<br>
+                We do not provide legal advice.
+            </p>
+            <a href="" class="hero-btn">Find Out More</a>
+        </div>
+        </section>
+
+        <!------ HOW WE HELP ------>
+        <section class="howWeHelpBG">
+            <section class="howWeHelp">
+                <h1>HOW WE HELP</h1>
+                <p>We're here to connect you with appropriate and accessible legal services.</p>
+                <div class="row">
+                    <div class="howWeHelp-col">
+                        <h3>Referrals</h3>
+                        <i class="fa fa-hand-o-right"></i>
+                        <p>Find out which legal organisation is best suited to your needs.</p>
+                    </div>
+                    <div class="howWeHelp-col">
+                        <h3>The Legal Directory</h3>
+                        <i class="fa fa-book"></i>
+                        <p>Compare Queensland's free legal services using our accessible fact sheets.</p>
+                    </div>
+                    <div class="howWeHelp-col">
+                        <h3>Applications</h3>
+                        <i class="fa fa-folder-open-o"></i>
+                        <p>Ready to apply for legal aid? Let us help, saving you and your chosen legal service valuable time.</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!------ CONTACT ------>
+        <section class="contactBG">
+            <section class="contact">
+                <h1>Get in touch.</h1>
+                <p>Working out who's best suited to your needs isn't always easy, but we're here to help. <br>
+                Let us know what's going on, and a member of our team will be in touch.</p>
+
+                    <div class="contact-col">
+                        <form action="">
+                            <input type="text" placeholder="Name" required>
+                            <input type="email" placeholder="Email" required>
+                            <input type="phone" placeholder="Phone Number (Optional)"> 
+                            <input type="text" placeholder="Subject" required>
+                            <textarea rows="8" placeholder="How can we help?" required></textarea>
+                            <button type="submit" class="submit-contact-btn">Submit</button>
+                        </form>
+                    </div>
+
+            </section>
+        </section>
+
+        <!------ FOOTER ------>
+        <section class="footerBG">
+            <section class="footer">
+                <div class="icons">
+                    <a href="about.html"><i class="fa fa-facebook-square"></i></a>
+                    <i class="fa fa-instagram"></i>
+                    <i class="fa fa-twitter-square"></i>
+                    <i class="fa fa-linkedin-square"></i>
+                    <i class="fa fa-envelope"></i>
+                    <i class="fa fa-phone-square"></i>
+                </div>
+                <div class="administrative">
+                    <p>Copyright &copy; The Queensland Legal Directory | [EMAIL@theQLD.com] | [PHONE NUMBER]</p>
+                    <p><a href="">Contact Us</a> | <a href="">Disclaimer</a> | <a href="">Acknowledgement</a></p>
+                </div>
+
+            </section>
+        </section>
+
+        <!------ JavaScript: Toggle Mobile Menu ------>
+        <script>
+            var navLinks = document.getElementById("navLinks")
+
+            function showMenu(){
+                navLinks.style.right = "0";
+            }
+            function hideMenu(){
+                navLinks.style.right = "-200px"
+            }
+            
+        </script>
+    </body>
+</html>
