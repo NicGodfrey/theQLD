@@ -581,6 +581,11 @@ nav{
     height: 3vh;
 }
 
+.cat-btn:hover{
+    color: #fff;
+    background: rgb(26, 1, 54);
+}
+
 .FS-btn{
     display: inline-block;
     text-decoration: none;
@@ -594,10 +599,13 @@ nav{
     text-align: center;
     cursor: pointer;
     transition: 0.5s;
-    width: 8vh;
-    height: 3vh;
+    
 }
 
+.FS-btn:hover{
+    color: #fff;
+    background: rgb(26, 1, 54);
+}
 
 .directoryCategories{
     width: 100%;
@@ -628,10 +636,7 @@ nav{
     padding: 5px 5px;
 }
 
-.cat-btn:hover{
-    color: #fff;
-    background: rgb(26, 1, 54);
-}
+
 
 .directoryGridContainer{
     width:80%;
@@ -672,16 +677,36 @@ nav{
     margin-top:4%;
 }
 
+.directoryH3{
+    margin-bottom:0;
+}
+
+#directory-category .row{
+    margin-top: 1%;
+}
+
 .directory-col-lnks{
     text-align: left;
+    padding-right: 5px;
 }
 
 .directory-col-abt {
     margin-right:1%;
+    width: 70%;
 }
 
 .directory-col-abt p{
     text-align: justify;
     color:black
+}
+
+.directory-col-img{
+    width: 30%;
+    text-align:center;
+}
+
+.directory-col-img img{
+    object-fit: cover; 
+    width: 60%;
 }
 
