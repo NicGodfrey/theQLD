@@ -14,22 +14,25 @@
 }
 nav{
     display: flex;
-    padding: 2% 6%;
+    padding: 2% 2%;
     justify-content: space-between;
     align-items: center;
 }
 nav img{
-    width: 150px
+    width: 150px;
+    /*vertical-align: top;*/
 }
 .nav-links{
     flex: 1;
     text-align: right;
+    vertical-align: top;
 }
 .nav-links ul li{
     list-style: none;
     display: inline-block;
     padding: 8px 12px;
     position: relative;
+    vertical-align: top;
 }
 .nav-links ul li a{
     color: #fff;
