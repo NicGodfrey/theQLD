@@ -7,7 +7,7 @@
 .header{
     min-height: 100vh;
     width: 100%;
-    background-image: linear-gradient(rgba(2, 13, 58, 0.801),rgba(2, 13, 58, 0.801)), url(images/brisbane.jpg);
+    background-image: linear-gradient(rgba(2, 13, 58, 0.801),rgba(2, 13, 58, 0.801)), url(images/brisbane.jpeg);
     background-position: center;
     background-size: cover;
     position: relative;
