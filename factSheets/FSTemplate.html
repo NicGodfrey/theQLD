@@ -34,10 +34,10 @@
         </section>
         <!------ CONTENT ------>
         <section class="FS-bg">
-            <section class="FS-main" id="FS-main">
-                <div class="row">
-                    <div class="FS-content" id="FS-content">
-                        <div class="row">
+            <section class="FS-main" id="FS-main" style="background-color:rgb(1, 0, 65);">
+                <div class="row" style="background-color:rgb(1, 0, 65);">
+                    <div class="FS-content" id="FS-content" sty;e="background-color:rgb(1, 0, 65);">
+                        <div class="row" style="background-color:rgb(1, 0, 65);">
                             <div class="FS-content-col">
                                 <h3 id="aboutName"></h3>
                                 <div class="FS-fa"><i class="fa fa-question-circle-o"></i></div>
@@ -59,10 +59,7 @@
                             <div class="FS-footer-col">
                                 <h3>APPLY</h3>
                                 <div class="FS-fa"><i class="fa fa-arrow-circle-o-right"></i></div>
-                                <p>Book an appointment with Caxton Legal Centre by calling (07) 3214 6333 between 09:00-16:00, Mondays to Friday.
-                                    <br>
-                                    Alternatively, get in touch and let us help prepare your application!
-                                </p>    
+                                <p id="applyText"></p>    
                             </div>
                             <div class="FS-footer-col">
                                 <h3>CONTINUE THE SEARCH</h3>
@@ -83,27 +80,27 @@
                             <div class="FS-sideContent">
                                 <div class="FS-fa"><i class="fa fa-desktop"></i></div>
                                 <h4>Website</h4>
-                                <p><a href="https://caxton.org.au">https://caxton.org.au</a></p>
+                                <p id="sideWeb"></p>
                             </div>
                             <div class="FS-sideContent">
                                 <div class="FS-fa"><i class="fa fa-envelope-open-o"></i></div>
                                 <h4>E-Mail</h4>
-                                <p><a href="mailto:caxton@caxton.org.au">caxton@caxton.org.au</a></p>
+                                <p id="sideEmail"></p>
                             </div>
                             <div class="FS-sideContent">
                                 <div class="FS-fa"><i class="fa fa-phone"></i></div>
                                 <h4>Phone</h4>
-                                <p><a href="tel:+61-07-3214-6333">(07) 3214 6333</a></p>
+                                <p id="sidePhone"></p>
                             </div>
                             <div class="FS-sideContent">
                                 <div class="FS-fa"><i class="fa fa-home"></i></div>
                                 <h4>Address</h4>
-                                <p>1 Manning St, South Brisbane, Queensland 4101</p>
+                                <p id="sideAddress"></p>
                             </div>
                             <div class="FS-sideContent">
                                 <div class="FS-fa"><i class="fa fa-comments-o"></i></div>
                                 <h4>Social Media</h4>
-                                <div class="FS-sideContent-social"><p><a href="https://www.facebook.com/caxtonlegalcentre/"><i class="fa fa-facebook-square"></i></a></p></div>
+                                <div class="FS-sideContent-social"><p id="sideSocial"></p></div>
                             </div>
                         </div>
                     </div>
@@ -111,24 +108,7 @@
             </section>
         </section>
 
-        <!------ FOOTER ------>
-        <section class="footerBG">
-            <section class="footer">
-                <div class="icons">
-                    <a href="about.html"><i class="fa fa-facebook-square"></i></a>
-                    <i class="fa fa-instagram"></i>
-                    <i class="fa fa-twitter-square"></i>
-                    <i class="fa fa-linkedin-square"></i>
-                    <i class="fa fa-envelope"></i>
-                    <i class="fa fa-phone-square"></i>
-                </div>
-                <div class="administrative">
-                    <p>Copyright &copy; The Queensland Legal Directory | [EMAIL@theQLD.com] | [PHONE NUMBER]</p>
-                    <p><a href="">Contact Us</a> | <a href="">Disclaimer</a> | <a href="">Acknowledgement</a></p>
-                </div>
-
-            </section>
-        </section>
+        <div data-includeHTML="../TPLfooter.html"></div>
 
         <!------ JavaScript: Toggle Mobile Menu ------>
         <script>
@@ -142,6 +122,8 @@
             }
             
         </script>
+
+        <script src="../js/include.js"></script>
 
         <!------ Get Parameters ------>
         <script>
@@ -172,10 +154,24 @@
             document.getElementById("aboutText").innerHTML = aboutText;
             var helpText = window.clcHelpText;
             document.getElementById("helpText").innerHTML = helpText;
+            var applyText = window.clcApplyText;
+            document.getElementById("applyText").innerHTML = applyText + "<br> Alternatively, get in touch and let us help prepare your application!";
 
             var imgPath = window.clcImgPath;
-            document.getElementById("imgPath").innerHTML = '<img src="../images/logos/' + imgPath + '" style="object-fit: cover; width: 70%;">';
+            var clcURL = window.clcURL;
+            document.getElementById("imgPath").innerHTML = '<a href="' + clcURL + '"><img src="../images/logos/' + imgPath + '" style="object-fit: cover; width: 70%;"></a>';
+            document.getElementById("sideWeb").innerHTML = '<a href="' + clcURL + '">' + clcURL + '</a>';
+            var clcEmail = window.clcEmail;
+            document.getElementById("sideEmail").innerHTML = '<a href="mailto:' + clcEmail + '">' + clcEmail + '</a>';
+            var clcPhoneLink = window.clcPhoneLink;
+            var clcPhoneDisp = window.clcPhoneDisp;
+            document.getElementById("sidePhone").innerHTML = '<a href="' + clcPhoneLink + '">' + clcPhoneDisp + '</a>';
+            var clcAddress = window.clcAddress;
+            document.getElementById("sideAddress").innerHTML = clcAddress;
 
+            var clcFB = window.clcFB;
+            document.getElementById("sideSocial").innerHTML = clcFB;
+            
             console.log("Fact Sheet: " + name)
 
         </script>
