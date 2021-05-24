@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="Name">Name: </div>
+        <script>
+            function GetURLParameters(sParam)
+            {
+                var sPageURL = window.location.search.substring(1);
+                console.log("URL sub: " + sPageURL)
+                var sURLVars = sPageURL.split('&');
+                console.log(sURLVars)
+                for (var i = 0; i < sURLVars.length; i++)
+                    {
+                        var sParameterName = sURLVars[i].split('=');
+                        if (sParameterName[0] == sParam)
+                            {
+                                return sParameterName[1];
+                            }
+                    }
+                //var name = location.href.split('?')[1].split('=')[1]; 
+            }
+            //var name = GetURLParameters('name');
+            var name = window.name;
+            console.log(name)
+            document.getElementById("Name").innerHTML = name;
+
+        </script>
+    </body>
+</html>
