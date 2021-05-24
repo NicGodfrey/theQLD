@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Queensland Legal Directory -- <div id="Name"></div></title>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+    </head>
+    <body>
+        
+        <section class="FS-header">
+            <nav>
+                <a href="../index.html"><img src="../images/logo.png"></a>
+                <i class="fa fa-bars" onclick="showMenu()"></i>
+                <div class="nav-links" id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="../index.html">HOME</a></li>
+                        <li><a href="">DIRECTORY</a></li>
+                        <li><a href="../about.html">ABOUT US</a></li>
+                    </ul>
+                </div>
+                
+            </nav>
+            <div class="FS-text-box">
+                <h1><div id="Name"></div></h1>
+            </div>
+        </section>
+        <!------ CONTENT ------>
+        <section class="FS-bg">
+            <section class="FS-main" id="FS-main">
+                <div class="row">
+                    <div class="FS-content" id="FS-content">
+                        <div class="row">
+                            <div class="FS-content-col">
+                                <h3 id="aboutName"></h3>
+                                <div class="FS-fa"><i class="fa fa-question-circle-o"></i></div>
+                                <br>
+                                <p id="aboutText"></p>
+                            </div>
+                            <div class="FS-content-col">
+                                <h3 id="helpName"></h3>
+                                <div class="FS-fa"><i class="fa fa-handshake-o"></i></div>
+                                <br>
+                                <p id="helpText"></p>
+                            </div>
+                        </div>
+
+                        <div class="FS-footerHead">
+                            - What Now? -
+                        </div>
+                        <div class="row">
+                            <div class="FS-footer-col">
+                                <h3>APPLY</h3>
+                                <div class="FS-fa"><i class="fa fa-arrow-circle-o-right"></i></div>
+                                <p>Book an appointment with Caxton Legal Centre by calling (07) 3214 6333 between 09:00-16:00, Mondays to Friday.
+                                    <br>
+                                    Alternatively, get in touch and let us help prepare your application!
+                                </p>    
+                            </div>
+                            <div class="FS-footer-col">
+                                <h3>CONTINUE THE SEARCH</h3>
+                                <div class="FS-fa"><i class="fa fa-book"></i></div>
+                                <p id="continueSearch"></p>    
+                            </div>
+                            <div class="FS-footer-col">
+                                <h3>REQUEST A REFERRAL</h3>
+                                <div class="FS-fa"><i class="fa fa-user-o"></i></div>
+                                <p>Sick of searching? Fill out our referral form or send us an email so we can help you choose!</p>    
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="FS-sidebar">
+                        <div class="FS-logo" id="imgPath"></div>
+                        <div class="FS-sidebar-inner">
+                            <div class="FS-sideContent">
+                                <div class="FS-fa"><i class="fa fa-desktop"></i></div>
+                                <h4>Website</h4>
+                                <p><a href="https://caxton.org.au">https://caxton.org.au</a></p>
+                            </div>
+                            <div class="FS-sideContent">
+                                <div class="FS-fa"><i class="fa fa-envelope-open-o"></i></div>
+                                <h4>E-Mail</h4>
+                                <p><a href="mailto:caxton@caxton.org.au">caxton@caxton.org.au</a></p>
+                            </div>
+                            <div class="FS-sideContent">
+                                <div class="FS-fa"><i class="fa fa-phone"></i></div>
+                                <h4>Phone</h4>
+                                <p><a href="tel:+61-07-3214-6333">(07) 3214 6333</a></p>
+                            </div>
+                            <div class="FS-sideContent">
+                                <div class="FS-fa"><i class="fa fa-home"></i></div>
+                                <h4>Address</h4>
+                                <p>1 Manning St, South Brisbane, Queensland 4101</p>
+                            </div>
+                            <div class="FS-sideContent">
+                                <div class="FS-fa"><i class="fa fa-comments-o"></i></div>
+                                <h4>Social Media</h4>
+                                <div class="FS-sideContent-social"><p><a href="https://www.facebook.com/caxtonlegalcentre/"><i class="fa fa-facebook-square"></i></a></p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!------ FOOTER ------>
+        <section class="footerBG">
+            <section class="footer">
+                <div class="icons">
+                    <a href="about.html"><i class="fa fa-facebook-square"></i></a>
+                    <i class="fa fa-instagram"></i>
+                    <i class="fa fa-twitter-square"></i>
+                    <i class="fa fa-linkedin-square"></i>
+                    <i class="fa fa-envelope"></i>
+                    <i class="fa fa-phone-square"></i>
+                </div>
+                <div class="administrative">
+                    <p>Copyright &copy; The Queensland Legal Directory | [EMAIL@theQLD.com] | [PHONE NUMBER]</p>
+                    <p><a href="">Contact Us</a> | <a href="">Disclaimer</a> | <a href="">Acknowledgement</a></p>
+                </div>
+
+            </section>
+        </section>
+
+        <!------ JavaScript: Toggle Mobile Menu ------>
+        <script>
+            var navLinks = document.getElementById("navLinks")
+
+            function showMenu(){
+                navLinks.style.right = "0";
+            }
+            function hideMenu(){
+                navLinks.style.right = "-200px"
+            }
+            
+        </script>
+
+        <!------ Get Parameters ------>
+        <script>
+            function GetURLParameters(sParam)
+            {
+                var sPageURL = window.location.search.substring(1);
+                console.log("URL sub: " + sPageURL)
+                var sURLVars = sPageURL.split('&');
+                console.log(sURLVars)
+                for (var i = 0; i < sURLVars.length; i++)
+                    {
+                        var sParameterName = sURLVars[i].split('=');
+                        if (sParameterName[0] == sParam)
+                            {
+                                return sParameterName[1];
+                            }
+                    }
+                //var name = location.href.split('?')[1].split('=')[1]; 
+            }
+            //window.name = GetURLParameters('name');
+            var name = window.clcName;
+            document.getElementById("Name").innerHTML = name;
+            document.getElementById("aboutName").innerHTML = "About " + name;
+            document.getElementById("helpName").innerHTML = "How " + name + " Helps";
+            document.getElementById("continueSearch").innerHTML = "If " + name + ' doesn’t seem to be what you’re looking for, keep searching our <a href="../index.html">Legal Directory</a>.'
+
+            var aboutText = window.clcAboutText;
+            document.getElementById("aboutText").innerHTML = aboutText;
+            var helpText = window.clcHelpText;
+            document.getElementById("helpText").innerHTML = helpText;
+
+            var imgPath = window.clcImgPath;
+            document.getElementById("imgPath").innerHTML = '<img src="../images/logos/' + imgPath + '" style="object-fit: cover; width: 70%;">';
+
+            console.log("Fact Sheet: " + name)
+
+        </script>
+    </body>
+</html>
