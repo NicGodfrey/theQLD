@@ -3,9 +3,10 @@ $(document).ready(function () { // Call function when DOM is ready
         $(this).load($(this).attr("data-includeHTML"));
     });
     $("div[data-includeHTML-FS]").each(function () {     
-        console.log($(this).attr("data-includeHTML-FS") + "?" + "name=" + $(this).attr("data-FS-name"))
+        console.log("LOADING");
+        console.log($(this).attr("data-includeHTML-FS") + "?" + "name=" + $(this).attr("data-FS-name"));
         window.name="Bob";
-        console.log(window.name)           
+        console.log(window.name);
         $(this).load($(this).attr("data-includeHTML-FS") + "?" + "name=" + $(this).attr("data-FS-name"));
     });
 });
