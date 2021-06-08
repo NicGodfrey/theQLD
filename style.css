@@ -168,6 +168,10 @@ nav .fa{
         padding: 0;
 
     }
+    nav img{
+        width: 80px;
+        /*vertical-align: top;*/
+    }
 }
 
 /*----- howWeHelp -----*/
@@ -718,7 +722,7 @@ nav{
 
 .directory-col-abt {
     margin-right:1%;
-    width: 70%;
+    width: 50%;
 }
 
 .directory-col-abt p{
@@ -727,7 +731,7 @@ nav{
 }
 
 .directory-col-img{
-    width: 30%;
+    width: 20%;
     text-align:center;
 }
 
@@ -736,14 +740,14 @@ nav{
     width: 60%;
 }
 
-@media(max-width: 750px){
+@media(max-width: 800px){
     .header-about{
         min-height: 20vh;
     }
     .directoryGrid{
         display: grid;
         width: 100%;
-        grid-gap: 10px;
+        grid-gap: 5px;
         grid-template-columns: repeat(3, auto);
         grid-auto-rows: 1fr;
         align-items: center;
@@ -765,6 +769,69 @@ nav{
         cursor: pointer;
         transition: 0.5s;
         width: 10vh;
+        border-radius: 10px
+    }
+    .top-btn{
+        display: inline-block;
+        text-decoration: none;
+        color: rgb(26, 1, 54);
+        border: 1px solid rgb(26, 1, 54);
+        font-size: 12px;
+        padding: 6px 17px;
+        margin: 2%;
+        background: transparent;
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.5s;
+        width: 50%;
+        height: 2vh;
+    }
+    .FS-btn{
+        display: inline-block;
+        text-decoration: none;
+        color: rgb(26, 1, 54);
+        border: 1px solid rgb(26, 1, 54);
+        font-size: 12px;
+        padding: 6px 17px;
+        margin: 2%;
+        background: transparent;
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.5s;
+        
+    }
+}
+
+@media(max-width: 1400px) and (min-width: 800px){
+    .header-about{
+    }
+    .directoryGrid{
+        display: grid;
+        width: 100%;
+        grid-gap: 5px;
+        grid-template-columns: repeat(3, auto);
+        grid-auto-rows: 1fr;
+        align-items: center;
+        justify-items: center;
+        position: relative;
+        overflow-x: hidden;
+    }
+    .cat-btn{
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        text-decoration: none;
+        color: rgb(26, 1, 54);
+        border: 1px solid rgb(26, 1, 54);
+        background-color: white;
+        font-size: 12px;
+        padding: 6px 3px;
+        margin: 1%;
+        cursor: pointer;
+        transition: 0.5s;
+        width: 20vh;
         border-radius: 10px
     }
 
