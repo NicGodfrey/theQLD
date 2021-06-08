@@ -623,7 +623,7 @@ nav{
     border: 1px solid rgb(26, 1, 54);
     font-size: 16px;
     padding: 12px 34px;
-    margin: 2%;
+    margin: 0%;
     background: transparent;
     position: relative;
     text-align: center;
@@ -784,7 +784,7 @@ nav{
         text-align: center;
         cursor: pointer;
         transition: 0.5s;
-        width: 50%;
+        /*width: 50%;*/
         height: 2vh;
     }
     .FS-btn{
@@ -794,14 +794,50 @@ nav{
         border: 1px solid rgb(26, 1, 54);
         font-size: 12px;
         padding: 6px 17px;
-        margin: 2%;
+        margin: 0%;
         background: transparent;
         position: relative;
         text-align: center;
         cursor: pointer;
         transition: 0.5s;
+        align-self: center;
+        margin: 2%
+
         
     }
+
+    .directory-col-lnks{
+        text-align: left;
+        padding-right: 5px;
+        margin: 5%;
+    }
+    
+    .directory-col-abt {
+        margin-right:1%;
+        width: 100%;
+    }
+    
+    .directory-col-abt p{
+        text-align: justify;
+        color:black
+    }
+    
+    .directory-col-img{
+        width: 0%;
+        height: 0;
+        text-align:center;
+        overflow: hidden;
+    }
+    
+    .directory-col-img img{
+        object-fit: cover; 
+        width: 60%;
+    }
+
+    .categoryH1{
+        font-size:30px;
+    }
+
 }
 
 @media(max-width: 1400px) and (min-width: 800px){
