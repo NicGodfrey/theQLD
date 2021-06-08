@@ -22,7 +22,7 @@
                     <i class="fa fa-times" onclick="hideMenu()"></i>
                     <ul>
                         <li><a href="../index.html">HOME</a></li>
-                        <li><a href="">DIRECTORY</a></li>
+                        <li><a href="../legalDirectory.html">DIRECTORY</a></li>
                         <li><a href="../about.html">ABOUT US</a></li>
                     </ul>
                 </div>
@@ -115,10 +115,12 @@
             var navLinks = document.getElementById("navLinks")
 
             function showMenu(){
-                navLinks.style.right = "0";
+                navLinks.style.width = "200px";
+                navLinks.ul.style.padding = "30px";
             }
             function hideMenu(){
-                navLinks.style.right = "-200px"
+                navLinks.style.width = "0"
+                navLinks.ul.style.padding = "0";
             }
             
         </script>
