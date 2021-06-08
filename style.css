@@ -752,21 +752,19 @@ nav{
         overflow-x: hidden;
     }
     .cat-btn{
-        display: inline-block;
+        display: flex;
+        justify-content:center;
+        align-items: center;
         text-decoration: none;
         color: rgb(26, 1, 54);
         border: 1px solid rgb(26, 1, 54);
         background-color: white;
         font-size: 12px;
-        padding: 6px 17px;
+        padding: 6px 3px;
         margin: 1%;
-        position: relative;
-        text-align: center;
-        vertical-align: center;
         cursor: pointer;
         transition: 0.5s;
         width: 10vh;
-        height: 3vh;
         border-radius: 10px
     }
 
