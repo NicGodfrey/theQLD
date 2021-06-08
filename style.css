@@ -125,17 +125,35 @@ nav .fa{
     .nav-links ul li{
         display: block;
     }
+    .nav-links ul li a:hover{
+        color: #818181;
+        transition: 0.3s;
+        
+    }
     .nav-links{
         position: absolute;
         background: rgb(26, 1, 54);
-        height: 100vh;
+        height: 100%;
+        width: 0;
+        top: 0;
+        right:0;
+        text-align: left;
+        z-index: 2;
+        overflow-x: hidden;
+        transition: 1s;
+    }
+    /*
+    .nav-links{
+        position: absolute;
+        background: rgb(26, 1, 54);
+        height: 100%;
         width: 200px;
         top: 0;
         right: -200px;
         text-align: left;
         z-index: 2;
         transition: 1s;
-    }
+    }*/
     nav .fa{
         display: block;
         color: #fff;
@@ -147,7 +165,7 @@ nav .fa{
         position: right;
     }
     .nav-links ul{
-        padding: 30px;
+        padding: 0;
 
     }
 }
