@@ -1,6 +1,6 @@
 $(document).ready(function () { // Call function when DOM is ready
     $("div[data-includeHTML-FS]").each(function () {     
-        console.log("LOADING");
+        console.log("LOADING...");
         //console.log($(this).attr("data-includeHTML-FS") + "?" + "name=" + $(this).attr("data-FS-name"));
         window.clcName=$(this).attr("data-FS-name");
         window.clcAboutText=$(this).attr("data-FS-aboutText");
@@ -12,10 +12,13 @@ $(document).ready(function () { // Call function when DOM is ready
         window.clcEmail=$(this).attr("data-FS-email");
         window.clcPhoneLink=$(this).attr("data-FS-phone-link");
         window.clcPhoneDisp=$(this).attr("data-FS-phone-disp");
+        window.clcPhoneLink2=$(this).attr("data-FS-phone-link2");
+        window.clcPhoneDisp2=$(this).attr("data-FS-phone-disp2");
         
         window.clcAddress=$(this).attr("data-FS-address");
         window.clcFB=$(this).attr("data-FS-FB");
-        console.log(window.clcAboutText);
+        console.log(window.clcPhoneDisp2);
+        console.log("AAAAAAAAAAA")
         $(this).load($(this).attr("data-includeHTML-FS"));
     });
 });

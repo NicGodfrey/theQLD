@@ -165,7 +165,21 @@
             document.getElementById("sideEmail").innerHTML = '<a href="mailto:' + clcEmail + '">' + clcEmail + '</a>';
             var clcPhoneLink = window.clcPhoneLink;
             var clcPhoneDisp = window.clcPhoneDisp;
-            document.getElementById("sidePhone").innerHTML = '<a href="' + clcPhoneLink + '">' + clcPhoneDisp + '</a>';
+            if (typeof window.clcPhoneLink2 !== 'undefined'){
+                console.log("Two numbers")
+                var clcPhoneLink2 = window.clcPhoneLink2;
+                var clcPhoneDisp2 = window.clcPhoneDisp2;
+                var sidePhoneHTMLComb = '<a href="' + clcPhoneLink + '">' + clcPhoneDisp + '</a>' + '<br>' + '<a href="' + clcPhoneLink2 + '">' + clcPhoneDisp2 + '</a>';
+            } else {
+                console.log("One number")
+                console.log(typeof window.clcPhoneLink2)
+                var sidePhoneHTMLComb = '<a href="' + clcPhoneLink + '">' + clcPhoneDisp + '</a>';
+                //document.getElementById("sidePhone").innerHTML = '<a href="' + clcPhoneLink + '">' + clcPhoneDisp + '</a>';
+            }
+            //console.log(sidePhoneHTMLComb)
+            document.getElementById("sidePhone").innerHTML = sidePhoneHTMLComb;
+            console.log(document.getElementById("sidePhone").innerHTML)
+
             var clcAddress = window.clcAddress;
             document.getElementById("sideAddress").innerHTML = clcAddress;
 
