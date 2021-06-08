@@ -577,16 +577,17 @@ nav{
     text-decoration: none;
     color: rgb(26, 1, 54);
     border: 1px solid rgb(26, 1, 54);
+    background-color: white;
     font-size: 16px;
     padding: 12px 34px;
     margin: 2%;
-    background: transparent;
     position: relative;
     text-align: center;
     cursor: pointer;
     transition: 0.5s;
     width: 20vh;
     height: 3vh;
+    border-radius: 10px
 }
 
 .top-btn{
@@ -640,7 +641,7 @@ nav{
     position: relative;
     margin-top: 0%;
     text-align:center;
-    background-color: #fff;
+    background-color: rgb(1, 0, 65);
 
 
 }
@@ -665,7 +666,7 @@ nav{
 
 .directoryGridContainer{
     width:80%;
-    background-color:white;
+    background-color:rgb(1, 0, 65);
     display: inline-block;
     margin-bottom:2%;
     margin-top:2%;
@@ -735,3 +736,38 @@ nav{
     width: 60%;
 }
 
+@media(max-width: 750px){
+    .header-about{
+        min-height: 20vh;
+    }
+    .directoryGrid{
+        display: grid;
+        width: 100%;
+        grid-gap: 10px;
+        grid-template-columns: repeat(3, auto);
+        grid-auto-rows: 1fr;
+        align-items: center;
+        justify-items: center;
+        position: relative;
+        overflow-x: hidden;
+    }
+    .cat-btn{
+        display: inline-block;
+        text-decoration: none;
+        color: rgb(26, 1, 54);
+        border: 1px solid rgb(26, 1, 54);
+        background-color: white;
+        font-size: 12px;
+        padding: 6px 17px;
+        margin: 1%;
+        position: relative;
+        text-align: center;
+        vertical-align: center;
+        cursor: pointer;
+        transition: 0.5s;
+        width: 10vh;
+        height: 3vh;
+        border-radius: 10px
+    }
+
+}
