@@ -18,7 +18,6 @@ $(document).ready(function () { // Call function when DOM is ready
         window.clcAddress=$(this).attr("data-FS-address");
         window.clcFB=$(this).attr("data-FS-FB");
         console.log(window.clcPhoneDisp2);
-        console.log("AAAAAAAAAAA")
         $(this).load($(this).attr("data-includeHTML-FS"));
     });
 });

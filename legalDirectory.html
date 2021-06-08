@@ -2,11 +2,12 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>The Queensland Legal Directory -- About Us</title>
+        <title>The Queensland Legal Directory -- Legal Directory</title>
         <link rel="stylesheet" href="style.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     </head>
     <body>
         <section class="header-about" id="top-of-page">
@@ -41,7 +42,7 @@
                     <div class="cell"><a href="" class="cat-btn">Indigenous</a></div>
                     <div class="cell"><a href="" class="cat-btn">LGBTIQ+</a></div>
                     <div class="cell"><a href="" class="cat-btn">Tenancy</a></div>
-                    <div class="cell"><a href="" class="cat-btn">Welfare</a></div>
+                    <div class="cell"><a href="#Welfare" class="cat-btn">Welfare</a></div>
                     <div class="cell"><a href="" class="cat-btn">Wills & Estates</a></div>
                     <div class="cell"><a href="" class="cat-btn">Youth</a></div>
                 </div>
@@ -101,13 +102,34 @@
                 </div>
                 <a href="#top-of-page" class="top-btn">Return to Top</a>
             </section>
+            <section class="directory-category" id="directory-category">
+                <h1 class="categoryH1" id="Welfare">Welfare</h1>
+                <h3 class="directoryH3">Aboriginal & Torres Strait Islander Women's Legal Service North Queensland</h3>
+                <div class="row">
+                    <div class="directory-col-img">
+                        <img src="images/logos/ATSIWLSNQ.png" >
+                    </div>
+                    <div class="directory-col-abt">
+                        <p>The Aboriginal and Torres Strait Islander Women’s Legal Service NQ is a service which exists to provide legal services and promote law reform for First Nations women in North Queensland. They provide support in relation to the following matters: child protection, family law, domestic violence, separation, child support, victims assist and discrimination law. In addition to providing legal services, they also run community legal education workshops for Aboriginal and Torres Strait Islander women in Townsville and to remote areas of North Queensland. </p>
+                    </div>
+                    <div class="directory-col-lnks">
+                        <b>Website: </b><a href="https://caxton.org.au">https://caxton.org.au</a><br>
+                        <b>E-Mail: </b><a href="mailto:caxton@caxton.org.au">caxton@caxton.org.au</a><br>
+                        <b>Phone: </b><a href="tel:+61-07-3214-6333">(07) 3214 6333</a><br>
+                        <a href="factSheets/caxton.html" class="FS-btn"><i class="fa fa-file-text-o"></i>  Fact Sheet</a>
+                    </div>
+                </div>
+                <a href="#top-of-page" class="top-btn">Return to Top</a>
+            </section>
+
             </section>
         </section>
 
 
-        <div data-includeHTML="TPLfooter.html"></div>
+        <div data-includeHTML="./TPLfooter.html"></div>
 
 
+        <script src="js/include.js"></script>
 
 
         <!------ JavaScript: Toggle Mobile Menu ------>
@@ -124,7 +146,7 @@
             }
             
         </script>
-        <script src="js/include.js"></script>
+        
 
     </body>
 </html>
