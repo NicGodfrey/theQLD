@@ -118,6 +118,13 @@ nav .fa{
     font-size: 20px;
 }
 
+.acknowledgement {
+    padding-left:30px;
+    padding-right:30px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
 @media(max-width: 800px){
     .text-box h1{
         font-size: 20px;
@@ -844,7 +851,7 @@ nav{
         cursor: pointer;
         transition: 0.5s;
         align-self: center;
-        margin: 2%
+        margin: 0%
 
         
     }
@@ -864,8 +871,10 @@ nav{
 
     .directory-col-lnks{
         text-align: left;
-        padding-right: 5px;
-        margin: 5%;
+        padding-right: 0px;
+        margin: 0%;
+        padding-left: 8px;
+        width: 95%;
     }
     
     .directory-col-abt {
