@@ -14,9 +14,16 @@ $(document).ready(function () { // Call function when DOM is ready
         window.clcPhoneDisp=$(this).attr("data-FS-phone-disp");
         window.clcPhoneLink2=$(this).attr("data-FS-phone-link2");
         window.clcPhoneDisp2=$(this).attr("data-FS-phone-disp2");
+        window.clcPhoneLink_2_1=$(this).attr("data-FS-phone-link_2_1");
+        window.clcPhoneDisp_2_1=$(this).attr("data-FS-phone-disp_2_1");
+        window.clcPhoneHead1=$(this).attr("data-FS-phone-Head1");
+        window.clcPhoneHead2=$(this).attr("data-FS-phone-Head2");
+        
         
         window.clcAddress=$(this).attr("data-FS-address");
+        window.clcAddressLink=$(this).attr("data-FS-addressLink");
         window.clcFB=$(this).attr("data-FS-FB");
+        window.clcLinkedIn=$(this).attr("data-FS-LinkedIn");
         console.log(window.clcPhoneDisp2);
         $(this).load($(this).attr("data-includeHTML-FS"));
     });

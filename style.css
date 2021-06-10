@@ -118,7 +118,7 @@ nav .fa{
     font-size: 20px;
 }
 
-@media(max-width: 750px){
+@media(max-width: 800px){
     .text-box h1{
         font-size: 20px;
     }
@@ -246,7 +246,7 @@ h3{
     text-align: center;
 }
 
-@media(max-width: 700px){
+@media(max-width: 800px){
     .row{
         flex-direction: column;
     }
@@ -617,7 +617,8 @@ nav{
     transition: 0.5s;
     width: 20vh;
     height: 3vh;
-    border-radius: 10px
+    border-radius: 10px;
+    font-weight: 600;
 }
 
 .top-btn{
@@ -795,6 +796,7 @@ nav{
         cursor: pointer;
         transition: 0.5s;
         width: 10vh;
+        height: 8vh;
         border-radius: 10px
     }
     .top-btn{
@@ -830,6 +832,19 @@ nav{
         margin: 2%
 
         
+    }
+    .directoryCategories{
+        padding-top: 10%;
+        padding-bottom: 10%;
+        background-color: rgb(1, 0, 65);
+    
+    
+    }
+    #directoryCategories .row{
+        margin-top: 10%;
+        padding-bottom: 10%;
+    
+    
     }
 
     .directory-col-lnks{
