@@ -347,6 +347,20 @@ nav{
     padding-right: 20px;
 }
 
+@media(max-width: 800px){
+    .whatWeDo-col{
+        width: 100%;
+        align-items: center;
+    }
+    .whatWeDo-col p{
+        padding: 30px;
+    }
+    .whatWeDoBG{
+        width:100%;
+    }
+}
+
+
 /*---------------                           FACT SHEETS                       ---------------*/
 .FS-header{
     min-height: 20vh;
@@ -745,6 +759,7 @@ nav{
 .directory-col-lnks{
     text-align: left;
     padding-right: 5px;
+    width: 35%;
 }
 
 .directory-col-abt {
