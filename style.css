@@ -14,10 +14,6 @@
     border-radius: 0 50% 50% 0;
     background-color: rgb(226, 50, 6);
     transition: 0.5s;
-
-
-
-
 }
 
 .esc-long{
@@ -54,6 +50,36 @@
     left:-5px;
 }
 
+@media (max-width: 800px){
+    .escape{
+        position: fixed;
+        left: -5px;
+        top: 45%;
+        z-index: 3;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 0 50% 50% 0;
+        background-color: rgb(226, 50, 6);
+        transition: 0.5s;
+    }
+    
+    .esc-long{
+        height: 20px;
+        line-height: 20px;
+        font-size: 20px;
+        width:0px;
+        overflow-x:hidden;
+    }
+    
+    .escape-btn{
+        font-size: 20px;
+        height: 20px;
+        line-height: 20px;
+    }
+    
+    .escape:hover{
+        left:-5px;
+    }
+}
 
 
 
