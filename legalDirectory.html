@@ -137,6 +137,19 @@
             <section class="directory-category" id="directory-category">
                 <h1 class="categoryH1" id="Family">Family & Domestic Violence</h1>
 
+                <div class="warningBanner">
+                    <h3><i class="fa fa-exclamation-circle"></i>  Are you, or someone you know, in danger?  <i class="fa fa-exclamation-circle"></i></h3>
+                    <p>If the danger is immediate, please call <b>000</b> now.</p>
+                    <p>For non-urgent help, you can contact the Queensland police at <b>131 444</b>.</p>
+                    <div class=warningBanner-btn onclick="showDVServices()" id="warningBanner-btn">Show Additional Helpful Services</div>
+                    <div class="warningBanner_list" id="warningBanner_list">
+                        <li><b><a href="https://www.qld.gov.au/law/crime-and-police/victim-assist-queensland" target="_blank">Victim Assist Queensland</a></b>, a support service provided by the Queensland Government, available during business hours: 1300 546 587</li>
+                        <li><b><a href="https://www.dvconnect.org/" target="_blank">DV Connect Womensline</a></b>, a 24/7 Domestic Violence Helpline for women: 1800 811 811</li>
+                        <li><b><a href="https://www.dvconnect.org/" target="_blank">DV Connect Mensline</a></b>, a Domestic Violence Helpline for men available from 09:00-Midnight 7 days a week: 1800 600 636</li>
+                        <li><b><a href="https://www.dvconnect.org/" target="_blank">DV Connect Sexual Assault Helpline</a></b>, a Sexual Assault Helpline for victims or persons concerned about someone they know, available from 07:30-23:30 7 days a week: 1800 010 120</li>
+                    </div>
+                </div>
+
                 <!-- Bayside -->
                 <h3 class="directoryH3">Bayside Community Legal Centre</h3>
                 <div class="row">
@@ -416,6 +429,18 @@
             function hideMenu(){
                 navLinks.style.width = "0"
                 navLinks.ul.style.padding = "0";
+            }
+
+            function showDVServices(){
+                warningBanner_list.style.height="auto";
+                document.getElementById("warningBanner-btn").innerHTML = "Hide Additional Helpful Services";
+                document.getElementById("warningBanner-btn").onclick = hideDVServices;
+            }
+            function hideDVServices(){
+                warningBanner_list.style.height="0px";
+                document.getElementById("warningBanner-btn").innerHTML = "Show Additional Helpful Services";
+                document.getElementById("warningBanner-btn").onclick = showDVServices;
+
             }
             
         </script>

@@ -870,6 +870,57 @@ nav{
     width: 60%;
 }
 
+.warningBanner {
+    background-color: red;
+    color: white;
+    text-align: left;
+    border: 1px solid black;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.warningBanner p{
+    color: white;
+    text-align: center;
+}
+
+.warningBanner_list {
+    background-color: rgb(212, 212, 212);
+    color: black;
+    padding-left: 5px;
+    overflow:hidden;
+    height: 0px;
+    transition: 0.5s;
+}
+
+
+
+.warningBanner-btn {
+
+    display: inline-block;
+    text-decoration: none;
+    color: rgb(26, 1, 54);
+    border: 1px solid rgb(26, 1, 54);
+    background-color: white;
+    font-size: 16px;
+    padding: 12px 0;
+    margin: 2%;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.5s;
+    width: 96%;
+    align-self: center;
+    height: 3vh;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+
+.warningBanner-btn:hover{
+    color: #fff;
+    background: rgb(26, 1, 54);
+}
+
 @media(max-width: 800px){
     .header-about{
         min-height: 20vh;
