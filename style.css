@@ -848,6 +848,7 @@ nav{
     text-align: left;
     padding-right: 5px;
     width: 35%;
+    overflow-wrap: anywhere;
 }
 
 .directory-col-abt {
@@ -871,7 +872,7 @@ nav{
 }
 
 .warningBanner {
-    background-color: red;
+    background-color: rgb(143, 1, 1);
     color: white;
     text-align: left;
     border: 1px solid black;
