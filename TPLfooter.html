@@ -3,6 +3,33 @@
 <!------ ESCAPE BUTTON FIXED POSITION ------>
     <div class="escape"><a href="https://www.abc.net.au/news/" class="escape-btn"> <div class=esc-long>ESCAPE</div> <i class="fa fa-exclamation-circle"></i> </a></div>
 
+
+<!------ DISCLAIMER COOKIE ------->
+<div class='cookie-banner' style='display:none'>
+    <div class="text-box">
+        <img src="images/logo.png">
+        <h3>Welcome to the Queensland Legal Directory.</h3>
+        <p>It's important to understand that, while we will endeavour to find you appropriate legal help, we cannot advise you ourselves. 
+            ​<br>
+            As such, no information we provide by webpage, email, phone, or otherwise, should be considered legal advice.
+            <br><br><br>
+            For more information, refer to our full <a href=''>disclaimer</a>.
+        </p>
+        <a href="" class="close-cookie">I Understand</a>
+    </div></div>
+
+<script>
+    if (localStorage.getItem('cookieSeen') != 'shown') {
+  $('.cookie-banner').delay(2000).fadeIn();
+  
+};
+$('.close-cookie').click(function() {
+  $('.cookie-banner').fadeOut();
+  localStorage.setItem('cookieSeen','shown')
+})
+</script>
+    
+
 <!------ FOOTER ------>
         <section class="footerBG">
             <section class="footer">

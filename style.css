@@ -5,6 +5,55 @@
     scroll-behavior: smooth;
 }
 
+.cookie-banner{
+    position: fixed;
+    bottom: 10%;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    width: 80%;
+    height: 80%;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgba(2, 13, 58, 0.801),rgba(2, 13, 58, 0.801)), url(images/GoldCoast.jpeg);
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 5000px rgba(0, 0, 0, 0.8);
+}
+
+.cookie-banner img{
+    width: 150px;
+    /*vertical-align: top;*/
+}
+
+.cookie-banner a:visited {
+    color: white;
+  }
+
+  .cookie-banner a {
+    color: white;
+  }
+
+  .close-cookie{
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    font-size: 16px;
+    padding: 12px 34px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+.close-cookie:hover{
+    border: 1px solid rgb(26, 1, 54);
+    background: rgb(26, 1, 54);
+    transition: 1s;
+}
+
 .escape{
     position: fixed;
     left: -120px;

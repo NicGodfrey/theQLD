@@ -1,0 +1,26 @@
+{% assign names = value.name | split: " " %}
+
+Hi {{ names[0] | default: "there"}}, thanks for contacting the Queensland Legal Directory!
+
+We'll get back to you as soon as we can at {{value.email}}, but make sure to keep an eye on your junk folder as well, just in case!
+
+{% if value.number.size > 1%}
+We noticed you also left a phone number, {{value.number}}. We'll try contacting you by email first (unless you've requested otherwise in your submission), but if we don't hear back from you soon, you might receive a friendly text response from us as well. If you'd rather not receive a text, please send us another email now at contact@theQLD.com and let us know.
+
+Finally, we've attached a copy of your submission below this response. If it looks incorrect or appears to be missing any details, please email us and let us know. 
+{% endif %}
+
+{% if value.number.size < 2 %}
+We've also attached a copy of your submission below this response. If it looks incorrect or appears to be missing any details, please email us at contact@theQLD.com and let us know. 
+{% endif %}
+
+Thanks for reaching out.
+
+Best regards,
+The Queensland Legal Directory
+
+------------------------------------
+
+Your submission:
+{{ value.subject }} 
+{{ value.message }}
