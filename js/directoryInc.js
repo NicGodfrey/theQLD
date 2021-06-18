@@ -22,3 +22,14 @@ $(document).ready(function () { // Call function when DOM is ready
     });
 });
 
+$(document).ready(function () { // Call function when DOM is ready
+    $("div[data-FS-objName]").each(function () {     
+        console.log("LOADING...");
+        objName = $(this).attr("data-FS-objName");
+        objIt = dict[objName];
+        generatedFSHTML = populateFS(objIt)
+        console.log("Generated FS: " + generatedFSHTML)
+        document.getElementById($(this).attr("data-FS-objName")).innerHTML = generatedFSHTML;
+        
+    });
+});
