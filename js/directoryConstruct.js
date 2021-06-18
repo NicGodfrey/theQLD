@@ -73,6 +73,13 @@ function populateCatHTML(category){
     return generatedHTML;
 }
 
+/*function populateDir(){
+    console.log(categories.length)
+    for (i = 0; i < categories.length; i++) {
+        console.log(categories[0])
+    }
+}*/
+
 function populateFS(entry){
     console.log("Populating FS: ");
     console.log(entry)
@@ -148,6 +155,8 @@ function populateFS(entry){
     data-FS-applyText="`+entry.applyText+`"
     data-FS-URL="`+entry.url+`" data-FS-email="`+entry.email+`"
     ` + phoneText + `
+    data-FS-address="` + entry.addressDisp + `"
+    data-FS-addressLink="` + entry.addressLink + `"
     ` + socialMedia + `
 
     ></div>`
@@ -162,8 +171,62 @@ var dict = new Object();
 var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
 //function entry(name, imgPath, about, url, email, phone, addressLink, addressDisp, fsURL, categories, aboutFS, howHelpFS, applyText, fb, linkedin, twitter, insta){ // TODO
 
+    // ATSIWLSNQ
+    let ATSIWLSNQ = new entry(
+        "Aboriginal and Torress Strait Islander Women's Legal Service North Queensland", 'ATSIWLSNQ.png',
+    "The Aboriginal and Torres Strait Islander Women’s Legal Service NQ is a service which exists to provide legal services and promote law reform for First Nations women in North Queensland. They provide support in relation to the following matters: child protection, family law, domestic violence, separation, child support, victims assist and discrimination law. In addition to providing legal services, they also run community legal education workshops for Aboriginal and Torres Strait Islander women in Townsville and to remote areas of North Queensland.",
+    "http://www.atsiwlsnq.org.au",
+    "admin@atsiwlsnq.org.au",
+    [["1800 082 600", "(07) 4721 6007"],["Phone",""]],
+    "https://www.google.com/maps/place/Aboriginal+and+Torres+Strait+Islander+Women's+Legal+Services+NQ+Inc./@-19.2582827,146.8081721,15z/data=!3m1!4b1!4m5!3m4!1s0x6bd5f8db33e6cf57:0x24526a120a707ba9!8m2!3d-19.258214!4d146.8168359", 
+    "Level 3, 42 Sturt St, Townsville, Queensland 4810",
+    "ATSIWLSNQ",
+    ['INDIGENOUS','DISCRIMINATION', 'FAMILY'],
+    `
+    The Aboriginal and Torres Strait Islander Women’s Legal Service NQ (ATSIWLSNQ) is a service which exists to provide legal services and promote law reform for First Nations women in North Queensland.
+        <br><br>
+        Originally founded as part of the North Queensland Women’s Legal Service, ATSIWLSNQ has operated independently since 2006. The service is funded by the Commonwealth Attorney General’s Department and the State Attorney General’s Department through the Legal Aid Queensland’s Community Legal Service Program. 
+        <br><br>
+        In addition to providing legal services, they also run community legal education workshops for Aboriginal and Torres Strait Islander women in Townsville and to remote areas of North Queensland.    `,
+    `
+    ATSIWLSNQ can provide assistance to Aboriginal and Torres Strait women and their families from clinics throughout North Queensland. They provide support in relation to the following matters: child protection, family law, domestic violence, separation, child support, victims assist and discrimination law.
+    <br><br>
+    ATSIWLSNQ provide a broad range of legal services to their clients. They may be able to provide you with preliminary legal advice, ongoing legal casework and even court representation. 
+    `,
+    `Free call ATSIWLSNQ by calling 1800 082 600 between 09:00-17:00, Mondays to Friday.
+    `,
+    "https://www.facebook.com/ATSIWLSNQ/",
+    "",
+    );
+    dict["ATSIWLSNQ"] = ATSIWLSNQ;
+
+    // Bayside
+    let Bayside = new entry(
+        'Bayside Community Legal Service', 'bcls.png',
+    "Basic Rights Queensland provides legal advice and advocacy with regards to Centrelink assistance, disability discrimination and women’s workplace issues. Their team includes lawyers, social workers and volunteers, who work to provide community legal education, advocate for law reform and provide specialist services to other community organisations.",
+    "https://bcls.org.au/",
+    "enquiries@bcls.org.au",
+    "(07) 3162 3282",
+    "https://www.google.com/maps/place/Bayside+Community+Legal+Service+Inc./@-27.4460855,153.1611739,14.31z/data=!4m5!3m4!1s0x6b915d8d7a1d980b:0x131d3b4d4eb032b4!8m2!3d-27.444219!4d153.1723517", // AddressLink
+    "Wynnum Community Centre, 1st Floor, 105 Florence St, Wynnum, Queensland 4178", // AddressDisp
+    "BRQ",
+    ['DISCRIMINATION','WELFARE'],
+    `Bayside Community Legal Service (BCLS) is a legal service founded in 1992 which provides legal support to the Bayside community. Their services include providing legal advice and representation, mediation, legal information, referrals and community legal education.
+    <br><br>
+    BCLS is heavily reliant on their volunteers made up of students, lawyers and mediators. Bayside Community Legal Service could not provide legal assistance to the Bayside community without the hardwork and dedication of their volunteers.
+    <br><br>
+    BCLS receives some funding through through Legal Aid Queensland, but also accepts individual tax-deductible donations.`,
+    `Bayside Community Legal Centre offers one-off, 30 minute advice appointments. These can be held by phone or in-person.
+    <br><br>
+    BCLS can only provide assistance within their practice areas. These include debt issues, property damage from a motor vehicle accident, neighbourhood disputes, tenancy, consumer complaints and bailment. They can also advise you on family law issues regarding domestic violence, divorce/separation and parenting. Within criminal law, they can provide advice in relation to criminal offences, traffic offences and breaches of domestic violence orders. 
+    `,
+    `To organise a consultation, call (07) 3162 3282, request a call back on BCLS' website or email enquiries@bcls.org.au.`,
+    "https://www.facebook.com/BCLS.WYNNUM/",
+    ""
+    );
+    dict["Bayside"] = Bayside;
+
     // BRQ
-    var BRQPhone = parsePhones(["(07) 3847 5532", "1800 358 511", "1800 621 458"],["Free Call (Social Security / Disability Discrimination)", "", "Free Call (Women's Employment)"])
     let BRQ = new entry(
         'Basic Rights Queensland', 'BRQ.png',
     "Basic Rights Queensland provides legal advice and advocacy with regards to Centrelink assistance, disability discrimination and women’s workplace issues. Their team includes lawyers, social workers and volunteers, who work to provide community legal education, advocate for law reform and provide specialist services to other community organisations.",
@@ -173,7 +236,7 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     "", // AddressLink
     "", // AddressDisp
     "BRQ",
-    ['DISCRIMINATION','TENANCY', 'CRIME'],
+    ['DISCRIMINATION','WELFARE'],
     `Basic Rights Queensland (BRQ) is a service which provides legal advice and advocacy in the areas of of Centrelink assistance, disability discrimination and women’s workplace issued. The service was originally founded over thirty years ago as the ‘Welfare Rights Centre’. Since then, it has grown and in 2018 merged with Working Women Queensland.
     <br><br>
     Their team includes lawyers, social workers and volunteers, who work to provide community legal education, advocate for law reform and provide specialist services to other community organisations.
@@ -189,7 +252,6 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     dict["BRQ"] = BRQ;
 
     // BNCLS
-    var BNCLSPhone = parsePhones("(07) 3260 6820")
     let BNCLS = new entry(
         'Brisbane North Community Legal Service', 'NorthsideConnect.png',
     "Brisbane North Community Legal Service (BNCLS) is a generalist community legal service which provides free legal advice, information, and referral to individuals on a range of legal issues including family law, domestic violence, civil disputes, criminal matters, neighbourhood issues, elder law and employment.",
@@ -197,9 +259,9 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     "admin@northsideconnect.org.au",
     "(07) 3260 6820",
     "https://www.google.com/maps/place/Northside+Connect/@-27.4013307,153.051648,15z/data=!3m1!4b1!4m5!3m4!1s0x6b915861ecd5f391:0x16401a8027fcdbf1!8m2!3d-27.4013621!4d153.0603798", 
-    "14 Station St, Nundah, Queensland 4012</a><br>",
+    "14 Station St, Nundah, Queensland 4012",
     "brisbane_north",
-    ['DISCRIMINATION','TENANCY', 'CRIME'],
+    ['FAMILY','TENANCY', 'CRIME', 'EMPLOYMENT'],
     `
     Brisbane North Community Legal Service (BNCLS) is a generalist community legal service which provides free legal advice, information and referral to individuals on a range of legal issues.
     <br><br>
@@ -216,4 +278,35 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     "",
     );
     dict["BNCLS"] = BNCLS;
+
+    // Hub Community Legal
+    let HubCL = new entry(
+        'Hub Community Legal', 'HubCL.svg',
+    "Hub Community Legal offers advice, assistance, and in some circumstances, ongoing casework and court representation across south west Brisbane. They operate in a variety of legal areas, including family, property, traffic, youth, crime & employment, though they cannot assist with personal injury, commercial, or conveyancing matters.",
+    "https://hubcommunity.org.au",
+    "legal@hubcommunity.org.au",
+    "(07) 3372 7677",
+    "https://www.google.com/maps/place/HUB+Community+Legal+(formerly+South+West+Brisbane+Community+Legal+Centre)/@-34.1862962,141.0480228,5z/data=!4m9!1m2!2m1!1sgoogle+maps+hub+community+legal!3m5!1s0x6b914f1932fadb43:0xfb06e2c5c0538aaf!8m2!3d-27.5976697!4d152.9658072!15sCh9nb29nbGUgbWFwcyBodWIgY29tbXVuaXR5IGxlZ2FsIgOIAQGSARBjb21tdW5pdHlfY2VudGVy", 
+    "79 Poinsettia St, Inala, Queensland 4077",
+    "Hub_CL",
+    ['WILLS', 'FAMILY', 'YOUTH', 'CRIME', 'EMPLOYMENT'],
+    `
+    Initially started in 1986 as the Community of Inala Legal Service, Hub Community Legal (HCL) offers legal advice and assistance throughout Brisbane's south west suburbs.
+    <br><br>
+    The Community of Inala Legal Service has also been known as the South West Brisbane Community Legal Centre, and merged with the Hub Neighbourhood Centre in 2019. They accept both State and Federal funding.
+    `,
+    `
+    HCL offers free legal advice appointments during the day and evening at their Inala offices, as well as with partner organisations. In addition, limited advice is offered by telephone with appointment. In some circusmtances, HCL is able to offer ongoing casework or representation in court.       
+        <br><br>
+        HCL operates in a variety of legal areas, including family, property, traffic, youth, crime & employment, though they cannot assist with personal injury, commercial, or conveyancing matters. 
+        <br><br>
+        HCL provide youth lawyers for children and teenagers, and have arrangements in place for assisting individuals with hearing or speech impediments, as well as individuals who have difficulty with English.
+    `,
+    `Contact Hub Community Legal on (07) 3372 7677. Individuals who have difficluty with English can call the <a href='https://www.tisnational.gov.au/Help-using-TIS-National-services/Contact-TIS-National' target='_blank'>Translating and Interpreting Service</a> on 131 450 for assistance in making a booking. Individuals with a hearing or speech impediment can contact HCL through the <a href='https://relayservice.gov.au/' target='_blank'>National Relay Service</a>.
+    `,
+    "https://www.facebook.com/HUBcommunitylegal/",
+    "https://www.linkedin.com/company/south-west-brisbane-community-legal-centre/about/",
+    );
+    dict["HubCL"] = HubCL;
+
 
