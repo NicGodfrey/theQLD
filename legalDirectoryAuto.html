@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Queensland Legal Directory -- Legal Directory</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    </head>
+    <body>
+        <section class="header-about" id="top-of-page">
+            <nav>
+                <a href="index.html"><img src="images/logo.png"></a>
+                <i class="fa fa-bars" onclick="showMenu()"></i>
+                <div class="nav-links" id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="legalDirectory.html">DIRECTORY</a></li>
+                        <li><a href="about.html">ABOUT</a></li>
+                    </ul>
+                </div>
+                
+            </nav>
+            <div class="text-box">
+                <h1>Legal Directory</h1>
+            </div>
+        </section>
+
+        <!------ Directory ------>
+        <section class="directoryCategories" id="directoryCategories">
+            <div class="directoryGridContainer">
+                <div class="directoryGrid" id="directoryGrid">
+                    <div class="cell"><a href="#Criminal" class="cat-btn">Criminal</a></div>
+                    <div class="cell"><a href="#Debt" class="cat-btn">Debt</a></div>
+                    <div class="cell"><a href="#Discrimination" class="cat-btn">Discrimination</a></div>
+                    <div class="cell"><a href="#Employment" class="cat-btn">Employment</a></div>
+                    <div class="cell"><a href="#Family" class="cat-btn">Family & DV</a></div>
+                    <div class="cell"><a href="#Immigration" class="cat-btn">Immigration</a></div>
+                    <div class="cell"><a href="#Indigenous" class="cat-btn">Indigenous</a></div>
+                    <div class="cell"><a href="#LGBTIQ+" class="cat-btn">LGBTIQ+</a></div>
+                    <div class="cell"><a href="#Tenancy" class="cat-btn">Tenancy</a></div>
+                    <div class="cell"><a href="#Welfare" class="cat-btn">Welfare</a></div>
+                    <div class="cell"><a href="#WillsEstates" class="cat-btn">Wills & Estates</a></div>
+                    <div class="cell"><a href="#Youth" class="cat-btn">Youth</a></div>
+                </div>
+                <div class="cell" style="width:100%; padding:0px; margin:0px;" onclick="location.href='mailto:contact@theqld.com';"><a href="" class="cat-btn" style="width:100%; margin: 0px; padding:0px; padding-top:2%; padding-bottom:2%; margin-top:2%">Can't find what you're after? Let us help.</a></div>
+            </div>
+        </section>
+        <section class="directoryBG">
+
+
+            <!--- CRIME --->
+            <section class="directory-category" id="directory-category">
+                <h1 class="categoryH1" id="Criminal">Criminal</h1>
+
+                <div data-includeHTML-DirCat="CRIME" id="CRIME"></div>
+                
+                <a href="#top-of-page" class="top-btn">Return to Top</a>
+                <div class=separator style="margin:4%;"><hr></div>
+            </section>   
+
+
+
+
+        <div data-includeHTML="./TPLfooter.html"></div>
+
+
+        <script src="js/include.js"></script>
+        <script src="js/directoryConstruct.js"></script>
+        <script src="js/directoryInc.js"></script>
+
+
+
+        <!------ JavaScript: Toggle Mobile Menu ------>
+        <script>
+            var navLinks = document.getElementById("navLinks")
+
+            function showMenu(){
+                navLinks.style.width = "200px";
+                navLinks.ul.style.padding = "30px";
+            }
+            function hideMenu(){
+                navLinks.style.width = "0"
+                navLinks.ul.style.padding = "0";
+            }
+
+            function showDVServices(){
+                warningBanner_list.style.height="auto";
+                document.getElementById("warningBanner-btn").innerHTML = "Hide Additional Helpful Services";
+                document.getElementById("warningBanner-btn").onclick = hideDVServices;
+            }
+            function hideDVServices(){
+                warningBanner_list.style.height="0px";
+                document.getElementById("warningBanner-btn").innerHTML = "Show Additional Helpful Services";
+                document.getElementById("warningBanner-btn").onclick = showDVServices;
+
+            }
+            
+        </script>
+        
+
+    </body>
+</html>
