@@ -1,5 +1,5 @@
 /// CONSTRUCTOR
-function entry(name, imgPath, about, url, email, phone, addressLink, addressDisp, fsURL, categories, aboutFS, howHelpFS, applyText){ // TODO
+function entry(name, imgPath, about, url, email, phone, addressLink, addressDisp, fsURL, categories, aboutFS, howHelpFS, applyText, fb, linkedin, twitter, insta){ // TODO
     this.name = name;
     this.imgPath = imgPath;
     this.about = about;
@@ -18,6 +18,10 @@ function entry(name, imgPath, about, url, email, phone, addressLink, addressDisp
     this.aboutFS = aboutFS;
     this.howHelpFS = howHelpFS;
     this.applyText = applyText;
+    this.fb = fb;
+    this.linkedin = linkedin;
+    this.twitter = twitter;
+    this.insta = insta;
 }
 ///
 
@@ -74,6 +78,7 @@ function populateFS(entry){
     console.log(entry)
     phoneText="";
 
+    // PHONE
     if (Array.isArray(entry.rawPhone)){
         j=1;
         for (i = 0; i < entry.rawPhone[0].length; i++){
@@ -127,6 +132,15 @@ function populateFS(entry){
         phoneText += ` data-FS-phone-link="`+phoneLink+`"`;
     }
 
+    //SOCIAL MEDIA
+    var socialMedia = "";
+    if (entry.fb != ""){
+        socialMedia += `data-FS-FB='<a href="` + entry.fb + `" target="_blank"><i class="fa fa-facebook-square"></i></a>'`
+    }
+    if (entry.linkedin != ""){
+        socialMedia += `data-FS-LinkedIn='<a href="` + entry.linkedin + `" target="_blank"><i class="fa fa-linkedin-square"></i></a>'`
+    }
+
     generatedHTML=`
     <div data-includeHTML-FS="FSTemplate.html" data-FS-name="` + entry.name + `" data-FS-imgRelPath="`+entry.imgPath+`" 
     data-FS-aboutText="`+entry.aboutFS+`"
@@ -134,8 +148,7 @@ function populateFS(entry){
     data-FS-applyText="`+entry.applyText+`"
     data-FS-URL="`+entry.url+`" data-FS-email="`+entry.email+`"
     ` + phoneText + `
-    data-FS-FB='<a href="https://www.facebook.com/wwqld/" target="_blank"><i class="fa fa-facebook-square"></i></a>'
-    data-FS-LinkedIn= '<a href="https://www.linkedin.com/company/basic-rights-queensland/about/" target="_blank"><i class="fa fa-linkedin-square"></i></a>'
+    ` + socialMedia + `
 
     ></div>`
 
@@ -147,7 +160,7 @@ function populateFS(entry){
 /// ENTRIES
 var dict = new Object();
 var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
-// function entry(name, imgPath, about, url, email, phone, phoneExtra, addressLink, addressDisp, fsURL, categories, aboutFS, howHelpFS){ // TODO
+//function entry(name, imgPath, about, url, email, phone, addressLink, addressDisp, fsURL, categories, aboutFS, howHelpFS, applyText, fb, linkedin, twitter, insta){ // TODO
 
     // BRQ
     var BRQPhone = parsePhones(["(07) 3847 5532", "1800 358 511", "1800 621 458"],["Free Call (Social Security / Disability Discrimination)", "", "Free Call (Women's Employment)"])
@@ -169,7 +182,9 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `Basic Rights Queensland can provide assistance if you are having Centrelink issues, facing disability discrimination or are a woman facing issues at the workplace. However, the service is only able to provide support for those who are very vulnerable and unable to advocate for themselves. 
     <br><br>
     BRQ may also be unable to provide support where they deem a case does not have merit or when facing issues with capacity.`,
-    `Contact Basic Rights Queensland by calling (07) 3847 5532 or 1800 358 511 between 09:00-16:30 Mondays to Thursdays, or 09:00-12:30 Fridays, for <b>social security</b> or <b>disability discrimination</b> matters. For <b>women's employment</b> advice, free call 1800 621 458 between 09:00-13:00 Mondays or Tuesdays, or 09:00-16:00 on Fridays.`
+    `Contact Basic Rights Queensland by calling (07) 3847 5532 or 1800 358 511 between 09:00-16:30 Mondays to Thursdays, or 09:00-12:30 Fridays, for <b>social security</b> or <b>disability discrimination</b> matters. For <b>women's employment</b> advice, free call 1800 621 458 between 09:00-13:00 Mondays or Tuesdays, or 09:00-16:00 on Fridays.`,
+    "https://www.facebook.com/wwqld/",
+    "https://www.linkedin.com/company/basic-rights-queensland/about/"
     );
     dict["BRQ"] = BRQ;
 
@@ -185,6 +200,20 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     "14 Station St, Nundah, Queensland 4012</a><br>",
     "brisbane_north",
     ['DISCRIMINATION','TENANCY', 'CRIME'],
+    `
+    Brisbane North Community Legal Service (BNCLS) is a generalist community legal service which provides free legal advice, information and referral to individuals on a range of legal issues.
+    <br><br>
+    A service of <a href='https://northsideconnect.org.au/' target='_blank'>Northside Connect</a>, volunteer legal practitioners and volunteer students which work at the BNCLS can also provide information on and referral to other services such as counselling and support.
+    `,
+    `
+    Based in Nundah and open to north side residents, BNCLS service provides free legal assistance on a range of legal issues including family law, domestic violence, civil disputes, criminal matters, neighbourhood issues, elder law and employment, as well as referrals to other qualified solicitors. Northside Connect also has a dedicated Domestic Violence and Family Support Program, which provides legal services and counselling to families.       
+        <br><br>
+        Appointments are available, in addition to drop-in legal advice by consultation. 
+    `,
+    `To see if BNCLS can help with your matter, call (07) 3260 6820 between 9:00-16:00 Monday to Thursday.
+    `,
+    "https://www.facebook.com/Northside-Connect-658994620794556/",
+    "",
     );
     dict["BNCLS"] = BNCLS;
 
