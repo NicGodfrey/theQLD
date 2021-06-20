@@ -279,6 +279,33 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     );
     dict["BNCLS"] = BNCLS;
 
+    // Care Goondiwindi Legal Service
+    let careGoondiwindi = new entry(
+        'Care Goondiwindi Legal Service', 'careGoondiwindi2.png',
+    "Care Goondiwindi Community provides a range of community services to residents of Goondiwindi, including legal information and referrals to other organisations that may be able to assist with legal matters. They do not, however, provide ongoing support or court representation.",
+    "http://www.caregoondiwindi.org.au",
+    "info@caregoondiwindi.org.au",
+    "(07) 4670 0700",
+    "https://www.google.com/maps/place/Care+Goondiwindi/@-28.5463105,150.3112495,17z/data=!3m1!4b1!4m5!3m4!1s0x6ba3169e3ab9d81f:0xc0ab38373c6b96a2!8m2!3d-28.5463105!4d150.3134382", 
+    "111 Callandoon Street, Goondiwindi, Queensland 4390",
+    "care_goondiwindi",
+    ['TENANCY', 'WELFARE'],
+    `
+    Care Goondiwindi provides a range of community services to the people of Goondiwindi, which includes the Care Goondiwindi Community Legal Services (CGCLS), founded in 2006. This service is committed to providing advice and support to vulnerable, disadvantaged and disabled members of the community.
+    <br><br>
+    CGCLS are also committed to informing and empowering the community through legal education and can provide clients with support in using government issued self-help kits.    `,
+    `
+    CGCLS provides legal information and referrals to other organisations that may be able to assist you with your matter. However, they do not provide ongoing support or court representation.
+    <br><br>
+    Appointments are held on Mondays and Thursdays between 9:45am and 2:45pm at the Care Goondiwindi office or over the phone, and are by booking only. CGCLS also have a Stanthorpe Office which provides phone appointments only. 
+    `,
+    `To get in touch with CGCLS, call (07) 4670 0700 between 09:45-14:45 Mondays or Thursdays, or email info@caregoondiwindi.org.au.
+    `,
+    "https://www.facebook.com/gundycare/",
+    "",
+    );
+    dict["careGoondiwindi"] = careGoondiwindi;
+
     // Hub Community Legal
     let HubCL = new entry(
         'Hub Community Legal', 'HubCL.svg',
