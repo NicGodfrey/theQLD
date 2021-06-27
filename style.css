@@ -108,14 +108,14 @@
     .escape-mob{
         position: fixed;
         left: 0;
-        top: 92%;
+        top: 95%;
         width:90%;
         z-index: 3;
         border: 1px solid rgb(255, 255, 255);
         border-radius: 10px 10px 0 0;
         background-color: rgb(226, 50, 6);
         transition: 0.5s;
-        height: 8%;
+        height: 5%;
         margin-left:5%;
         margin-right:5%;
         text-align: center;
