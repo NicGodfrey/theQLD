@@ -134,9 +134,61 @@
     }
     
     .escape-btn{
-        font-size: 18px;
-        height: 20px;
+        font-size: 16px;
+        height: 80%;
         line-height: 20px;
+        padding-top:1%;
+    }
+
+    .cookie-banner{
+        position: fixed;
+        top: 2%;
+        left: 5%;
+        right: 5%;
+        width: 90%;
+        height: 88%;
+        overflow:scroll;
+    }
+    
+    .cookie-banner img{
+        width:75px;
+        overflow:hidden;
+    }
+    
+    .cookie-banner a:visited {
+        color: white;
+      }
+    
+      .cookie-banner a {
+        color: white;
+      }
+
+      .cookie-banner .disclaimerText {
+          font-size: 12px;
+          line-height: 1.4;
+      }
+
+      .cookie-banner .h3 {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+      .close-cookie{
+        display: inline-block;
+        text-decoration: none;
+        color: #fff;
+        border: 1px solid #fff;
+        font-size: 12px;
+        padding: 12px 34px;
+        background: transparent;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .close-cookie:hover{
+        border: 1px solid rgb(26, 1, 54);
+        background: rgb(26, 1, 54);
+        transition: 1s;
     }
     
 
