@@ -203,6 +203,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `,
     "https://www.facebook.com/ATSIWLSNQ/",
     "",
+    "",
+    ""
     );
     dict["ATSIWLSNQ"] = ATSIWLSNQ;
 
@@ -228,6 +230,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `,
     `To organise a consultation, call (07) 3162 3282, request a call back on BCLS' website or email enquiries@bcls.org.au.`,
     "https://www.facebook.com/BCLS.WYNNUM/",
+    "",
+    "",
     ""
     );
     dict["Bayside"] = Bayside;
@@ -253,7 +257,9 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     BRQ may also be unable to provide support where they deem a case does not have merit or when facing issues with capacity.`,
     `Contact Basic Rights Queensland by calling (07) 3847 5532 or 1800 358 511 between 09:00-16:30 Mondays to Thursdays, or 09:00-12:30 Fridays, for <b>social security</b> or <b>disability discrimination</b> matters. For <b>women's employment</b> advice, free call 1800 621 458 between 09:00-13:00 Mondays or Tuesdays, or 09:00-16:00 on Fridays.`,
     "https://www.facebook.com/wwqld/",
-    "https://www.linkedin.com/company/basic-rights-queensland/about/"
+    "https://www.linkedin.com/company/basic-rights-queensland/about/",
+    "",
+    ""
     );
     dict["BRQ"] = BRQ;
 
@@ -282,6 +288,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `,
     "https://www.facebook.com/Northside-Connect-658994620794556/",
     "",
+    "",
+    ""
     );
     dict["BNCLS"] = BNCLS;
 
@@ -310,6 +318,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `,
     "https://www.facebook.com/cairnscommunitylegalcentre/",
     "",
+    "",
+    ""
     );
     dict["cairnsCLC"] = cairnsCLC;
 
@@ -337,6 +347,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `,
     "https://www.facebook.com/gundycare/",
     "",
+    "",
+    ""
     );
     dict["careGoondiwindi"] = careGoondiwindi;
 
@@ -373,6 +385,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `,
     "https://www.facebook.com/caxtonlegalcentre/",
     "https://www.linkedin.com/company/caxtonlegalcentre/?originalSubdomain=au",
+    "",
+    ""
     );
     dict["caxtonlegalcentre"] = caxtonlegalcentre;   
 
@@ -401,6 +415,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `,
     "https://www.facebook.com/CQCLC",
     "",
+    "",
+    ""
     );
     dict["central_qld_clc"] = central_qld_clc;   
 
@@ -429,6 +445,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `,
     "https://www.facebook.com/GoldCoastLegalService/",
     "",
+    "",
+    ""
     );
     dict["goldCoastCLC"] = goldCoastCLC;
 
@@ -459,6 +477,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     `,
     "https://www.facebook.com/HUBcommunitylegal/",
     "https://www.linkedin.com/company/south-west-brisbane-community-legal-centre/about/",
+    "",
+    ""
     );
     dict["HubCL"] = HubCL;
 
