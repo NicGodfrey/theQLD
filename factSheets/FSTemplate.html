@@ -210,6 +210,14 @@
                 var clcLinkedIn = window.clcLinkedIn;
                 socialMedias += clcLinkedIn + ' '
             }
+            if (typeof window.clcTwitter != 'undefined'){
+                var clcTwitter = window.clcTwitter;
+                socialMedias += clcTwitter + ' '
+            }
+            if (typeof window.clcInsta != 'undefined'){
+                var clcInsta = window.clcInsta;
+                socialMedias += clcInsta + ' '
+            }
             document.getElementById("sideSocial").innerHTML = socialMedias;
             
             console.log("Fact Sheet: " + name)

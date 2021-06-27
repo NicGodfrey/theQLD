@@ -24,7 +24,11 @@ $(document).ready(function () { // Call function when DOM is ready
         window.clcAddressLink=$(this).attr("data-FS-addressLink");
         window.clcFB=$(this).attr("data-FS-FB");
         window.clcLinkedIn=$(this).attr("data-FS-LinkedIn");
-        console.log(window.clcPhoneDisp2);
+        window.clcTwitter=$(this).attr("data-FS-Twitter")
+        window.clcInsta=$(this).attr("data-FS-Insta")
+        console.log("ABC:")
+        console.log($(this))
+        console.log(window.clcPhoneLink)
         $(this).load($(this).attr("data-includeHTML-FS"));
     });
 });

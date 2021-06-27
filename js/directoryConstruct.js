@@ -147,6 +147,12 @@ function populateFS(entry){
     if (entry.linkedin != ""){
         socialMedia += `data-FS-LinkedIn='<a href="` + entry.linkedin + `" target="_blank"><i class="fa fa-linkedin-square"></i></a>'`
     }
+    if (entry.twitter != ""){
+        socialMedia += `data-FS-Twitter='<a href="` + entry.twitter + `" target="_blank"><i class="fa fa-twitter-square"></i></a>'`
+    }
+    if (entry.insta != ""){
+        socialMedia += `data-FS-Insta='<a href="` + entry.insta + `" target="_blank"><i class="fa fa-instagram"></i></a>'`
+    }
 
     generatedHTML=`
     <div data-includeHTML-FS="FSTemplate.html" data-FS-name="` + entry.name + `" data-FS-imgRelPath="`+entry.imgPath+`" 
@@ -279,6 +285,34 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     );
     dict["BNCLS"] = BNCLS;
 
+    // Cairns Community Legal Centre
+    let cairnsCLC = new entry(
+        'Cairns Community Legal Centre', 'cairns.png',
+    "Cairns Community Legal Centre Inc (CCLC) provides assistance for socially or financially disadvantaged members of the community with legal concerns in a variety of areas, both over the phone and in-person. In addition, they offer duty lawyer services for family and domestic violence cases at the Cairns Magistrates Court, as well as discretionary discrete assistance services throughout Queensland.",
+    "http://www.cclc.org.au",
+    "enquiry@cclc.org.au",
+    [["(07) 4031 7688", "1800 062 608"],["Phone",""]],
+    "https://www.google.com/maps/place/Cairns+Community+Legal+Centre/@-16.9232826,145.7732019,17z/data=!3m1!4b1!4m5!3m4!1s0x6978669248502ce3:0x2890ef414900ad4e!8m2!3d-16.9233033!4d145.7753631", 
+    "Level 2, Main Street Arcade, 82 Grafton St, Cairns City, Queensland 4870",
+    "cairns_community_legal_centre",
+    ['FAMILY','DISCRIMINATION'],
+    `
+    Cairns Community Legal Centre Inc (CCLC) provides assistance for socially or financially disadvantaged members of the community with legal concerns in a variety of areas, both over the phone and in-person.
+        <br><br>
+        CCLC are also committed to providing legal education to the community, and achieve this through group presentations and workshops on a range of legal topics.
+    `,
+    `
+    CCLC can provide information, referrals and legal advice, and will, in some situations, provide ongoing casework assistance. 
+        <br><br>
+        CCLC offers general legal services as well as assistance in areas of discrimination and human rights, mental health, consumer law, family law and elderly law. In addition, they offer a duty lawyer service at the Cairns Magistrates Court for domestic and family violence cases in partnership with the <a href='factSheets/NQWLS' target='_blank'>North Queensland Women's Legal Services</a>, as well as discretionary discrete assistance services across Queensland.
+    `,
+    `Contact the CCLC by calling (07) 4031 7688 or 1800 062 608 between 09:00-16:00 Mondays to Fridays, or visit the centre on the 2nd floor of the Main Street Arcade, 82 Grafton Street, Cairns from 09:00-16:00 Monday to Thursday, or 09:00-12:00 on Fridays. To access the CCLC's family law and domestic violence duty lawyer, approach them at the Cairns Magistrate Court on Thursdays without appointment.
+    `,
+    "https://www.facebook.com/cairnscommunitylegalcentre/",
+    "",
+    );
+    dict["cairnsCLC"] = cairnsCLC;
+
     // Care Goondiwindi Legal Service
     let careGoondiwindi = new entry(
         'Care Goondiwindi Legal Service', 'careGoondiwindi2.png',
@@ -305,6 +339,98 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     "",
     );
     dict["careGoondiwindi"] = careGoondiwindi;
+
+    // Caxton Legal Centre
+    let caxtonlegalcentre = new entry(
+        'Caxton Legal Centre', 'caxton.jpg',
+    "Caxton Legal Centre (CLC) is an independent, non-profit, non-government organisation. They advise and refer in a wide array of areas, and, in limited circumstances, assist with casework. In addition to these services, CLC advocates for a number of law reform projects every year.",
+    "https://caxton.org.au",
+    "caxton@caxton.org.au",
+    "(07) 3214 6333",
+    "https://www.google.com/maps/place/Caxton+Legal+Centre/@-27.4747474,153.0112587,17z/data=!3m1!4b1!4m5!3m4!1s0x6b91598ba2f2b2df:0xe5ecd4fffbe75833!8m2!3d-27.4747474!4d153.0134474", 
+    "1 Manning St, South Brisbane, Queensland 4101",
+    "caxton_legal_centre",
+    ['CRIME', 'FAMILY', 'EMPLOYMENT', 'DEBT'],
+    `
+    Caxton Legal Centre (CLC) is an independent, non-profit, non-government organisation.
+        <br><br>
+        In addition to providing legal assistance, CLC advocates for law reform, <a href='https://caxton.org.au/about-caxton-legal-centre/law-reform/' target='_blank'>taking on various projects each year</a>.
+        <br><br>
+        CLC also implemented its first Reconciliation Action Plan in 2014 to further Australia's reconciliation with Aboriginal and Torres Strait Islander communities, and <a href='https://caxton.org.au/about-caxton-legal-centre/reconciliation-action-plan/' target='_blank'>has continued to develop plans since</a>.  
+        <br><br>
+        CLC is supported by a collection of volunteer lawyers and law students. They accept funding from the federal and Queensland governments, as well as independent donations. Occasionally, CLC fundraises for particular cases.
+    `,
+    `
+    Caxton Legal Centre advises in a variety of areas of law, including human rights, family law, employment law, criminal charges, elder law, and more.
+        <br><br>
+        In areas of employment law, CLC can only assist those earning less than $80,000 annually, or who were doing so prior to dismissal. They cannot advise with regards to certain matters of employment law, such as unpaid wages, contracts or work cover. Further, CLC can only assist employees in employment law, not contractors. 
+        <br><br>
+        Due to limited resources, while CLC will endeavour to advise and refer, they can only handle casework in limited circumstances. In some courts, CLC offers a duty lawyer service.
+        <br><br>
+        <b>NOTE:</b> CLC cannot help employers, businesses, landlords, real estate agents, or guarantors seeking a solictor's certificate about a loan. Further, there are a number of specific matters in which caxton cannot assist, a full list of which can be found <a href='https://caxton.org.au/wp-content/uploads/2020/02/Matters-we-cannot-assist-with-website.pdf' target='_blank'>here</a>. Please consult this list prior to applying to CLC. If you are unsure if your matter is applicable, don't hesitate to ask us at the Queensland Legal Directory for some assistance!
+    `,
+    `Book an appointment with Caxton Legal Centre by calling (07) 3214 6333 between 09:00-16:00, Mondays to Friday.
+    `,
+    "https://www.facebook.com/caxtonlegalcentre/",
+    "https://www.linkedin.com/company/caxtonlegalcentre/?originalSubdomain=au",
+    );
+    dict["caxtonlegalcentre"] = caxtonlegalcentre;   
+
+    // Central Queensland CLC
+    let central_qld_clc = new entry(
+        'Central Queensland Community Legal Centre', 'cqclc.png',
+    "Central Queensland Community Legal Centre (CQCLC) is a Rockhampton based centre which can provide advice on consumer law, criminal law, neighbourhood and tenancy disputes, estate administration, family law, employment law, and migration law. They hold advice clinics regularly, and can otherwise provide assistance in-person, over the phone, or by video call.",
+    "www.cqclc.org.au",
+    "admin@cqclc.org.au",
+    "(07) 4922 1200",
+    "https://www.google.com/maps/place/Central+Queensland+Community+Legal+Centre+Inc./@-23.3799527,150.515067,18.2z/data=!4m13!1m7!3m6!1s0x6bc300991aeb5a41:0x83113c8a10cf4f9d!2s240+Quay+St,+Rockhampton+QLD+4700!3b1!8m2!3d-23.3803746!4d150.5159459!3m4!1s0x6bc300980e20cd85:0x9943b8c4bbfc82d2!8m2!3d-23.3802694!4d150.5161044", 
+    "240 Quay St, Rockhampton, Queensland 4700",
+    "central_qld_clc",
+    ['CRIME', 'TENANCY', 'EMPLOYMENT', 'WILLS', 'FAMILY', 'IMMIGRATION'],
+    `
+    Central Queensland Community Legal Centre is a Rockhampton based centre incorporated in 1996.  Their mission is to provide free legal services for vulnerable and disadvantaged people. They provide services from just south of Mackay to Bundaberg and west to the border with the Northern Territory.
+        <br><br>
+        CQCLC is also committed to providing community legal education to the public. This can include offering workshops on specific legal issues, providing legal information factsheets and delivering information to student bodies.
+    `,
+    `
+    CQCLC can provide advice on consumer law, criminal law, neighbourhood and tenancy disputes, estate administration, family law, employment law, and migration law. They can offer advice in person, by phone, or via FaceTime/Skype, and have a <a href='https://www.cqclc.org.au/chatbot/' target='_blank'>chatbot</a> which can provide information 24/7.
+        <br><br>
+        CQCLC hold advice clinics in Emerald, Gladstone and Rockhampton throughout the week. There is also an additional estate administration clinic held once a month. Session times can be confirmed at CQCLC's <a href='https://www.cqclc.org.au/our-services/' target='_blank'>website</a>.
+    `,
+    `Book an appointment with Central Queensland Community Legal Centre by calling (07) 4922 1200 or free-calling 1800 155 121 between office hours.
+    `,
+    "https://www.facebook.com/CQCLC",
+    "",
+    );
+    dict["central_qld_clc"] = central_qld_clc;   
+
+    // Gold Coast CLC
+    let goldCoastCLC = new entry(
+        'Gold Coast Community Legal Centre', 'goldcoastclc.svg',
+    "The Gold Coast Community Legal Centre is a generalist centre providing free legal advice and assistance throughout the Gold Coast region. They operate out of Southport and service the whole of the Gold Coast region from Beenleigh to Coolangatta.",
+    "https://www.gcclc.org.au/",
+    "office@gcclc.org.au",
+    "(07) 5532 9611",
+    "https://www.google.com/maps/place/The+Gold+Coast+Community+Legal+Centre/@-27.9637818,153.4085772,17z/data=!3m1!4b1!4m5!3m4!1s0x6b910ff26e05d885:0x80c8ff6a1fae8e50!8m2!3d-27.9636194!4d153.4106495", 
+    "34 Railway St, Southport, Queensland 4215",
+    "gold_coast_clc",
+    ['FAMILY', 'CRIME'],
+    `
+    The Gold Coast Community Legal Centre (GCCLC) is a generalist centre providing free legal advice and assistance throughout the Gold Coast region. 
+        <br><br>
+        The GCCLC operates out of Southport and services the whole of the Gold Coast region from Beenleigh to Coolangatta.   
+    `,
+    `
+    In addition to legal advice, the GCCLC offers prototype and collaborative project work, community legal information and general information and referrals. Legal advice and assistance is offered Monday to Friday by appointment between 08:30-16:00, as well as via a Night Clinic on Tuesday evenings from 17:00. 
+        <br><br>
+        The Centre is able to provide legal assistance to clients in most areas of the law, including family law, consumer law, and neighbourhood disputes, however, it cannot assist business owners.
+    `,
+    `Book an appointment with the Gold Coast Community Legal Centre by calling (07) 5532 9611 or <a href='https://www.gcclc.org.au/request-a-call-back' target='_blank'>requesting a call-back online</a>.
+    `,
+    "https://www.facebook.com/GoldCoastLegalService/",
+    "",
+    );
+    dict["goldCoastCLC"] = goldCoastCLC;
 
     // Hub Community Legal
     let HubCL = new entry(
@@ -336,4 +462,34 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     );
     dict["HubCL"] = HubCL;
 
+    // Institute for Urban Indigenous Health
+    let IUIH = new entry(
+        'Institute for Urban Indigenous Health', 'iuih.jpg',
+    'The Institute for Urban Indigenous Health Legal Service provides advice for individuals or families referred through <a href="https://www.moretonatsichs.org.au/your-health/family-wellbeing/" target="_blank">the Moreton ATSICHS Family Wellbeing Service</a> or by a general practitioner or allied health worker. They can assist with family law, discrimination or harassment, Centrelink reviews, SPER or debt recovery, elder abuse and tenancy matters.',
+    "http://www.iuih.org.au/",
+    "reception@iuih.org.au",
+    "(07) 3828 3600",
+    "https://www.google.com/maps/place/Institute+for+Urban+Indigenous+Health/@-27.4363131,153.0182591,15z/data=!3m2!4b1!5s0x6b9159c4b02acd2f:0xd42ccac1e6205b07!4m5!3m4!1s0x6b9159eadbc8a5a7:0xb487302427344a55!8m2!3d-27.4363134!4d153.0270139", 
+    "22 Cox Road, Windsor, Queensland 4030",
+    "institute_for_urban_indigenous_health",
+    ['WELFARE', 'FAMILY', 'DISCRIMINATION', 'TENANCY', 'DEBT', 'INDIGENOUS'],
+    `
+    The Institute for Urban Indigenous Health was founded in 2009 and pursues the planning, development and delivery of health, family wellbeing and social support services to the Aboriginal and Torres Strait Islander population of South East Queensland.
+        <br><br>
+    IUIH identifies the link between legal matters and health, and provides legal education and support to Aboriginal and Torres Strait Islander people, particularly those experiencing hardship. The IUIH Legal Service provides advice for individuals or families referred through <a href='https://www.moretonatsichs.org.au/your-health/family-wellbeing/' target='_blank'>the Moreton ATSICHS Family Wellbeing Service</a> or by a general practitioner or allied health worker. 
+    `,
+    `
+    The IUIH Legal Service team assists women, parents or guardians of children, and elders. They can assist with family law, discrimination or harassment, Centrelink reviews, SPER or debt recovery, elder abuse and tenancy matters. 
+        <br><br>
+    They cannot assist with criminal law, personal injury or migration matters.
+    `,
+    `
+    Legal services are provided upon referral through <a href='https://www.moretonatsichs.org.au/your-health/family-wellbeing/' target='_blank'> Moreton ATSICHS clinics</a>.
+    `,
+    "https://www.facebook.com/InstituteforUrbanIndigenousHealth/",
+    "https://www.linkedin.com/company/institute-of-urban-indigenous-health/?originalSubdomain=au",
+    "https://twitter.com/iuih_?lang=en",
+    "https://www.instagram.com/iuih/?hl=en"
+    );
+    dict["IUIH"] = IUIH;     
 
