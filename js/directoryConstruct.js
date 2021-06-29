@@ -323,6 +323,8 @@ var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
     );
     dict["cairnsCLC"] = cairnsCLC;
 
+
+
     // Care Goondiwindi Legal Service
     let careGoondiwindi = new entry(
         'Care Goondiwindi Legal Service', 'careGoondiwindi2.png',

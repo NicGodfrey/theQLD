@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Queensland Legal Directory -- Disclaimer</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    </head>
+    <body>
+        <section class="header-about">
+            <nav>
+                <a href="index.html"><img src="images/logo.png"></a>
+                <i class="fa fa-bars" onclick="showMenu()"></i>
+                <div class="nav-links" id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="legalDirectory.html">DIRECTORY</a></li>
+                        <li><a href="about.html">ABOUT US</a></li>
+                    </ul>
+                </div>
+                
+            </nav>
+            <div class="text-box">
+                <h1>DISCLAIMERS</h1>
+            </div>
+        </section>
+
+        <!------ DISCLAIMES ------>
+        <section class="whatWeDoBG">
+            <section class="row">
+                <section class="whatWeDo-col">
+                    <h1>Information</h1>
+                </section>
+                <section class="whatWeDo-col">
+                    <p><b>No Warranty for Information</b><br>The material on this website is intended to be a general information source only. Queensland Legal Directory does not warrant the suitability or accuracy of this information. Access to links or references from this site is not an endorsement by the Queensland Legal Directory of those references or the information contained therein.
+                        </p>
+                </section>
+            </section>
+            <section class="row">
+                <section class="whatWeDo-col">
+                    <h1>Legal Advice</h1>
+                </section>
+                <section class="whatWeDo-col">
+                    <p>
+                        <b>No Legal Advice</b><br>
+                        The information provided by the Queensland Legal Directory is not intended to be and does not constitute legal advice. The Queensland Legal Directory is not liable for any damage caused by reliance on information obtained from its web or phone services or otherwise.
+                    </p>
+                </section>
+            </section>
+            <section class="row">
+                <section class="whatWeDo-col">
+                    <h1>Security</h1>
+                </section>
+                <section class="whatWeDo-col">
+                    <p>
+                        <b>No Warrant for Security</b><br>
+                        The Queensland Legal Directory does not warrant that the site, references or links are free from viruses, trojans, malware, spyware or other technical capabilities which could cause harm to computer systems. As far as permitted by law, the Queensland Legal Directory excludes all liability to third parties arising directly or indirectly out of their use of this website and the material contained therein or referenced to. 
+                    </p>
+                </section>
+            </section>
+        </section>
+
+
+    <!-------- TPLFooter (NOT INCLUDED TO AVOID DISCLAIMER COOKIE) ------------>
+    <!------ ESCAPE BUTTON FIXED POSITION ------>
+    <div class="escape" onclick="location.href='https://www.abc.net.au/news/';"><a href="https://www.abc.net.au/news/" class="escape-btn"> <div class=esc-long>Quick Exit</div> <i class="fa fa-exclamation-circle"></i> </a></div>
+    <div class="escape-mob" onclick="location.href='https://www.abc.net.au/news/';"><a href="https://www.abc.net.au/news/" class="escape-btn"> <i class="fa fa-exclamation-circle"></i> Quick Exit <i class="fa fa-exclamation-circle"></i> </a></div>
+
+    <!------ FOOTER ------>
+        <section class="footerBG">
+            <section class="footer">
+                <div class="icons">
+                    <a href="https://www.facebook.com/theqld"><i class="fa fa-facebook-square"></i></a>
+                    <i class="fa fa-instagram"></i>
+                    <i class="fa fa-twitter-square"></i>
+                    <a href="https://www.linkedin.com/company/the-queensland-legal-directory/"><i class="fa fa-linkedin-square"></i></a>
+                    <a href="mailto:'contact@theQLD.com'"><i class="fa fa-envelope"></i></a>
+                    <i class="fa fa-phone-square"></i>
+                </div>
+                <div class="administrative">
+                    <p>Copyright &copy; The Queensland Legal Directory | <a href="mailto:'contact@theQLD.com'">contact@theQLD.com</a> | [PHONE NUMBER]</p>
+                    <p><a href="">Contact Us</a> | <a href="disclaimer.html">Disclaimer</a> | <a href="">Donate</a> | <a href="">Transparency</a> </p>
+                </div>
+                <div class="acknowledgement">
+                    <hr>
+                    <p>The Queensland Legal Directory acknowledges the Traditional Owners of Country throughout this nation and of the Turrbal and Jagera/Yuggera people of Meanjin, the land on which we are situated. 
+                        <br>
+                        We pay our respects to Elders past and present.</p>
+                </div>
+
+            </section>
+        </section>
+
+
+
+        <script src="js/include.js"></script>
+
+
+        <!------ JavaScript: Toggle Mobile Menu ------>
+        <script>
+            var navLinks = document.getElementById("navLinks")
+
+            function showMenu(){
+                navLinks.style.width = "200px";
+                navLinks.ul.style.padding = "30px";
+            }
+            function hideMenu(){
+                navLinks.style.width = "0"
+                navLinks.ul.style.padding = "0";
+            }
+            
+        </script>
+    </body>
+</html>
