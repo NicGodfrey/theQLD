@@ -1184,3 +1184,19 @@ nav{
     }
 
 }
+
+/* Privacy */
+.privacy {
+    color: black;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 3%;
+}
+
+.privacy p {
+    color: black;
+}
+
+.privacy h1 {
+    color: black;
+}
