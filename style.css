@@ -1036,6 +1036,21 @@ nav{
     background: rgb(26, 1, 54);
 }
 
+.otherAreas a{
+    color: rgb(26, 1, 54);
+    text-decoration: none;
+    border: 0.5px solid rgb(26, 1, 54);
+    padding: 2px 5px;
+    border-radius: 10px;
+    transition: 0.5s;
+}
+
+.otherAreas a:hover{
+    color: #fff;
+    background: rgb(26, 1, 54);
+}
+
+
 @media(max-width: 800px){
     .header-about{
         min-height: 20vh;

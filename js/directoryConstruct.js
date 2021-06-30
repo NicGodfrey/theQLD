@@ -25,14 +25,51 @@ function entry(name, imgPath, about, url, email, phone, addressLink, addressDisp
 }
 ///
 
+var categoriesDict = {"CRIME": "Crime", 
+"DEBT":"Debt", 
+"DISCRIMINATION": "Discrimination",
+"EMPLOYMENT": "Employment",
+"FAMILY": "Family & DV",
+"IMMIGRATION": "Immigration",
+"INDIGENOUS": "Indigenous",
+"LGBTIQ+": "LGBTIQ+",
+"TENANCY": "Tenancy",
+"WELFARE": "Welfare",
+"WILLS": "Wills & Estates",
+"YOUTH": "Youth"}
+
+
+/// GENERATE OTHER LEGAL AREAS
+function legalAreas(categories, current){
+    //console.log(categoriesDict)
+    var generatedHTML = "";
+    for (x = 0; x < Object.keys(categories).length; x++){
+        iterCat = Object.values(categories)[x];
+        console.log(x)
+        console.log(iterCat)
+        if (iterCat != current){
+            lowerCase = iterCat.toLowerCase()
+            capitalised = iterCat.charAt(0).toUpperCase() + lowerCase.slice(1)
+            friendlyText = categoriesDict[iterCat];
+            generatedHTML += "<a href='#" + capitalised + "'>" + friendlyText + "</a> | "
+        }
+    }
+    returnedHTML = generatedHTML.substring(0, generatedHTML.length - 2);
+    //console.log("Returning " + returnedHTML)
+    return returnedHTML;
+}
+
+
 /// POPULATE FUNCTION
-function populateHTML(entry) {
+function populateHTML(entry, otherCats) {
     console.log(entry)
+    console.log(otherCats)
+    
     if (entry.addressDisp != "") {
-        console.log("ADDRESS")
+        //console.log("ADDRESS")
         address = `<b>Address: </b><a href='` + entry.addressLink + `' target='_blank'>` + entry.addressDisp + `</a><br></br>`;
     } else {
-        console.log("NO ADDRESS")
+        //console.log("NO ADDRESS")
         address = "";
     }
     generatedHTML = `
@@ -43,6 +80,9 @@ function populateHTML(entry) {
         </div>
         <div class="directory-col-abt">
             <p>` + entry.about + `</p>
+            <div class="otherAreas">
+            <p><b>Other Areas:</b> ` + otherCats + `</p>
+            </div>
         </div>
         <div class="directory-col-lnks"> 
             <b>Website: </b><a href="` + entry.url + `" target="_blank">` + entry.url + `</a><br>
@@ -53,22 +93,29 @@ function populateHTML(entry) {
         </div>
     </div>
     `
+    console.log(generatedHTML)
     return generatedHTML;
 }
 
 function populateCatHTML(category){
-    console.log("populateCatHTML")
-    console.log(Object.keys(dict).length)
+    //console.log("populateCatHTML")
+    //console.log(Object.keys(dict).length)
     var generatedHTML ="";
     for (i = 0; i < Object.keys(dict).length; i++) {
         entryObj = Object.values(dict)[i];
         if (entryObj.categories.includes(category)){
             console.log(Object.values(dict)[i])
             entryName = Object.keys(dict)[i];
-            generatedHTML += populateHTML(entryObj);
+            //console.log(entryObj.categories)
+            otherCats = legalAreas(entryObj.categories, category);
+            console.log("XYZ")
+            //otherCats = "ABC"
+            generatedHTML += populateHTML(entryObj, otherCats);
             generatedHTML += "<br><br>"
         }
     }
+
+    console.log("DONE")
     
     return generatedHTML;
 }
@@ -174,7 +221,6 @@ function populateFS(entry){
 
 /// ENTRIES
 var dict = new Object();
-var categories = ["CRIME", "DISCRIMINATION", "TENANCY "]
 //function entry(name, imgPath, about, url, email, phone, addressLink, addressDisp, fsURL, categories, aboutFS, howHelpFS, applyText, fb, linkedin, twitter, insta){ // TODO
 
     // ATSIWLSNQ
