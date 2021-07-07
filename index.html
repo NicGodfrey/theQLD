@@ -70,7 +70,8 @@
             </section>
         </section>
 
-        <!------ CONTACT ------>
+
+        <!------ CONTACT [USEBASIN] ------>
         <section class="contactBG">
             <section class="contact" id="contact">
                 <h1>Get in touch.</h1>
@@ -78,7 +79,30 @@
                 Let us know what's going on, and a member of our team will be in touch.</p>
 
                     <div class="contact-col">
-                        <form id="contact-form" action="https://www.formbackend.com/f/a395f3b0c0ca637f" method="POST"> <!-- Delegate backend to 3rd party (Currently 50 subs/mo) -->
+                        <form id="contact-form" action="https://usebasin.com/f/c5d7829db480" method="POST"> <!-- Delegate backend to 3rd party (Currently 100 subs/mo) -->
+                            <input type="text" placeholder="Name" name="name" required>
+                            <input type="email" placeholder="Email" name="email" required>
+                            <input type="phone" placeholder="Phone Number (Optional)" name="number"> 
+                            <input type="text" placeholder="Subject" name="subject" required>
+                            <textarea rows="8" placeholder="How can we help?" name="message" required></textarea>
+                            <button class="g-recaptcha submit-contact-btn" data-sitekey="6Lew3SMUAAAAAJ82QoS7gqOTkRI_dhYrFy1f7Sqy" data-callback='onSubmit'>Submit</button>
+                            <div style="font-size: 10px; align-self: center; justify-self: center; justify-content: center; align-items: center;">Our form is protected by Google's reCAPTCHA v2. Your use of this form is subject to Google's Privacy Policy and Terms of Use.</div>
+                        </form>
+                    </div>
+
+            </section>
+        </section>
+
+
+        <!------ CONTACT ---- [FORM BACKEND]
+        <section class="contactBG">
+            <section class="contact" id="contact">
+                <h1>Get in touch.</h1>
+                <p>Working out who's best suited to your needs isn't always easy, but we're here to help. <br>
+                Let us know what's going on, and a member of our team will be in touch.</p>
+
+                    <div class="contact-col">
+                        <form id="contact-form" action="https://www.formbackend.com/f/a395f3b0c0ca637f" method="POST"> <!-- Delegate backend to 3rd party (Currently 50 subs/mo) 
                             <input type="text" placeholder="Name" name="name" required>
                             <input type="email" placeholder="Email" name="email" required>
                             <input type="phone" placeholder="Phone Number (Optional)" name="number"> 
@@ -91,6 +115,7 @@
 
             </section>
         </section>
+        --->
 
         <section>
         <!-- Messenger Chat plugin Code -->
