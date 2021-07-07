@@ -13,6 +13,11 @@
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon//favicon-16x16.png">
         <link rel="manifest" href="/favicon//site.webmanifest">
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script>
+            function onSubmit(token) {
+                document.getElementById("contact-form").submit();
+            }
+        </script>
 
 
     </head>
@@ -73,13 +78,13 @@
                 Let us know what's going on, and a member of our team will be in touch.</p>
 
                     <div class="contact-col">
-                        <form action="https://www.formbackend.com/f/a395f3b0c0ca637f" method="POST"> <!-- Delegate backend to 3rd party (Currently 50 subs/mo) -->
+                        <form id="contact-form" action="https://www.formbackend.com/f/a395f3b0c0ca637f" method="POST"> <!-- Delegate backend to 3rd party (Currently 50 subs/mo) -->
                             <input type="text" placeholder="Name" name="name" required>
                             <input type="email" placeholder="Email" name="email" required>
                             <input type="phone" placeholder="Phone Number (Optional)" name="number"> 
                             <input type="text" placeholder="Subject" name="subject" required>
                             <textarea rows="8" placeholder="How can we help?" name="message" required></textarea>
-                            <div class="g-recaptcha" data-siteket="6Lcx7nobAAAAALXvjiS-YQ6BVAPK1Erz9MqFuGMt"></div>
+                            <div class="g-recaptcha" data-sitekey="6LcZ43obAAAAAAQQ_HE_ssf6gURawDnZkHofeKqh" data-callback='onSubmit'></div>
                             <button type="submit" class="submit-contact-btn" value="Submit">Submit</button>
                             <div style="font-size: 10px; align-self: center; justify-self: center; justify-content: center; align-items: center;">Our form is protected by Google's reCAPTCHA v2. Your use of this form is subject to Google's Privacy Policy and Terms of Use.</div>
                         </form>
