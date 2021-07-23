@@ -32,7 +32,7 @@ var categoriesDict = {"CRIME": "Crime",
 "FAMILY": "Family & DV",
 "IMMIGRATION": "Immigration",
 "INDIGENOUS": "Indigenous",
-"LGBTIQ+": "LGBTIQ+",
+"LGBTIQ": "LGBTIQ",
 "TENANCY": "Tenancy",
 "WELFARE": "Welfare",
 "WILLS": "Wills & Estates",
@@ -72,6 +72,13 @@ function populateHTML(entry, otherCats) {
         //console.log("NO ADDRESS")
         address = "";
     }
+
+    if (entry.url != "NONE") {
+        urlLine = `<b>Website: </b><a href="` + entry.url + `" target="_blank">` + entry.url + `</a><br>`;
+    } else {
+        urlLine = "";
+    }
+
     generatedHTML = `
     <h3 class="directoryH3">` + entry.name + `</h3>
     <div class="row">
@@ -85,7 +92,7 @@ function populateHTML(entry, otherCats) {
             </div>
         </div>
         <div class="directory-col-lnks"> 
-            <b>Website: </b><a href="` + entry.url + `" target="_blank">` + entry.url + `</a><br>
+            ` + urlLine + `
             <b>E-Mail: </b><a href="mailto:` + entry.email + `">` + entry.email + `</a><br>
             ` + entry.phone + `
             `+ address +`
@@ -201,12 +208,19 @@ function populateFS(entry){
         socialMedia += `data-FS-Insta='<a href="` + entry.insta + `" target="_blank"><i class="fa fa-instagram"></i></a>'`
     }
 
+    // URL
+    if (entry.url != "NONE"){
+        urlLine = entry.url;
+    } else {
+        urlLine = "NONE";
+    }
+
     generatedHTML=`
     <div data-includeHTML-FS="FSTemplate.html" data-FS-name="` + entry.name + `" data-FS-imgRelPath="`+entry.imgPath+`" 
     data-FS-aboutText="`+entry.aboutFS+`"
     data-FS-helpText="`+entry.howHelpFS+`"
     data-FS-applyText="`+entry.applyText+`"
-    data-FS-URL="`+entry.url+`" data-FS-email="`+entry.email+`"
+    data-FS-URL="`+urlLine+`" data-FS-email="`+entry.email+`"
     ` + phoneText + `
     data-FS-address="` + entry.addressDisp + `"
     data-FS-addressLink="` + entry.addressLink + `"
@@ -552,12 +566,121 @@ var dict = new Object();
     They cannot assist with criminal law, personal injury or migration matters.
     `,
     `
-    Legal services are provided upon referral through <a href='https://www.moretonatsichs.org.au/your-health/family-wellbeing/' target='_blank'> Moreton ATSICHS clinics</a>.
+    To access IUIH's legal service, seek referral by contacting the <a href='https://www.moretonatsichs.org.au/your-health/family-wellbeing/' target='_blank'> Moreton ATSICHS clinics</a>.
     `,
     "https://www.facebook.com/InstituteforUrbanIndigenousHealth/",
     "https://www.linkedin.com/company/institute-of-urban-indigenous-health/?originalSubdomain=au",
     "https://twitter.com/iuih_?lang=en",
     "https://www.instagram.com/iuih/?hl=en"
     );
-    dict["IUIH"] = IUIH;     
+    dict["IUIH"] = IUIH;   
+
+    let Junkuri_Laka = new entry(
+        'Junkuri Laka Community Centre', 'Junkuri_Laka.png',
+    "The Junkuri Laka Community Legal Centre, also known as the Mornington Island Community Legal Centre, is based on Mornington Island and promotes the wellbeing of the people of the Wellesley Islands. The centre runs a domestic violence program, a men's support group including individuals struggling with violence and/or alcohol, and provides mediation services.",
+    "NONE",
+    "nikita.junkurilaka@gmail.com",
+    [["(07) 4745 7278", "1800 062 608"],["Phone",""]],
+    "https://www.google.com/maps/place/Junkuri+Laka/@-18.7237645,131.9785424,6.19z/data=!4m5!3m4!1s0x69f4448548a94161:0x684839f7f4803d5d!8m2!3d-16.6627594!4d139.1721021", 
+    "2 Lardil Street Gununa Mornington Island, Queensland, 4871",
+    "junkuri_laka",
+    ['WILLS', 'INDIGENOUS', 'FAMILY', 'CRIME', 'WELFARE'],
+    `
+    The Junkuri Laka Community Legal Centre is based on Mornington Island and promotes the wellbeing of the people of the Wellesley Islands.
+    <br>
+    The centre was established in 2013, and is also known as the Mornington Island Community Legal Centre.
+    `,
+    `
+    The Junkuri Laka Community Legal Centre engages with government organisations and is active in promoting the human, legal and civil rights of residents of the Wellesley Islands.
+    <br>
+    The centre runs a domestic violence program, a men's support group including individuals struggling with violence and/or alcohol, and provides mediation services. They cannot assist in matters related to general banking services, but can assist in such disputes. The centre is also unable to assist where conflicts of interest occur, such as disputes between two members of the community.
+    `,
+    `
+    To seek assistance, contact the Junkuri Laka Community Legal Centre by email or phone at (07) 4745 7278.
+    `,
+    "",
+    "",
+    "",
+    ""
+    );
+    dict["Junkuri_Laka"] = Junkuri_Laka;   
+    
+                //function entry(name, imgPath, about, url, email, phone, addressLink, addressDisp, fsURL, categories, aboutFS, howHelpFS, applyText, fb, linkedin, twitter, insta){ // TODO
+
+
+    // [LawRight]
+    let LAWRIGHT = new entry(
+    'Law Right', 'LawRight.svg',
+    "LawRight, formerly known as QPILCH, is a non-for-profit which increases access to justice by connecting clients with pro bono lawyers. These lawyers work with health and social workers to assist people experiencing mental illness, homelessness & other forms of hardship, as well as to provide services for vulnerable individuals navigating Queensland’s courts and tribunals.",
+    "http://www.lawright.org.au/",
+    "admin@lawright.org.au",
+    "(07) 3846 6317",
+    "https://www.lawright.org.au/find-legal-help/community-health-justice-partnerships/", // AddressLink
+    'Numerous Locations', 
+    "law_right",
+    ['WELFARE', 'DISCRIMINATION', 'DEBT', 'TENANCY'],
+    `
+    Founded in 2001, LawRight is a not-for-profit organisation that aims to improve access to justice through strategic partnerships with pro bono lawyers. Each year over 800 lawyers, 170 barristers and 140 law students give up their time to help disadvantaged members of the community. 
+    <br><br>
+    At 15 Community and Health Justice Partnership locations, pro bono lawyers work with health and social workers to assist people experiencing mental illness, homelessness & other forms of hardship. They also provide services for vulnerable individuals navigating Queensland’s courts and tribunals. 
+    `,
+    `
+    LawRight can provide advice and support in a range of civil law areas for individuals who could not otherwise fund legal assistance. However, they cannot assist with criminal law, family law, native title matters or complex commercial disputes.
+    <br><br>
+    LawRight may be able to provide you with legal advice at one of their outreach locations. They may also be able to partner you with one of the pro bono lawyers that work with them to provide you with ongoing legal support. 
+    `,
+    `To get in contact with LawRight, fill out an <a href='https://www.lawright.org.au/apply/' target='_blank'>online form</a>, or call (07) 3846 6317.`,
+    "https://www.facebook.com/LawRightQLD/",
+    "https://www.linkedin.com/company/lawrightqld/?originalSubdomain=au",
+    "https://twitter.com/lawrightqld?lang=en",
+    "https://www.instagram.com/lawrightqld/?hl=en",
+    );
+    dict["LAWRIGHT"] = LAWRIGHT;
+
+    // [LGBTI]
+    let LGBTI = new entry(
+    'The LGBTI Legal Service', 'lgbti.png',
+    "The LGBTI Legal Service provides legal support on a free and confidential basis to Queensland residents who identify as members of the lesbian, gay, bisexual, trans, and intersex community free of charge. In addition to providing legal services, the LGBT Legal Service is also active in the area of law reform, via parliamentary submissions and the provision of free legal toolkits and fact sheets on their website.",
+    "https://lgbtilegalservice.org.au/",
+    "mail@lgbtilegalservice.org",
+    "(07) 3124 7160",
+    "https://www.google.com/maps/place/20+Hockings+St,+West+End+QLD+4101/@-27.4746414,153.0058547,17z/data=!3m1!4b1!4m5!3m4!1s0x6b9150a43b5f2863:0xdd28c5e3334f8a30!8m2!3d-27.4746414!4d153.0080434", // AddressLink
+    'Level 1, Oxley House, 20 Hockings Street, West End, Queensland 4101', 
+    "LGBTI",
+    ['LGBTIQ', 'FAMILY', 'CRIME', 'DISCRIMINATION', 'EMPLOYMENT', 'WELFARE'],
+    `The LGBTI Legal Service provides legal support on a free and confidential basis to Queensland residents who identify as members of the lesbian, gay, bisexual, trans, and intersex community.
+    <br><br>
+    The service offers advice on legal issues specifically linked to a person's identification as LGBTI and/or for people who would prefer to interact with a solicitor who has an understanding of the particular treatment of LGBTI individuals both culturally and legally.
+    <br><br>
+    The services provided by the LGBTI Legal Service are free of charge.
+    <br><br>
+    In addition to providing legal services, the LGBT Legal Service is also active in the area of law reform, via parliamentary submissions and the provision of free legal toolkits and fact sheets on their website.`,
+    `With no means testing, the LGBTI Legal Service is able to assist any members of the Queensland LGBTI community. They offer support in legal services relating to:
+    <li>Family law</li>
+    <li>Domestic violence</li>
+    <li>Surrogacy and parenting rights</li>
+    <li>Criminal law (including victim support)</li>
+    <li>Employment law</li>
+    <li>Gender identity</li>
+    <li>Civil law</li>
+    <li>Administrative law and government decisions</li>
+    <li>Discrimination and human rights issues</li>
+    <br>
+They do not offer assistance in the areas of:
+    <li>Immigration and visas</li>
+    <li>Medical negligence</li>
+    <li>Building disputes</li>
+    <li>Personal injuries</li>
+    <li>Taxation law</li>
+    <li>Commercial law</li>
+    <li>Investments</li>
+    <br>
+The volunteer lawyers of the service are unable to provide legal representation, though offer legal advice for one to represent themselves in court. The LGBTI Legal Service also may not advise on the behalf of someone else without a power of attorney.`,
+    `Apply for in-person consultation at the Brisbane office or telephone/videoconference for clients outside of Brisbane by calling (07) 3124 7160. `,
+    "https://www.facebook.com/LGBTILegalService",
+    "",
+    "https://twitter.com/lgbtilegal",
+    "",
+    );
+    dict["LGBTI"] = LGBTI;
 

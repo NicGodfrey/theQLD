@@ -77,7 +77,7 @@
                     <div class="FS-sidebar">
                         <div class="FS-logo" id="imgPath"></div>
                         <div class="FS-sidebar-inner">
-                            <div class="FS-sideContent">
+                            <div class="FS-sideContent" id="sideWebParent">
                                 <div class="FS-fa"><i class="fa fa-desktop"></i></div>
                                 <h4>Website</h4>
                                 <p id="sideWeb"></p>
@@ -97,7 +97,7 @@
                                 <h4>Address</h4>
                                 <p id="sideAddress"></p>
                             </div>
-                            <div class="FS-sideContent">
+                            <div class="FS-sideContent" id="sideSocialParent">
                                 <div class="FS-fa"><i class="fa fa-comments-o"></i></div>
                                 <h4>Social Media</h4>
                                 <div class="FS-sideContent-social"><p id="sideSocial"></p></div>
@@ -161,9 +161,15 @@
             document.getElementById("applyText").innerHTML = applyText + "<br> Alternatively, get in touch and let us help prepare your application!";
 
             var imgPath = window.clcImgPath;
+            if (clcURL != "NONE"){
             var clcURL = window.clcURL;
-            document.getElementById("imgPath").innerHTML = '<a href="' + clcURL + '" target="_blank"><img src="../images/logos/' + imgPath + '" style="object-fit: cover; width: 70%;"></a>';
-            document.getElementById("sideWeb").innerHTML = '<a href="' + clcURL + '" target="_blank">' + clcURL + '</a>';
+                document.getElementById("imgPath").innerHTML = '<a href="' + clcURL + '" target="_blank"><img src="../images/logos/' + imgPath + '" style="object-fit: cover; width: 70%;"></a>';
+                document.getElementById("sideWeb").innerHTML = '<a href="' + clcURL + '" target="_blank">' + clcURL + '</a>';
+            } else {
+                document.getElementById("imgPath").innerHTML = '<img src="../images/logos/' + imgPath + '" style="object-fit: cover; width: 70%;">';
+                document.getElementById("sideWeb").innerHTML = 'No Website';
+                document.getElementById("sideWebParent").innerHTML = ''
+            }
             var clcEmail = window.clcEmail;
             document.getElementById("sideEmail").innerHTML = '<a href="mailto:' + clcEmail + '">' + clcEmail + '</a>';
             var clcPhoneLink = window.clcPhoneLink;
@@ -219,6 +225,9 @@
                 socialMedias += clcInsta + ' '
             }
             document.getElementById("sideSocial").innerHTML = socialMedias;
+            if (socialMedias == ""){
+                document.getElementById("sideSocialParent").innerHTML = "";
+            }
             
             console.log("Fact Sheet: " + name)
 
