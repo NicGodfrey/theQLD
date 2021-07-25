@@ -268,6 +268,37 @@ var dict = new Object();
     );
     dict["ATSIWLSNQ"] = ATSIWLSNQ;
 
+    // ATSILS
+    let ATSILS = new entry(
+        "Aboriginal and Torress Strait Islander Legal Service (Qld)", 'atsils.png',
+    "The Aboriginal and Torres Strait Islander Legal Service provides professional and culturally proficient legal services for Aboriginal and Torres Strait Islander people across Queensland. This includes legal advice and representation relating to criminal, civil and family law.",
+    "http://www.atsiwlsnq.org.au",
+    "admin@atsiwlsnq.org.au",
+    [["1800 012 255", "(07) 3025 3888"],["Phone",""]],
+    "https://www.atsils.org.au/contact/", 
+    "Multiple Locations",
+    "ATSILS",
+    ['INDIGENOUS','CRIME', 'FAMILY'],
+    `
+    The Aboriginal and Torres Strait Islander Legal Service (Qld) ('ATSILS') provides professional and culturally proficient legal services for Aboriginal and Torres Strait Islander people across Queensland.
+    <br><br>
+    Funded by the Commonwealth Attorney Generals' Department and the Department of Prime Minister and Cabinet, ATSILS provides legal advice, as well as law reform efforts, legal education, coronial and public sector monitoring, and support for former offenders in transitioning back into the community through their <a href='https://www.atsils.org.au/prisoner-throughcare/' target='_blank'>Throughcare Program</a>.
+    `,
+    `
+    ATSILS is provides legal advice and representation relating to criminal, civil and family law. Specifically, ATSILS' services include advice, duty matters and casework matters, though means testing is applied to the latter. 
+    <br><br>
+    Finally, ATSILS provides 24 hour legal representation and advice specifically on criminal matters for Aboriginal and Torres Strait Islander people.
+    `,
+    `
+    Contact ATSILS' toll-free number at 1800 012 255, or find your closest ATSILS office <a href='https://www.atsils.org.au/contact/' target='_blank'>here</a>.
+    `,
+    "https://www.facebook.com/atsils/",
+    "https://www.linkedin.com/company/atsils?originalSubdomain=au",
+    "https://twitter.com/atsils?lang=en",
+    ""
+    );
+    dict["ATSILS"] = ATSILS;
+
     // Bayside
     let Bayside = new entry(
         'Bayside Community Legal Service', 'bcls.png',
