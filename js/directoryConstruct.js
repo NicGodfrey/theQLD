@@ -684,3 +684,61 @@ The volunteer lawyers of the service are unable to provide legal representation,
     );
     dict["LGBTI"] = LGBTI;
 
+    // [Mackay Regional CLC]
+    let mackay = new entry(
+    'Mackay Regional Community Legal Centre Inc.', 'mackay_clc.png',
+    "The Mackay Regional Community Legal Centre assists financially disadvantaged people in the Mackay, Whitsunday and Iasaac regions, by providing legal advice, information, referrals and ongoing assistance. MRCLC provides a generalist legal service, covering family law (property and parenting matters), employment, debt, and neighbourhood or consumer disputes. Further, as part of the Queensland Statewide Tenant Advice and Referral Service (QSTARS), MRCLC advises tenants and rooming accomodation residents.",
+    "https://mrclc.com.au/",
+    "admin@mrclc.com.au",
+    "(07) 4953 1211",
+    "https://www.google.com/maps/place/Mackay+Regional+Community+Legal+Centre/@-21.1408117,149.1764143,15z/data=!3m1!4b1!4m5!3m4!1s0x6bdbd3f88118c089:0xa586c4da4b078f1e!8m2!3d-21.1409533!4d149.1851312", // AddressLink
+    'Suite 9, The Dome, 134 Victoria Street, Mackay, Queensland 4740', 
+    "mackay_regional_clc",
+    ['WILLS', 'TENANCY'],
+    `
+    The Mackay Regional Community Legal Centre ('MRCLC') assists financially disadvantaged people in the Mackay, Whitsunday and Iasaac regions, by providing legal advice, information, referrals and ongoing assistance.
+    <br><br>
+    In addition to legal assistance, MRCLC also educates local organisations and members of the community through legal presentations.
+    `,
+    `
+    MRCLC provides a generalist legal service, covering family law (property and parenting matters), employment, debt, and neighbourhood or consumer disputes. Further, as part of the Queensland Statewide Tenant Advice and Referral Service (QSTARS), MRCLC advises tenants and rooming accomodation residents.
+    <br><br>
+    MRCLC's solicitors provide advice at pre-booked appointments (both in person and over the phone) from 09:00 to 16:00 Monday to Friday, and can also arrange appointments from 08:30 to 17:00 where necessary. Once a month, MRCLC also provides offer appointments through their outreach services in Bowen, Prosperine, Cannonvale and Sarina. Finally, MRCLC hold legal advice evenings twice a month between 17:35 and 20:00 by appointment.
+    `,
+    `To get in touch with MRCLC, contact them on (07) 4953 1211 between 09:00-16:00 on weekdays.`,
+    "https://www.facebook.com/MackayRegionalCLC/",
+    "",
+    "",
+    "",
+    );
+    dict["mackay"] = mackay;
+
+    // Moreton Bay Regional Community Legal Service
+    let mbrcls = new entry(
+    'Moreton Bay Regional Community Legal Service', 'Moreton.png',
+    'The Moreton Bay Regional Community Legal Service is a generalist service which supports disadvantaged, vulnerable and marginalised individuals in the Moreton Bay region. They provide a variety of legal services, including the provision of legal advice, community legal education, outreach work, court support, and advocacy, case work, and document assistance.',
+    "https://www.mbrcls.org.au/",
+    "office@mbrcls.org.au",
+    "(07) 5495 5916",
+    "https://www.google.com/maps/place/Moreton+Bay+Regional+Community+Legal+Service/@-27.0837242,152.9467609,17z/data=!3m1!4b1!4m5!3m4!1s0x6b93f3c15a48aadb:0xf2644ae58e917941!8m2!3d-27.0837242!4d152.9489496", // AddressLink
+    '9 George St, Caboolture, Queensland 4510', 
+    "moreton_bay_regional",
+    ['FAMILY', 'CRIME', 'DEBT', 'WILLS', 'WELFARE', 'DISCRIMINATION', 'TENANCY'],
+    `
+    The Moreton Bay Regional Community Legal Service ('MBRCLS') is a generalist service which provides legal services to disadvantaged, vulnerable and marginalised individuals in the Moreton Bay region.
+    <br><br>
+    In addition to providing legal advice and referrals, MBRCLS educates the community on legal issues through their <a href='https://www.mbrcls.org.au/legal-chat/' target='_blank'>Legal Chat Community Legal Education Program</a>.  
+    `,
+    `
+    MBRCLS provides a variety of legal services, including the provision of legal advice, community legal education, outreach work, court support and advocacy. Further, MBRCLS provide ongoing case work and legal document assistance, though these services are generally limited to individuals on annual incomes of $35,000 or less, and preference is given to individuals with literary, social or economic disadvantages.
+    <br><br>
+    As a generalist service, MBRCLS can assist in the areas of family law, criminal law, domestic violence, human rights, bankruptcy & debt, wills & estates, tenancy issues, discrimination, motor vehicle offences, government subsidies & pensions, and civil disputes.
+    `,
+    `To get in touch with MBRCLS, contact them on (07) 5495 5916 or fill out <a href='https://www.mbrcls.org.au/morton-bay-legal-services/#page-footer' target='_blank'>the contact form</a> on their website.`,
+    "https://www.facebook.com/mbrcls/",
+    "https://www.linkedin.com/company/moreton-bay-regional-community-legal-service-inc-/?originalSubdomain=au",
+    "https://twitter.com/moretonbaylegal",
+    "",
+    );
+    dict["mbrcls"] = mbrcls;
+
