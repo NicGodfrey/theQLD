@@ -22,13 +22,13 @@
     </div></div>
 
 <script>
-    if (localStorage.getItem('cookieSeen') != 'shown') {
+    if (sessionStorage.getItem('cookieSeen') != 'shown') {
   $('.cookie-banner').delay(2000).fadeIn();
   
 };
 $('.close-cookie').click(function() {
   $('.cookie-banner').fadeOut();
-  localStorage.setItem('cookieSeen','shown')
+  sessionStorage.setItem('cookieSeen','shown')
 })
 </script>
     
