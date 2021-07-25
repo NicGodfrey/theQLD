@@ -578,7 +578,7 @@ var dict = new Object();
     // Institute for Urban Indigenous Health
     let IUIH = new entry(
         'Institute for Urban Indigenous Health', 'iuih.jpg',
-    'The Institute for Urban Indigenous Health Legal Service provides advice for individuals or families referred through <a href="https://www.moretonatsichs.org.au/your-health/family-wellbeing/" target="_blank">the Moreton ATSICHS Family Wellbeing Service</a> or by a general practitioner or allied health worker. They can assist with family law, discrimination or harassment, Centrelink reviews, SPER or debt recovery, elder abuse and tenancy matters.',
+    'The Institute for Urban Indigenous Health Legal Service provides advice for individuals or families referred through the <a href="https://www.moretonatsichs.org.au/your-health/family-wellbeing/" target="_blank">Moreton ATSICHS Family Wellbeing Service</a> or by a general practitioner or allied health worker. They can assist with family law, discrimination or harassment, Centrelink reviews, SPER or debt recovery, elder abuse and tenancy matters.',
     "http://www.iuih.org.au/",
     "reception@iuih.org.au",
     "(07) 3828 3600",
@@ -773,3 +773,30 @@ The volunteer lawyers of the service are unable to provide legal representation,
     );
     dict["mbrcls"] = mbrcls;
 
+    // Pine Rivers Community Legal Service
+    let pine_rivers = new entry(
+    'Pine Rivers Community Legal Service', 'encircle.jpeg',
+    "An initiative of <a href='https://encircle.org.au/about/' target='_blank'>Encircle Ltd.</a>, the Pine Rivers Community Legal Service offers general legal assistance in the greater Northern Brisbane area. PRCLS is a general legal service, providing advice, document drafting, duty lawyers at the Pine Rivers Magistrates Court and mediation services.",
+    "https://encircle.org.au/community-legal-service/",
+    "prcls@encircle.org.au",
+    "(07) 3881 3500",
+    "https://www.google.com/maps/place/Pine+Rivers+Community+Legal+Service/@-27.3003355,152.9862021,17z/data=!3m1!4b1!4m5!3m4!1s0x6b93fc95ad352f9f:0xd26b52b3afbd92d6!8m2!3d-27.3003643!4d152.9882778", // AddressLink
+    '4/481 Gympie Road, Strathpine, Queensland 4500', 
+    "pine_rivers",
+    ['FAMILY', 'CRIME', 'DEBT', 'WILLS', 'WELFARE'],
+    `
+    An initiative of <a href='https://encircle.org.au/about/' target='_blank'>Encircle Ltd.</a>, the Pine Rivers Community Legal Service ('PRCLS') offers general legal assistance in the greater Northern Brisbane area. In addition to legal services, PRCLS engages in law reform activities and legal education, while Encircle offers link-ups of services to support clients' broader needs, such as counselling and family support.  
+    `,
+    `
+    PRCLS is a general legal service, providing advice, document drafting, duty lawyers at the Pine Rivers Magistrates Court and mediation services. 
+    <br>
+    <br>
+    Day appointments are held from 09:00-16:30, Mondays-Fridays, while short walk-ins are also accepted on Thursday nights from 17:45-19:30 (aside from during the Queensland December to January school holidays and public holidays) at Strathpine. Day appointments are also available at a number of other locations, listed on their website. 
+    `,
+    `Book an appointment by calling PRCLS at (07) 3881 3500 or visiting their offices from 09:00-16:30 Mondays-Fridays.`,
+    "https://www.facebook.com/pineriverscommunitylegalservice/",
+    "",
+    "",
+    "",
+    );
+    dict["pine_rivers"] = pine_rivers;
