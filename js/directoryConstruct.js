@@ -800,3 +800,36 @@ The volunteer lawyers of the service are unable to provide legal representation,
     "",
     );
     dict["pine_rivers"] = pine_rivers;
+
+    // Suncoast CLS
+    let suncoast = new entry(
+    'Suncoast Community Legal Service', 'scls.png',
+    "oast Community Legal Service Inc is an independent, non-profit community organisation providing legal advice, referrals and education. They can provide legal advice and appropriate referrals in the areas of family law, crime, employment law, debts, consumer complaints, discrimination, residential tenancies and neighbourhood disputes.",
+    "http://www.suncoastcommunitylegal.org",
+    "reception@suncoastcommunitylegal.org",
+    "(07) 5376 7800",
+    "https://www.google.com/maps/place/Suncoast+Community+Legal+Service+Inc/@-26.653338,153.0806823,15z/data=!3m1!4b1!4m5!3m4!1s0x6b9376621d5441a1:0x10f34d3fac2a782d!8m2!3d-26.6533463!4d153.0894354", // AddressLink
+    '170 Horton Parade, Maroochydore, Queensland 4558', 
+    "suncoast",
+    ['FAMILY', 'CRIME', 'DEBT', 'WILLS', 'WELFARE', 'EMPLOYMENT', 'DISCRIMINATION', 'TENANCY'],
+    `
+    Suncoast Community Legal Service Inc ('SCLS') is an independent, non-profit community organisation providing legal advice, referrals and education. Their mission is to provide quality legal services to address disadvantage in the Sunshine Coast community using volunteers and staff.
+    <br><br>
+    Since their inception in 1984, SCLS has developed strong community and referral networks across the region. They use these networks to secure better access to justice for people facing hardship and disadvantage in the Sunshine Coast region. 
+    <br><br>
+    SCLS holds regular consultations at Maroochydore, Caloundra, Landsborough, Noosa, Pomona, Maleny and Nambour.
+    `,
+    `
+    SCLS can provide legal advice and appropriate referrals in the areas of family law, crime, employment law, debts, consumer complaints, discrimination, residential tenancies and neighbourhood disputes. In these areas, SCLS does not provide ongoing casework.
+    <br><br>
+    SCLS also provides a dedicated Elder Abuse Prevention Support service. They provide advice and some ongoing casework regarding common forms of elder abuse, wills, enduring powers of attorney, and grandparents' rights.
+    <br><br>
+    SCLS does not provide advice in relation to commercial matters or property conveyances, nor can they assist landlords, employee organisations or business owners.
+    `,
+    `Book a consultation with SCLS by contacting them at (07) 5376 7800 or through their website.`,
+    "https://www.facebook.com/SuncoastLegal/",
+    "",
+    "",
+    "",
+    );
+    dict["suncoast"] = suncoast;
