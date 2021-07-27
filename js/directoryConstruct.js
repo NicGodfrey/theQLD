@@ -302,13 +302,13 @@ var dict = new Object();
     // Bayside
     let Bayside = new entry(
         'Bayside Community Legal Service', 'bcls.png',
-    "Basic Rights Queensland provides legal advice and advocacy with regards to Centrelink assistance, disability discrimination and women’s workplace issues. Their team includes lawyers, social workers and volunteers, who work to provide community legal education, advocate for law reform and provide specialist services to other community organisations.",
+    "Bayside Community Legal Service provides legal support to the Bayside community, including providing legal advice and representation, mediation, legal information, referrals and community legal education.",
     "https://bcls.org.au/",
     "enquiries@bcls.org.au",
     "(07) 3162 3282",
     "https://www.google.com/maps/place/Bayside+Community+Legal+Service+Inc./@-27.4460855,153.1611739,14.31z/data=!4m5!3m4!1s0x6b915d8d7a1d980b:0x131d3b4d4eb032b4!8m2!3d-27.444219!4d153.1723517", // AddressLink
     "Wynnum Community Centre, 1st Floor, 105 Florence St, Wynnum, Queensland 4178", // AddressDisp
-    "BRQ",
+    "bayside_community_legal_service",
     ['DISCRIMINATION','WELFARE'],
     `Bayside Community Legal Service (BCLS) is a legal service founded in 1992 which provides legal support to the Bayside community. Their services include providing legal advice and representation, mediation, legal information, referrals and community legal education.
     <br><br>
