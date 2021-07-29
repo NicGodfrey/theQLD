@@ -337,7 +337,7 @@ var dict = new Object();
     "", // AddressLink
     "", // AddressDisp
     "BRQ",
-    ['DISCRIMINATION','WELFARE'],
+    ['DISCRIMINATION','WELFARE', 'EMPLOYMENT'],
     `Basic Rights Queensland (BRQ) is a service which provides legal advice and advocacy in the areas of of Centrelink assistance, disability discrimination and women’s workplace issued. The service was originally founded over thirty years ago as the ‘Welfare Rights Centre’. Since then, it has grown and in 2018 merged with Working Women Queensland.
     <br><br>
     Their team includes lawyers, social workers and volunteers, who work to provide community legal education, advocate for law reform and provide specialist services to other community organisations.
@@ -804,7 +804,7 @@ The volunteer lawyers of the service are unable to provide legal representation,
     // Suncoast CLS
     let suncoast = new entry(
     'Suncoast Community Legal Service', 'scls.png',
-    "oast Community Legal Service Inc is an independent, non-profit community organisation providing legal advice, referrals and education. They can provide legal advice and appropriate referrals in the areas of family law, crime, employment law, debts, consumer complaints, discrimination, residential tenancies and neighbourhood disputes.",
+    "Suncoast Community Legal Service Inc is an independent, non-profit community organisation providing legal advice, referrals and education. They can provide legal advice and appropriate referrals in the areas of family law, crime, employment law, debts, consumer complaints, discrimination, residential tenancies and neighbourhood disputes.",
     "http://www.suncoastcommunitylegal.org",
     "reception@suncoastcommunitylegal.org",
     "(07) 5376 7800",
