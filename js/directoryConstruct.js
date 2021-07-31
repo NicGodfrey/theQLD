@@ -272,8 +272,8 @@ var dict = new Object();
     let ATSILS = new entry(
         "Aboriginal and Torress Strait Islander Legal Service (Qld)", 'atsils.png',
     "The Aboriginal and Torres Strait Islander Legal Service provides professional and culturally proficient legal services for Aboriginal and Torres Strait Islander people across Queensland. This includes legal advice and representation relating to criminal, civil and family law.",
-    "http://www.atsiwlsnq.org.au",
-    "admin@atsiwlsnq.org.au",
+    "https://www.atsils.org.au/",
+    "info@atsils.org.au",
     [["1800 012 255", "(07) 3025 3888"],["Phone",""]],
     "https://www.atsils.org.au/contact/", 
     "Multiple Locations",
@@ -285,9 +285,9 @@ var dict = new Object();
     Funded by the Commonwealth Attorney Generals' Department and the Department of Prime Minister and Cabinet, ATSILS provides legal advice, as well as law reform efforts, legal education, coronial and public sector monitoring, and support for former offenders in transitioning back into the community through their <a href='https://www.atsils.org.au/prisoner-throughcare/' target='_blank'>Throughcare Program</a>.
     `,
     `
-    ATSILS is provides legal advice and representation relating to criminal, civil and family law. Specifically, ATSILS' services include advice, duty matters and casework matters, though means testing is applied to the latter. 
+    ATSILS provides legal advice and representation relating to criminal, civil and family law. Specifically, ATSILS' services include advice, duty matters and casework matters, though means testing is applied to the latter. 
     <br><br>
-    Finally, ATSILS provides 24 hour legal representation and advice specifically on criminal matters for Aboriginal and Torres Strait Islander people.
+    Finally, ATSILS provides 24 hour legal representation and advice specifically on criminal matters for Aboriginal and Torres Strait Islander people at police stations.
     `,
     `
     Contact ATSILS' toll-free number at 1800 012 255, or find your closest ATSILS office <a href='https://www.atsils.org.au/contact/' target='_blank'>here</a>.
@@ -295,7 +295,7 @@ var dict = new Object();
     "https://www.facebook.com/atsils/",
     "https://www.linkedin.com/company/atsils?originalSubdomain=au",
     "https://twitter.com/atsils?lang=en",
-    ""
+    "https://www.instagram.com/atsilsq/?hl=en"
     );
     dict["ATSILS"] = ATSILS;
 
@@ -309,7 +309,7 @@ var dict = new Object();
     "https://www.google.com/maps/place/Bayside+Community+Legal+Service+Inc./@-27.4460855,153.1611739,14.31z/data=!4m5!3m4!1s0x6b915d8d7a1d980b:0x131d3b4d4eb032b4!8m2!3d-27.444219!4d153.1723517", // AddressLink
     "Wynnum Community Centre, 1st Floor, 105 Florence St, Wynnum, Queensland 4178", // AddressDisp
     "bayside_community_legal_service",
-    ['DISCRIMINATION','WELFARE'],
+    ['DISCRIMINATION','WELFARE', 'FAMILY', 'DEBT', 'TENANCY', 'CRIME'],
     `Bayside Community Legal Service (BCLS) is a legal service founded in 1992 which provides legal support to the Bayside community. Their services include providing legal advice and representation, mediation, legal information, referrals and community legal education.
     <br><br>
     BCLS is heavily reliant on their volunteers made up of students, lawyers and mediators. Bayside Community Legal Service could not provide legal assistance to the Bayside community without the hardwork and dedication of their volunteers.
@@ -319,9 +319,9 @@ var dict = new Object();
     <br><br>
     BCLS can only provide assistance within their practice areas. These include debt issues, property damage from a motor vehicle accident, neighbourhood disputes, tenancy, consumer complaints and bailment. They can also advise you on family law issues regarding domestic violence, divorce/separation and parenting. Within criminal law, they can provide advice in relation to criminal offences, traffic offences and breaches of domestic violence orders. 
     `,
-    `To organise a consultation, call (07) 3162 3282, request a call back on BCLS' website or email enquiries@bcls.org.au.`,
+    `To organise a consultation, call (07) 3162 3282, <a href ='https://bcls.org.au/contact-us/' target='_blank'>request a call back on BCLS' website</a> or email enquiries@bcls.org.au.`,
     "https://www.facebook.com/BCLS.WYNNUM/",
-    "",
+    "https://www.linkedin.com/company/bayside-community-legal-service/?originalSubdomain=au",
     "",
     ""
     );
@@ -373,7 +373,7 @@ var dict = new Object();
     `
     Based in Nundah and open to north side residents, BNCLS service provides free legal assistance on a range of legal issues including family law, domestic violence, civil disputes, criminal matters, neighbourhood issues, elder law and employment, as well as referrals to other qualified solicitors. Northside Connect also has a dedicated Domestic Violence and Family Support Program, which provides legal services and counselling to families.       
         <br><br>
-        Appointments are available, in addition to drop-in legal advice by consultation. 
+        Consultations are available generally by booking as well as drop-in sessions, though due to the COVID-19 pandemic, all appointments must be booked. Further, all consultations are by phone, and held during office hours or on Wednesday evenings. 
     `,
     `To see if BNCLS can help with your matter, call (07) 3260 6820 between 9:00-16:00 Monday to Thursday.
     `,
@@ -478,7 +478,7 @@ var dict = new Object();
     `,
     "https://www.facebook.com/caxtonlegalcentre/",
     "https://www.linkedin.com/company/caxtonlegalcentre/?originalSubdomain=au",
-    "",
+    "https://twitter.com/caxtonlegal?lang=en",
     ""
     );
     dict["caxtonlegalcentre"] = caxtonlegalcentre;   
@@ -487,9 +487,9 @@ var dict = new Object();
     let central_qld_clc = new entry(
         'Central Queensland Community Legal Centre', 'cqclc.png',
     "Central Queensland Community Legal Centre (CQCLC) is a Rockhampton based centre which can provide advice on consumer law, criminal law, neighbourhood and tenancy disputes, estate administration, family law, employment law, and migration law. They hold advice clinics regularly, and can otherwise provide assistance in-person, over the phone, or by video call.",
-    "www.cqclc.org.au",
+    "https://www.cqclc.org.au/",
     "admin@cqclc.org.au",
-    "(07) 4922 1200",
+    ["(07) 4922 1200", "1800 155 121"],["Phone",""],
     "https://www.google.com/maps/place/Central+Queensland+Community+Legal+Centre+Inc./@-23.3799527,150.515067,18.2z/data=!4m13!1m7!3m6!1s0x6bc300991aeb5a41:0x83113c8a10cf4f9d!2s240+Quay+St,+Rockhampton+QLD+4700!3b1!8m2!3d-23.3803746!4d150.5159459!3m4!1s0x6bc300980e20cd85:0x9943b8c4bbfc82d2!8m2!3d-23.3802694!4d150.5161044", 
     "240 Quay St, Rockhampton, Queensland 4700",
     "central_qld_clc",
@@ -523,7 +523,7 @@ var dict = new Object();
     "https://www.google.com/maps/place/The+Gold+Coast+Community+Legal+Centre/@-27.9637818,153.4085772,17z/data=!3m1!4b1!4m5!3m4!1s0x6b910ff26e05d885:0x80c8ff6a1fae8e50!8m2!3d-27.9636194!4d153.4106495", 
     "34 Railway St, Southport, Queensland 4215",
     "gold_coast_clc",
-    ['FAMILY', 'CRIME'],
+    ['FAMILY', 'CRIME', 'DEBT', 'TENANCY', 'WELFARE', 'EMPLOYMENT'],
     `
     The Gold Coast Community Legal Centre (GCCLC) is a generalist centre providing free legal advice and assistance throughout the Gold Coast region. 
         <br><br>
@@ -537,7 +537,7 @@ var dict = new Object();
     `Book an appointment with the Gold Coast Community Legal Centre by calling (07) 5532 9611 or <a href='https://www.gcclc.org.au/request-a-call-back' target='_blank'>requesting a call-back online</a>.
     `,
     "https://www.facebook.com/GoldCoastLegalService/",
-    "",
+    "https://www.linkedin.com/company/gold-coast-community-legal-centre/?originalSubdomain=au",
     "",
     ""
     );
@@ -553,7 +553,7 @@ var dict = new Object();
     "https://www.google.com/maps/place/HUB+Community+Legal+(formerly+South+West+Brisbane+Community+Legal+Centre)/@-34.1862962,141.0480228,5z/data=!4m9!1m2!2m1!1sgoogle+maps+hub+community+legal!3m5!1s0x6b914f1932fadb43:0xfb06e2c5c0538aaf!8m2!3d-27.5976697!4d152.9658072!15sCh9nb29nbGUgbWFwcyBodWIgY29tbXVuaXR5IGxlZ2FsIgOIAQGSARBjb21tdW5pdHlfY2VudGVy", 
     "79 Poinsettia St, Inala, Queensland 4077",
     "Hub_CL",
-    ['WILLS', 'FAMILY', 'YOUTH', 'CRIME', 'EMPLOYMENT'],
+    ['WILLS', 'FAMILY', 'YOUTH', 'CRIME', 'EMPLOYMENT', 'DEBT'],
     `
     Initially started in 1986 as the Community of Inala Legal Service, Hub Community Legal (HCL) offers legal advice and assistance throughout Brisbane's south west suburbs.
     <br><br>
@@ -709,9 +709,9 @@ They do not offer assistance in the areas of:
 The volunteer lawyers of the service are unable to provide legal representation, though offer legal advice for one to represent themselves in court. The LGBTI Legal Service also may not advise on the behalf of someone else without a power of attorney.`,
     `Apply for in-person consultation at the Brisbane office or telephone/videoconference for clients outside of Brisbane by calling (07) 3124 7160. `,
     "https://www.facebook.com/LGBTILegalService",
-    "",
+    "https://www.linkedin.com/company/lgbti-legal-service-inc/?originalSubdomain=au",
     "https://twitter.com/lgbtilegal",
-    "",
+    "https://www.instagram.com/lgbtilegalservice/",
     );
     dict["LGBTI"] = LGBTI;
 
@@ -795,7 +795,7 @@ The volunteer lawyers of the service are unable to provide legal representation,
     `,
     `Book an appointment by calling PRCLS at (07) 3881 3500 or visiting their offices from 09:00-16:30 Mondays-Fridays.`,
     "https://www.facebook.com/pineriverscommunitylegalservice/",
-    "",
+    "https://www.linkedin.com/company/pine-rivers-community-legal-service/about/",
     "",
     "",
     );
