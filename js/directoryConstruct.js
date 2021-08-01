@@ -312,7 +312,7 @@ var dict = new Object();
     ['DISCRIMINATION','WELFARE', 'FAMILY', 'DEBT', 'TENANCY', 'CRIME'],
     `Bayside Community Legal Service (BCLS) is a legal service founded in 1992 which provides legal support to the Bayside community. Their services include providing legal advice and representation, mediation, legal information, referrals and community legal education.
     <br><br>
-    BCLS is heavily reliant on their volunteers made up of students, lawyers and mediators. Bayside Community Legal Service could not provide legal assistance to the Bayside community without the hardwork and dedication of their volunteers.
+    BCLS utilises a team of volunteers made up of students, lawyers and mediators.
     <br><br>
     BCLS receives some funding through through Legal Aid Queensland, but also accepts individual tax-deductible donations.`,
     `Bayside Community Legal Centre offers one-off, 30 minute advice appointments. These can be held by phone or in-person.
