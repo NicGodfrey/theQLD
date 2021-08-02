@@ -22,14 +22,15 @@
     </div></div>
 
 <script>
+
     if (sessionStorage.getItem('cookieSeen') != 'shown') {
-  $('.cookie-banner').delay(2000).fadeIn();
-  
-};
-$('.close-cookie').click(function() {
-  $('.cookie-banner').fadeOut();
-  sessionStorage.setItem('cookieSeen','shown')
-})
+        $('.cookie-banner').delay(2000).fadeIn();
+    
+    };
+    $('.close-cookie').click(function() {
+    $('.cookie-banner').fadeOut();
+    sessionStorage.setItem('cookieSeen','shown')
+    })
 </script>
     
 
