@@ -368,12 +368,12 @@ var dict = new Object();
     `
     Brisbane North Community Legal Service (BNCLS) is a generalist community legal service which provides free legal advice, information and referral to individuals on a range of legal issues.
     <br><br>
-    A service of <a href='https://northsideconnect.org.au/' target='_blank'>Northside Connect</a>, volunteer legal practitioners and volunteer students which work at the BNCLS can also provide information on and referral to other services such as counselling and support.
+    A service of <a href='https://northsideconnect.org.au/' target='_blank'>Northside Connect</a>, volunteer legal practitioners and students who work at the BNCLS can also provide information on and referral to other services such as counselling and support.
     `,
     `
     Based in Nundah and open to north side residents, BNCLS service provides free legal assistance on a range of legal issues including family law, domestic violence, civil disputes, criminal matters, neighbourhood issues, elder law and employment, as well as referrals to other qualified solicitors. Northside Connect also has a dedicated Domestic Violence and Family Support Program, which provides legal services and counselling to families.       
         <br><br>
-        Consultations are available generally by booking as well as drop-in sessions, though due to the COVID-19 pandemic, all appointments must be booked. Further, all consultations are by phone, and held during office hours or on Wednesday evenings. 
+        Generally, consultations are available during office hours and on Wednesday evenings by booking as well as drop-in sessions. Currently, however, due to the COVID-19 pandemic, all appointments must be booked and are conducted by phone. 
     `,
     `To see if BNCLS can help with your matter, call (07) 3260 6820 between 9:00-16:00 Monday to Thursday.
     `,
