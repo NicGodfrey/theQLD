@@ -516,7 +516,7 @@ var dict = new Object();
     // Gold Coast CLC
     let goldCoastCLC = new entry(
         'Gold Coast Community Legal Centre', 'goldcoastclc.svg',
-    "The Gold Coast Community Legal Centre is a generalist centre providing free legal advice and assistance throughout the Gold Coast region. They operate out of Southport and service the whole of the Gold Coast region from Beenleigh to Coolangatta.",
+    "The Gold Coast Community Legal Centre is a generalist centre providing free legal advice and assistance throughout the Gold Coast region. They operate out of Southport and service the whole of the Gold Coast region west to Beaudesert, south to Tweed Heads, and north to Pimpama.",
     "https://www.gcclc.org.au/",
     "office@gcclc.org.au",
     "(07) 5532 9611",
@@ -527,7 +527,7 @@ var dict = new Object();
     `
     The Gold Coast Community Legal Centre (GCCLC) is a generalist centre providing free legal advice and assistance throughout the Gold Coast region. 
         <br><br>
-        The GCCLC operates out of Southport and services the whole of the Gold Coast region west to Beaudesert and south to Tweed Heads. The assist as far north as Pimpama, but will consider further north assistance where residents are unable to access local legal assistance.   
+        The GCCLC operates out of Southport and services the whole of the Gold Coast region west to Beaudesert and south to Tweed Heads. They assist as far north as Pimpama, but will consider further north assistance where residents are unable to access local legal assistance.   
     `,
     `
     In addition to legal advice, the GCCLC offers duty lawyer services, community legal information and general information and referrals. Legal advice and assistance is offered Monday to Friday by appointment between 08:30-16:00, as well as via a Night Clinic on Tuesday evenings from 17:00. 
