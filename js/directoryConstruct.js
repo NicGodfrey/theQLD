@@ -310,7 +310,7 @@ var dict = new Object();
     "Wynnum Community Centre, 1st Floor, 105 Florence St, Wynnum, Queensland 4178", // AddressDisp
     "bayside_community_legal_service",
     ['DISCRIMINATION','WELFARE', 'FAMILY', 'DEBT', 'TENANCY', 'CRIME'],
-    `Bayside Community Legal Service (BCLS) is a legal service founded in 1992 which provides legal support to the Bayside community. Their services include providing legal advice and representation, mediation, legal information, referrals and community legal education.
+    `Bayside Community Legal Service (BCLS) is a legal service founded in 1992 which provides legal support to the Bayside community. Their services include providing legal advice and representation, form assistance, mediation, legal information, referrals and community legal education.
     <br><br>
     BCLS utilises a team of volunteers made up of students, lawyers and mediators.
     <br><br>
