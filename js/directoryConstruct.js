@@ -239,7 +239,7 @@ var dict = new Object();
 
     // ATSIWLSNQ
     let ATSIWLSNQ = new entry(
-        "Aboriginal and Torress Strait Islander Women's Legal Service North Queensland", 'ATSIWLSNQ.png',
+        "Aboriginal and Torres Strait Islander Women's Legal Service North Queensland", 'ATSIWLSNQ.png',
     "The Aboriginal and Torres Strait Islander Women’s Legal Service NQ is a service which exists to provide legal services and promote law reform for First Nations women in North Queensland. They provide support in relation to the following matters: child protection, family law, domestic violence, separation, child support, victims assist and discrimination law. In addition to providing legal services, they also run community legal education workshops for Aboriginal and Torres Strait Islander women in Townsville and to remote areas of North Queensland.",
     "http://www.atsiwlsnq.org.au",
     "admin@atsiwlsnq.org.au",
@@ -270,7 +270,7 @@ var dict = new Object();
 
     // ATSILS
     let ATSILS = new entry(
-        "Aboriginal and Torress Strait Islander Legal Service (Qld)", 'atsils.png',
+        "Aboriginal and Torres Strait Islander Legal Service (Qld)", 'atsils.png',
     "The Aboriginal and Torres Strait Islander Legal Service provides professional and culturally proficient legal services for Aboriginal and Torres Strait Islander people across Queensland. This includes legal advice and representation relating to criminal, civil and family law.",
     "https://www.atsils.org.au/",
     "info@atsils.org.au",
