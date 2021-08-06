@@ -555,16 +555,18 @@ var dict = new Object();
     "Hub_CL",
     ['WILLS', 'FAMILY', 'YOUTH', 'CRIME', 'EMPLOYMENT', 'DEBT'],
     `
-    Initially started in 1986 as the Community of Inala Legal Service, Hub Community Legal (HCL) offers legal advice and assistance throughout Brisbane's south west suburbs.
+    Initially founded in 1986 as the Community of Inala Legal Service, Hub Community Legal (HCL) offers legal advice and assistance throughout Brisbane's south west suburbs.
     <br><br>
     The Community of Inala Legal Service has also been known as the South West Brisbane Community Legal Centre, and merged with the Hub Neighbourhood Centre in 2019. They accept both State and Federal funding.
+    <br><br>
+    In addition to providing legal services through Hub Community Legal, the Hub Neighbourhood Centre provides a range of other services to members of the community, including office and venue use, general information and referral, community events, and more.
     `,
     `
     HCL offers free legal advice appointments during the day and evening at their Inala offices, as well as with partner organisations. In addition, limited advice is offered by telephone with appointment. In some circusmtances, HCL is able to offer ongoing casework or representation in court.       
         <br><br>
-        HCL operates in a variety of legal areas, including family, property, traffic, youth, crime & employment, though they cannot assist with personal injury, commercial, or conveyancing matters. 
+        HCL operates in a variety of legal areas, including family, property, traffic, youth, crime, and employment, though they cannot assist with personal injury, commercial, or conveyancing matters. 
         <br><br>
-        HCL provide youth lawyers for children and teenagers, and have arrangements in place for assisting individuals with hearing or speech impediments, as well as individuals who have difficulty with English.
+        HCL provide youth lawyers for children and teenagers, and have arrangements in place for assisting individuals with hearing or speech impediments, as well as individuals who have difficulty with english.
     `,
     `Contact Hub Community Legal on (07) 3372 7677. Individuals who have difficluty with English can call the <a href='https://www.tisnational.gov.au/Help-using-TIS-National-services/Contact-TIS-National' target='_blank'>Translating and Interpreting Service</a> on 131 450 for assistance in making a booking. Individuals with a hearing or speech impediment can contact HCL through the <a href='https://relayservice.gov.au/' target='_blank'>National Relay Service</a>.
     `,
