@@ -789,7 +789,7 @@ The volunteer lawyers of the service are unable to provide legal representation,
     `
     An initiative of <a href='https://encircle.org.au/about/' target='_blank'>Encircle Ltd.</a>, the Pine Rivers Community Legal Service ('PRCLS') offers general legal assistance in the greater Northern Brisbane area.
     <br><br>
-    In addition to legal services, PRCLS engages in law reform activities and legal education, while Encircle offers link-ups of services to support clients' broader needs, such as counselling, family support, financial advice and assistance (including a no interest loan scheme), housing assistance, and more.  
+    In addition to legal services, PRCLS engages in law reform activities and legal education, while Encircle offers link-ups of services to support the community's broader needs, such as counselling, family support, financial advice and assistance (including a no interest loan scheme), housing assistance, and more.  
     `,
     `
     PRCLS is a general legal service, providing advice, document drafting, duty lawyers at the Pine Rivers Magistrates Court, and mediation services. 
