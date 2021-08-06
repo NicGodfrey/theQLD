@@ -787,10 +787,12 @@ The volunteer lawyers of the service are unable to provide legal representation,
     "pine_rivers",
     ['FAMILY', 'CRIME', 'DEBT', 'WILLS', 'WELFARE'],
     `
-    An initiative of <a href='https://encircle.org.au/about/' target='_blank'>Encircle Ltd.</a>, the Pine Rivers Community Legal Service ('PRCLS') offers general legal assistance in the greater Northern Brisbane area. In addition to legal services, PRCLS engages in law reform activities and legal education, while Encircle offers link-ups of services to support clients' broader needs, such as counselling and family support.  
+    An initiative of <a href='https://encircle.org.au/about/' target='_blank'>Encircle Ltd.</a>, the Pine Rivers Community Legal Service ('PRCLS') offers general legal assistance in the greater Northern Brisbane area.
+    <br><br>
+    In addition to legal services, PRCLS engages in law reform activities and legal education, while Encircle offers link-ups of services to support clients' broader needs, such as counselling, family support, financial advice and assistance (including a no interest loan scheme), housing assistance, and more.  
     `,
     `
-    PRCLS is a general legal service, providing advice, document drafting, duty lawyers at the Pine Rivers Magistrates Court and mediation services. 
+    PRCLS is a general legal service, providing advice, document drafting, duty lawyers at the Pine Rivers Magistrates Court, and mediation services. 
     <br>
     <br>
     Day appointments are held from 09:00-16:30, Mondays-Fridays, while short walk-ins are also accepted on Thursday nights from 17:45-19:30 (aside from during the Queensland December to January school holidays and public holidays) at Strathpine. Day appointments are also available at a number of other locations, listed on their website. 
