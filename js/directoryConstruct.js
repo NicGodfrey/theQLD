@@ -516,7 +516,7 @@ var dict = new Object();
     // Gold Coast CLC
     let goldCoastCLC = new entry(
         'Gold Coast Community Legal Centre', 'goldcoastclc.svg',
-    "The Gold Coast Community Legal Centre is a generalist centre providing free legal advice and assistance throughout the Gold Coast region. They operate out of Southport and service the whole of the Gold Coast region west to Beaudesert, south to Tweed Heads, and north to Pimpama.",
+    "The Gold Coast Community Legal Centre is a generalist centre providing free legal advice and assistance throughout the Gold Coast region. They operate out of Southport and service the Gold Coast region west to Beaudesert, south to Tweed Heads, and north to Pimpama.",
     "https://www.gcclc.org.au/",
     "office@gcclc.org.au",
     "(07) 5532 9611",
@@ -610,7 +610,7 @@ var dict = new Object();
 
     let Junkuri_Laka = new entry(
         'Junkuri Laka Community Centre', 'Junkuri_Laka.png',
-    "The Junkuri Laka Community Legal Centre, also known as the Mornington Island Community Legal Centre, is based on Mornington Island and promotes the wellbeing of the people of the Wellesley Islands. The centre runs a domestic violence program, a men's support group including individuals struggling with violence and/or alcohol, and provides mediation services.",
+    "The Junkuri Laka Community Legal Centre, also known as the Mornington Island Community Legal Centre, is based on Mornington Island and advocates for the people of the Wellesley Islands. The centre runs a domestic violence program, a men's support group including individuals struggling with violence and/or alcohol, and provides mediation services.",
     "NONE",
     "nikita.junkurilaka@gmail.com",
     [["(07) 4745 7278", "1800 062 608"],["Phone",""]],
