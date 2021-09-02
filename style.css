@@ -155,10 +155,10 @@
     .cookie-banner{
         position: fixed;
         top: 2%;
-        left: 5%;
-        right: 5%;
-        width: 90%;
-        height: 88%;
+        left: 2%;
+        right: 2%;
+        width: 96%;
+        height: 96%;
         overflow:scroll;
     }
     
