@@ -446,42 +446,7 @@ var dict = new Object();
     dict["careGoondiwindi"] = careGoondiwindi;
 
     // Caxton Legal Centre
-    let caxtonlegalcentre = new entry(
-        'Caxton Legal Centre', 'caxton.jpg',
-    "Caxton Legal Centre (CLC) is an independent, non-profit, non-government organisation. They advise and refer in a wide array of areas, and, in limited circumstances, assist with casework. In addition to these services, CLC advocates for a number of law reform projects every year.",
-    "https://caxton.org.au",
-    "caxton@caxton.org.au",
-    "(07) 3214 6333",
-    "https://www.google.com/maps/place/Caxton+Legal+Centre/@-27.4747474,153.0112587,17z/data=!3m1!4b1!4m5!3m4!1s0x6b91598ba2f2b2df:0xe5ecd4fffbe75833!8m2!3d-27.4747474!4d153.0134474", 
-    "1 Manning St, South Brisbane, Queensland 4101",
-    "caxton_legal_centre",
-    ['CRIME', 'FAMILY', 'EMPLOYMENT', 'DEBT'],
-    `
-    Caxton Legal Centre (CLC) is an independent, non-profit, non-government organisation.
-        <br><br>
-        In addition to providing legal assistance, CLC advocates for law reform, <a href='https://caxton.org.au/about-caxton-legal-centre/law-reform/' target='_blank'>taking on various projects each year</a>.
-        <br><br>
-        CLC also implemented its first Reconciliation Action Plan in 2014 to further Australia's reconciliation with Aboriginal and Torres Strait Islander communities, and <a href='https://caxton.org.au/about-caxton-legal-centre/reconciliation-action-plan/' target='_blank'>has continued to develop plans since</a>.  
-        <br><br>
-        CLC is supported by a collection of volunteer lawyers and law students. They accept funding from the federal and Queensland governments, as well as independent donations. Occasionally, CLC fundraises for particular cases.
-    `,
-    `
-    Caxton Legal Centre advises in a variety of areas of law, including human rights, family law, employment law, criminal charges, elder law, and more.
-        <br><br>
-        In areas of employment law, CLC can only assist those earning less than $80,000 annually, or who were doing so prior to dismissal. They cannot advise with regards to certain matters of employment law, such as unpaid wages, contracts or work cover. Further, CLC can only assist employees in employment law, not contractors. 
-        <br><br>
-        Due to limited resources, while CLC will endeavour to advise and refer, they can only handle casework in limited circumstances. In some courts, CLC offers a duty lawyer service.
-        <br><br>
-        <b>NOTE:</b> CLC cannot help employers, businesses, landlords, real estate agents, or guarantors seeking a solictor's certificate about a loan. Further, there are a number of specific matters in which caxton cannot assist, a full list of which can be found <a href='https://caxton.org.au/wp-content/uploads/2020/02/Matters-we-cannot-assist-with-website.pdf' target='_blank'>here</a>. Please consult this list prior to applying to CLC. If you are unsure if your matter is applicable, don't hesitate to ask us at the Queensland Legal Directory for some assistance!
-    `,
-    `Book an appointment with Caxton Legal Centre by calling (07) 3214 6333 between 09:00-16:00, Mondays to Friday.
-    `,
-    "https://www.facebook.com/caxtonlegalcentre/",
-    "https://www.linkedin.com/company/caxtonlegalcentre/?originalSubdomain=au",
-    "https://twitter.com/caxtonlegal?lang=en",
-    ""
-    );
-    dict["caxtonlegalcentre"] = caxtonlegalcentre;   
+
 
     // Central Queensland CLC
     let central_qld_clc = new entry(
