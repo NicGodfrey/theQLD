@@ -1,6 +1,8 @@
 # Session Gateway — GPT5.6 sol pool (Option B)
 
-Product-style gateway in front of a **10-slot hot pool** of Cloud Agents named **GPT5.6 sol**, model `gpt-5.6-sol-xhigh`.
+Product-style gateway in front of a **10-slot hot pool** of Cloud Agents named **GPT5.6 sol**, model `gpt-5.6-sol` with `reasoning=xhigh`.
+
+Workers must be created via Cloud Agents API (`npm run hot-start -- --force`). Task/cloud subagents from an orchestrator chat are **not** API-runnable (legacy workflow).
 
 Orchestrator (this instance):  
 https://cursor.com/agents/bc-4c8e891e-d046-4919-a55a-eafe1e62dcea

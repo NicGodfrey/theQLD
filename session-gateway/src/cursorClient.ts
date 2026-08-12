@@ -99,7 +99,14 @@ export const cursorClient = {
   createWorker(slot: number, name: string): Promise<CreatedAgent> {
     return api<CreatedAgent>("POST", "/agents", {
       prompt: { text: BOOT_PROMPT(slot, name) },
-      model: { id: config.workerModelId },
+      model: {
+        id: config.workerModelId,
+        params: [
+          { id: "context", value: config.workerContext },
+          { id: "reasoning", value: config.workerReasoning },
+          { id: "fast", value: config.workerFast },
+        ],
+      },
       name,
       repos: [{ url: config.repoUrl, startingRef: config.repoRef }],
       autoCreatePR: false,

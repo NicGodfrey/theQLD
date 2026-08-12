@@ -1,5 +1,10 @@
 import { config } from "../src/config.js";
-import { hotStartMissingSlots, listWorkers, loadRegistryIntoStore } from "../src/pool.js";
+import {
+  hardResetWorker,
+  hotStartMissingSlots,
+  listWorkers,
+  loadRegistryIntoStore,
+} from "../src/pool.js";
 
 async function main() {
   loadRegistryIntoStore();
@@ -9,10 +14,19 @@ async function main() {
     );
     process.exit(1);
   }
+  const force = process.argv.includes("--force");
   console.log(
-    `Hot-starting up to ${config.poolSize} workers with model ${config.workerModelId}...`,
+    `Hot-starting up to ${config.poolSize} workers with model ${config.workerModelId} reasoning=${config.workerReasoning}${force ? " (force recreate)" : ""}...`,
   );
-  const workers = await hotStartMissingSlots();
+  const workers = force
+    ? await (async () => {
+        for (let slot = 1; slot <= config.poolSize; slot++) {
+          console.log(`recreating slot ${slot}...`);
+          await hardResetWorker(slot, "hot-start-force");
+        }
+        return listWorkers();
+      })()
+    : await hotStartMissingSlots();
   console.log(JSON.stringify({ workers: listWorkers() }, null, 2));
   const ready = workers.filter((w) => w.bcId && w.status !== "ERROR").length;
   const errors = workers.filter((w) => w.status === "ERROR");
