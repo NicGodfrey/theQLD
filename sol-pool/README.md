@@ -13,6 +13,14 @@ python3 -m venv .venv
 .venv/bin/python -m sol_pool
 ```
 
+如果当前环境没有 `python3-venv`，也可以：
+
+```bash
+cd sol-pool
+pip3 install -r requirements.txt
+PYTHONPATH=. python3 -m sol_pool
+```
+
 - API：http://127.0.0.1:8787/v1/health
 - 演示页：http://127.0.0.1:8787/demo/
 - 默认 API key：`dev-key`
