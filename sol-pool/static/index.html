@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>GPT5.6 sol 10 槽原型</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 24px; background: #111; color: #eee; }
+    main { max-width: 960px; margin: 0 auto; display: grid; gap: 16px; }
+    button, input, select { font: inherit; padding: 8px 10px; }
+    pre { background: #1c1c1c; padding: 12px; overflow: auto; min-height: 120px; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .slots { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .slot { border: 1px solid #333; padding: 8px; border-radius: 8px; }
+    .idle { color: #8f8; }
+    .bound, .busy { color: #fc6; }
+    .resetting { color: #f88; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>GPT5.6 sol 10 槽网关</h1>
+    <p>每个浏览器会话只能绑定 1 个 worker。心跳停止后槽位会重置。</p>
+    <div class="row">
+      <label>API key <input id="apiKey" value="dev-key" /></label>
+      <button id="refresh">刷新槽位</button>
+      <button id="acquire">自动申请会话</button>
+      <select id="pick"></select>
+      <button id="acquireOne">申请指定槽</button>
+      <button id="end">结束并重置</button>
+    </div>
+    <div class="slots" id="slots"></div>
+    <div class="row">
+      <input id="prompt" style="flex:1" value="你好，介绍你自己" />
+      <button id="send">发送</button>
+    </div>
+    <pre id="log"></pre>
+  </main>
+  <script>
+    const logEl = document.getElementById("log");
+    const slotsEl = document.getElementById("slots");
+    const pick = document.getElementById("pick");
+    let session = null;
+    const apiKey = () => document.getElementById("apiKey").value;
+    const log = (x) => { logEl.textContent = typeof x === "string" ? x : JSON.stringify(x, null, 2); };
+    const headers = (token, extra={}) => Object.assign({
+      "Authorization": "Bearer " + token,
+      "Content-Type": "application/json"
+    }, extra);
+    async function defJson(url, opts) {
+      const res = await fetch(url, opts);
+      const body = await res.json();
+      if (!res.ok) throw body;
+      return body;
+    }
+    async function refresh() {
+      const data = await defJson("/v1/workers", { headers: headers(apiKey()) });
+      slotsEl.innerHTML = "";
+      pick.innerHTML = "";
+      for (const w of data.data) {
+        const div = document.createElement("div");
+        div.className = "slot " + w.status;
+        div.textContent = w.id + " " + w.display_name + "\n" + w.status;
+        slotsEl.appendChild(div);
+        const opt = document.createElement("option");
+        opt.value = w.id; opt.textContent = "worker " + w.id;
+        pick.appendChild(opt);
+      }
+    }
+    async function acquire(workerId) {
+      const body = workerId ? { worker_id: Number(workerId) } : {};
+      session = await defJson("/v1/sessions", {
+        method: "POST",
+        headers: headers(apiKey(), { "Idempotency-Key": crypto.randomUUID() }),
+        body: JSON.stringify(body)
+      });
+      log(session);
+      startHeartbeat();
+      await refresh();
+    }
+    let hb = null;
+    function startHeartbeat() {
+      if (hb) clearInterval(hb);
+      hb = setInterval(async () => {
+        if (!session) return;
+        try {
+          await defJson("/v1/sessions/" + session.id + "/heartbeat", {
+            method: "POST",
+            headers: headers(session.access_token)
+          });
+        } catch (err) { log(err); }
+      }, 8000);
+    }
+    document.getElementById("refresh").onclick = () => refresh().catch(log);
+    document.getElementById("acquire").onclick = () => acquire().catch(log);
+    document.getElementById("acquireOne").onclick = () => acquire(pick.value).catch(log);
+    document.getElementById("end").onclick = async () => {
+      if (!session) return;
+      const ended = await defJson("/v1/sessions/" + session.id, {
+        method: "DELETE",
+        headers: headers(session.access_token, { "Idempotency-Key": crypto.randomUUID() })
+      });
+      session = null;
+      if (hb) clearInterval(hb);
+      log(ended);
+      await refresh();
+    };
+    document.getElementById("send").onclick = async () => {
+      if (!session) throw { error: { message: "先申请会话" } };
+      const text = document.getElementById("prompt").value;
+      const msg = await defJson("/v1/workers/" + session.worker_id + "/sessions/" + session.id + "/messages", {
+        method: "POST",
+        headers: headers(session.access_token, { "Idempotency-Key": crypto.randomUUID() }),
+        body: JSON.stringify({ mode: "sync", content: [{ type: "input_text", text }] })
+      });
+      log(msg);
+    };
+    refresh().catch(log);
+  </script>
+</body>
+</html>
