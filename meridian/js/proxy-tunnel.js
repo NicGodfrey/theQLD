@@ -1,49 +1,439 @@
-(() => {
-  function generate() {
-    const port = document.getElementById("local").value;
-    const mode = document.getElementById("mode").value;
-    const domain = document.getElementById("domain").value.trim();
-    const token = document.getElementById("token").value.trim();
-    const only = document.getElementById("only").value.trim();
+/* PROXY TUNNEL by MERIDIAN — safe local-AI exposure wizard (local-first). */
+'use strict';
 
-    let config = "";
-    if (mode === "cloudflare") {
-      config = `# cloudflared config.yml\ntunnel: ${token}\ningress:\n  - hostname: ${domain}\n    path: ${only}\n    service: http://127.0.0.1:${port}\n  - service: http_status:404\n\n# run\ncloudflared tunnel run --token ${token}`;
-    } else if (mode === "frp") {
-      config = `# frpc.toml\nserverAddr = "frps.example.com"\nserverPort = 7000\n\n[[proxies]]\nname = "ollama"\ntype = "http"\nlocalIP = "127.0.0.1"\nlocalPort = ${port}\ncustomDomains = ["${domain}"]\n\n# put auth token in server\n# meta token = ${token}`;
-    } else {
-      config = `# nginx stream/http reverse for local AI\nserver {\n  listen 443 ssl;\n  server_name ${domain};\n  location ${only.replace("*", "")} {\n    proxy_pass http://127.0.0.1:${port};\n    proxy_set_header Authorization "Bearer ${token}";\n  }\n}`;
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const LS_KEY = 'meridian.proxytunnel.v1';
+const uid = p => p + Math.random().toString(36).slice(2, 8);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function download(name, text, mime = 'text/plain') {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type: mime }));
+  a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+let toastT = null;
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+/* ---------- catalog ---------- */
+const SERVICES = [
+  { id: 'ollama',  name: 'Ollama',            port: 11434, sub: ':11434 · REST',    desc: 'Local LLM runtime. Keep OLLAMA_HOST bound to 127.0.0.1 — the tunnel is the only door.' },
+  { id: 'webui',   name: 'Open WebUI',        port: 8080,  sub: ':8080 · web app',  desc: 'Chat UI over Ollama/OpenAI-compatible backends. Has its own users — still add edge auth.' },
+  { id: 'lmstudio',name: 'LM Studio',         port: 1234,  sub: ':1234 · OpenAI API', desc: 'Desktop model server speaking the OpenAI API dialect on localhost.' },
+  { id: 'comfy',   name: 'ComfyUI',           port: 8188,  sub: ':8188 · workflows', desc: 'Node-based diffusion pipeline. Heavy responses — prefer streaming-friendly tunnels.' },
+  { id: 'custom',  name: 'Custom service',    port: 8000,  sub: 'any host:port',    desc: 'Anything that speaks HTTP on your machine or LAN.' },
+];
+const METHODS = [
+  { id: 'cloudflare', name: 'Cloudflare Tunnel', sub: 'no open ports', desc: 'Outbound-only connector, TLS + DDoS shield at the edge, optional Zero-Trust Access. Easiest safe default.' },
+  { id: 'frp',        name: 'FRP',               sub: 'your own VPS',  desc: 'Fast reverse proxy pair (frps on VPS, frpc at home). Full control, token-authenticated control channel.' },
+  { id: 'nginx',      name: 'Nginx stream + SSH', sub: 'classic ops',  desc: 'Reverse SSH tunnel into a VPS, nginx terminates TLS and proxies to the tunnel port. No new daemons.' },
+];
+const CHECKLIST = [
+  { id: 'bind',   t: 'Bind the service to 127.0.0.1 only',            s: 'e.g. OLLAMA_HOST=127.0.0.1 — never 0.0.0.0 once a tunnel exists.' },
+  { id: 'auth',   t: 'Require auth at the edge before sharing the URL', s: 'Bearer token, Cloudflare Access policy, or basic auth. No naked endpoints.' },
+  { id: 'tls',    t: 'TLS end-to-end',                                 s: 'Edge cert + verify the hop from edge to origin is encrypted or local.' },
+  { id: 'fw',     t: 'Firewall the origin box',                        s: 'ufw default deny incoming; allow only ssh (and frps port if self-hosting).' },
+  { id: 'rotate', t: 'Rotate tokens on a schedule',                    s: 'Calendar it. A leaked token from a demo lives forever otherwise.' },
+  { id: 'rate',   t: 'Rate-limit at the edge',                         s: 'One abusive client can peg your GPU. Cap rpm per IP or key.' },
+  { id: 'logs',   t: 'Watch the access logs for a week',               s: 'Scanners find new hostnames within hours. Know what normal looks like.' },
+  { id: 'kill',   t: 'Rehearse the kill switch',                       s: 'Know the one command that severs the tunnel (systemctl stop / cloudflared delete).' },
+];
+
+/* ---------- state ---------- */
+const DEFAULT_STATE = () => ({
+  step: 1,
+  svc: { kind: 'ollama', host: '127.0.0.1', port: 11434 },
+  method: 'cloudflare',
+  opts: { hostname: 'ai.example.com', auth: 'token', token: '', frpsAddr: 'vps.example.com', frpsPort: 7000, vpsUser: 'deploy' },
+  checks: {},
+  saved: [],
+});
+let state = DEFAULT_STATE();
+try {
+  const raw = JSON.parse(localStorage.getItem(LS_KEY));
+  if (raw && raw.svc) state = Object.assign(DEFAULT_STATE(), raw, { opts: Object.assign(DEFAULT_STATE().opts, raw.opts || {}) });
+} catch (e) { /* fresh */ }
+const save = () => localStorage.setItem(LS_KEY, JSON.stringify(state));
+
+/* ---------- config generation ---------- */
+const svcName = () => (SERVICES.find(s => s.id === state.svc.kind) || SERVICES[4]).name;
+const origin = () => `${state.svc.host}:${state.svc.port}`;
+const authNote = () => state.opts.auth === 'none'
+  ? '# !! auth disabled — do not share this hostname publicly'
+  : state.opts.auth === 'access'
+    ? '# auth: enforced by zero-trust policy at the edge'
+    : '# auth: shared bearer token (see TUNNEL_TOKEN in .env / checklist)';
+
+function genCloudflare() {
+  const files = {};
+  files['cloudflared-config.yml'] =
+`# cloudflared config.yml — generated by PROXY TUNNEL by MERIDIAN
+# ${new Date().toISOString()}
+# Path: ~/.cloudflared/config.yml
+tunnel: meridian-${state.svc.kind}
+credentials-file: /home/YOU/.cloudflared/meridian-${state.svc.kind}.json
+
+${authNote()}
+ingress:
+  - hostname: ${state.opts.hostname}
+    service: http://${origin()}
+    originRequest:
+      noTLSVerify: false
+      connectTimeout: 10s
+      # long generations / SSE:
+      disableChunkedEncoding: false
+  # everything else is a hard 404
+  - service: http_status:404
+`;
+  files['setup.sh'] =
+`#!/usr/bin/env bash
+# Cloudflare Tunnel bootstrap — PROXY TUNNEL by MERIDIAN
+set -euo pipefail
+
+# 1) authenticate once (opens browser)
+cloudflared tunnel login
+
+# 2) create the tunnel + DNS record
+cloudflared tunnel create meridian-${state.svc.kind}
+cloudflared tunnel route dns meridian-${state.svc.kind} ${state.opts.hostname}
+
+# 3) drop config.yml (this kit) into ~/.cloudflared/ then run:
+cloudflared tunnel run meridian-${state.svc.kind}
+
+# 4) production: install as a service
+sudo cloudflared service install
+${state.opts.auth === 'access' ? `
+# 5) REQUIRED for zero-trust mode:
+#    Cloudflare dashboard → Zero Trust → Access → Applications
+#    Add "${state.opts.hostname}", policy: allow only your identity/org.` : state.opts.auth === 'token' ? `
+# 5) Token check happens at your app/edge worker. Simplest: a Cloudflare
+#    Worker in front that rejects requests missing:
+#      Authorization: Bearer $TUNNEL_TOKEN` : `
+# 5) !! You chose no auth. Keep this URL private and short-lived.`}
+`;
+  return files;
+}
+function genFrp() {
+  const tok = state.opts.token || 'REPLACE_WITH_STRONG_TOKEN';
+  const files = {};
+  files['frps.toml'] =
+`# frps.toml (VPS side) — generated by PROXY TUNNEL by MERIDIAN
+# ${new Date().toISOString()}
+bindAddr = "0.0.0.0"
+bindPort = ${state.opts.frpsPort}
+
+auth.method = "token"
+auth.token = "${tok}"
+
+vhostHTTPPort = 8080          # behind nginx/caddy TLS termination
+log.to = "/var/log/frps.log"
+log.level = "info"
+
+# hard caps so one client can't drown the box
+transport.maxPoolCount = 8
+`;
+  files['frpc.toml'] =
+`# frpc.toml (home/GPU side) — generated by PROXY TUNNEL by MERIDIAN
+serverAddr = "${state.opts.frpsAddr}"
+serverPort = ${state.opts.frpsPort}
+
+auth.method = "token"
+auth.token = "${tok}"
+
+[[proxies]]
+name = "meridian-${state.svc.kind}"
+type = "http"
+localIP = "${state.svc.host}"
+localPort = ${state.svc.port}
+customDomains = ["${state.opts.hostname}"]
+${state.opts.auth === 'token' ? `
+# edge auth: frp can enforce basic auth on http proxies
+httpUser = "meridian"
+httpPassword = "${tok.slice(0, 16)}"` : ''}
+`;
+  files['frps.service'] =
+`# /etc/systemd/system/frps.service
+[Unit]
+Description=frp server (PROXY TUNNEL by MERIDIAN)
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/frps -c /etc/frp/frps.toml
+Restart=on-failure
+RestartSec=5
+User=frp
+NoNewPrivileges=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
+`;
+  return files;
+}
+function genNginxStream() {
+  const tunnelPort = 9443;
+  const files = {};
+  files['tunnel.sh'] =
+`#!/usr/bin/env bash
+# Reverse SSH tunnel (home/GPU box → VPS) — PROXY TUNNEL by MERIDIAN
+# Keeps ${origin()} reachable on the VPS at 127.0.0.1:${tunnelPort}, nothing exposed at home.
+set -euo pipefail
+
+autossh -M 0 -N \\
+  -o "ServerAliveInterval 15" -o "ServerAliveCountMax 3" \\
+  -o "ExitOnForwardFailure yes" \\
+  -R 127.0.0.1:${tunnelPort}:${origin()} \\
+  ${state.opts.vpsUser}@${state.opts.frpsAddr}
+`;
+  files['nginx-tunnel.conf'] =
+`# /etc/nginx/conf.d/tunnel.conf (VPS side) — PROXY TUNNEL by MERIDIAN
+# ${new Date().toISOString()}
+${authNote()}
+
+limit_req_zone $binary_remote_addr zone=tunnel_rl:10m rate=60r/m;
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name ${state.opts.hostname};
+
+    ssl_certificate     /etc/letsencrypt/live/${state.opts.hostname}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${state.opts.hostname}/privkey.pem;
+
+    location / {
+        limit_req zone=tunnel_rl burst=20 nodelay;
+${state.opts.auth === 'token' ? `
+        # shared token gate
+        if ($http_authorization != "Bearer \${TUNNEL_TOKEN}") { return 401; }
+` : state.opts.auth === 'none' ? `
+        # !! no auth configured
+` : `
+        # zero-trust: put oauth2-proxy / authelia in front of this location
+`}
+        proxy_pass http://127.0.0.1:${tunnelPort};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+
+        # model streaming
+        proxy_buffering off;
+        proxy_read_timeout 300s;
     }
+}
+`;
+  files['autossh.service'] =
+`# /etc/systemd/system/meridian-tunnel.service (home/GPU side)
+[Unit]
+Description=Reverse tunnel to ${state.opts.frpsAddr} (PROXY TUNNEL by MERIDIAN)
+After=network-online.target
 
-    const checks = [
-      "本地服务仅监听 127.0.0.1",
-      "公网必须鉴权（Token / mTLS / IP allowlist）",
-      "关闭模型管理接口对外暴露",
-      "开启访问日志与速率限制",
-      "用 Proxy Gate 再包一层统一对外 API",
-    ];
+[Service]
+ExecStart=/usr/local/bin/tunnel.sh
+Restart=always
+RestartSec=10
 
-    document.getElementById("config").textContent = config;
-    document.getElementById("checklist").innerHTML = checks
-      .map((c, i) => `<label class="list-item" style="justify-content:flex-start;gap:.6rem"><input type="checkbox" ${i < 2 ? "checked" : ""}/> ${c}</label>`)
-      .join("");
-    Meridian.save("proxy-tunnel:last", { port, mode, domain, token, only, config });
-    Meridian.toast("隧道方案已生成");
+[Install]
+WantedBy=multi-user.target
+`;
+  return files;
+}
+function genChecklistFile() {
+  const done = CHECKLIST.filter(c => state.checks[c.id]).length;
+  return `# Hardening checklist — PROXY TUNNEL by MERIDIAN (${done}/${CHECKLIST.length} done locally)
+${CHECKLIST.map(c => `[${state.checks[c.id] ? 'x' : ' '}] ${c.t}\n      ${c.s}`).join('\n')}
+`;
+}
+function currentFiles() {
+  const gen = state.method === 'cloudflare' ? genCloudflare : state.method === 'frp' ? genFrp : genNginxStream;
+  const files = gen();
+  files['CHECKLIST.txt'] = genChecklistFile();
+  return files;
+}
+
+/* ---------- wizard UI ---------- */
+let fileTab = null;
+function renderStep() {
+  $$('#stepper .st').forEach(el => {
+    const n = +el.dataset.step;
+    el.classList.toggle('on', n === state.step);
+    el.classList.toggle('done', n < state.step);
+  });
+  $$('.wizstep').forEach(el => { el.hidden = +el.dataset.step !== state.step; });
+  if (state.step === 4) renderFiles();
+}
+function renderSvcCards() {
+  $('#svcCards').innerHTML = SERVICES.map(s => `
+    <div class="card ${state.svc.kind === s.id ? 'sel' : ''}" data-svc="${s.id}">
+      <div class="sub">${esc(s.sub)}</div><h3>${esc(s.name)}</h3><p>${esc(s.desc)}</p>
+    </div>`).join('');
+  $('#svcHost').value = state.svc.host;
+  $('#svcPort').value = state.svc.port;
+}
+function renderMethodCards() {
+  $('#methodCards').innerHTML = METHODS.map(m => `
+    <div class="card ${state.method === m.id ? 'sel' : ''}" data-method="${m.id}">
+      <div class="sub">${esc(m.sub)}</div><h3>${esc(m.name)}</h3><p>${esc(m.desc)}</p>
+    </div>`).join('');
+}
+function renderMethodOpts() {
+  const o = state.opts;
+  if (state.method === 'cloudflare') {
+    $('#methodOpts').innerHTML = `
+      <div class="field"><label>Tunnel name</label><input type="text" value="meridian-${esc(state.svc.kind)}" disabled></div>
+      <p style="font-size:12.5px;color:var(--dim)">Cloudflare needs no inbound ports — the connector dials out. Zero-trust auth mode maps to an Access application on your hostname.</p>`;
+  } else if (state.method === 'frp') {
+    $('#methodOpts').innerHTML = `
+      <div class="field"><label>frps server address (VPS)</label><input type="text" id="optFrpsAddr" value="${esc(o.frpsAddr)}"></div>
+      <div class="field"><label>frps control port</label><input type="number" id="optFrpsPort" value="${o.frpsPort}"></div>
+      <p style="font-size:12.5px;color:var(--dim)">You run <b>frps</b> on the VPS and <b>frpc</b> next to the model. The shared token authenticates the pair.</p>`;
+  } else {
+    $('#methodOpts').innerHTML = `
+      <div class="field"><label>VPS address</label><input type="text" id="optFrpsAddr" value="${esc(o.frpsAddr)}"></div>
+      <div class="field"><label>SSH user</label><input type="text" id="optVpsUser" value="${esc(o.vpsUser)}"></div>
+      <p style="font-size:12.5px;color:var(--dim)">autossh keeps a reverse tunnel up; nginx on the VPS terminates TLS and rate-limits before proxying into it.</p>`;
   }
+}
+function renderFiles() {
+  const files = currentFiles();
+  const names = Object.keys(files);
+  if (!fileTab || !files[fileTab]) fileTab = names[0];
+  $('#fileTabs').innerHTML = names.map(n => `<button data-file="${esc(n)}" class="${n === fileTab ? 'on' : ''}">${esc(n)}</button>`).join('');
+  $('#fileOut').textContent = files[fileTab];
+  const m = METHODS.find(x => x.id === state.method);
+  $('#pathline').innerHTML =
+    `<b>${esc(svcName())}</b> @ ${esc(origin())} <span class="arrow">⟶</span> ${esc(m.name)} <span class="arrow">⟶</span> https://${esc(state.opts.hostname)} <span class="chip">${esc(state.opts.auth)} auth</span>`;
+}
+function renderChecklist() {
+  $('#checklist').innerHTML = CHECKLIST.map(c => `
+    <label class="check ${state.checks[c.id] ? 'on' : ''}">
+      <input type="checkbox" data-check="${c.id}" ${state.checks[c.id] ? 'checked' : ''}>
+      <span><span class="ct">${esc(c.t)}</span><span class="cs">${esc(c.s)}</span></span>
+    </label>`).join('');
+  const done = CHECKLIST.filter(c => state.checks[c.id]).length;
+  $('#checkScore').textContent = done === CHECKLIST.length
+    ? 'All clear — this tunnel is respectable. 🛡'
+    : `${done}/${CHECKLIST.length} complete — the checklist ships inside your kit too.`;
+}
+function renderSaved() {
+  $('#savedList').innerHTML = state.saved.length ? state.saved.map(s => `
+    <div class="savedrow" data-id="${s.id}">
+      <span class="nm">${esc(s.name)}</span>
+      <span class="meta">${esc(s.snapshot.svc.kind)} → ${esc(s.snapshot.method)} · ${new Date(s.ts).toLocaleDateString()}</span>
+      <span class="sp"></span>
+      <button class="btn btn-sm" data-act="load">Load</button>
+      <button class="btn btn-sm btn-copper" data-act="dl">⇩ Kit</button>
+      <button class="btn btn-sm btn-danger" data-act="del">×</button>
+    </div>`).join('') : '<p style="font-size:12.5px;color:var(--dim-2)">Configure a tunnel and save it — kits are re-downloadable any time.</p>';
+}
 
-  document.getElementById("genBtn").onclick = generate;
-  document.getElementById("exportBtn").onclick = () => {
-    if (!document.getElementById("config").textContent.includes("server") && !document.getElementById("config").textContent.includes("tunnel")) generate();
-    Meridian.download("proxy-tunnel.txt", document.getElementById("config").textContent);
-  };
-
-  const last = Meridian.load("proxy-tunnel:last", null);
-  if (last) {
-    document.getElementById("local").value = last.port;
-    document.getElementById("mode").value = last.mode;
-    document.getElementById("domain").value = last.domain;
-    document.getElementById("token").value = last.token;
-    document.getElementById("only").value = last.only;
-    document.getElementById("config").textContent = last.config;
+/* ---------- events ---------- */
+document.addEventListener('click', e => {
+  const nav = e.target.closest('[data-nav]');
+  if (nav) {
+    const to = +nav.dataset.nav;
+    if (to >= 3 && !state.opts.hostname.trim()) { toast('Set a public hostname first'); state.step = 3; renderStep(); $('#optHost').focus(); return; }
+    state.step = to; save(); renderStep();
+    if (to === 3) renderMethodOpts();
+    return;
   }
+  const st = e.target.closest('#stepper .st');
+  if (st) { state.step = +st.dataset.step; save(); renderStep(); if (state.step === 3) renderMethodOpts(); return; }
+  const sc = e.target.closest('[data-svc]');
+  if (sc) {
+    state.svc.kind = sc.dataset.svc;
+    const preset = SERVICES.find(s => s.id === state.svc.kind);
+    state.svc.port = preset.port;
+    save(); renderSvcCards(); return;
+  }
+  const mc = e.target.closest('[data-method]');
+  if (mc) { state.method = mc.dataset.method; fileTab = null; save(); renderMethodCards(); return; }
+  const ft = e.target.closest('[data-file]');
+  if (ft) { fileTab = ft.dataset.file; renderFiles(); return; }
+  const savedBtn = e.target.closest('.savedrow [data-act]');
+  if (savedBtn) {
+    const id = savedBtn.closest('.savedrow').dataset.id;
+    const entry = state.saved.find(s => s.id === id);
+    if (!entry) return;
+    const act = savedBtn.dataset.act;
+    if (act === 'del') { state.saved = state.saved.filter(s => s.id !== id); save(); renderSaved(); }
+    else if (act === 'load') {
+      Object.assign(state, JSON.parse(JSON.stringify(entry.snapshot)), { saved: state.saved, checks: state.checks, step: 4 });
+      fileTab = null; save();
+      renderSvcCards(); renderMethodCards(); renderOptInputs(); renderStep();
+      toast(`“${entry.name}” loaded`);
+    } else if (act === 'dl') {
+      const cur = { svc: state.svc, method: state.method, opts: state.opts };
+      Object.assign(state, JSON.parse(JSON.stringify(entry.snapshot)));
+      const files = currentFiles();
+      Object.assign(state, cur);
+      Object.entries(files).forEach(([n, c], i) => setTimeout(() => download(n, c), i * 220));
+      toast('Kit downloading');
+    }
+  }
+});
+$('#svcHost').addEventListener('input', e => { state.svc.host = e.target.value.trim() || '127.0.0.1'; save(); });
+$('#svcPort').addEventListener('input', e => { state.svc.port = parseInt(e.target.value, 10) || 8000; save(); });
+function renderOptInputs() {
+  $('#optHost').value = state.opts.hostname;
+  $('#optAuth').value = state.opts.auth;
+  $('#optToken').value = state.opts.token;
+  renderMethodOpts();
+}
+document.addEventListener('input', e => {
+  const id = e.target.id;
+  if (id === 'optHost') state.opts.hostname = e.target.value.trim();
+  else if (id === 'optAuth') state.opts.auth = e.target.value;
+  else if (id === 'optToken') state.opts.token = e.target.value;
+  else if (id === 'optFrpsAddr') state.opts.frpsAddr = e.target.value.trim();
+  else if (id === 'optFrpsPort') state.opts.frpsPort = parseInt(e.target.value, 10) || 7000;
+  else if (id === 'optVpsUser') state.opts.vpsUser = e.target.value.trim();
+  else return;
+  save();
+});
+$('#btnGenToken').addEventListener('click', () => {
+  const bytes = new Uint8Array(24);
+  crypto.getRandomValues(bytes);
+  state.opts.token = 'mt_' + [...bytes].map(b => b.toString(16).padStart(2, '0')).join('');
+  $('#optToken').value = state.opts.token;
+  $('#optToken').type = 'text';
+  setTimeout(() => { $('#optToken').type = 'password'; }, 1600);
+  save(); toast('Token generated (stored locally)');
+});
+$('#checklist').addEventListener('change', e => {
+  const cb = e.target.closest('[data-check]');
+  if (!cb) return;
+  state.checks[cb.dataset.check] = cb.checked;
+  save(); renderChecklist();
+  if (state.step === 4) renderFiles();
+});
+$('#btnDlFile').addEventListener('click', () => {
+  const files = currentFiles();
+  download(fileTab, files[fileTab]); toast(fileTab + ' downloaded');
+});
+$('#btnDlKit').addEventListener('click', () => {
+  const files = currentFiles();
+  Object.entries(files).forEach(([n, c], i) => setTimeout(() => download(n, c), i * 220));
+  toast(`Kit downloading (${Object.keys(files).length} files)`);
+});
+$('#btnCopyFile').addEventListener('click', () => {
+  navigator.clipboard && navigator.clipboard.writeText(currentFiles()[fileTab]).then(() => toast('Copied')).catch(() => toast('Copy failed'));
+});
+$('#btnSaveTunnel').addEventListener('click', () => {
+  const name = $('#saveName').value.trim() || `${state.svc.kind} via ${state.method}`;
+  state.saved.unshift({
+    id: uid('t'), name, ts: Date.now(),
+    snapshot: JSON.parse(JSON.stringify({ svc: state.svc, method: state.method, opts: state.opts })),
+  });
+  if (state.saved.length > 20) state.saved.length = 20;
+  $('#saveName').value = '';
+  save(); renderSaved(); toast(`Saved “${name}”`);
+});
+
+/* ---------- boot ---------- */
+(function boot() {
+  renderSvcCards(); renderMethodCards(); renderOptInputs();
+  renderChecklist(); renderSaved(); renderStep();
 })();
