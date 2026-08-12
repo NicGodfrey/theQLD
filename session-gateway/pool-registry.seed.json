@@ -2,50 +2,80 @@
   "version": 1,
   "orchestratorUrl": "https://cursor.com/agents/bc-4c8e891e-d046-4919-a55a-eafe1e62dcea",
   "modelId": "gpt-5.6-sol-xhigh",
-  "updatedAt": "2026-08-12T19:20:30.000Z",
-  "note": "Hot-started via orchestrator Task(cloud). Runtime registry is data/pool-registry.json (gitignored).",
+  "updatedAt": "2026-08-12T19:23:05.181Z",
   "workers": [
     {
       "slot": 1,
       "name": "GPT5.6 sol-01",
       "bcId": "bc-bb722f34-9d62-5c7f-b26c-4a0d1cf45b61",
       "url": "https://cursor.com/agents/bc-bb722f34-9d62-5c7f-b26c-4a0d1cf45b61",
-      "source": "task"
+      "source": "api"
     },
     {
       "slot": 2,
       "name": "GPT5.6 sol-02",
       "bcId": "bc-ba6cd1cc-4bb0-5151-ba0b-d8f4be70dc44",
       "url": "https://cursor.com/agents/bc-ba6cd1cc-4bb0-5151-ba0b-d8f4be70dc44",
-      "source": "task"
+      "source": "task",
+      "readyAt": "2026-08-12T19:23:05.181Z"
     },
     {
       "slot": 3,
       "name": "GPT5.6 sol-03",
       "bcId": "bc-4e1f2fb8-ed8d-586e-81b6-a100bfcdfa45",
       "url": "https://cursor.com/agents/bc-4e1f2fb8-ed8d-586e-81b6-a100bfcdfa45",
-      "source": "task"
+      "source": "api"
     },
     {
       "slot": 4,
       "name": "GPT5.6 sol-04",
       "bcId": "bc-2228402c-28b5-5adb-8b04-faa5c4d70221",
       "url": "https://cursor.com/agents/bc-2228402c-28b5-5adb-8b04-faa5c4d70221",
-      "source": "task"
+      "source": "api"
     },
     {
       "slot": 5,
       "name": "GPT5.6 sol-05",
       "bcId": "bc-a17d74fd-dba1-52dc-9568-3dea4ed7539c",
       "url": "https://cursor.com/agents/bc-a17d74fd-dba1-52dc-9568-3dea4ed7539c",
-      "source": "task"
+      "source": "api"
     },
     {
       "slot": 6,
       "name": "GPT5.6 sol-06",
       "bcId": "bc-3dfd652b-4ec4-51af-b966-4219c7ab3282",
       "url": "https://cursor.com/agents/bc-3dfd652b-4ec4-51af-b966-4219c7ab3282",
-      "source": "task"
+      "source": "api"
+    },
+    {
+      "slot": 7,
+      "name": "GPT5.6 sol-07",
+      "bcId": "bc-cbc9c9ee-f20e-5b06-964c-c60b101e2976",
+      "url": "https://cursor.com/agents/bc-cbc9c9ee-f20e-5b06-964c-c60b101e2976",
+      "source": "api"
+    },
+    {
+      "slot": 8,
+      "name": "GPT5.6 sol-08",
+      "bcId": "bc-e8e4ec83-3c31-507a-9aaf-d7b1cacb1c33",
+      "url": "https://cursor.com/agents/bc-e8e4ec83-3c31-507a-9aaf-d7b1cacb1c33",
+      "source": "api"
+    },
+    {
+      "slot": 9,
+      "name": "GPT5.6 sol-09",
+      "bcId": "bc-979a299c-7b57-5f76-aa4b-3034b0fe2bd2",
+      "url": "https://cursor.com/agents/bc-979a299c-7b57-5f76-aa4b-3034b0fe2bd2",
+      "source": "api"
+    },
+    {
+      "slot": 10,
+      "name": "GPT5.6 sol-10",
+      "bcId": "bc-a8de967f-b4dc-5dd4-85dd-f97d9cc3db3f",
+      "url": "https://cursor.com/agents/bc-a8de967f-b4dc-5dd4-85dd-f97d9cc3db3f",
+      "source": "task",
+      "readyAt": "2026-08-12T19:22:36.283Z"
     }
-  ]
+  ],
+  "note": "Hot-started GPT5.6 sol workers (gpt-5.6-sol-xhigh) via orchestrator Task(cloud). Runtime: data/pool-registry.json"
 }

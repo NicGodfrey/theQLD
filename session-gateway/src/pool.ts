@@ -122,6 +122,22 @@ export async function hardResetWorker(
     w.updatedAt = nowIso();
   });
 
+  // Without CURSOR_API_KEY we cannot recreate agents. Keep the Task-bootstrapped
+  // worker online and send a logical SESSION_RESET when chat is next invoked via API.
+  if (!config.cursorApiKey) {
+    store.update((db) => {
+      const w = db.workers.find((x) => x.slot === slotNum)!;
+      w.status = oldBcId ? "FREE" : "ERROR";
+      w.generation += 1;
+      w.lastError = oldBcId
+        ? `soft-reset (${reason}): CURSOR_API_KEY missing; kept bcId and bumped generation`
+        : `reset failed (${reason}): no worker bcId and no CURSOR_API_KEY`;
+      w.updatedAt = nowIso();
+    });
+    writeRegistry();
+    return store.get().workers.find((w) => w.slot === slotNum)!;
+  }
+
   if (oldBcId) {
     try {
       await cursorClient.archive(oldBcId);
@@ -154,9 +170,8 @@ export async function hardResetWorker(
       err instanceof Error ? err.message : String(err);
     store.update((db) => {
       const w = db.workers.find((x) => x.slot === slotNum)!;
-      w.bcId = null;
-      w.url = null;
-      w.status = "ERROR";
+      // Preserve previous identity so the slot remains usable until recreate succeeds.
+      w.status = oldBcId ? "FREE" : "ERROR";
       w.lastError = `reset failed (${reason}): ${message}`;
       w.updatedAt = nowIso();
     });
