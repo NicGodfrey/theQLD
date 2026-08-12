@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flow Market — MERIDIAN</title>
+  <link rel="stylesheet" href="../css/studio.css" />
+  
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">MERIDIAN<span>.</span></a>
+      <nav class="topnav"><a href="../index.html">工作室</a><a href="flow-create.html">创作</a><a href="flow-content.html">内容</a></nav>
+      <button class="btn btn-acid" id="genBtn" type="button">生成战役</button>
+    </header>
+    <div class="page-head">
+      <h1>Flow Market</h1>
+      <p>AI 营销工作流：目标、受众、渠道与日历一次成型，导出 CSV / JSON。</p>
+    </div>
+    
+    <div class="workspace">
+      <aside class="panel">
+        <div class="field"><label>战役目标</label><input id="goal" value="7 天获取 1200 个高意向试用" /></div>
+        <div class="field"><label>受众画像</label><textarea id="audience">独立开发者 / AI 应用团队，关注成本与稳定性</textarea></div>
+        <div class="field"><label>预算（元）</label><input id="budget" type="number" value="8000" /></div>
+        <div class="field"><label>渠道（可多选）</label><div id="channels" class="list"></div></div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="saveBtn" type="button">保存战役</button>
+          <button class="btn btn-ghost" id="exportCsv" type="button">导出 CSV</button>
+          <button class="btn btn-ghost" id="exportJson" type="button">导出 JSON</button>
+        </div>
+      </aside>
+      <main class="panel">
+        <h3>战役计划</h3>
+        <div class="output" id="plan">填写左侧信息后生成。</div>
+        <h3 style="margin-top:1rem">内容日历</h3>
+        <div id="calendar" class="list"></div>
+      </main>
+    </div>
+  </div>
+  <script src="../js/core.js"></script>
+  <script src="../js/flow-market.js"></script>
+</body>
+</html>

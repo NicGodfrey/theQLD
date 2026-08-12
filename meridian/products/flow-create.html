@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flow Create — MERIDIAN</title>
+  <link rel="stylesheet" href="../css/studio.css" />
+  
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">MERIDIAN<span>.</span></a>
+      <nav class="topnav"><a href="../index.html">工作室</a><a href="flow-market.html">营销</a><a href="lovara.html">Lovara</a></nav>
+      <button class="btn btn-acid" id="runBtn" type="button">运行流水线</button>
+    </header>
+    <div class="page-head">
+      <h1>Flow Create</h1>
+      <p>AI 创作工作流：把灵感拆成可复用步骤，一键跑通并导出 Markdown / JSON。</p>
+    </div>
+    
+    <div class="workspace">
+      <aside class="panel">
+        <h3>项目变量</h3>
+        <div class="field"><label for="topic">主题</label><input id="topic" value="城市夜跑装备品牌短片脚本" /></div>
+        <div class="field"><label for="audience">受众</label><input id="audience" value="25-35 岁都市运动人群" /></div>
+        <div class="field"><label for="tone">语气</label><select id="tone"><option>锋利有画面</option><option>温暖叙事</option><option>极简科技</option></select></div>
+        <div class="field"><label for="wfName">工作流名称</label><input id="wfName" value="夜跑短片-默认" /></div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="saveBtn" type="button">保存</button>
+          <button class="btn btn-ghost" id="loadBtn" type="button">读取</button>
+          <button class="btn btn-ghost" id="exportJson" type="button">导出 JSON</button>
+        </div>
+        <p class="muted" id="saveHint" style="margin-top:.8rem"></p>
+      </aside>
+      <main class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+          <h3 style="margin:0">步骤编排</h3>
+          <button class="btn btn-ghost" id="addStep" type="button">+ 步骤</button>
+        </div>
+        <div class="list" id="steps" style="margin-top:1rem"></div>
+        <h3 style="margin-top:1.4rem">运行结果</h3>
+        <div class="output" id="result">点击「运行流水线」生成创作产物。</div>
+        <div class="btn-row" style="margin-top:.8rem">
+          <button class="btn btn-acid" id="exportMd" type="button">导出 Markdown</button>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="../js/core.js"></script>
+  <script src="../js/flow-create.js"></script>
+</body>
+</html>

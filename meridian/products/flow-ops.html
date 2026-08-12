@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flow Ops — MERIDIAN</title>
+  <link rel="stylesheet" href="../css/studio.css" />
+  
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">MERIDIAN<span>.</span></a>
+      <nav class="topnav"><a href="../index.html">工作室</a><a href="flow-content.html">内容</a><a href="agent-factory.html">工厂</a></nav>
+      <button class="btn btn-acid" id="buildBtn" type="button">生成运营剧本</button>
+    </header>
+    <div class="page-head">
+      <h1>Flow Ops</h1>
+      <p>AI 用户运营工作流：生命周期触达、分群规则、健康分与留存模拟。</p>
+    </div>
+    
+    <div class="workspace">
+      <aside class="panel">
+        <div class="field"><label>产品名</label><input id="product" value="MERIDIAN Proxy Gate" /></div>
+        <div class="field"><label>北极星指标</label><input id="north" value="周活跃网关请求数" /></div>
+        <div class="field"><label>新用户七日目标留存 %</label><input id="target" type="number" value="32" /></div>
+        <div class="field"><label>阶段</label>
+          <select id="stage">
+            <option>acquire</option><option>activate</option><option>retain</option><option>expand</option><option>refer</option>
+          </select>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="exportMd" type="button">导出 MD</button>
+          <button class="btn btn-ghost" id="exportJson" type="button">导出 JSON</button>
+        </div>
+      </aside>
+      <main class="panel">
+        <h3>触达序列</h3>
+        <div id="seq" class="list"></div>
+        <h3 style="margin-top:1.2rem">健康分模型</h3>
+        <div class="output" id="health"></div>
+        <h3 style="margin-top:1.2rem">留存模拟</h3>
+        <div class="bars" id="bars"></div>
+        <div class="output" id="playbook" style="margin-top:1rem"></div>
+      </main>
+    </div>
+  </div>
+  <script src="../js/core.js"></script>
+  <script src="../js/flow-ops.js"></script>
+</body>
+</html>

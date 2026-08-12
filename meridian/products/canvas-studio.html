@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Canvas Studio — MERIDIAN</title>
+  <link rel="stylesheet" href="../css/studio.css" />
+  <style>
+    #board { width:100%; height:520px; border:1px solid var(--line-strong); border-radius:14px; background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(243,240,231,.8)); touch-action:none; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">MERIDIAN<span>.</span></a>
+      <nav class="topnav"><a href="lovara.html">Lovara</a><a href="flow-create.html">Create</a></nav>
+      <button class="btn btn-acid" id="exportBtn" type="button">导出 Prompt Pack</button>
+    </header>
+    <div class="page-head">
+      <h1>Canvas Studio</h1>
+      <p>AI 创意画布：节点化管理图像提示、风格、文案与品牌，连线后导出提示词包。</p>
+    </div>
+    <div class="workspace">
+      <aside class="panel">
+        <div class="btn-row">
+          <button class="btn btn-ghost" data-type="image" type="button">+ 图像提示</button>
+          <button class="btn btn-ghost" data-type="style" type="button">+ 风格</button>
+          <button class="btn btn-ghost" data-type="copy" type="button">+ 文案</button>
+          <button class="btn btn-ghost" data-type="brand" type="button">+ 品牌</button>
+        </div>
+        <div class="field" style="margin-top:1rem"><label>选中节点内容</label><textarea id="editor" placeholder="点选画布中的节点进行编辑"></textarea></div>
+        <button class="btn btn-ghost" id="linkBtn" type="button">连接所选两节点</button>
+        <p class="muted" id="hint">按住节点拖动。点选两个节点后可连接。</p>
+      </aside>
+      <main class="panel">
+        <svg id="board" viewBox="0 0 1000 520"></svg>
+      </main>
+    </div>
+  </div>
+  <script src="../js/core.js"></script>
+  <script src="../js/canvas-studio.js"></script>
+</body>
+</html>

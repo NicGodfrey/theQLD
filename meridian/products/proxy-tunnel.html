@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proxy Tunnel — MERIDIAN</title>
+  <link rel="stylesheet" href="../css/studio.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">MERIDIAN<span>.</span></a>
+      <nav class="topnav"><a href="proxy-gate.html">Gate</a><a href="proxy-router.html">Router</a></nav>
+      <button class="btn btn-acid" id="genBtn" type="button">生成隧道方案</button>
+    </header>
+    <div class="page-head">
+      <h1>Proxy Tunnel</h1>
+      <p>本地模型反代隧道向导：Cloudflare Tunnel / FRP / Nginx stream，安全暴露 Ollama。</p>
+    </div>
+    <div class="workspace">
+      <aside class="panel">
+        <div class="field"><label>本地服务</label><select id="local"><option value="11434">Ollama :11434</option><option value="8000">vLLM :8000</option><option value="5001">LocalAI :5001</option></select></div>
+        <div class="field"><label>方案</label><select id="mode"><option value="cloudflare">Cloudflare Tunnel</option><option value="frp">FRP</option><option value="nginx">Nginx stream</option></select></div>
+        <div class="field"><label>公网域名</label><input id="domain" value="llm.example.com" /></div>
+        <div class="field"><label>鉴权 Token</label><input id="token" value="replace-with-token" /></div>
+        <div class="field"><label>仅允许路径</label><input id="only" value="/v1/*" /></div>
+      </aside>
+      <main class="panel">
+        <h3>配置</h3>
+        <div class="output" id="config">选择参数后生成</div>
+        <h3 style="margin-top:1rem">上线清单</h3>
+        <div id="checklist" class="list"></div>
+        <div class="btn-row" style="margin-top:1rem">
+          <button class="btn btn-ghost" id="exportBtn" type="button">导出</button>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="../js/core.js"></script>
+  <script src="../js/proxy-tunnel.js"></script>
+</body>
+</html>

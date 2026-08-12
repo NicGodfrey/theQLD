@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proxy Router — MERIDIAN</title>
+  <link rel="stylesheet" href="../css/studio.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">MERIDIAN<span>.</span></a>
+      <nav class="topnav"><a href="proxy-gate.html">Gate</a><a href="proxy-tunnel.html">Tunnel</a></nav>
+      <button class="btn btn-acid" id="exportBtn" type="button">导出路由配置</button>
+    </header>
+    <div class="page-head">
+      <h1>Proxy Router</h1>
+      <p>多模型反代路由：权重、故障转移、成本与延迟模拟，导出 Caddy / Nginx / Traefik。</p>
+    </div>
+    <div class="workspace">
+      <aside class="panel">
+        <div id="models" class="list"></div>
+        <div class="btn-row" style="margin-top:.7rem">
+          <button class="btn btn-ghost" id="addModel" type="button">+ 模型</button>
+          <button class="btn btn-ghost" id="simBtn" type="button">模拟 100 次</button>
+        </div>
+        <div class="field" style="margin-top:1rem"><label>故障转移阈值</label>
+          <select id="failover"><option value="next">下一个权重</option><option value="cheapest">最低成本</option><option value="fastest">最低延迟</option></select>
+        </div>
+      </aside>
+      <main class="panel">
+        <h3>路由图</h3>
+        <svg id="graph" viewBox="0 0 720 260" style="width:100%;background:rgba(255,255,255,.45);border-radius:12px;border:1px solid var(--line)"></svg>
+        <h3 style="margin-top:1rem">模拟结果</h3>
+        <div class="output" id="stats">点击模拟</div>
+        <h3 style="margin-top:1rem">配置预览</h3>
+        <div class="output" id="cfg"></div>
+      </main>
+    </div>
+  </div>
+  <script src="../js/core.js"></script>
+  <script src="../js/proxy-router.js"></script>
+</body>
+</html>

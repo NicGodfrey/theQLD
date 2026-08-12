@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lovara — MERIDIAN</title>
+  <link rel="stylesheet" href="../css/studio.css" />
+  <style>#artboard{width:100%;min-height:420px;border-radius:16px;border:1px solid var(--line-strong);background:#fff}.swatches{display:flex;gap:.5rem;flex-wrap:wrap;margin:.8rem 0}.swatch{width:42px;height:42px;border-radius:10px;border:1px solid var(--line-strong)}.layers{font-size:.9rem}</style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">MERIDIAN<span>.</span></a>
+      <nav class="topnav"><a href="../index.html">工作室</a><a href="canvas-studio.html">画布</a><a href="proxy-gate.html">反代</a></nav>
+      <button class="btn btn-acid" id="genBtn" type="button">生成设计板</button>
+    </header>
+    <div class="page-head">
+      <h1>LOVARA</h1>
+      <p>Lovart-class AI 设计代理：输入创意简报，生成图层化视觉画板、配色与字体方案。</p>
+    </div>
+    
+    <div class="workspace">
+      <aside class="panel">
+        <div class="field"><label>创意简报</label><textarea id="brief">为 AI 反代网关做一张发布海报：冷静、工程感、有速度，中英双语标题可用。</textarea></div>
+        <div class="field"><label>画幅</label>
+          <select id="ratio"><option value="4x5">4:5 海报</option><option value="16x9">16:9 横版</option><option value="1x1">1:1 社媒</option></select>
+        </div>
+        <div class="field"><label>风格</label>
+          <select id="style"><option>工业未来</option><option>编辑杂志</option><option>日系清新</option><option>Brutalist</option></select>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="exportSvg" type="button">导出 SVG</button>
+          <button class="btn btn-ghost" id="exportJson" type="button">导出 JSON</button>
+        </div>
+        <h3 style="margin-top:1rem">历史</h3>
+        <div id="history" class="list"></div>
+      </aside>
+      <main class="panel">
+        <svg id="artboard" viewBox="0 0 800 1000" role="img" aria-label="Lovara artboard"></svg>
+        <div class="swatches" id="swatches"></div>
+        <div class="layers" id="layers"></div>
+      </main>
+    </div>
+  </div>
+  <script src="../js/core.js"></script>
+  <script src="../js/lovara.js"></script>
+</body>
+</html>
