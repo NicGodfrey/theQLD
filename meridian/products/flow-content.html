@@ -1,50 +1,409 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Flow Content — MERIDIAN</title>
-  <link rel="stylesheet" href="../css/studio.css" />
-  <style>.tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}.tabs button{border:1px solid var(--line-strong);background:transparent;border-radius:999px;padding:.45rem .9rem;cursor:pointer;font-weight:600}.tabs button.active{background:var(--ink);color:var(--foam)}.tabpane{display:none}.tabpane.active{display:block}</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flow Content · MERIDIAN — AI 内容工作流</title>
+<meta name="description" content="MERIDIAN Flow Content：选题 → 大纲 → 长文 → 社媒切片 → SEO Meta 的多标签内容工作台。关键词密度助手，多文件 Markdown 打包导出。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* MERIDIAN Flow Suite — embedded design system (brand tokens + components) */
+:root{
+  --ink:#0B1F2A;
+  --foam:#F3F0E7;
+  --acid:#C8F542;
+  --copper:#D9773F;
+  --line:rgba(11,31,42,.14);
+  --ink-70:rgba(11,31,42,.7);
+  --ink-55:rgba(11,31,42,.55);
+  --ink-35:rgba(11,31,42,.35);
+  --paper:rgba(255,255,255,.62);
+  --danger:#C2452C;
+  --display:"Bricolage Grotesque","IBM Plex Sans","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --body-font:"IBM Plex Sans","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --radius:14px;
+  --radius-sm:10px;
+  --shadow:0 12px 32px rgba(11,31,42,.08);
+  --speed:.22s;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:var(--body-font);color:var(--ink);line-height:1.65;font-size:15.5px;
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(1100px 620px at 10% -12%,rgba(200,245,66,.30),transparent 62%),
+    radial-gradient(920px 700px at 106% 4%,rgba(217,119,63,.16),transparent 56%),
+    radial-gradient(1400px 900px at 50% 118%,rgba(11,31,42,.09),transparent 60%),
+    var(--foam);
+  background-attachment:fixed;
+}
+body[data-page="flow-market"]{
+  background:
+    radial-gradient(1000px 600px at 88% -10%,rgba(200,245,66,.28),transparent 60%),
+    radial-gradient(900px 720px at -6% 14%,rgba(217,119,63,.18),transparent 55%),
+    radial-gradient(1400px 900px at 50% 120%,rgba(11,31,42,.09),transparent 60%),
+    var(--foam);
+  background-attachment:fixed;
+}
+body[data-page="flow-content"]{
+  background:
+    radial-gradient(1200px 640px at 50% -18%,rgba(200,245,66,.26),transparent 62%),
+    radial-gradient(880px 680px at 108% 46%,rgba(217,119,63,.15),transparent 55%),
+    radial-gradient(1400px 900px at 0% 120%,rgba(11,31,42,.10),transparent 62%),
+    var(--foam);
+  background-attachment:fixed;
+}
+body[data-page="flow-ops"]{
+  background:
+    radial-gradient(1000px 620px at -6% -8%,rgba(217,119,63,.20),transparent 58%),
+    radial-gradient(980px 700px at 104% 0%,rgba(200,245,66,.26),transparent 60%),
+    radial-gradient(1400px 900px at 50% 122%,rgba(11,31,42,.10),transparent 60%),
+    var(--foam);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.18;margin:0 0 .5em;letter-spacing:-.01em}
+p{margin:0 0 1em}
+a{color:inherit}
+::selection{background:var(--acid);color:var(--ink)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.stack{display:grid;gap:16px}
+.stack-lg{display:grid;gap:24px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row-between{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grow{flex:1 1 auto}
+.spacer{flex:1}
+@media (max-width:860px){.cols-2,.cols-3{grid-template-columns:1fr}}
+.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(243,240,231,.82);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1180px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px}
+.wordmark{font-family:var(--display);font-weight:800;letter-spacing:.22em;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.wordmark i{width:9px;height:9px;background:var(--acid);border:1.5px solid var(--ink);display:inline-block;transform:rotate(45deg);transition:transform var(--speed) ease}
+.wordmark:hover i{transform:rotate(225deg)}
+.nav-links{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+.nav-links a{text-decoration:none;font-size:13.5px;padding:6px 12px;border-radius:999px;color:var(--ink-70);transition:background var(--speed) ease,color var(--speed) ease}
+.nav-links a:hover{background:rgba(11,31,42,.07);color:var(--ink)}
+.nav-links a.active{background:var(--ink);color:var(--acid)}
+@media (max-width:720px){.nav-inner{padding:10px 16px;gap:10px}.nav-links a{padding:5px 9px;font-size:12.5px}}
+.hero{padding:84px 0 56px}
+.hero .hero-mark{font-family:var(--display);font-weight:800;letter-spacing:.34em;font-size:13px;color:var(--ink-55);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.hero .hero-mark::after{content:"";height:1px;flex:0 0 72px;background:var(--copper)}
+.hero .hero-mark strong{color:var(--ink)}
+.hero h1{font-size:clamp(34px,5.4vw,60px);font-weight:800;max-width:15em;margin-bottom:.35em}
+.hero h1 em{font-style:normal;background:linear-gradient(180deg,transparent 62%,var(--acid) 62%)}
+.hero .lede{font-size:clamp(15.5px,1.6vw,18px);color:var(--ink-70);max-width:44em;margin-bottom:28px}
+.cta-group{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.hero .hero-meta{margin-top:26px;font-size:13px;color:var(--ink-55);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.hero .hero-meta b{color:var(--copper);font-weight:600}
+.hero .hero-meta span::after{content:"·";margin-left:8px;color:var(--ink-35)}
+.hero .hero-meta span:last-child::after{content:""}
+@media (max-width:720px){.hero{padding:56px 0 40px}}
+.btn{appearance:none;border:1px solid var(--ink);cursor:pointer;font-family:var(--display);font-weight:700;font-size:14.5px;letter-spacing:.02em;padding:11px 22px;border-radius:999px;background:transparent;color:var(--ink);display:inline-flex;align-items:center;gap:8px;text-decoration:none;line-height:1.2;transition:transform var(--speed) ease,box-shadow var(--speed) ease,background var(--speed) ease,color var(--speed) ease}
+.btn:hover{transform:translateY(-1.5px);box-shadow:0 8px 20px rgba(11,31,42,.14)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:var(--ink);color:var(--acid);border-color:var(--ink)}
+.btn-primary:hover{background:#12303f}
+.btn-acid{background:var(--acid);color:var(--ink);border-color:var(--ink)}
+.btn-ghost{border-color:var(--line);background:rgba(255,255,255,.4)}
+.btn-danger{border-color:var(--danger);color:var(--danger);background:transparent}
+.btn-danger:hover{background:var(--danger);color:#fff}
+.btn-sm{padding:6px 13px;font-size:12.5px}
+.btn-icon{padding:4px 9px;font-size:13px;border-radius:8px;border-color:var(--line);background:rgba(255,255,255,.5);font-family:var(--body-font);font-weight:500}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.panel-head h2,.panel-head h3{margin:0;font-size:19px}
+.panel-head .hint{font-size:12.5px;color:var(--ink-55)}
+.panel-kicker{font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--copper);margin-bottom:6px}
+.subpanel{background:rgba(255,255,255,.5);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 16px}
+.field{display:grid;gap:6px;min-width:0}
+.field>label{font-size:12.5px;font-weight:600;letter-spacing:.04em;color:var(--ink-70)}
+input[type=text],input[type=number],input[type=date],select,textarea{font-family:var(--body-font);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);padding:9px 12px;width:100%;transition:border-color var(--speed) ease,box-shadow var(--speed) ease}
+textarea{resize:vertical;min-height:72px;line-height:1.55}
+textarea.code{font-family:var(--mono);font-size:13px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(200,245,66,.45)}
+input[type=range]{width:100%;accent-color:var(--copper);padding:0;border:none;background:transparent}
+.chip-toggle{position:relative;display:inline-flex;cursor:pointer}
+.chip-toggle input{position:absolute;opacity:0;pointer-events:none}
+.chip-toggle span{border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;background:rgba(255,255,255,.55);transition:all var(--speed) ease;user-select:none}
+.chip-toggle:hover span{border-color:var(--ink)}
+.chip-toggle input:checked+span{background:var(--ink);color:var(--acid);border-color:var(--ink)}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:12px;background:rgba(255,255,255,.55);white-space:nowrap}
+.chip.acid{background:var(--acid);border-color:var(--ink)}
+.chip.copper{background:var(--copper);color:#fff;border-color:var(--copper)}
+.chip.ink{background:var(--ink);color:var(--foam);border-color:var(--ink)}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{appearance:none;background:none;border:none;cursor:pointer;font-family:var(--display);font-weight:700;font-size:14px;color:var(--ink-55);padding:11px 16px;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color var(--speed) ease,border-color var(--speed) ease}
+.tabs button:hover{color:var(--ink)}
+.tabs button.active{color:var(--ink);border-bottom-color:var(--acid)}
+.tab-body{display:none;padding-top:18px}
+.tab-body.active{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff}
+table.data{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px}
+table.data th{text-align:left;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-55);padding:10px 12px;border-bottom:1px solid var(--line);background:rgba(243,240,231,.6);white-space:nowrap}
+table.data td{padding:9px 12px;border-bottom:1px solid rgba(11,31,42,.07);vertical-align:top}
+table.data tr:last-child td{border-bottom:none}
+table.data tr:hover td{background:rgba(200,245,66,.09)}
+.output{background:var(--ink);color:var(--foam);border-radius:var(--radius-sm);padding:14px 16px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;max-height:340px;overflow:auto;margin:0;font-family:var(--body-font)}
+.output.mono{font-family:var(--mono);font-size:12.5px}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-55)}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink-35)}
+.status.running::before{background:var(--copper);animation:pulse 1s infinite}
+.status.done::before{background:var(--acid);border:1px solid var(--ink)}
+.status.error::before{background:var(--danger)}
+@keyframes pulse{50%{opacity:.35}}
+.meter{height:10px;border-radius:999px;background:rgba(11,31,42,.09);overflow:hidden}
+.meter i{display:block;height:100%;border-radius:999px;background:var(--acid);transition:width .5s cubic-bezier(.2,.8,.2,1),background .3s ease}
+.meter i.copper{background:var(--copper)}
+.meter i.ink{background:var(--ink)}
+.meter i.danger{background:var(--danger)}
+.muted{color:var(--ink-55)}
+.small{font-size:12.5px}
+.mono{font-family:var(--mono)}
+.right{text-align:right}
+.mb-0{margin-bottom:0}
+.hr{border:none;border-top:1px solid var(--line);margin:18px 0}
+.badge-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;flex:0 0 26px;background:var(--acid);border:1.5px solid var(--ink);font-family:var(--display);font-weight:800;font-size:12.5px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);background:var(--ink);color:var(--foam);padding:11px 22px;border-radius:999px;font-size:13.5px;opacity:0;pointer-events:none;z-index:99;transition:opacity var(--speed) ease,transform var(--speed) ease;box-shadow:0 14px 34px rgba(11,31,42,.3);max-width:min(88vw,520px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.foot{margin-top:72px;border-top:1px solid var(--line);padding:26px 0 44px;font-size:12.5px;color:var(--ink-55)}
+.foot .foot-inner{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.foot a{color:var(--ink-70);text-decoration:none}
+.foot a:hover{color:var(--copper)}
+.studio{padding:8px 0 40px}
+.studio-grid{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+.lf-grid{display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start}
+@media (max-width:980px){.studio-grid,.lf-grid{grid-template-columns:1fr}}
+.stages{display:flex;gap:0;flex-wrap:wrap;align-items:stretch}
+.stage{appearance:none;cursor:pointer;background:rgba(255,255,255,.5);border:1px solid var(--line);padding:10px 16px;font-family:var(--display);font-weight:700;font-size:13.5px;color:var(--ink-70);display:flex;flex-direction:column;gap:2px;align-items:flex-start;min-width:118px;transition:all var(--speed) ease;position:relative}
+.stage small{font-family:var(--body-font);font-weight:400;font-size:11px;color:var(--ink-55);letter-spacing:.08em;text-transform:uppercase}
+.stage:first-child{border-radius:var(--radius-sm) 0 0 var(--radius-sm)}
+.stage:last-child{border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.stage+.stage{margin-left:-1px}
+.stage:hover{background:rgba(200,245,66,.25);z-index:1}
+.stage.active{background:var(--ink);color:var(--acid);border-color:var(--ink);z-index:2}
+.stage.active small{color:rgba(243,240,231,.66)}
+@media (max-width:720px){
+  .stages{flex-direction:column}
+  .stage{border-radius:0;min-width:0}
+  .stage:first-child{border-radius:var(--radius-sm) var(--radius-sm) 0 0}
+  .stage:last-child{border-radius:0 0 var(--radius-sm) var(--radius-sm)}
+  .stage+.stage{margin-left:0;margin-top:-1px}
+}
+.step-card{background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px;transition:box-shadow var(--speed) ease,transform var(--speed) ease}
+.step-card:hover{box-shadow:0 8px 22px rgba(11,31,42,.09)}
+.step-card.running{border-color:var(--copper);box-shadow:0 0 0 3px rgba(217,119,63,.18)}
+.step-card.done{border-color:rgba(11,31,42,.3)}
+.week-label{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper);margin:18px 0 8px}
+.week-label:first-child{margin-top:0}
+canvas.chart{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm)}
+
+</style>
 </head>
-<body>
-  <div class="shell">
-    <header class="topbar">
-      <a class="brand" href="../index.html">MERIDIAN<span>.</span></a>
-      <nav class="topnav"><a href="../index.html">工作室</a><a href="flow-market.html">营销</a><a href="flow-ops.html">运营</a></nav>
-      <button class="btn btn-acid" id="genBtn" type="button">生成全套内容</button>
-    </header>
-    <div class="page-head">
-      <h1>Flow Content</h1>
-      <p>AI 内容工作流：选题 → 大纲 → 长文 → 社交切片 → SEO，一键打包导出。</p>
-    </div>
-    
-    <div class="workspace">
-      <aside class="panel">
-        <div class="field"><label>选题</label><input id="topic" value="如何用反代网关把多模型成本打下来" /></div>
-        <div class="field"><label>主关键词</label><input id="keyword" value="AI 反代网关" /></div>
-        <div class="field"><label>字数目标</label><input id="words" type="number" value="1200" /></div>
-        <div class="field"><label>关键词密度辅助</label><div class="muted" id="density">生成后计算</div></div>
-        <div class="btn-row">
-          <button class="btn btn-ghost" id="exportBtn" type="button">导出多文件</button>
-          <button class="btn btn-ghost" id="saveBtn" type="button">保存</button>
-        </div>
-      </aside>
-      <main class="panel">
-        <div class="tabs" id="tabs">
-          <button type="button" data-tab="outline" class="active">大纲</button>
-          <button type="button" data-tab="longform">长文</button>
-          <button type="button" data-tab="social">社交切片</button>
-          <button type="button" data-tab="seo">SEO</button>
-        </div>
-        <div class="tabpane active" id="outline"><div class="output" id="out-outline">待生成</div></div>
-        <div class="tabpane" id="longform"><div class="output" id="out-longform">待生成</div></div>
-        <div class="tabpane" id="social"><div class="output" id="out-social">待生成</div></div>
-        <div class="tabpane" id="seo"><div class="output" id="out-seo">待生成</div></div>
-      </main>
+<body data-page="flow-content" id="top">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="wordmark" href="#top">MERIDIAN<i></i></a>
+    <div class="nav-links">
+      <a href="flow-create.html">Flow Create</a>
+      <a href="flow-market.html">Flow Market</a>
+      <a href="flow-content.html" class="active">Flow Content</a>
+      <a href="flow-ops.html">Flow Ops</a>
     </div>
   </div>
-  <script src="../js/core.js"></script>
-  <script src="../js/flow-content.js"></script>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-mark"><strong>MERIDIAN</strong> Flow Content · AI 内容工作流</div>
+    <h1>一个选题，<em>裂变一整套内容资产</em>。</h1>
+    <p class="lede">从选题出发：自动生成结构化大纲、成篇长文、四平台社媒切片与 SEO Meta。内置关键词密度助手，全部产物可编辑、可另存，最终以多文件 Markdown 一键打包下载。</p>
+    <div class="cta-group">
+      <a class="btn btn-primary" href="#studio">进入内容工作台 ↓</a>
+      <button class="btn btn-ghost" id="heroExample">用示例选题试跑</button>
+    </div>
+    <div class="hero-meta">
+      <span><b>6</b> 标签页流水线</span>
+      <span><b>4</b> 平台切片模板</span>
+      <span><b>密度</b> 关键词助手</span>
+      <span><b>5 文件</b> 打包导出</span>
+    </div>
+  </div>
+</header>
+
+<main class="studio" id="studio">
+  <div class="wrap stack-lg">
+    <section class="panel">
+      <div class="row-between" style="margin-bottom:6px">
+        <div class="panel-kicker mb-0">Workspace / 内容工作台</div>
+        <div class="row">
+          <input type="text" id="projName" placeholder="项目名称" style="max-width:220px">
+          <button class="btn btn-sm btn-acid" id="saveProj">保存项目</button>
+          <select id="projList" style="max-width:200px"><option value="">载入已存项目…</option></select>
+          <button class="btn btn-sm btn-danger" id="delProj" title="删除选中项目">删</button>
+        </div>
+      </div>
+
+      <div class="tabs" id="tabs">
+        <button data-tab="topic" class="active">① 选题 Topic</button>
+        <button data-tab="outline">② 大纲 Outline</button>
+        <button data-tab="longform">③ 长文 Longform</button>
+        <button data-tab="social">④ 社媒切片 Social</button>
+        <button data-tab="seo">⑤ SEO Meta</button>
+        <button data-tab="export">⑥ 导出 Export</button>
+      </div>
+
+      <!-- ① Topic -->
+      <div class="tab-body active" data-body="topic">
+        <div class="cols-2">
+          <div class="stack">
+            <div class="field">
+              <label>选题 / 主题</label>
+              <input type="text" id="tTopic" placeholder="例如：AI 工作流如何帮小团队追平大厂产能">
+            </div>
+            <div class="field">
+              <label>核心关键词（用于 SEO 与密度检测）</label>
+              <input type="text" id="tKeyword" placeholder="例如：AI 工作流">
+            </div>
+            <div class="field">
+              <label>次要关键词（逗号分隔）</label>
+              <input type="text" id="tKeywords2" placeholder="例如：自动化, 提示词, 效率工具">
+            </div>
+          </div>
+          <div class="stack">
+            <div class="field">
+              <label>目标读者</label>
+              <input type="text" id="tAudience" placeholder="例如：3-10 人的小型创业团队">
+            </div>
+            <div class="field">
+              <label>语气</label>
+              <select id="tTone">
+                <option>务实直接</option>
+                <option>轻松幽默</option>
+                <option>克制专业</option>
+                <option>热情鼓动</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>篇幅</label>
+              <select id="tLength">
+                <option value="5">标准（约 5 节）</option>
+                <option value="6">加长（约 6 节）</option>
+                <option value="7">深度（约 7 节）</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:18px">
+          <button class="btn btn-primary" id="genAll">⚡ 生成全部内容资产</button>
+          <span class="hint">依次生成：大纲 → 长文 → 社媒切片 → SEO Meta（全部可再编辑）</span>
+        </div>
+      </div>
+
+      <!-- ② Outline -->
+      <div class="tab-body" data-body="outline">
+        <div class="row-between" style="margin-bottom:10px">
+          <span class="hint">Markdown 大纲，可直接编辑；重新生成会覆盖当前内容</span>
+          <button class="btn btn-sm btn-ghost" data-regen="outline">↻ 重新生成大纲</button>
+        </div>
+        <textarea id="aOutline" class="code" rows="16" placeholder="先在「选题」页填写信息，然后生成…"></textarea>
+      </div>
+
+      <!-- ③ Longform -->
+      <div class="tab-body" data-body="longform">
+        <div class="row-between" style="margin-bottom:10px">
+          <span class="hint" id="lfStats">0 字</span>
+          <button class="btn btn-sm btn-ghost" data-regen="longform">↻ 依据大纲重写长文</button>
+        </div>
+        <div class="lf-grid">
+          <textarea id="aLongform" class="code" rows="22" placeholder="长文将基于大纲生成…"></textarea>
+          <div class="subpanel stack" style="align-self:start">
+            <div class="panel-kicker">关键词密度助手</div>
+            <div id="densityBox" class="stack small"><p class="muted mb-0">生成或粘贴长文后自动分析。</p></div>
+            <p class="small muted mb-0">建议：核心关键词密度保持在 0.5% – 2.5% 之间；过高会被判定为堆砌。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ Social -->
+      <div class="tab-body" data-body="social">
+        <div class="row-between" style="margin-bottom:10px">
+          <span class="hint">四个平台的切片版本，各自独立可编辑</span>
+          <button class="btn btn-sm btn-ghost" data-regen="social">↻ 重新生成切片</button>
+        </div>
+        <div class="cols-2">
+          <div class="field"><label>小红书笔记</label><textarea id="sXhs" class="code" rows="12"></textarea></div>
+          <div class="field"><label>抖音口播脚本</label><textarea id="sDouyin" class="code" rows="12"></textarea></div>
+          <div class="field"><label>Twitter/X Thread</label><textarea id="sTwitter" class="code" rows="12"></textarea></div>
+          <div class="field"><label>Email Newsletter</label><textarea id="sEmail" class="code" rows="12"></textarea></div>
+        </div>
+      </div>
+
+      <!-- ⑤ SEO -->
+      <div class="tab-body" data-body="seo">
+        <div class="row-between" style="margin-bottom:10px">
+          <span class="hint">搜索引擎收录所需的全部元信息</span>
+          <button class="btn btn-sm btn-ghost" data-regen="seo">↻ 重新生成 SEO Meta</button>
+        </div>
+        <div class="cols-2">
+          <div class="stack">
+            <div class="field">
+              <label>Title 标签 <span class="muted" id="seoTitleCount">(0/60)</span></label>
+              <input type="text" id="seoTitle">
+            </div>
+            <div class="field">
+              <label>Meta Description <span class="muted" id="seoDescCount">(0/160)</span></label>
+              <textarea id="seoDesc" rows="3"></textarea>
+            </div>
+            <div class="field">
+              <label>URL Slug</label>
+              <input type="text" id="seoSlug" class="mono">
+            </div>
+          </div>
+          <div class="stack">
+            <div class="field">
+              <label>Keywords</label>
+              <input type="text" id="seoKeywords">
+            </div>
+            <div class="field">
+              <label>建议内链锚文本（每行一个）</label>
+              <textarea id="seoAnchors" class="code" rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⑥ Export -->
+      <div class="tab-body" data-body="export">
+        <p class="muted">将当前工作台的全部产物打包为多个文件下载（浏览器会连续弹出多个下载，属正常行为）。</p>
+        <div id="fileList" class="stack" style="margin-bottom:16px"></div>
+        <div class="row">
+          <button class="btn btn-primary" id="exportAll">⬇ 打包下载全部文件</button>
+          <span class="hint">01-outline.md · 02-longform.md · 03-social.md · 04-seo.md · project.json</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span>MERIDIAN Studio · Flow Content — 数据仅保存在你的浏览器（localStorage），不上传任何服务器。</span>
+    <span class="row">
+      <a href="flow-create.html">Flow Create</a>
+      <a href="flow-market.html">Flow Market</a>
+      <a href="flow-ops.html">Flow Ops</a>
+    </span>
+  </div>
+</footer>
+
+<script src="../js/flow-content.js"></script>
 </body>
 </html>

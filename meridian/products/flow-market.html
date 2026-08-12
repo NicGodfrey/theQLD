@@ -1,45 +1,346 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Flow Market — MERIDIAN</title>
-  <link rel="stylesheet" href="../css/studio.css" />
-  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flow Market · MERIDIAN — AI 营销工作流</title>
+<meta name="description" content="MERIDIAN Flow Market：AI 营销活动构建器。目标、人群、渠道（小红书/抖音/Twitter/Email/SEO）、预算与内容日历，一键生成完整营销方案，导出 CSV / JSON。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* MERIDIAN Flow Suite — embedded design system (brand tokens + components) */
+:root{
+  --ink:#0B1F2A;
+  --foam:#F3F0E7;
+  --acid:#C8F542;
+  --copper:#D9773F;
+  --line:rgba(11,31,42,.14);
+  --ink-70:rgba(11,31,42,.7);
+  --ink-55:rgba(11,31,42,.55);
+  --ink-35:rgba(11,31,42,.35);
+  --paper:rgba(255,255,255,.62);
+  --danger:#C2452C;
+  --display:"Bricolage Grotesque","IBM Plex Sans","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --body-font:"IBM Plex Sans","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --radius:14px;
+  --radius-sm:10px;
+  --shadow:0 12px 32px rgba(11,31,42,.08);
+  --speed:.22s;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:var(--body-font);color:var(--ink);line-height:1.65;font-size:15.5px;
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(1100px 620px at 10% -12%,rgba(200,245,66,.30),transparent 62%),
+    radial-gradient(920px 700px at 106% 4%,rgba(217,119,63,.16),transparent 56%),
+    radial-gradient(1400px 900px at 50% 118%,rgba(11,31,42,.09),transparent 60%),
+    var(--foam);
+  background-attachment:fixed;
+}
+body[data-page="flow-market"]{
+  background:
+    radial-gradient(1000px 600px at 88% -10%,rgba(200,245,66,.28),transparent 60%),
+    radial-gradient(900px 720px at -6% 14%,rgba(217,119,63,.18),transparent 55%),
+    radial-gradient(1400px 900px at 50% 120%,rgba(11,31,42,.09),transparent 60%),
+    var(--foam);
+  background-attachment:fixed;
+}
+body[data-page="flow-content"]{
+  background:
+    radial-gradient(1200px 640px at 50% -18%,rgba(200,245,66,.26),transparent 62%),
+    radial-gradient(880px 680px at 108% 46%,rgba(217,119,63,.15),transparent 55%),
+    radial-gradient(1400px 900px at 0% 120%,rgba(11,31,42,.10),transparent 62%),
+    var(--foam);
+  background-attachment:fixed;
+}
+body[data-page="flow-ops"]{
+  background:
+    radial-gradient(1000px 620px at -6% -8%,rgba(217,119,63,.20),transparent 58%),
+    radial-gradient(980px 700px at 104% 0%,rgba(200,245,66,.26),transparent 60%),
+    radial-gradient(1400px 900px at 50% 122%,rgba(11,31,42,.10),transparent 60%),
+    var(--foam);
+  background-attachment:fixed;
+}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.18;margin:0 0 .5em;letter-spacing:-.01em}
+p{margin:0 0 1em}
+a{color:inherit}
+::selection{background:var(--acid);color:var(--ink)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.stack{display:grid;gap:16px}
+.stack-lg{display:grid;gap:24px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row-between{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grow{flex:1 1 auto}
+.spacer{flex:1}
+@media (max-width:860px){.cols-2,.cols-3{grid-template-columns:1fr}}
+.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(243,240,231,.82);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1180px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:20px}
+.wordmark{font-family:var(--display);font-weight:800;letter-spacing:.22em;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.wordmark i{width:9px;height:9px;background:var(--acid);border:1.5px solid var(--ink);display:inline-block;transform:rotate(45deg);transition:transform var(--speed) ease}
+.wordmark:hover i{transform:rotate(225deg)}
+.nav-links{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+.nav-links a{text-decoration:none;font-size:13.5px;padding:6px 12px;border-radius:999px;color:var(--ink-70);transition:background var(--speed) ease,color var(--speed) ease}
+.nav-links a:hover{background:rgba(11,31,42,.07);color:var(--ink)}
+.nav-links a.active{background:var(--ink);color:var(--acid)}
+@media (max-width:720px){.nav-inner{padding:10px 16px;gap:10px}.nav-links a{padding:5px 9px;font-size:12.5px}}
+.hero{padding:84px 0 56px}
+.hero .hero-mark{font-family:var(--display);font-weight:800;letter-spacing:.34em;font-size:13px;color:var(--ink-55);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.hero .hero-mark::after{content:"";height:1px;flex:0 0 72px;background:var(--copper)}
+.hero .hero-mark strong{color:var(--ink)}
+.hero h1{font-size:clamp(34px,5.4vw,60px);font-weight:800;max-width:15em;margin-bottom:.35em}
+.hero h1 em{font-style:normal;background:linear-gradient(180deg,transparent 62%,var(--acid) 62%)}
+.hero .lede{font-size:clamp(15.5px,1.6vw,18px);color:var(--ink-70);max-width:44em;margin-bottom:28px}
+.cta-group{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.hero .hero-meta{margin-top:26px;font-size:13px;color:var(--ink-55);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.hero .hero-meta b{color:var(--copper);font-weight:600}
+.hero .hero-meta span::after{content:"·";margin-left:8px;color:var(--ink-35)}
+.hero .hero-meta span:last-child::after{content:""}
+@media (max-width:720px){.hero{padding:56px 0 40px}}
+.btn{appearance:none;border:1px solid var(--ink);cursor:pointer;font-family:var(--display);font-weight:700;font-size:14.5px;letter-spacing:.02em;padding:11px 22px;border-radius:999px;background:transparent;color:var(--ink);display:inline-flex;align-items:center;gap:8px;text-decoration:none;line-height:1.2;transition:transform var(--speed) ease,box-shadow var(--speed) ease,background var(--speed) ease,color var(--speed) ease}
+.btn:hover{transform:translateY(-1.5px);box-shadow:0 8px 20px rgba(11,31,42,.14)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:var(--ink);color:var(--acid);border-color:var(--ink)}
+.btn-primary:hover{background:#12303f}
+.btn-acid{background:var(--acid);color:var(--ink);border-color:var(--ink)}
+.btn-ghost{border-color:var(--line);background:rgba(255,255,255,.4)}
+.btn-danger{border-color:var(--danger);color:var(--danger);background:transparent}
+.btn-danger:hover{background:var(--danger);color:#fff}
+.btn-sm{padding:6px 13px;font-size:12.5px}
+.btn-icon{padding:4px 9px;font-size:13px;border-radius:8px;border-color:var(--line);background:rgba(255,255,255,.5);font-family:var(--body-font);font-weight:500}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.panel-head h2,.panel-head h3{margin:0;font-size:19px}
+.panel-head .hint{font-size:12.5px;color:var(--ink-55)}
+.panel-kicker{font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--copper);margin-bottom:6px}
+.subpanel{background:rgba(255,255,255,.5);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 16px}
+.field{display:grid;gap:6px;min-width:0}
+.field>label{font-size:12.5px;font-weight:600;letter-spacing:.04em;color:var(--ink-70)}
+input[type=text],input[type=number],input[type=date],select,textarea{font-family:var(--body-font);font-size:14.5px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);padding:9px 12px;width:100%;transition:border-color var(--speed) ease,box-shadow var(--speed) ease}
+textarea{resize:vertical;min-height:72px;line-height:1.55}
+textarea.code{font-family:var(--mono);font-size:13px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(200,245,66,.45)}
+input[type=range]{width:100%;accent-color:var(--copper);padding:0;border:none;background:transparent}
+.chip-toggle{position:relative;display:inline-flex;cursor:pointer}
+.chip-toggle input{position:absolute;opacity:0;pointer-events:none}
+.chip-toggle span{border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;background:rgba(255,255,255,.55);transition:all var(--speed) ease;user-select:none}
+.chip-toggle:hover span{border-color:var(--ink)}
+.chip-toggle input:checked+span{background:var(--ink);color:var(--acid);border-color:var(--ink)}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:12px;background:rgba(255,255,255,.55);white-space:nowrap}
+.chip.acid{background:var(--acid);border-color:var(--ink)}
+.chip.copper{background:var(--copper);color:#fff;border-color:var(--copper)}
+.chip.ink{background:var(--ink);color:var(--foam);border-color:var(--ink)}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{appearance:none;background:none;border:none;cursor:pointer;font-family:var(--display);font-weight:700;font-size:14px;color:var(--ink-55);padding:11px 16px;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color var(--speed) ease,border-color var(--speed) ease}
+.tabs button:hover{color:var(--ink)}
+.tabs button.active{color:var(--ink);border-bottom-color:var(--acid)}
+.tab-body{display:none;padding-top:18px}
+.tab-body.active{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff}
+table.data{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px}
+table.data th{text-align:left;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-55);padding:10px 12px;border-bottom:1px solid var(--line);background:rgba(243,240,231,.6);white-space:nowrap}
+table.data td{padding:9px 12px;border-bottom:1px solid rgba(11,31,42,.07);vertical-align:top}
+table.data tr:last-child td{border-bottom:none}
+table.data tr:hover td{background:rgba(200,245,66,.09)}
+.output{background:var(--ink);color:var(--foam);border-radius:var(--radius-sm);padding:14px 16px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;max-height:340px;overflow:auto;margin:0;font-family:var(--body-font)}
+.output.mono{font-family:var(--mono);font-size:12.5px}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-55)}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink-35)}
+.status.running::before{background:var(--copper);animation:pulse 1s infinite}
+.status.done::before{background:var(--acid);border:1px solid var(--ink)}
+.status.error::before{background:var(--danger)}
+@keyframes pulse{50%{opacity:.35}}
+.meter{height:10px;border-radius:999px;background:rgba(11,31,42,.09);overflow:hidden}
+.meter i{display:block;height:100%;border-radius:999px;background:var(--acid);transition:width .5s cubic-bezier(.2,.8,.2,1),background .3s ease}
+.meter i.copper{background:var(--copper)}
+.meter i.ink{background:var(--ink)}
+.meter i.danger{background:var(--danger)}
+.muted{color:var(--ink-55)}
+.small{font-size:12.5px}
+.mono{font-family:var(--mono)}
+.right{text-align:right}
+.mb-0{margin-bottom:0}
+.hr{border:none;border-top:1px solid var(--line);margin:18px 0}
+.badge-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;flex:0 0 26px;background:var(--acid);border:1.5px solid var(--ink);font-family:var(--display);font-weight:800;font-size:12.5px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);background:var(--ink);color:var(--foam);padding:11px 22px;border-radius:999px;font-size:13.5px;opacity:0;pointer-events:none;z-index:99;transition:opacity var(--speed) ease,transform var(--speed) ease;box-shadow:0 14px 34px rgba(11,31,42,.3);max-width:min(88vw,520px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.foot{margin-top:72px;border-top:1px solid var(--line);padding:26px 0 44px;font-size:12.5px;color:var(--ink-55)}
+.foot .foot-inner{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.foot a{color:var(--ink-70);text-decoration:none}
+.foot a:hover{color:var(--copper)}
+.studio{padding:8px 0 40px}
+.studio-grid{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+.lf-grid{display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start}
+@media (max-width:980px){.studio-grid,.lf-grid{grid-template-columns:1fr}}
+.stages{display:flex;gap:0;flex-wrap:wrap;align-items:stretch}
+.stage{appearance:none;cursor:pointer;background:rgba(255,255,255,.5);border:1px solid var(--line);padding:10px 16px;font-family:var(--display);font-weight:700;font-size:13.5px;color:var(--ink-70);display:flex;flex-direction:column;gap:2px;align-items:flex-start;min-width:118px;transition:all var(--speed) ease;position:relative}
+.stage small{font-family:var(--body-font);font-weight:400;font-size:11px;color:var(--ink-55);letter-spacing:.08em;text-transform:uppercase}
+.stage:first-child{border-radius:var(--radius-sm) 0 0 var(--radius-sm)}
+.stage:last-child{border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.stage+.stage{margin-left:-1px}
+.stage:hover{background:rgba(200,245,66,.25);z-index:1}
+.stage.active{background:var(--ink);color:var(--acid);border-color:var(--ink);z-index:2}
+.stage.active small{color:rgba(243,240,231,.66)}
+@media (max-width:720px){
+  .stages{flex-direction:column}
+  .stage{border-radius:0;min-width:0}
+  .stage:first-child{border-radius:var(--radius-sm) var(--radius-sm) 0 0}
+  .stage:last-child{border-radius:0 0 var(--radius-sm) var(--radius-sm)}
+  .stage+.stage{margin-left:0;margin-top:-1px}
+}
+.step-card{background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px;transition:box-shadow var(--speed) ease,transform var(--speed) ease}
+.step-card:hover{box-shadow:0 8px 22px rgba(11,31,42,.09)}
+.step-card.running{border-color:var(--copper);box-shadow:0 0 0 3px rgba(217,119,63,.18)}
+.step-card.done{border-color:rgba(11,31,42,.3)}
+.week-label{font-family:var(--display);font-weight:800;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper);margin:18px 0 8px}
+.week-label:first-child{margin-top:0}
+canvas.chart{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm)}
+
+</style>
 </head>
-<body>
-  <div class="shell">
-    <header class="topbar">
-      <a class="brand" href="../index.html">MERIDIAN<span>.</span></a>
-      <nav class="topnav"><a href="../index.html">工作室</a><a href="flow-create.html">创作</a><a href="flow-content.html">内容</a></nav>
-      <button class="btn btn-acid" id="genBtn" type="button">生成战役</button>
-    </header>
-    <div class="page-head">
-      <h1>Flow Market</h1>
-      <p>AI 营销工作流：目标、受众、渠道与日历一次成型，导出 CSV / JSON。</p>
-    </div>
-    
-    <div class="workspace">
-      <aside class="panel">
-        <div class="field"><label>战役目标</label><input id="goal" value="7 天获取 1200 个高意向试用" /></div>
-        <div class="field"><label>受众画像</label><textarea id="audience">独立开发者 / AI 应用团队，关注成本与稳定性</textarea></div>
-        <div class="field"><label>预算（元）</label><input id="budget" type="number" value="8000" /></div>
-        <div class="field"><label>渠道（可多选）</label><div id="channels" class="list"></div></div>
-        <div class="btn-row">
-          <button class="btn btn-ghost" id="saveBtn" type="button">保存战役</button>
-          <button class="btn btn-ghost" id="exportCsv" type="button">导出 CSV</button>
-          <button class="btn btn-ghost" id="exportJson" type="button">导出 JSON</button>
-        </div>
-      </aside>
-      <main class="panel">
-        <h3>战役计划</h3>
-        <div class="output" id="plan">填写左侧信息后生成。</div>
-        <h3 style="margin-top:1rem">内容日历</h3>
-        <div id="calendar" class="list"></div>
-      </main>
+<body data-page="flow-market" id="top">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="wordmark" href="#top">MERIDIAN<i></i></a>
+    <div class="nav-links">
+      <a href="flow-create.html">Flow Create</a>
+      <a href="flow-market.html" class="active">Flow Market</a>
+      <a href="flow-content.html">Flow Content</a>
+      <a href="flow-ops.html">Flow Ops</a>
     </div>
   </div>
-  <script src="../js/core.js"></script>
-  <script src="../js/flow-market.js"></script>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-mark"><strong>MERIDIAN</strong> Flow Market · AI 营销工作流</div>
+    <h1>一次输入，生成<em>整场营销战役</em>。</h1>
+    <p class="lede">设定目标、人群、渠道与预算，Flow Market 生成完整作战方案：内容支柱、渠道钩子、CTA、A/B 变体、KPI 目标与逐周发布日历。导出 CSV 给执行团队，导出 JSON 进你的系统。</p>
+    <div class="cta-group">
+      <a class="btn btn-primary" href="#studio">开始构建 Campaign ↓</a>
+      <button class="btn btn-ghost" id="heroExample">载入示例方案</button>
+    </div>
+    <div class="hero-meta">
+      <span><b>5</b> 大渠道模板</span>
+      <span><b>A/B</b> 双钩子变体</span>
+      <span><b>KPI</b> 随预算自动测算</span>
+      <span><b>CSV + JSON</b> 导出</span>
+    </div>
+  </div>
+</header>
+
+<main class="studio" id="studio">
+  <div class="wrap stack-lg">
+
+    <div class="studio-grid">
+      <section class="panel">
+        <div class="panel-kicker">Brief / 输入</div>
+        <div class="panel-head"><h2>活动设定</h2></div>
+        <div class="stack">
+          <div class="field">
+            <label>活动名称</label>
+            <input type="text" id="cName" placeholder="例如：秋季新品上市战役">
+          </div>
+          <div class="field">
+            <label>营销目标</label>
+            <select id="cGoal">
+              <option value="brand">品牌曝光 Awareness</option>
+              <option value="leads">线索获取 Leads</option>
+              <option value="conversion">电商转化 Conversion</option>
+              <option value="community">私域增长 Community</option>
+              <option value="launch">产品发布 Launch</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>目标人群</label>
+            <textarea id="cAudience" rows="3" placeholder="例如：25-35 岁一线城市白领，关注效率工具与自我提升"></textarea>
+          </div>
+          <div class="field">
+            <label>投放渠道</label>
+            <div class="row" id="cChannels">
+              <label class="chip-toggle"><input type="checkbox" value="小红书" checked><span>小红书</span></label>
+              <label class="chip-toggle"><input type="checkbox" value="抖音" checked><span>抖音</span></label>
+              <label class="chip-toggle"><input type="checkbox" value="Twitter/X"><span>Twitter/X</span></label>
+              <label class="chip-toggle"><input type="checkbox" value="Email" checked><span>Email</span></label>
+              <label class="chip-toggle"><input type="checkbox" value="SEO"><span>SEO</span></label>
+            </div>
+          </div>
+          <div class="cols-2">
+            <div class="field">
+              <label>总预算（¥）</label>
+              <input type="number" id="cBudget" min="1000" step="500" value="30000">
+            </div>
+            <div class="field">
+              <label>周期（周）</label>
+              <input type="number" id="cWeeks" min="1" max="12" value="4">
+            </div>
+          </div>
+          <div class="field">
+            <label>开始日期</label>
+            <input type="date" id="cStart">
+          </div>
+          <button class="btn btn-primary" id="generate">⚡ 生成完整营销方案</button>
+        </div>
+        <hr class="hr">
+        <div class="panel-kicker">Library / 方案库</div>
+        <div class="row" style="margin:8px 0 12px">
+          <button class="btn btn-sm btn-acid" id="saveCampaign">保存当前方案</button>
+        </div>
+        <div id="savedList" class="stack"></div>
+      </section>
+
+      <div class="stack-lg">
+        <section class="panel" id="planPanel" style="display:none">
+          <div class="panel-kicker">Plan / 方案</div>
+          <div class="panel-head">
+            <h2 id="planTitle">营销方案</h2>
+            <span class="row">
+              <button class="btn btn-sm btn-ghost" id="exportCsv">导出日历 CSV</button>
+              <button class="btn btn-sm btn-ghost" id="exportJson">导出方案 JSON</button>
+            </span>
+          </div>
+          <div id="planSummary" class="stack"></div>
+        </section>
+
+        <section class="panel" id="calendarPanel" style="display:none">
+          <div class="panel-kicker">Calendar / 发布日历</div>
+          <div class="panel-head">
+            <h2>逐周发布日历</h2>
+            <span class="hint" id="calHint"></span>
+          </div>
+          <div id="calendar"></div>
+        </section>
+
+        <section class="panel" id="emptyPanel">
+          <div class="panel-head"><h2>方案预览区</h2></div>
+          <p class="muted mb-0">填写左侧活动设定后点击「生成完整营销方案」，这里会出现：预算分配、KPI 目标、内容支柱、各渠道钩子与 CTA、A/B 变体，以及逐周发布日历。</p>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span>MERIDIAN Studio · Flow Market — 数据仅保存在你的浏览器（localStorage），不上传任何服务器。</span>
+    <span class="row">
+      <a href="flow-create.html">Flow Create</a>
+      <a href="flow-content.html">Flow Content</a>
+      <a href="flow-ops.html">Flow Ops</a>
+    </span>
+  </div>
+</footer>
+
+<script src="../js/flow-market.js"></script>
 </body>
 </html>
