@@ -1,4 +1,8 @@
 import { Hono } from "hono";
+import {
+  handleAnthropicMessages,
+  handleAnthropicModels,
+} from "./anthropicProxy.js";
 import { config } from "./config.js";
 import { sessionInvoice } from "./billing.js";
 import {
@@ -55,6 +59,8 @@ export function buildApp() {
       orchestratorUrl: config.orchestratorUrl,
       endpoints: [
         "GET /health",
+        "GET /v1/models  (Anthropic-compatible for Claude Code)",
+        "POST /v1/messages  (Anthropic-compatible for Claude Code)",
         "GET /v1/pool",
         "POST /v1/pool/hot-start",
         "POST /v1/pool/register",
@@ -69,9 +75,23 @@ export function buildApp() {
   );
 
   app.use("/v1/*", async (c, next) => {
-    if (!auth(c)) return c.json({ error: "unauthorized" }, 401);
+    if (!auth(c)) {
+      return c.json(
+        {
+          type: "error",
+          error: {
+            type: "authentication_error",
+            message: "invalid gateway token",
+          },
+        },
+        401,
+      );
+    }
     await next();
   });
+
+  app.get("/v1/models", (c) => handleAnthropicModels(c));
+  app.post("/v1/messages", (c) => handleAnthropicMessages(c));
 
   app.get("/v1/pool", (c) => {
     loadRegistryIntoStore();
@@ -106,7 +126,14 @@ export function buildApp() {
       const body = await c.req.json();
       const clientId = String(body.clientId || "");
       if (!clientId) return c.json({ error: "clientId required" }, 400);
-      return c.json(acquireSession(clientId));
+      const preferredSlot =
+        body.preferredSlot != null ? Number(body.preferredSlot) : undefined;
+      return c.json(
+        acquireSession(clientId, {
+          preferredSlot,
+          reuse: Boolean(body.reuse),
+        }),
+      );
     } catch (err) {
       if (err instanceof SessionError) {
         return c.json(

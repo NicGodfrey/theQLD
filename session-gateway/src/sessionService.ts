@@ -21,11 +21,34 @@ export class SessionError extends Error {
   }
 }
 
-export function acquireSession(clientId: string) {
+function sessionPayload(sessionId: string, workerSlot: number) {
+  const worker = store.get().workers.find((w) => w.slot === workerSlot)!;
+  return {
+    sessionId,
+    worker: {
+      slot: worker.slot,
+      name: worker.name,
+      bcId: worker.bcId,
+      url: worker.url,
+      modelId: worker.modelId,
+    },
+    heartbeatTtlMs: config.heartbeatTtlMs,
+    orchestratorUrl: config.orchestratorUrl,
+  };
+}
+
+export function acquireSession(
+  clientId: string,
+  opts?: { preferredSlot?: number; reuse?: boolean },
+) {
   const active = store
     .get()
     .sessions.find((s) => s.clientId === clientId && s.status === "ACTIVE");
   if (active) {
+    if (opts?.reuse) {
+      heartbeat(active.sessionId);
+      return sessionPayload(active.sessionId, active.workerSlot);
+    }
     throw new SessionError(
       "This client already holds a session; one session may bind only one worker",
       "session_exists",
@@ -33,11 +56,28 @@ export function acquireSession(clientId: string) {
     );
   }
 
-  const free = store
-    .get()
-    .workers.find((w) => w.status === "FREE" && w.bcId && w.url);
+  const preferred = opts?.preferredSlot
+    ? store
+        .get()
+        .workers.find(
+          (w) =>
+            w.slot === opts.preferredSlot &&
+            w.status === "FREE" &&
+            w.bcId &&
+            w.url,
+        )
+    : undefined;
+  const free =
+    preferred ||
+    store.get().workers.find((w) => w.status === "FREE" && w.bcId && w.url);
   if (!free) {
-    throw new SessionError("No free GPT5.6 sol workers", "pool_full", 503);
+    throw new SessionError(
+      opts?.preferredSlot
+        ? `Worker slot ${opts.preferredSlot} is not free`
+        : "No free GPT5.6 sol workers",
+      "pool_full",
+      503,
+    );
   }
 
   const sessionId = uuidv4();
@@ -61,19 +101,7 @@ export function acquireSession(clientId: string) {
     });
   });
 
-  const worker = store.get().workers.find((w) => w.slot === free.slot)!;
-  return {
-    sessionId,
-    worker: {
-      slot: worker.slot,
-      name: worker.name,
-      bcId: worker.bcId,
-      url: worker.url,
-      modelId: worker.modelId,
-    },
-    heartbeatTtlMs: config.heartbeatTtlMs,
-    orchestratorUrl: config.orchestratorUrl,
-  };
+  return sessionPayload(sessionId, free.slot);
 }
 
 export function heartbeat(sessionId: string) {
