@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+scan_results.json
+scan_targets.json
+unaccused_scan.json
