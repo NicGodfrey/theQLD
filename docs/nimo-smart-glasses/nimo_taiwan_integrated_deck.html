@@ -1,280 +1,483 @@
 <!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"/><title>NIMO台湾洞察×操盘整合汇报</title><style>
 @page { size: 297mm 210mm; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-html, body { font-family: "WenQuanYi Micro Hei", "Segoe UI", "Microsoft YaHei", sans-serif; background: #cfcbc2; color: #0b0b0b; font-size: 8pt; }
-.slide { width: 297mm; height: 210mm; background: #fcfcfb; page-break-after: always; position: relative; overflow: hidden; padding: 9mm 11mm 9mm; }
+html, body { font-family: "WenQuanYi Micro Hei", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; background: #cfcbc2; color: #0b0b0b; font-size: 8pt; }
+.slide { width: 297mm; height: 210mm; background: #fcfcfb; page-break-after: always; position: relative; overflow: hidden; padding: 8.5mm 11mm 26mm; }
 .slide:last-child { page-break-after: auto; }
 .slide.cover { background: radial-gradient(120% 80% at 100% 0%, rgba(42,120,214,.10), transparent 55%), radial-gradient(90% 70% at 0% 100%, rgba(27,175,122,.08), transparent 50%), #fcfcfb; }
-.eyebrow { font-size: 7.4pt; letter-spacing: .07em; color: #898781; margin-bottom: 2mm; }
+.eyebrow { font-size: 7.2pt; letter-spacing: .07em; color: #898781; margin-bottom: 1.8mm; }
 .eyebrow .p { color: #2a78d6; font-weight: 700; }
-.kicker { display: inline-block; font-size: 7.2pt; font-weight: 700; letter-spacing: .12em; color: #fff; background: #0b0b0b; padding: 1mm 2.4mm; margin-bottom: 2.8mm; }
-h1 { font-size: 15.5pt; font-weight: 700; line-height: 1.18; letter-spacing: -.02em; margin-bottom: 1.8mm; }
+.kicker { display: inline-block; font-size: 7.2pt; font-weight: 700; letter-spacing: .12em; color: #fff; background: #0b0b0b; padding: 1mm 2.4mm; margin-bottom: 2.6mm; }
+h1 { font-size: 15pt; font-weight: 700; line-height: 1.16; letter-spacing: -.02em; margin-bottom: 1.6mm; }
 h1 .blue { color: #2a78d6; }
-.lead { font-size: 8.3pt; line-height: 1.48; color: #52514e; margin-bottom: 2.8mm; max-width: 255mm; }
+.lead { font-size: 8.1pt; line-height: 1.45; color: #52514e; margin-bottom: 2.5mm; max-width: 262mm; }
 .hl { color: #2a78d6; font-weight: 700; }
-.rule { height: .55pt; background: #e1e0d9; margin: 0 0 3mm; }
-.metrics { display: grid; gap: 0; margin-bottom: 3mm; border-bottom: .55pt solid #e1e0d9; padding-bottom: 2.4mm; }
+.rule { height: .55pt; background: #e1e0d9; margin: 0 0 2.8mm; }
+.metrics { display: grid; gap: 0; margin-bottom: 2.8mm; border-bottom: .55pt solid #e1e0d9; padding-bottom: 2.2mm; }
 .metrics.c4 { grid-template-columns: repeat(4,1fr); }
 .metrics.c5 { grid-template-columns: repeat(5,1fr); }
-.metric { padding: 2.1mm 2.8mm 0 0; border-top: 2.3pt solid #2a78d6; }
-.metrics .metric + .metric { padding-left: 2.8mm; border-left: .55pt solid #e1e0d9; }
+.metric { padding: 2mm 2.6mm 0 0; border-top: 2.3pt solid #2a78d6; }
+.metrics .metric + .metric { padding-left: 2.6mm; border-left: .55pt solid #e1e0d9; }
 .metric.tg { border-top-color: #1baf7a; } .metric.to { border-top-color: #eda100; }
 .metric.tp { border-top-color: #4a3aa7; } .metric.tr { border-top-color: #e34948; } .metric.tk { border-top-color: #0b0b0b; }
-.metric .num { font-size: 13pt; font-weight: 700; line-height: 1.1; margin-bottom: .6mm; }
-.metric .sub { font-size: 7.3pt; margin-bottom: .3mm; }
-.metric .note { font-size: 6.4pt; color: #898781; line-height: 1.3; }
-.h2 { display: flex; align-items: center; gap: 1.6mm; font-size: 9pt; font-weight: 700; color: #2a78d6; margin: 0 0 1.7mm; }
+.metric .num { font-size: 12.5pt; font-weight: 700; line-height: 1.1; margin-bottom: .6mm; font-variant-numeric: tabular-nums; }
+.metric .sub { font-size: 7.2pt; margin-bottom: .3mm; font-weight: 700; }
+.metric .note { font-size: 6.3pt; color: #898781; line-height: 1.3; }
+.h2 { display: flex; align-items: center; gap: 1.6mm; font-size: 8.8pt; font-weight: 700; color: #2a78d6; margin: 0 0 1.6mm; }
 .h2::before { content:""; width: 2.1mm; height: 2.1mm; background: #2a78d6; }
-.row { display: grid; gap: 3mm; margin-bottom: 2.4mm; } .row > * { min-width: 0; }
+.row { display: grid; gap: 2.8mm; margin-bottom: 2.4mm; } .row > * { min-width: 0; }
 .row.c2 { grid-template-columns: 1fr 1fr; }
 .row.c3 { grid-template-columns: 1fr 1fr 1fr; }
 .row.c4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
-.row.c12 { grid-template-columns: 1.3fr .95fr; }
-.card { background: #fff; border: .7pt solid #e1e0d9; border-radius: 1mm; padding: 2.5mm 2.7mm; overflow: hidden; }
+.row.c12 { grid-template-columns: 1.35fr .9fr; }
+.card { background: #fff; border: .7pt solid #e1e0d9; border-radius: 1mm; padding: 2.4mm 2.6mm; overflow: hidden; }
 .card.dark { background: #0b0b0b; border-color: #0b0b0b; }
 .card.dark .ck { color: #fff; } .card.dark p, .card.dark li { color: #d8d6cf; }
-.ck { display: flex; align-items: center; gap: 1.4mm; font-size: 7.9pt; font-weight: 700; margin-bottom: 1.3mm; }
+.ck { display: flex; align-items: center; gap: 1.4mm; font-size: 7.8pt; font-weight: 700; margin-bottom: 1.2mm; }
 span.sq { width: 2mm; height: 2mm; display: inline-block; flex: 0 0 auto; }
 span.sq.b { background: #2a78d6; } span.sq.g { background: #1baf7a; }
 span.sq.o { background: #eda100; } span.sq.r { background: #e34948; } span.sq.p { background: #4a3aa7; } span.sq.w { background: #fff; }
-.card p, .card li, .persp p, .persp li { font-size: 7.1pt; line-height: 1.4; color: #52514e; }
+.card p, .card li, .persp p, .persp li { font-size: 7pt; line-height: 1.4; color: #52514e; }
 .card ul, .persp ul { list-style: none; padding: 0; }
-.card ul li, .persp ul li { position: relative; padding-left: 3mm; margin-bottom: .45mm; }
-.card ul li::before { content:""; position: absolute; left: 0; top: 1.15mm; width: 1.45mm; height: 1.45mm; background: #c8c6be; }
+.card ul li, .persp ul li { position: relative; padding-left: 3mm; margin-bottom: .5mm; }
+.card ul li::before { content:""; position: absolute; left: 0; top: 1.1mm; width: 1.45mm; height: 1.45mm; background: #c8c6be; }
 .persp { background: #fff; border: .7pt solid #e1e0d9; border-top: 2.1pt solid #2a78d6; border-radius: 1mm; padding: 2.3mm 2.6mm; }
-.persp.g { border-top-color: #1baf7a; } .persp.o { border-top-color: #eda100; }
+.persp.g { border-top-color: #1baf7a; } .persp.o { border-top-color: #eda100; } .persp.r { border-top-color: #e34948; }
 .ptag { display: flex; align-items: center; gap: 1.4mm; font-size: 7.5pt; font-weight: 700; color: #2a78d6; margin-bottom: 1mm; }
-.persp.g .ptag { color: #1baf7a; } .persp.o .ptag { color: #c07d00; }
-.persp ul li::before { content:""; position: absolute; left: 0; top: 1.15mm; width: 1.45mm; height: 1.45mm; background: #2a78d6; }
-.persp.g ul li::before { background: #1baf7a; }
+.persp.g .ptag { color: #1baf7a; } .persp.o .ptag { color: #c07d00; } .persp.r .ptag { color: #e34948; }
+.persp ul li::before { content:""; position: absolute; left: 0; top: 1.1mm; width: 1.45mm; height: 1.45mm; background: #2a78d6; }
+.persp.g ul li::before { background: #1baf7a; } .persp.r ul li::before { background: #e34948; }
 table.tbl { width: 100%; border-collapse: collapse; font-size: 6.7pt; }
-table.tbl th { text-align: left; font-weight: 700; border-bottom: 1.15pt solid #0b0b0b; padding: 1.15mm 1.2mm 1.3mm 0; }
-table.tbl td { color: #52514e; border-bottom: .55pt solid #e1e0d9; padding: 1.25mm 1.2mm 1.25mm 0; vertical-align: top; line-height: 1.35; }
+table.tbl th { text-align: left; font-weight: 700; border-bottom: 1.15pt solid #0b0b0b; padding: 1.1mm 1.2mm 1.2mm 0; }
+table.tbl td { color: #52514e; border-bottom: .55pt solid #e1e0d9; padding: 1.15mm 1.2mm 1.15mm 0; vertical-align: top; line-height: 1.35; }
 table.tbl td.k { color: #0b0b0b; font-weight: 700; } table.tbl td.b { color: #2a78d6; font-weight: 700; }
+table.tbl td.g { color: #1baf7a; font-weight: 700; } table.tbl td.rd { color: #e34948; font-weight: 700; }
 table.tbl .r { text-align: right; font-variant-numeric: tabular-nums; }
-.tag { display: inline-block; font-size: 6.2pt; font-weight: 700; padding: .2mm 1.1mm; border-radius: .4mm; background: #eaf2fc; color: #2a78d6; }
+table.tbl th.r { text-align: right; }
+.tag { display: inline-block; font-size: 6.1pt; font-weight: 700; padding: .2mm 1.1mm; border-radius: .4mm; background: #eaf2fc; color: #2a78d6; white-space: nowrap; }
 .tag.g { background: #e6f7f0; color: #1baf7a; } .tag.o { background: #fff4df; color: #c07d00; } .tag.r { background: #fdecec; color: #e34948; }
-.chain { display: grid; grid-template-columns: 1fr 4.5mm 1fr 4.5mm 1fr 4.5mm 1fr 4.5mm 1fr; align-items: stretch; margin-bottom: 2.3mm; }
-.chain .node { background: #fff; border: .7pt solid #e1e0d9; border-radius: 1mm; padding: 2mm 2.2mm; }
+.chain { display: grid; align-items: stretch; margin-bottom: 2.5mm; }
+.chain.n4 { grid-template-columns: 1fr 4.5mm 1fr 4.5mm 1fr 4.5mm 1fr; }
+.chain.n5 { grid-template-columns: 1fr 4.5mm 1fr 4.5mm 1fr 4.5mm 1fr 4.5mm 1fr; }
+.chain .node { background: #fff; border: .7pt solid #e1e0d9; border-radius: 1mm; padding: 1.9mm 2.1mm; }
+.chain .node .nt { font-size: 7.2pt; font-weight: 700; margin-bottom: .7mm; display: flex; align-items: center; gap: 1.3mm; }
+.chain .node p { font-size: 6.6pt; color: #52514e; line-height: 1.35; }
 .chain .arrow { display:flex; align-items:center; justify-content:center; color:#898781; font-size:9pt; }
-.parts { display: grid; grid-template-columns: repeat(4,1fr); gap: 2.8mm; margin: 2mm 0 2.8mm; }
-.part { background: #fff; border: .7pt solid #e1e0d9; border-radius: 1mm; padding: 2.8mm; min-height: 34mm; }
-.part .n { font-size: 7pt; font-weight: 700; letter-spacing: .06em; margin-bottom: 1mm; }
-.part .t { font-size: 11pt; font-weight: 700; margin-bottom: 1.3mm; }
-.part p { font-size: 7.1pt; color: #52514e; line-height: 1.4; }
-.disc { background: #f5f4f0; border-radius: 1mm; padding: 1.8mm 2.5mm; font-size: 6.3pt; color: #898781; line-height: 1.35; }
+.decis { display: grid; grid-template-columns: repeat(3,1fr); gap: 2.6mm; margin: 0 0 2.8mm; }
+.dbox { background: #fff; border: .7pt solid #e1e0d9; border-left: 2.6pt solid #2a78d6; border-radius: 1mm; padding: 2.2mm 2.5mm; }
+.dbox .dn { font-size: 6.6pt; font-weight: 700; letter-spacing: .08em; color: #2a78d6; margin-bottom: .8mm; }
+.dbox .dt { font-size: 8.2pt; font-weight: 700; margin-bottom: .8mm; line-height: 1.25; }
+.dbox p { font-size: 6.8pt; color: #52514e; line-height: 1.38; }
+.dbox.g { border-left-color: #1baf7a; } .dbox.g .dn { color: #1baf7a; }
+.dbox.o { border-left-color: #eda100; } .dbox.o .dn { color: #c07d00; }
+.dbox.p { border-left-color: #4a3aa7; } .dbox.p .dn { color: #4a3aa7; }
+.dbox.r { border-left-color: #e34948; } .dbox.r .dn { color: #e34948; }
+.dbox.k { border-left-color: #0b0b0b; } .dbox.k .dn { color: #0b0b0b; }
+.concl { position: absolute; left: 11mm; right: 11mm; bottom: 9.6mm; background: #0b0b0b; border-radius: 1mm; padding: 2.4mm 3mm; display: grid; grid-template-columns: auto 1fr; gap: 3mm; align-items: center; }
+.concl .cl { font-size: 6.8pt; font-weight: 700; letter-spacing: .1em; color: #0b0b0b; background: #ffd35c; padding: .9mm 2mm; border-radius: .4mm; white-space: nowrap; }
+.concl p { font-size: 7.8pt; font-weight: 700; color: #fff; line-height: 1.42; }
+.concl p b { color: #8ec1ff; }
+.disc { background: #f5f4f0; border-radius: 1mm; padding: 1.7mm 2.4mm; font-size: 6.2pt; color: #898781; line-height: 1.35; }
 .foot { position: absolute; left: 11mm; right: 11mm; bottom: 3.3mm; display: grid; grid-template-columns: 1fr auto 1fr; font-size: 6.3pt; color: #898781; border-top: .55pt solid #e1e0d9; padding-top: 1.3mm; }
-.foot .c { text-align: center; } .foot .rr { text-align: right; font-weight: 700; color: #52514e; }
+.foot .c { text-align: center; } .foot .rr { text-align: right; font-weight: 700; color: #52514e; font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: tabular-nums; }
 </style></head><body>
+
+<!-- P01 封面 -->
 <section class="slide cover">
-  <div class="kicker">INTEGRATED STRATEGY REPORT</div>
-  <div class="eyebrow">市场洞察 · 视光 KA 格局 · 高规同价绝杀 · 渠道政策 · 节奏</div>
-  <h1>NIMO 台湾上市<br><span class="blue">洞察 × 操盘整合汇报</span></h1>
-  <p class="lead">一条线讲清：战场在哪、对手是谁、<span class="hl">第二三 KA 是谁</span>、开局怎么定价、渠道怎么让利、认证后怎么打。角色称 <b>KA</b>，不称省代。</p>
+  <div class="kicker">BOSS DECISION DECK · 2026.08</div>
+  <div class="eyebrow">市场切割 · 竞争矩阵 · 视光 KA 梯队 · 高规同价绝杀 · 价盘政策 · 认证节奏</div>
+  <h1>NIMO 台湾洞察 × 操盘整合汇报<br><span class="blue">视光主场 · 高规同价绝杀</span></h1>
+  <p class="lead">台湾已是分割市场：Eagle 占繁中摄像、Rokid×宝岛占视光有屏有摄像、Even×iNNOHOME 占 Quiet Tech 3C 柜。NIMO 只打一场仗——<span class="hl">视光连锁深度的无摄像 HUD 日常镜</span>，赢在更轻 + 含镜透明 + 当场验配。本册十一页，每页一个结论，可直接进决策会。</p>
   <div class="rule"></div>
-  <div class="parts">
-    <div class="part"><div class="n" style="color:#2a78d6;">PART I</div><div class="t">洞察</div><p>赛道切割 · 竞争矩阵 · 视光连锁 KA 梯队 · Rokid 配镜模式</p></div>
-    <div class="part"><div class="n" style="color:#1baf7a;">PART II</div><div class="t">操盘</div><p>高规同价绝杀 · 话术 · 对 Even/Rokid 结构对照</p></div>
-    <div class="part"><div class="n" style="color:#4a3aa7;">PART III</div><div class="t">价盘政策</div><p>货盘 · 提货收入 · 半价戒 · KA 毛利返利</p></div>
-    <div class="part"><div class="n" style="color:#eda100;">PART IV</div><div class="t">节奏</div><p>认证闸门 · 开杀 · 回抬另议 · 扩店</p></div>
+  <div class="decis">
+    <div class="dbox"><div class="dn">决策 ① 战场</div><div class="dt">视光 KA 主场</div><p>无摄像 HUD 日常镜；不用电信 / 3C 定义品牌。</p></div>
+    <div class="dbox g"><div class="dn">决策 ② 价盘</div><div class="dt">$499 / $599 含镜开局</div><p>高规同价绝杀；高折射与渐进 = 表价 −$100；回抬可选不自动。</p></div>
+    <div class="dbox p"><div class="dn">决策 ③ KA 政策</div><div class="dt">毛利 35 / 40 / 42% + 返利 3%</div><p>包运税卖断；前期镜片 NIMO 供；角色称 KA，不称省代。</p></div>
+    <div class="dbox o"><div class="dn">决策 ④ 半价戒</div><div class="dt">MAP $249 → 视光 $124.50</div><p>仅认证视光店加购、绑主机订单；不进电信打包。</p></div>
+    <div class="dbox k"><div class="dn">决策 ⑤ 目标</div><div class="dt">年内 500 → 次年 1 万（暂定）</div><p>首年 15–30 家标杆店，密度优先不铺柜。</p></div>
+    <div class="dbox r"><div class="dn">决策 ⑥ 节奏</div><div class="dt">证书到手才开卖</div><p>BSMI ≈3 个月、NCC ≈1 个月可并行；未取证不上柜。</p></div>
   </div>
   <div class="metrics c5">
-    <div class="metric"><div class="num">宝岛→小林</div><div class="sub">第一 / 第二 KA</div><div class="note">仁爱·得恩堂并行</div></div>
-    <div class="metric tg"><div class="num">$599</div><div class="sub">单光含镜绝杀</div><div class="note">≈NT$19,168</div></div>
-    <div class="metric to"><div class="num">$499</div><div class="sub">平光开局</div><div class="note">≈NT$15,968</div></div>
-    <div class="metric tp"><div class="num">$124.5</div><div class="sub">视光半价戒</div><div class="note">MAP $249</div></div>
-    <div class="metric tk"><div class="num">500→1万</div><div class="sub">年内→次年（暂定）</div><div class="note">副 · 销量目标</div></div>
+    <div class="metric tg"><div class="num">$599</div><div class="sub">单光 1.60 含镜绝杀锚</div><div class="note">≈NT$19,168 · 贴 Even/Rokid 两万带</div></div>
+    <div class="metric"><div class="num">$499</div><div class="sub">平光入场价</div><div class="note">≈NT$15,968 · 低于两万锚</div></div>
+    <div class="metric to"><div class="num">~29g</div><div class="sub">更轻的本命镜</div><div class="note">Even G2 ~36g · Rokid ~49g 级</div></div>
+    <div class="metric tp"><div class="num">35/40/42%</div><div class="sub">KA 毛利预留</div><div class="note">+ 提货返利 3%</div></div>
+    <div class="metric tk"><div class="num">500→1万</div><div class="sub">年内 → 次年销量（副）</div><div class="note">次年暂定，M6 复盘锁定</div></div>
   </div>
-  <div class="foot"><span>NIMO 台湾市场洞察 × 上市操盘整合汇报 · 2026.08 · 内部</span><span class="c">封面</span><span class="rr">01</span></div>
+  <div class="concl"><span class="cl">本页结论</span><p>今天请拍板六件事：打视光主场、<b>$499/$599 含镜开局</b>、KA 毛利 35/40/42%+3%、半价戒只进视光、目标 <b>500→1 万</b>、证书不齐不上柜。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">封面 · 要决策什么</span><span class="rr">01 / 11</span></div>
 </section>
 
+<!-- P02 决策一页纸 -->
 <section class="slide">
-  <div class="eyebrow"><span class="p">PART I · 洞察</span> / 决策摘要</div>
-  <h1>台湾已是分割市场：视光主场仍有空位</h1>
-  <p class="lead">不能只喊无摄像头（Even 已占）。NIMO 抢 <span class="hl">视光连锁深度的无摄像 HUD</span>：更轻、含镜、当场验配。</p>
+  <div class="eyebrow"><span class="p">结论先行</span> / 决策一页纸</div>
+  <h1>六个维度，一页拍板</h1>
+  <p class="lead">每条结论都可直接写进任务书；依据在后页逐一展开，数字全部同源可查（汇率测算 <span class="num">1 USD = 32 TWD = 7.2 CNY</span>）。</p>
   <div class="rule"></div>
-  <div class="metrics c4">
-    <div class="metric"><div class="num">Eagle</div><div class="sub">繁中摄像日常</div><div class="note">电信+眼镜密度</div></div>
-    <div class="metric tg"><div class="num">Rokid</div><div class="sub">视光有屏有摄像</div><div class="note">宝岛独家教育品类</div></div>
-    <div class="metric to"><div class="num">Even</div><div class="sub">Quiet Tech 无摄像</div><div class="note">3C/电信/精品</div></div>
-    <div class="metric tp"><div class="num">NIMO空位</div><div class="sub">视光无摄像日常镜</div><div class="note">高规同价绝杀</div></div>
+  <table class="tbl" style="margin-bottom:2.6mm;">
+    <tr><th style="width:9%">维度</th><th style="width:47%">结论（拍板项）</th><th>关键依据</th></tr>
+    <tr><td class="k">战场</td><td class="b">视光连锁深度的无摄像 HUD 日常镜；不用电信 / 3C 定义品牌</td><td>B 赛道两强都没占「验光台上的无摄像」：Even 走 3C/电信，Rokid 有摄像</td></tr>
+    <tr><td class="k">对手</td><td>主敌 <b>Even</b>（同哲学）+ <b>Rokid</b>（同柜）；Eagle 为心智对照，Meta 水货为舆论对照</td><td>Even G2 NT$19,990 裸机、处方另计；Rokid NT$19,999 有摄像更重</td></tr>
+    <tr><td class="k">定价</td><td class="b">开局平光 $499 / 单光 1.60 $599 含镜；1.67/1.74/渐进 = 表价 −$100；回抬可选不自动</td><td>高规同价绝杀：同一标价带多含一副处方片 + 无摄像 + 更轻</td></tr>
+    <tr><td class="k">渠道</td><td>KA 梯队 <b>宝岛(~470) → 小林(~234) → 得恩堂(~80) ∥ 仁爱(~113) 试点</b>；首年 15–30 家标杆店</td><td>密度优先不铺柜；宝岛谈不拢有第二梯队保底，不单押</td></tr>
+    <tr><td class="k">目标</td><td class="b">年内 500 副；次年暂定 10,000 副（M6 复盘锁定）</td><td>均提货约 $350/台 → 年内销售收入约 USD 17–18 万量级</td></tr>
+    <tr><td class="k">风险</td><td>三大雷：<b>Even 平替标签 / 宝岛排他 / 处方交期翻车</b>——应对预案见 P11</td><td>认证 BSMI≈3 个月、NCC≈1 个月是节奏底线；未取证不上柜</td></tr>
+  </table>
+  <div class="row c2" style="margin-bottom:0;">
+    <div class="persp g">
+      <div class="ptag"><span class="sq g"></span>操盘视角 · 为什么是这六条</div>
+      <p>台湾不缺 AI 眼镜，缺的是「能当本命镜天天戴的无摄像 HUD」。我们不做第四个铺 3C 的品牌：Even 已证明这条哲学能赚钱，宝岛已证明验光台能卖两万的 AI 镜——NIMO 把两个已验证的事实拼在一起。</p>
+    </div>
+    <div class="persp">
+      <div class="ptag"><span class="sq b"></span>口径纪律</div>
+      <p>全文角色统一称 <b>KA</b>（视光连锁），不称省代；话术统一「同价更高规格」，禁止「更便宜 / 平替」。销量口径：年内 500 副为承诺目标，次年 1 万副为暂定目标，须经 M6 复盘再锁。</p>
+    </div>
   </div>
-  <div class="row c2">
-    <div>
-      <div class="h2">三条赛道（勿混战）</div>
-      <table class="tbl">
-        <tr><th>赛道</th><th>代表</th><th>NIMO</th></tr>
-        <tr><td class="k">A 摄像日常</td><td>Eagle / Meta水货</td><td>不正面硬刚</td></tr>
-        <tr><td class="k">B 轻显示 HUD</td><td>Rokid / Even / NIMO</td><td class="b">主战场</td></tr>
-        <tr><td class="k">C 影音巨幕</td><td>RayNeo / XREAL</td><td>不进入</td></tr>
-      </table>
+  <div class="concl"><span class="cl">本页结论</span><p>标价对齐两万心智、规格全面压过 Even/Rokid；渠道押视光梯队、不单押宝岛；节奏服从取证——<b>六条通过即可启动</b>。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">决策一页纸</span><span class="rr">02 / 11</span></div>
+</section>
+
+<!-- P03 市场切割 -->
+<section class="slide">
+  <div class="eyebrow"><span class="p">PART I · 洞察</span> / 市场切割</div>
+  <h1>三条赛道已分割完毕，只剩一个空位</h1>
+  <p class="lead">台湾不是「没有 AI 眼镜」的市场。消费者决策已从「有没有」转向「<span class="hl">正不正规、配不配度数、敢不敢天天戴、会不会被拍</span>」——这四问全部指向验光台。</p>
+  <div class="rule"></div>
+  <table class="tbl" style="margin-bottom:2.6mm;">
+    <tr><th style="width:16%">赛道</th><th style="width:26%">代表</th><th style="width:20%">用户心智</th><th style="width:22%">台湾成熟度</th><th>NIMO 动作</th></tr>
+    <tr><td class="k">A 日常摄像 AI</td><td>HTC Eagle / Meta 水货 / 小米代购</td><td>像普通眼镜 + 随身 AI</td><td>Eagle 已正规化（台哥大 300+ 门市）</td><td>不正面硬刚</td></tr>
+    <tr><td class="k">B 轻显示 HUD</td><td>Rokid×宝岛 / Even×iNNOHOME / <b>NIMO</b></td><td>抬头看见信息</td><td>两强已各占一类柜面</td><td class="b">主战场</td></tr>
+    <tr><td class="k">C 影音巨幕 AR</td><td>RayNeo / XREAL / VITURE</td><td>口袋电影院</td><td>代理与电商成熟</td><td>不进入，不拼 FOV</td></tr>
+  </table>
+  <div class="row c2" style="margin-bottom:0;">
+    <div class="card">
+      <div class="ck"><span class="sq r"></span>已被占满的位置</div>
+      <ul>
+        <li><b>繁中摄像日常</b> —— HTC VIVE Eagle（NT$15,600 起，电信 + 眼镜伙伴）</li>
+        <li><b>视光连锁有屏有摄像</b> —— Rokid×宝岛（NT$19,999，首批约 51 店）</li>
+        <li><b>无摄像 Quiet Tech（3C/精品/电信）</b> —— Even×iNNOHOME（NT$19,990，2026.8 开卖）</li>
+        <li><b>全球时尚心智（无正规）</b> —— Ray-Ban Meta 水货（约 0.9–1.8 万）</li>
+        <li><b>口袋巨幕</b> —— RayNeo / XREAL / VITURE</li>
+      </ul>
     </div>
     <div class="persp g">
-      <div class="ptag"><span class="sq g"></span>操盘视角</div>
-      <p>Even 解决「买得到」；宝岛×Rokid 解决「验得好的有屏有摄」。我们要解决的是：<b>验光台上的无摄像本命镜</b>——同价带规格全面更高。</p>
+      <div class="ptag"><span class="sq g"></span>NIMO 空位为何成立（三个证据）</div>
+      <ul>
+        <li><b>Even 未进视光验配主场</b>：处方走品牌实验室中心制、交期长；台湾通路是全国电子/法雅客/诚品/台哥大，不是验光台。</li>
+        <li><b>Rokid 做不了「会议室敢戴的本命镜」</b>：有摄像 + 磁吸外挂片 + ~49g 级，隐私与全天佩戴都受限。</li>
+        <li><b>论坛真实痛点已给出答案</b>：摄像头不敢进会议室、总价（框+片+戒）不透明、电信店试戴体验差——每一条都把成交点推回眼镜门市。</li>
+      </ul>
     </div>
   </div>
-  <div class="foot"><span>NIMO 台湾市场洞察 × 上市操盘整合汇报 · 2026.08 · 内部</span><span class="c">洞察摘要</span><span class="rr">02</span></div>
+  <div class="concl"><span class="cl">本页结论</span><p>空位 = <b>视光主场上的无摄像 HUD 日常镜</b>。钥匙是「更轻 + 含镜透明 + 当场验配」三件套——只喊「无摄像头」已经打不动，那句口号 Even 已经占了。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">PART I · 市场切割</span><span class="rr">03 / 11</span></div>
 </section>
 
+<!-- P04 竞争矩阵 -->
 <section class="slide">
-  <div class="eyebrow"><span class="p">PART I · 洞察</span> / 视光 KA 格局</div>
-  <h1>宝岛第一；第二小林；第三看仁爱与得恩堂</h1>
-  <p class="lead">连锁约占配镜通路三成。智能镜视光主场谈判，按<span class="hl">规模 + 客群重合</span>排梯队，不单押宝岛。</p>
+  <div class="eyebrow"><span class="p">PART I · 洞察</span> / 竞争矩阵</div>
+  <h1>两万价位带三家排队，NIMO 用结构破局</h1>
+  <p class="lead">主敌是 <span class="hl">Even（同哲学）与 Rokid（同柜）</span>；Eagle 是媒体默认对照组。对照的关键不是参数，是「同一笔钱到底买到什么」。</p>
   <div class="rule"></div>
-  <table class="tbl" style="margin-bottom:2.5mm;">
-    <tr><th>顺位</th><th>连锁</th><th class="r">约门市</th><th>客层</th><th>对 NIMO</th></tr>
-    <tr><td class="b">1</td><td class="k">宝岛集团</td><td class="r">~470</td><td>上班族/商务</td><td><span class="tag g">第一 KA</span> Rokid 已教育；谈分品类</td></tr>
-    <tr><td class="b">2</td><td class="k">小林眼镜</td><td class="r">~234</td><td>与宝岛重叠高</td><td><span class="tag">第二 KA / 首选备胎</span></td></tr>
-    <tr><td class="b">3</td><td class="k">仁爱眼镜</td><td class="r">~113</td><td>规模第三</td><td>规模向第三；需试点评估</td></tr>
-    <tr><td>—</td><td class="k">得恩堂</td><td class="r">~80</td><td>商务验配向</td><td><span class="tag o">战略前三谈判</span>（客群近）</td></tr>
-    <tr><td>—</td><td class="k">OWNDAYS / JINS 等</td><td class="r">~70+</td><td>快时尚年轻</td><td>破圈体验，非处方主场首选</td></tr>
+  <table class="tbl" style="margin-bottom:2.6mm;">
+    <tr><th style="width:11%">维度</th><th style="width:20%">NIMO（开局）</th><th style="width:19%">Even G2</th><th style="width:19%">Rokid@宝岛</th><th style="width:17%">HTC Eagle</th><th>Meta 水货</th></tr>
+    <tr><td class="k">台湾状态</td><td class="b">待入台（认证后开卖）</td><td>2026.8 iNNOHOME 独家</td><td>2025.12 宝岛独家</td><td>2025.9 正式首发</td><td>无正规销售</td></tr>
+    <tr><td class="k">摄像头</td><td class="g">无</td><td>无</td><td class="rd">有（1200 万）</td><td class="rd">有（1200 万）</td><td class="rd">有</td></tr>
+    <tr><td class="k">显示</td><td class="b">体全息 HUD</td><td>双目波导绿色 HUD</td><td>光波导 Micro-LED</td><td class="rd">无屏（翻译靠念）</td><td>主销无屏</td></tr>
+    <tr><td class="k">重量</td><td class="g">~29g</td><td>~36g</td><td>~49g 级</td><td>&lt;49g</td><td>—</td></tr>
+    <tr><td class="k">台售价</td><td class="b">单光含镜 $599 ≈NT$19,168</td><td>NT$19,990 裸机，处方另计</td><td>NT$19,999（原价 24,999）</td><td>NT$15,600 起</td><td>水货约 0.9–1.8 万+</td></tr>
+    <tr><td class="k">配镜路径</td><td class="b">视光 KA 当场验配 · 含镜交付</td><td>品牌实验室中心制、交期长</td><td>出厂平光 + 磁吸处方片 + 宝岛验光瞳距</td><td>合作眼镜店配镜</td><td>难验配 · 无保固</td></tr>
+    <tr><td class="k">渠道</td><td>视光 KA 梯队（规划）</td><td>全国电子/法雅客/诚品/momo/台哥大</td><td>宝岛约 51 店起 + EyeSmart 引流</td><td>台哥大 300+ / 眼镜伙伴</td><td>代购 / 电商平输</td></tr>
+    <tr><td class="k">心智占位</td><td class="b">待建：验光台上的无摄像</td><td>Quiet Tech</td><td>看得见的 AI</td><td>最懂台湾人</td><td>全球时尚模板</td></tr>
+    <tr><td class="k">对 NIMO 威胁</td><td>—</td><td class="rd">极高（同定位）</td><td class="rd">极高（同柜）</td><td>高（心智对照）</td><td>中（心智强服务弱）</td></tr>
+  </table>
+  <div class="row c3" style="margin-bottom:0;">
+    <div class="card"><div class="ck"><span class="sq b"></span>对 Even 打什么</div><p>验配与总价：他们 $599 多是裸机、处方另计还要等实验室；我们 $599 已含镜、门市当场验。</p></div>
+    <div class="card"><div class="ck"><span class="sq g"></span>对 Rokid 打什么</div><p>隐私与重量：同一柜面两万带，无摄像 + ~29g，才配叫「天天戴的本命镜」。</p></div>
+    <div class="card"><div class="ck"><span class="sq o"></span>对 Eagle 打什么</div><p>看得见：平光 $499 有屏入场；翻译提词不用只靠「听着记」。</p></div>
+  </div>
+  <div class="concl"><span class="cl">本页结论</span><p>NIMO 是两万带上<b>唯一「标价即含处方片」且无摄像、更轻</b>的选项——一张对照表同时打三个方向：对 Even 打验配总价、对 Rokid 打隐私重量、对 Eagle 打「看得见」。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">PART I · 竞争矩阵</span><span class="rr">04 / 11</span></div>
+</section>
+
+<!-- P05 视光 KA 梯队 -->
+<section class="slide">
+  <div class="eyebrow"><span class="p">PART I · 洞察</span> / 视光 KA 梯队</div>
+  <h1>宝岛第一、小林第二，得恩堂∥仁爱并行</h1>
+  <p class="lead">连锁约占台湾配镜通路三成（个人店约六成）。智能镜的视光主场谈判按「<span class="hl">规模 × 客群重合</span>」排梯队，并行接触、不单押一家。</p>
+  <div class="rule"></div>
+  <div class="metrics c4">
+    <div class="metric"><div class="num">~470</div><div class="sub">宝岛集团 · 第一 KA</div><div class="note">Rokid 已完成品类教育，谈分品类第二品牌</div></div>
+    <div class="metric tg"><div class="num">~234</div><div class="sub">小林眼镜 · 第二 KA</div><div class="note">规模第二，客群与宝岛重叠高</div></div>
+    <div class="metric to"><div class="num">~113</div><div class="sub">仁爱眼镜 · 规模第三</div><div class="note">偏价格带/区域渗透，单店试点评估</div></div>
+    <div class="metric tp"><div class="num">~80</div><div class="sub">得恩堂 · 战略前三</div><div class="note">商务验配客群近宝岛</div></div>
+  </div>
+  <table class="tbl" style="margin-bottom:2.4mm;">
+    <tr><th style="width:8%">顺位</th><th style="width:16%">连锁</th><th class="r" style="width:10%">约门市</th><th style="width:24%">客层 / 定位</th><th>对 NIMO 的 KA 含义</th></tr>
+    <tr><td class="b">1</td><td class="k">宝岛集团</td><td class="r">~470</td><td>上班族/商务为主；含直营+策略联盟</td><td><span class="tag g">第一 KA</span> 已被 Rokid 教育「有屏 AI」；给它的增量是无摄像日常镜分品类</td></tr>
+    <tr><td class="b">2</td><td class="k">小林眼镜</td><td class="r">~234</td><td>与宝岛重叠高（上班族/商务）</td><td><span class="tag">第二 KA / 首选备胎</span> 验配网络可复制同一套 SOP</td></tr>
+    <tr><td class="b">3</td><td class="k">仁爱眼镜</td><td class="r">~113</td><td>门店数第三；偏价格带/区域</td><td>规模向第三；智能镜适配度需单店试点验证</td></tr>
+    <tr><td>—</td><td class="k">得恩堂眼镜</td><td class="r">~80</td><td>宝岛点名核心竞品；商务验配向</td><td><span class="tag o">战略前三谈判名单</span>（客群近宝岛，门店少于仁爱）</td></tr>
+    <tr><td>—</td><td class="k">OWNDAYS / JINS 等</td><td class="r">~70+</td><td>快时尚、年轻客层</td><td>破圈体验可用，不作处方主场第一落点</td></tr>
   </table>
   <div class="row c2" style="margin-bottom:0;">
     <div class="persp">
-      <div class="ptag"><span class="sq b"></span>谈判顺序</div>
-      <p><b>①宝岛 → ②小林 → ③得恩堂 ∥ 仁爱试点</b>。宝岛谈不拢时，用小林+得恩堂组第二梯队视光网保密度。</p>
+      <div class="ptag"><span class="sq b"></span>谈判顺序与话术重心</div>
+      <p><b>① 宝岛</b>：排他风险最高，增量话术要硬——「Rokid 占了有屏有摄，NIMO 给你验光台上的无摄像日常镜，是分品类不打架」。<b>② 小林</b>：规模第二 + 客群重合，天然第二 KA。<b>③ 得恩堂（战略）∥ 仁爱（规模，试点）</b>并行接触，不等宝岛出结果。</p>
     </div>
+    <div class="persp r">
+      <div class="ptag"><span class="sq r"></span>谈判的坑（先说清）</div>
+      <ul>
+        <li>勿单押宝岛：Rokid 排他先例在前，被拖着谈会烧掉时间窗</li>
+        <li>勿用全品类独家换低价：给「品类优先合作」即可，不给全独家</li>
+        <li>快时尚连锁只做破圈，不背处方 KPI；个人店（六成）首年不碰，SOP 保不住</li>
+      </ul>
+    </div>
+  </div>
+  <div class="concl"><span class="cl">本页结论</span><p>谈判顺序：<b>宝岛 → 小林 → 得恩堂 ∥ 仁爱试点</b>。宝岛谈不拢不等于没戏——小林 + 得恩堂即可组第二梯队视光网，密度足够打完 500 副标杆仗。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">PART I · 视光 KA 梯队</span><span class="rr">05 / 11</span></div>
+</section>
+
+<!-- P06 Rokid 配镜模式拆解 -->
+<section class="slide">
+  <div class="eyebrow"><span class="p">PART I · 洞察</span> / Rokid@宝岛 配镜模式拆解</div>
+  <h1>磁吸片补度数 vs 含镜当场验配</h1>
+  <p class="lead">宝岛用 Rokid（有屏有摄像，约 NT$19,999）完成了「眼镜店卖 AI 镜要验配」的教育。NIMO 不必再教育市场，只需在<span class="hl">同一张验光台</span>上给出更顺的路径。</p>
+  <div class="rule"></div>
+  <div class="row c2" style="margin-bottom:2.4mm;">
+    <div class="card">
+      <div class="ck"><span class="sq o"></span>Rokid 路径 · 磁吸外挂补度数</div>
+      <div class="chain n4" style="margin-bottom:1.8mm;">
+        <div class="node"><div class="nt">出厂平光整机</div><p>无度数可网订</p></div><div class="arrow">→</div>
+        <div class="node"><div class="nt">宝岛验光瞳距</div><p>度数须门市预约</p></div><div class="arrow">→</div>
+        <div class="node"><div class="nt">订制磁吸处方片</div><p>独家配件路径</p></div><div class="arrow">→</div>
+        <div class="node"><div class="nt">回店磁吸装配</div><p>处方是「外挂」</p></div>
+      </div>
+      <ul>
+        <li>多一层磁吸片：重量、边框感、光学层级叠加</li>
+        <li>有摄像：会议室 / 健身房等敏感场景受限</li>
+        <li>~49g 级主机，长时间佩戴压力大</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="ck"><span class="sq g"></span>NIMO 路径 · 含镜一体当场验配</div>
+      <div class="chain n4" style="margin-bottom:1.8mm;">
+        <div class="node"><div class="nt">门市验光瞳距</div><p>常规配镜动作</p></div><div class="arrow">→</div>
+        <div class="node"><div class="nt">处方片装配主镜</div><p>$599 标价即含镜</p></div><div class="arrow">→</div>
+        <div class="node"><div class="nt">当场 / 短期取镜</div><p>交期是卖点</p></div><div class="arrow">→</div>
+        <div class="node"><div class="nt">即本命镜</div><p>全天佩戴</p></div>
+      </div>
+      <ul>
+        <li>度数长在镜片上，无外挂结构与二次公差</li>
+        <li>无摄像 + ~29g：全天佩戴无社交压力</li>
+        <li>总价一口清：标价即含镜，不再逐项加钱</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row c12" style="margin-bottom:0;">
+    <table class="tbl">
+      <tr><th style="width:20%">维度</th><th style="width:40%">Rokid@宝岛</th><th>NIMO</th></tr>
+      <tr><td class="k">度数实现</td><td>磁吸外挂处方片</td><td class="b">镜片一体装配</td></tr>
+      <tr><td class="k">摄像头</td><td class="rd">有</td><td class="g">无</td></tr>
+      <tr><td class="k">重量</td><td>~49g 级 + 磁吸片</td><td class="g">~29g</td></tr>
+      <tr><td class="k">总价透明</td><td>主机 + 磁吸片分层计价</td><td class="b">标价即含镜</td></tr>
+      <tr><td class="k">门店动作</td><td>验光 + 配件订购流程</td><td class="b">验光 + 常规装配（近普通配镜）</td></tr>
+    </table>
     <div class="persp g">
-      <div class="ptag"><span class="sq g"></span>口径说明</div>
-      <p>门市数参考宝岛科法说会/行业连锁披露（约2024末）。「第二三 KA」规模上是小林/仁爱；战略备胎常把得恩堂列入前三。</p>
+      <div class="ptag"><span class="sq g"></span>对宝岛（及各 KA）的谈判话术</div>
+      <p>「你们已经教育了『AI 镜要验光』。NIMO 让这套流程回到你们最熟悉的<b>常规配镜动作</b>——不用学配件体系、不背平凹产线（前期镜片 NIMO 供），店效更高、客诉面更小，客群还和 Rokid 分开。」</p>
     </div>
   </div>
-  <div class="foot"><span>NIMO 台湾市场洞察 × 上市操盘整合汇报 · 2026.08 · 内部</span><span class="c">视光 KA</span><span class="rr">03</span></div>
+  <div class="concl"><span class="cl">本页结论</span><p>Rokid 证明了验光台能卖两万的 AI 镜；NIMO 把「外挂式配镜」升级为「<b>含镜一体、当场验配</b>」——同一张验光台，更少动作、更像卖普通眼镜，这才是给连锁的真实增量。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">PART I · Rokid 配镜模式</span><span class="rr">06 / 11</span></div>
 </section>
 
+<!-- P07 操盘策略 -->
 <section class="slide">
-  <div class="eyebrow"><span class="p">PART I · 洞察</span> / Rokid×宝岛</div>
-  <h1>Rokid 是有屏有摄像版；配镜靠磁吸+验光台</h1>
-  <p class="lead">宝岛卖的是 <span class="hl">Rokid Glasses 光波导 AI 镜</span>（约 NT$19,999），不是巨幕影音主销。</p>
+  <div class="eyebrow"><span class="p">PART II · 操盘</span> / 高规同价绝杀</div>
+  <h1>绝杀逻辑：同一标价，规格全面更高</h1>
+  <p class="lead">不打「更便宜」：标价对齐 Even/Rokid 的两万心智，同价多给「含镜 + 无摄像 + 更轻」，再用半价戒放大——<span class="hl">价格力来自结构，不来自降价</span>。</p>
   <div class="rule"></div>
-  <div class="row c3" style="margin-bottom:2.5mm;">
-    <div class="card"><div class="ck"><span class="sq b"></span>产品</div>
-      <ul><li>光波导显示 / 悬浮字幕</li><li>翻译·导航·提词</li><li>1200万摄像</li><li>~49g 级主机</li></ul></div>
-    <div class="card"><div class="ck"><span class="sq g"></span>配镜解法</div>
-      <ul><li>出厂无度数</li><li>独家磁吸处方片/框</li><li>宝岛验光+瞳距</li><li>波导要调焦距才清晰</li></ul></div>
-    <div class="card"><div class="ck"><span class="sq o"></span>通路</div>
-      <ul><li>宝岛视光独家授权</li><li>指定门市开卖</li><li>购机+验配做过抽奖拉转化</li><li>品类教育已完成</li></ul></div>
+  <div class="chain n4">
+    <div class="node"><div class="nt"><span class="sq b"></span>① 标价对齐两万心智</div><p>单光 1.60 $599 ≈NT$19,168，贴住 Even 19,990 / Rokid 19,999</p></div><div class="arrow">→</div>
+    <div class="node"><div class="nt"><span class="sq g"></span>② 同价多给三样</div><p>含处方片 · 无摄像 · ~29g——对标变成「同价更高规格」</p></div><div class="arrow">→</div>
+    <div class="node"><div class="nt"><span class="sq o"></span>③ 半价戒放大</div><p>MAP $249 → 视光加购 $124.50，对齐 Even 半价 R1 玩法</p></div><div class="arrow">→</div>
+    <div class="node"><div class="nt"><span class="sq p"></span>④ 战场锁定验光台</div><p>当场验配 + 含镜交付，Even 学不走的主场</p></div>
   </div>
-  <div class="persp g">
-    <div class="ptag"><span class="sq g"></span>对 NIMO</div>
-    <p>宝岛已被教育「AI 镜要验配」。Rokid = <b>有屏+有摄像+磁吸配镜</b>。我们差异打 <b>无摄像本命镜 + 含镜总价清楚 + 更轻</b>，不是再科普要不要验光。</p>
-  </div>
-  <div class="foot"><span>NIMO 台湾市场洞察 × 上市操盘整合汇报 · 2026.08 · 内部</span><span class="c">Rokid 模式</span><span class="rr">04</span></div>
-</section>
-
-<section class="slide">
-  <div class="eyebrow"><span class="p">PART II · 操盘</span> / 绝杀</div>
-  <h1>高规同价绝杀：同价带卖更高规格</h1>
-  <p class="lead">开局默认 <span class="hl">平光 $499 / 单光 $599 含镜</span> + 视光半价戒；话术禁止「更便宜」。</p>
-  <div class="rule"></div>
-  <table class="tbl" style="margin-bottom:2.5mm;">
-    <tr><th>竞品买单</th><th class="r">他付出</th><th>NIMO 开局</th><th>绝杀点</th></tr>
-    <tr><td class="k">Even/Rokid 裸机心智</td><td class="r">≈19,990–19,999</td><td class="b">单光含镜 $599</td><td>同价带多一副片+无摄像</td></tr>
-    <tr><td class="k">Even 裸机+处方</td><td class="r">≈2.5–3.1 万</td><td class="b">$599</td><td>TCO 低一截</td></tr>
-    <tr><td class="k">Even+片+半价R1</td><td class="r">更高</td><td class="b">$599+$124.5</td><td>组合仍优，战场在验光台</td></tr>
-    <tr><td class="k">对照 Eagle</td><td class="r">~1.5–1.6 万</td><td class="b">平光 $499</td><td>有屏入场</td></tr>
+  <table class="tbl" style="margin-bottom:2.4mm;">
+    <tr><th style="width:24%">竞品常见买单</th><th class="r" style="width:18%">消费者付出（约）</th><th style="width:24%">NIMO 开局对位</th><th>为何绝杀</th></tr>
+    <tr><td class="k">Even G2 裸机</td><td class="r">NT$19,990</td><td class="b">单光 1.60 含镜 $599（≈NT$19,168）</td><td>同价带多一副处方片，门市当场验</td></tr>
+    <tr><td class="k">Even 裸机 + 处方片</td><td class="r">NT$2.5–3.1 万</td><td class="b">仍是 $599</td><td>总拥有成本低 0.6–1.2 万+</td></tr>
+    <tr><td class="k">Even + 片 + 半价 R1（NT$3,995）</td><td class="r">更高</td><td class="b">$599 + 半价戒 $124.5 ≈ $723.5（≈NT$23,152）</td><td>组合总价仍优，且我们已含镜</td></tr>
+    <tr><td class="k">Rokid@宝岛</td><td class="r">NT$19,999</td><td class="b">$599 含镜 · 无摄像 · 更轻</td><td>同柜同价带，规格全面占优</td></tr>
+    <tr><td class="k">尝鲜 / 对照 Eagle</td><td class="r">NT$15,600 起</td><td class="b">平光 $499（≈NT$15,968）</td><td>同带「有屏」入场，低于两万锚</td></tr>
   </table>
   <div class="row c3" style="margin-bottom:0;">
-    <div class="card dark"><div class="ck"><span class="sq w"></span>标准句</div><p>和他们标价一样的钱，你已经含镜，还能半价带戒。</p></div>
-    <div class="card"><div class="ck"><span class="sq b"></span>主场</div><p>视光 KA（宝岛优先，小林/得恩堂备胎）；不做电信定义品牌。</p></div>
-    <div class="card"><div class="ck"><span class="sq r"></span>禁止</div><p>平替 / 更便宜 / 吊打 / 未取证上柜 / 自动回抬。</p></div>
+    <div class="card dark"><div class="ck"><span class="sq w"></span>门店标准句（只此一句）</div><p style="font-size:8pt;font-weight:700;color:#fff;">「和他们标价一样的钱，你已经含镜，还能半价带戒。」</p></div>
+    <div class="card"><div class="ck"><span class="sq b"></span>三句区隔</div>
+      <ul>
+        <li>vs Even：他们 $599 多是裸机；我们 $599 已含镜、当场验配</li>
+        <li>vs Rokid：同柜两万带——无摄像、更轻、含镜一口价</li>
+        <li>vs Eagle：平光 $499 有屏入场，不用只靠「听着记」</li>
+      </ul></div>
+    <div class="card"><div class="ck"><span class="sq r"></span>禁止事项</div>
+      <ul>
+        <li>说「更便宜 / 平替 / 吊打」</li>
+        <li>未取证上柜 · 自动回抬</li>
+        <li>半价戒出视光、进电信打包</li>
+        <li>去影音巨幕测评场拼 FOV</li>
+      </ul></div>
   </div>
-  <div class="foot"><span>NIMO 台湾市场洞察 × 上市操盘整合汇报 · 2026.08 · 内部</span><span class="c">操盘绝杀</span><span class="rr">05</span></div>
+  <div class="concl"><span class="cl">本页结论</span><p>话术纪律就是价格纪律：全渠道只说「<b>同价更高规格</b>」。谁把 NIMO 讲成「便宜版 Even」，谁就在给品牌降级、给日后回抬堵路。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">PART II · 操盘策略</span><span class="rr">07 / 11</span></div>
 </section>
 
+<!-- P08 开局货盘 -->
 <section class="slide">
-  <div class="eyebrow"><span class="p">PART III · 价盘</span> / 货盘与收入</div>
-  <h1>开局货盘 + KA 提货收入（包运税）</h1>
-  <p class="lead">平光×65% · 单光×60% · 渐进×58%；返利 3%。回抬另议。</p>
+  <div class="eyebrow"><span class="p">PART III · 价盘</span> / 开局货盘与对标价</div>
+  <h1>七档货盘 + 半价戒：开局直接打优惠锚</h1>
+  <p class="lead">开局表 = 原标准价 <span class="hl">−$100</span>，直接执行、不再叠加任何补贴；回抬（+$100）是决策动作，条件满足才议。汇率测算 <span class="num">1 USD = 32 TWD = 7.2 CNY</span>。</p>
   <div class="rule"></div>
-  <table class="tbl" style="margin-bottom:2.3mm;">
-    <tr><th>SKU</th><th class="r">开局零售$</th><th class="r">提货=收入$</th><th class="r">≈NT$零售</th><th>角色</th></tr>
-    <tr><td class="k">平光</td><td class="r b">499</td><td class="r b">324.35</td><td class="r">15,968</td><td>尝鲜</td></tr>
-    <tr><td class="k">单光 0–600 / 1.60</td><td class="r b">599</td><td class="r b">359.40</td><td class="r">19,168</td><td><span class="tag g">主销绝杀</span></td></tr>
-    <tr><td class="k">单光 1.67 / 1.74</td><td class="r">749 / 849</td><td class="r">449.40 / 509.40</td><td class="r">—</td><td>升级薄</td></tr>
-    <tr><td class="k">渐进 1.60/1.67/1.74</td><td class="r">749/849/999</td><td class="r">434/492/579</td><td class="r">—</td><td>客单上探</td></tr>
-    <tr><td class="k">戒指（视光加购）</td><td class="r b">124.5</td><td class="r">另约</td><td class="r">3,984</td><td>半价导购（MAP 249）</td></tr>
+  <table class="tbl" style="margin-bottom:2.4mm;">
+    <tr><th style="width:15%">SKU</th><th style="width:16%">度数 / 折射率</th><th class="r" style="width:12%">开局零售 USD</th><th class="r" style="width:11%">≈ NT$</th><th class="r" style="width:10%">≈ ¥</th><th>角色</th></tr>
+    <tr><td class="k">平光</td><td>—</td><td class="r b">499</td><td class="r">15,968</td><td class="r">3,593</td><td><span class="tag o">尝鲜 / Demo 成交</span>（控量）</td></tr>
+    <tr><td class="k">单光 A</td><td>0–600 / 1.60</td><td class="r b">599</td><td class="r">19,168</td><td class="r">4,313</td><td><span class="tag g">主销绝杀款</span></td></tr>
+    <tr><td class="k">单光 B</td><td>600–1000 / 1.67</td><td class="r">749</td><td class="r">23,968</td><td class="r">5,393</td><td>升级薄</td></tr>
+    <tr><td class="k">单光 C</td><td>600–1000 / 1.74</td><td class="r">849</td><td class="r">27,168</td><td class="r">6,113</td><td>高阶薄</td></tr>
+    <tr><td class="k">渐进 A</td><td>1.60</td><td class="r">749</td><td class="r">23,968</td><td class="r">5,393</td><td>渐进入门</td></tr>
+    <tr><td class="k">渐进 B</td><td>1.67</td><td class="r">849</td><td class="r">27,168</td><td class="r">6,113</td><td>渐进主力</td></tr>
+    <tr><td class="k">渐进 C</td><td>1.74</td><td class="r">999</td><td class="r">31,968</td><td class="r">7,193</td><td>渐进高阶</td></tr>
+    <tr><td class="k">智能戒指</td><td>视光加购 · 绑主机订单</td><td class="r b">124.50</td><td class="r">3,984</td><td class="r">896</td><td><span class="tag">半价导购</span>（MAP $249 ≈NT$7,968）</td></tr>
   </table>
   <div class="row c3" style="margin-bottom:0;">
-    <div class="card"><div class="ck"><span class="sq b"></span>KA 毛利</div><p>平光 35% · 单光 40% · 渐进 42% + 返利 3%</p></div>
-    <div class="card"><div class="ck"><span class="sq g"></span>光学</div><p>前期镜片全 NIMO；连锁不背平凹产线</p></div>
-    <div class="card"><div class="ck"><span class="sq o"></span>回抬</div><p>后备平光599/单光699；条件满足才议，非自动</p></div>
+    <div class="card"><div class="ck"><span class="sq g"></span>绝杀对照（贴柜面）</div><p><b class="num">$599</b> 含镜 vs Even NT$19,990 裸机 vs Rokid NT$19,999——两万带<b>唯一含镜</b>；平光 <b class="num">$499</b> 对照 Eagle 15,600 起，同带有屏。</p></div>
+    <div class="card"><div class="ck"><span class="sq o"></span>回抬后备价（仅决策后启用）</div><p>平光 599；单光 699 / 849 / 949；渐进 849 / 949 / 1,099。触发条件：首销窗结束 + 配镜完成率达标 + 破价可控 + 竞品未放血 + 库存健康——<b>可只回抬部分 SKU</b>。</p></div>
+    <div class="card"><div class="ck"><span class="sq b"></span>货盘纪律</div><p>前期镜片全 <b>NIMO 供</b>（连锁不背平凹产线）；防蓝光/变色等膜层升级由门店加价公示；首年结构以单光 1.60 为主、平光控量。</p></div>
   </div>
-  <div class="foot"><span>NIMO 台湾市场洞察 × 上市操盘整合汇报 · 2026.08 · 内部</span><span class="c">定价货盘</span><span class="rr">06</span></div>
+  <div class="concl"><span class="cl">本页结论</span><p>开局价盘一次定死：<b>$499 / $599 双锚</b>打穿两万心智，高折射与渐进全线 −$100 跟进；回抬写进决策清单，<b>不写进日历</b>。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">PART III · 开局货盘</span><span class="rr">08 / 11</span></div>
 </section>
 
+<!-- P09 收入与 KA 政策 -->
 <section class="slide">
-  <div class="eyebrow"><span class="p">PART III · 渠道政策</span></div>
-  <h1>KA 政策：让利在价盘，复杂留品牌</h1>
+  <div class="eyebrow"><span class="p">PART III · 价盘</span> / 销售收入与 KA 政策</div>
+  <h1>提货价即销售收入，让利全部做进价盘</h1>
+  <p class="lead">包运税卖断：<span class="hl">KA 提货价 = 总部销售收入</span>。毛利预留平光 35%（×65%）/ 单光 40%（×60%）/ 渐进 42%（×58%）+ 提货返利 3%；开局提货 = 促销零售 × 折扣，<span class="hl">总部不再另贴 $100</span>。</p>
   <div class="rule"></div>
-  <div class="row c4" style="margin-bottom:2.5mm;">
-    <div class="card"><div class="ck"><span class="sq b"></span>授权</div>
-      <ul><li>视光 KA 梯队谈判</li><li>先 20–40 标杆店</li><li>认证验光师≥2</li><li>神秘客稽核</li></ul></div>
-    <div class="card"><div class="ck"><span class="sq g"></span>结算</div>
-      <ul><li>包运税卖断</li><li>开局零售倒折提货</li><li>返利 3%</li><li>半价戒绑主机</li></ul></div>
-    <div class="card"><div class="ck"><span class="sq o"></span>供给</div>
-      <ul><li>NIMO 镜片 SLA</li><li>样机买断上样</li><li>14 天舒适调整</li><li>序列号绑店</li></ul></div>
-    <div class="card"><div class="ck"><span class="sq r"></span>红线</div>
-      <ul><li>窜货破价</li><li>叠私让</li><li>泄进货价</li><li>未取证销售</li></ul></div>
+  <div class="row c12" style="margin-bottom:2.4mm;">
+    <table class="tbl">
+      <tr><th style="width:22%">SKU</th><th class="r">开局零售 $</th><th class="r">开局提货（=收入）$</th><th class="r">回抬零售 $</th><th class="r">回抬提货 $</th></tr>
+      <tr><td class="k">平光</td><td class="r">499</td><td class="r b">324.35</td><td class="r">599</td><td class="r">389.35</td></tr>
+      <tr><td class="k">单光 1.60</td><td class="r">599</td><td class="r b">359.40</td><td class="r">699</td><td class="r">419.40</td></tr>
+      <tr><td class="k">单光 1.67</td><td class="r">749</td><td class="r">449.40</td><td class="r">849</td><td class="r">509.40</td></tr>
+      <tr><td class="k">单光 1.74</td><td class="r">849</td><td class="r">509.40</td><td class="r">949</td><td class="r">569.40</td></tr>
+      <tr><td class="k">渐进 1.60</td><td class="r">749</td><td class="r">434.42</td><td class="r">849</td><td class="r">492.42</td></tr>
+      <tr><td class="k">渐进 1.67</td><td class="r">849</td><td class="r">492.42</td><td class="r">949</td><td class="r">550.42</td></tr>
+      <tr><td class="k">渐进 1.74</td><td class="r">999</td><td class="r">579.42</td><td class="r">1,099</td><td class="r">637.42</td></tr>
+    </table>
+    <div>
+      <div class="metrics c4" style="grid-template-columns:1fr 1fr; margin-bottom:2.2mm;">
+        <div class="metric tg"><div class="num">359.40</div><div class="sub">单光 1.60 提货 $</div><div class="note">≈NT$11,501 / ¥2,588</div></div>
+        <div class="metric"><div class="num">324.35</div><div class="sub">平光提货 $</div><div class="note">≈NT$10,379 / ¥2,335</div></div>
+        <div class="metric to"><div class="num">3%</div><div class="sub">提货额返利</div><div class="note">与价盘折扣并行</div></div>
+        <div class="metric tp"><div class="num">~17.5万</div><div class="sub">年内收入量级 USD</div><div class="note">500 副 × 均提货 ~$350</div></div>
+      </div>
+      <div class="persp o">
+        <div class="ptag"><span class="sq o"></span>半价戒政策（价格力放大器）</div>
+        <p>MAP <b class="num">$249</b> → 视光认证店加购 <b class="num">$124.50</b>（≈NT$3,984）；KA 戒指提货建议按加购价 ×70%（≈$87）或单独约定、签约锁定；序列号绑定主机订单；<b>不进电信打包、不拆零流水货</b>。回抬主机价时再评估戒指是否维持半价。</p>
+      </div>
+    </div>
   </div>
-  <div class="persp g">
-    <div class="ptag"><span class="sq g"></span>给连锁的谈判句</div>
-    <p>不必上平凹产线；验光成交即可。单光 <b>$599 含镜</b> 对打 Even/Rokid 两万柜，半价戒拉客单——增量是视光主场上的无摄像日常镜。宝岛之外，小林/得恩堂可并行保底。</p>
+  <div class="row c3" style="margin-bottom:0;">
+    <div class="card"><div class="ck"><span class="sq b"></span>供给与样机</div><ul><li>前期镜片 NIMO 供，交期 SLA 书面化</li><li>样机平光买断 $249–299（签约定）</li><li>14 天舒适调整 + 序列号绑店</li></ul></div>
+    <div class="card"><div class="ck"><span class="sq g"></span>结算与秩序</div><ul><li>包运税卖断，无退换补贴暗账</li><li>回抬需书面通知 + 价保</li><li>MAP 纪律：电商只做预约核销</li></ul></div>
+    <div class="card"><div class="ck"><span class="sq r"></span>红线（警告→降权→停货）</div><ul><li>窜货、破价、叠私让</li><li>泄露进货价</li><li>未取证销售 · 戒指出视光滥包</li></ul></div>
   </div>
-  <div class="foot"><span>NIMO 台湾市场洞察 × 上市操盘整合汇报 · 2026.08 · 内部</span><span class="c">渠道政策</span><span class="rr">07</span></div>
+  <div class="concl"><span class="cl">本页结论</span><p>对 KA 的让利只有两个口子：<b>价盘折扣（35/40/42%）与提货返利 3%</b>——透明、可审计、不留私下补贴；半价戒只走认证视光店，守住渠道秩序就是守住价盘。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">PART III · 收入与 KA 政策</span><span class="rr">09 / 11</span></div>
 </section>
 
+<!-- P10 认证与节奏 -->
 <section class="slide">
   <div class="eyebrow"><span class="p">PART IV · 节奏</span> / 认证与开卖</div>
-  <h1>先取证再开杀；回抬看数据</h1>
-  <p class="lead">BSMI <span class="hl">≈3 个月</span>（稳妥）；NCC <span class="hl">≈1 个月</span>（可并行）。客户样品表作备样，实验室终锁。</p>
+  <h1>一个闸门：证书到手才开卖</h1>
+  <p class="lead">BSMI 按 <span class="hl">≈3 个月</span>留稳（整机 + 电池主路径），NCC <span class="hl">≈1 个月</span>（乐观口径，可并行）；样品尽早备料，实验室签约后锁定终版排期。「未取证不上柜」是红线，不是口号。</p>
   <div class="rule"></div>
-  <div class="chain">
-    <div class="node"><div class="ck"><span class="sq b"></span>备样</div><p style="font-size:6.9pt;color:#52514e;">BSMI/NCC/电芯</p></div>
-    <div class="arrow">→</div>
-    <div class="node"><div class="ck"><span class="sq o"></span>并行测</div><p style="font-size:6.9pt;color:#52514e;">3月+1月</p></div>
-    <div class="arrow">→</div>
-    <div class="node"><div class="ck"><span class="sq p"></span>取证</div><p style="font-size:6.9pt;color:#52514e;">才可上柜</p></div>
-    <div class="arrow">→</div>
-    <div class="node"><div class="ck"><span class="sq g"></span>开杀</div><p style="font-size:6.9pt;color:#52514e;">$499/$599</p></div>
-    <div class="arrow">→</div>
-    <div class="node"><div class="ck"><span class="sq r"></span>评估</div><p style="font-size:6.9pt;color:#52514e;">回抬另议</p></div>
+  <div class="chain n5">
+    <div class="node"><div class="nt"><span class="sq b"></span>冻结硬件 · 备样</div><p>整机 / 电池包 / 电芯尽早备料</p></div><div class="arrow">→</div>
+    <div class="node"><div class="nt"><span class="sq o"></span>并行送测</div><p>BSMI ≈3 月 ∥ NCC ≈1 月</p></div><div class="arrow">→</div>
+    <div class="node"><div class="nt"><span class="sq p"></span>取证闸门</div><p>T+10w 进度 &lt;80% 则顺延开卖日</p></div><div class="arrow">→</div>
+    <div class="node"><div class="nt"><span class="sq g"></span>开杀</div><p>$499 / $599 + 半价戒同步上柜</p></div><div class="arrow">→</div>
+    <div class="node"><div class="nt"><span class="sq r"></span>数据评估</div><p>回抬另议 · 扩店另批</p></div>
   </div>
-  <table class="tbl">
-    <tr><th>阶段</th><th>动作</th><th>闸门</th></tr>
-    <tr><td class="k">认证期</td><td>送样；KA 梯队接触；TOT 备课</td><td>证书+店清单</td></tr>
-    <tr><td class="k">M0–M1</td><td class="b">开杀：平光499/单光599+半价戒</td><td>冲年内 <b>500 副</b></td></tr>
-    <tr><td class="k">M2–M3</td><td>TCO对照；戒加购；标杆 15–30 店</td><td>配镜完成率</td></tr>
-    <tr><td class="k">M4–M6</td><td>可选回抬；小林/二链；复盘</td><td>次年 <b>1万副（暂定）</b> 条件</td></tr>
-  </table>
-  <div class="foot"><span>NIMO 台湾市场洞察 × 上市操盘整合汇报 · 2026.08 · 内部</span><span class="c">节奏</span><span class="rr">08</span></div>
+  <div class="row c12" style="margin-bottom:0;">
+    <table class="tbl">
+      <tr><th style="width:14%">阶段</th><th style="width:52%">重点动作</th><th>闸门 / 目标挂钩</th></tr>
+      <tr><td class="k">认证期（并行）</td><td>送样与整改；KA 梯队接触（宝岛→小林）；TOT 培训备课；繁中标示与进口商资格补齐</td><td>证书 + 首批店清单</td></tr>
+      <tr><td class="k">M0</td><td>KA 签约、体验桌进场、半价戒物料与话术；闭门媒体（不放价销售）</td><td>价盘与政策书面锁定</td></tr>
+      <tr><td class="k">M1</td><td class="b">软开业 → 正式开卖：$499 / $599 + 半价戒</td><td><b>冲年内 500 副</b>的首销窗启动</td></tr>
+      <tr><td class="k">M2–M3</td><td>TCO 对照页上墙；戒加购推进；标杆店加密至 15–30 家</td><td>配镜完成率 / 试戴→成交达标</td></tr>
+      <tr><td class="k">M4–M5</td><td>可选回抬（条件满足才议，可只回抬部分 SKU）；小林 / 得恩堂并行落地</td><td>第二 KA 意向书</td></tr>
+      <tr><td class="k">M6</td><td>复盘首年结构与转化；锁定次年扩量条件</td><td><b>次年 1 万副（暂定）</b>：供给 / 售后 / KA 扩张三项就绪</td></tr>
+    </table>
+    <div>
+      <div class="card" style="margin-bottom:2.2mm;">
+        <div class="ck"><span class="sq b"></span>备样清单（客户经验表 · 实验室报价终确）</div>
+        <ul>
+          <li>BSMI：4 整机 + 4 电池包</li>
+          <li>电池随机：约 89 颗电芯（长周期项，最早备）</li>
+          <li>NCC：1 整机 + 1 传导定频 + 1 辐射定频</li>
+        </ul>
+      </div>
+      <div class="persp">
+        <div class="ptag"><span class="sq b"></span>北星指标（不看虚荣数）</div>
+        <p>① 配镜完成率 ② 试戴→成交转化 ③ NPS / 二次到店调试率 ④ 店均月销与功能片连带。<b>不把「与 Eagle 比门市数、与 Even 比专案价销量」当北星。</b></p>
+      </div>
+    </div>
+  </div>
+  <div class="concl"><span class="cl">本页结论</span><p>节奏三句话：证书不齐不上柜；开卖即打绝杀价，把 <b>500 副在优惠锚窗口内打完</b>；M6 用数据决定次年 1 万副是否加码——不靠拍脑袋。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">PART IV · 认证与节奏</span><span class="rr">10 / 11</span></div>
 </section>
 
+<!-- P11 风险与决策清单 -->
 <section class="slide">
-  <div class="eyebrow"><span class="p">决策收束</span></div>
-  <h1>整合结论：可直接进决策会</h1>
+  <div class="eyebrow"><span class="p">收束</span> / 风险预案 · 决策清单</div>
+  <h1>三大雷排好，六条拍板收束</h1>
+  <p class="lead">绝杀成立有前提；把「杀伤力条件」写进任务书，风险按<span class="hl">触发信号</span>管理，决策会当场过六条。</p>
   <div class="rule"></div>
-  <table class="tbl" style="margin-bottom:2.8mm;">
-    <tr><th style="width:8%">#</th><th>结论</th></tr>
-    <tr><td class="b">①</td><td class="k">洞察</td>：分割市场；空位=视光无摄像日常镜；Rokid=有屏有摄+磁吸配镜。</td></tr>
-    <tr><td class="b">②</td><td class="k">KA 梯队</td>：宝岛第一 → <b>小林第二</b> → 仁爱（规模）/ <b>得恩堂（战略）</b> 并行。</td></tr>
-    <tr><td class="b">③</td><td class="k">操盘</td>：高规同价绝杀；开局平光 $499 / 单光 $599 含镜 + 半价戒 $124.5。</td></tr>
-    <tr><td class="b">④</td><td class="k">政策</td>：KA 毛利 35/40/42%+返利3%；镜片 NIMO；包运税；不称省代。</td></tr>
-    <tr><td class="b">⑤</td><td class="k">节奏</td>：BSMI≈3月/NCC≈1月 → 取证开杀 → 回抬另议。</td></tr>
-    <tr><td class="b">⑥</td><td class="k">目标</td>：<b>年内 500 副</b>；<b>次年暂定 10,000 副</b>（视首年转化与 KA 扩张锁定）。</td></tr>
+  <div class="row c12" style="margin-bottom:2.4mm;">
+    <table class="tbl">
+      <tr><th style="width:20%">风险</th><th style="width:34%">触发信号</th><th>应对</th></tr>
+      <tr><td class="k">被叫「Even 平替」</td><td>媒体/论坛以 Even 为基准写 NIMO</td><td>首月集中打重量实测、验配 Vlog、TCO 对照；不接「平替」话题</td></tr>
+      <tr><td class="k">宝岛排他 / 谈不拢</td><td>采购以 Rokid 排他为由压条件、拖时间</td><td>小林 + 得恩堂第二梯队启动；精品店过渡不断档</td></tr>
+      <tr><td class="k">处方交期翻车</td><td>配镜完成率下滑、二次到店暴增</td><td>常见度数快配清单 + 超时补偿券；交期 SLA 周报</td></tr>
+      <tr><td class="k">3C 窜货破价</td><td>电商低于 MAP、序列号跨区出现</td><td>序列号区域锁；警告 → 降权 → 停货</td></tr>
+      <tr><td class="k">认证延误</td><td>T+10w 认证进度 &lt;80%</td><td>顺延开卖日不抢跑；预热期只做体验、不放价</td></tr>
+      <tr><td class="k">竞品放血降价</td><td>Even / Rokid 大促跌破两万带</td><td>不跟跌；延长优惠锚窗口，回抬冻结</td></tr>
+    </table>
+    <div class="persp r">
+      <div class="ptag"><span class="sq r"></span>杀伤力条件（绝杀成立的四个前提）</div>
+      <ul>
+        <li>含镜交付 SLA 兑现：当场 / 短期取镜不跳票</li>
+        <li>~29g 重量有实测内容背书（论坛长测 + 验光师出镜）</li>
+        <li>TCO 对照页在每家标杆店上墙</li>
+        <li>半价戒不出视光渠道</li>
+      </ul>
+      <p style="margin-top:1.2mm;"><b>四条缺一，绝杀降级为普通促销。</b></p>
+    </div>
+  </div>
+  <table class="tbl" style="margin-bottom:2.4mm;">
+    <tr><th style="width:6%">#</th><th style="width:12%">决策项</th><th>拍板内容</th></tr>
+    <tr><td class="b">①</td><td class="k">战场</td><td>视光 KA 主场的无摄像 HUD 日常镜；不用电信 / 3C 定义品牌</td></tr>
+    <tr><td class="b">②</td><td class="k">价盘</td><td>开局平光 <b>$499</b> / 单光 1.60 <b>$599 含镜</b>；1.67/1.74/渐进 = 表价 −$100；回抬可选不自动</td></tr>
+    <tr><td class="b">③</td><td class="k">KA 政策</td><td>毛利 35/40/42% + 返利 3%；包运税卖断；前期镜片 NIMO 供；角色称 KA 不称省代</td></tr>
+    <tr><td class="b">④</td><td class="k">半价戒</td><td>MAP $249 → 视光认证店 <b>$124.50</b>；绑主机订单、不出视光渠道</td></tr>
+    <tr><td class="b">⑤</td><td class="k">目标</td><td><b>年内 500 副</b>（15–30 家标杆店，密度优先）；<b>次年暂定 10,000 副</b>，M6 复盘锁定</td></tr>
+    <tr><td class="b">⑥</td><td class="k">节奏</td><td>BSMI ≈3 个月 / NCC ≈1 个月并行送测；<b>证书到手才开卖</b>，开卖即打绝杀价</td></tr>
   </table>
-  <div class="metrics c4" style="margin-bottom:2.5mm;">
-    <div class="metric"><div class="num">500</div><div class="sub">年内销量目标（副）</div><div class="note">标杆验证 · 密度优先</div></div>
-    <div class="metric tg"><div class="num">10,000</div><div class="sub">次年目标（暂定）</div><div class="note">视首年再锁定</div></div>
-    <div class="metric to"><div class="num">15–30</div><div class="sub">首年标杆店</div><div class="note">非铺柜导向</div></div>
-    <div class="metric tp"><div class="num">~$18万</div><div class="sub">年内收入量级</div><div class="note">均提货~$350 粗算</div></div>
-  </div>
-  <div class="persp g">
-    <div class="ptag"><span class="sq g"></span>收束句</div>
-    <p style="font-size:9.5pt;font-weight:700;color:#0b0b0b;line-height:1.4;">标价对齐两万心智，规格压过 Even/Rokid；渠道梯队宝岛—小林—得恩堂/仁爱；节奏服从取证与验光台。</p>
-  </div>
-  <div class="disc" style="margin-top:2.4mm;">同源文档：竞争格局洞察 · GTM方案 · KA政策与定价 · 操盘汇报。内部资料｜禁止外传。汇率测算 1USD=32TWD=7.2CNY。</div>
-  <div class="foot"><span>NIMO 台湾市场洞察 × 上市操盘整合汇报 · 2026.08 · 内部</span><span class="c">决策</span><span class="rr">09</span></div>
+  <div class="disc">同源文档：台湾智能眼镜竞争格局洞察 · NIMO台湾上市GTM方案 · NIMO台湾KA政策与定价方案 · Even-Realities摸底报告。汇率测算 1 USD = 32 TWD = 7.2 CNY；戒指成本与 KA 戒指供货折让以财务终核为准。内部资料，禁止外传。</div>
+  <div class="concl"><span class="cl">收束一句</span><p>标价对齐两万心智、规格压过 Even/Rokid，渠道押<b>宝岛—小林—得恩堂/仁爱</b>梯队，节奏服从取证——<b>六条通过，今天即可启动认证送样与 KA 接触</b>。</p></div>
+  <div class="foot"><span>NIMO 台湾洞察 × 操盘整合汇报 · 2026.08 · 内部机密</span><span class="c">风险与决策清单</span><span class="rr">11 / 11</span></div>
 </section>
 </body></html>
