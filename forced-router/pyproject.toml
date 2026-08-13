@@ -1,0 +1,12 @@
+[project]
+name = "forced-router"
+version = "1.0.0"
+description = "Force Cursor Auto/Router aliases onto a repo-specified model"
+requires-python = ">=3.10"
+readme = "README.md"
+
+[project.scripts]
+forced-router = "forced_router.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["forced_router*"]

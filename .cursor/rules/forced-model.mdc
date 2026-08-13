@@ -1,0 +1,11 @@
+---
+description: Forbid Cursor Auto/Router; use the model in .cursor/forced-model.json
+alwaysApply: true
+---
+
+This repository pins inference to the model in `.cursor/forced-model.json` (default preset: Claude Fable 5 Extra High).
+
+- Do not use Auto / Cursor Router / `auto-smart` / `default`.
+- Do not spawn custom subagents with `model: inherit`. Use `forced-coder` or `forced-reviewer`, or set `model:` to the `subagent_model` from that JSON file.
+- Built-in Explore / Bash / Browser subagents may keep their own models.
+- To change the forced model, edit `specified_model` in `.cursor/forced-model.json` (`fable5`, `sol`, or `opus5`) and run `python3 -m forced_router sync` from `forced-router/`.

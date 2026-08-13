@@ -1,0 +1,56 @@
+{
+  "$comment": "Single source of truth: change specified_model to the catalog id or preset you want. Auto / Cursor Router is forbidden in this repo.",
+  "specified_model": "fable5",
+  "auto_aliases": [
+    "auto",
+    "auto-smart",
+    "default",
+    "cursor-auto",
+    "composer-auto",
+    "cursor-router",
+    "smart-auto"
+  ],
+  "policy": {
+    "block_auto_in_ide": true,
+    "block_other_models_in_ide": true,
+    "deny_mismatched_subagents": true,
+    "force_all_api_models": true,
+    "allow_when_model_missing": true
+  },
+  "presets": {
+    "fable5": {
+      "id": "claude-fable-5",
+      "display": "Claude Fable 5 Extra High",
+      "cli_model": "claude-fable-5-thinking-xhigh",
+      "subagent_model": "claude-fable-5[effort=xhigh]",
+      "params": [
+        { "id": "effort", "value": "xhigh" },
+        { "id": "fast", "value": "false" }
+      ],
+      "match": ["claude-fable-5", "fable-5", "fable5"]
+    },
+    "sol": {
+      "id": "gpt-5.6-sol",
+      "display": "GPT-5.6 Sol Extra High",
+      "cli_model": "gpt-5.6-sol-xhigh",
+      "subagent_model": "gpt-5.6-sol[effort=xhigh]",
+      "params": [
+        { "id": "reasoning", "value": "xhigh" },
+        { "id": "context", "value": "272k" },
+        { "id": "fast", "value": "false" }
+      ],
+      "match": ["gpt-5.6-sol", "gpt-5.6-sol-xhigh", "sol"]
+    },
+    "opus5": {
+      "id": "claude-opus-5",
+      "display": "Claude Opus 5 High",
+      "cli_model": "claude-opus-5-thinking-high",
+      "subagent_model": "claude-opus-5[effort=high]",
+      "params": [
+        { "id": "effort", "value": "high" },
+        { "id": "fast", "value": "false" }
+      ],
+      "match": ["claude-opus-5", "opus-5", "opus5"]
+    }
+  }
+}
