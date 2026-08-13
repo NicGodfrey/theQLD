@@ -8,8 +8,9 @@
 | [台湾智能眼镜竞争格局洞察.md](./台湾智能眼镜竞争格局洞察.md) | 台湾各品牌官宣 / 渠道 / 社媒论坛口碑与 NIMO 空位 |
 | [Even-Realities摸底报告.md](./Even-Realities摸底报告.md) | EVEN 供应 / 销售 / SKU / 市场专项（NIMO 直接对标） |
 | [NIMO台湾上市GTM方案.md](./NIMO台湾上市GTM方案.md) | 多版 GTM：洞察 / SWOT / A视光·B双轨·C电信·D精品 |
-| [NIMO台湾上市GTM汇报手册.pdf](./NIMO台湾上市GTM汇报手册.pdf) | **汇报型 PDF**（对齐产业手册风格，12 页 A4） |
-| [build_gtm_ppt.py](./build_gtm_ppt.py) | 生成上述 PDF 的脚本（可改内容重跑） |
+| [NIMO台湾上市GTM汇报手册.pdf](./NIMO台湾上市GTM汇报手册.pdf) | **汇报型 PDF**（对齐产业手册组件：KPI 顶线 / 行业人视角框 / 细线表；12 页 A4 横版） |
+| [gtm_deck.html](./gtm_deck.html) | PDF 源稿（HTML/CSS 精排；Chrome headless 打印生成） |
+| [build_gtm_ppt.py](./build_gtm_ppt.py) | 旧版 reportlab 生成脚本（已由 `gtm_deck.html` 替代，仅作备份） |
 
 **核心结论速览**
 
