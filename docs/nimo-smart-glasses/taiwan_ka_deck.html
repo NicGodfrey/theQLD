@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"/><title>NIMO KA 认证与价盘</title><style>
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"/><title>NIMO 高规同价绝杀</title><style>
 @page { size: 297mm 210mm; margin: 0; }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 html, body { font-family: "WenQuanYi Micro Hei", "Segoe UI", "Microsoft YaHei", sans-serif; background: #dcdad3; color: #0b0b0b; font-size: 8pt; }
@@ -13,7 +13,7 @@ h1 { font-size: 14.5pt; font-weight: 700; line-height: 1.22; margin-bottom: 1.6m
 .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-bottom: 3mm; border-bottom: .55pt solid #e1e0d9; padding-bottom: 2.4mm; }
 .metric { padding: 2mm 2.8mm 0 0; border-top: 2.2pt solid #2a78d6; }
 .metrics .metric + .metric { padding-left: 2.8mm; border-left: .55pt solid #e1e0d9; }
-.metric.tg { border-top-color: #1baf7a; } .metric.to { border-top-color: #eda100; } .metric.tr { border-top-color: #e34948; }
+.metric.tg { border-top-color: #1baf7a; } .metric.to { border-top-color: #eda100; } .metric.tp { border-top-color: #4a3aa7; }
 .metric .num { font-size: 12pt; font-weight: 700; margin-bottom: .5mm; }
 .metric .sub { font-size: 7.2pt; } .metric .note { font-size: 6.4pt; color: #898781; }
 .row { display: grid; gap: 3mm; margin-bottom: 2.4mm; } .row > * { min-width: 0; }
@@ -21,18 +21,19 @@ h1 { font-size: 14.5pt; font-weight: 700; line-height: 1.22; margin-bottom: 1.6m
 .card { background: #fff; border: .7pt solid #e1e0d9; border-radius: 1mm; padding: 2.4mm; }
 .ck { font-size: 7.8pt; font-weight: 700; margin-bottom: 1.2mm; display: flex; gap: 1.4mm; align-items: center; }
 span.sq { width: 2mm; height: 2mm; display: inline-block; background: #2a78d6; }
-span.sq.g { background: #1baf7a; } span.sq.o { background: #eda100; } span.sq.r { background: #e34948; }
+span.sq.g { background: #1baf7a; } span.sq.o { background: #eda100; } span.sq.p { background: #4a3aa7; }
 .card p, .card li, .persp p, .persp li { font-size: 7.1pt; line-height: 1.4; color: #52514e; }
 .card ul, .persp ul { list-style: none; padding: 0; }
 .card ul li, .persp ul li { padding-left: 3mm; position: relative; margin-bottom: .45mm; }
-.card ul li::before, .persp ul li::before { content:""; position: absolute; left: 0; top: 1.15mm; width: 1.45mm; height: 1.45mm; background: #c8c6be; }
+.card ul li::before { content:""; position: absolute; left: 0; top: 1.15mm; width: 1.45mm; height: 1.45mm; background: #c8c6be; }
 .persp { background: #fff; border: .7pt solid #e1e0d9; border-top: 2pt solid #2a78d6; border-radius: 1mm; padding: 2.3mm 2.6mm; }
-.persp.g { border-top-color: #1baf7a; }
+.persp.g { border-top-color: #1baf7a; } .persp.o { border-top-color: #eda100; }
 .ptag { font-size: 7.5pt; font-weight: 700; color: #2a78d6; margin-bottom: 1mm; display: flex; gap: 1.4mm; align-items: center; }
-.persp.g .ptag { color: #1baf7a; }
-table.tbl { width: 100%; border-collapse: collapse; font-size: 6.7pt; }
+.persp.g .ptag { color: #1baf7a; } .persp.o .ptag { color: #c07d00; }
+.persp ul li::before { content:""; position: absolute; left: 0; top: 1.15mm; width: 1.45mm; height: 1.45mm; background: #2a78d6; }
+table.tbl { width: 100%; border-collapse: collapse; font-size: 6.6pt; }
 table.tbl th { text-align: left; font-weight: 700; border-bottom: 1.1pt solid #0b0b0b; padding: 1.1mm 1.2mm 1.2mm 0; }
-table.tbl td { border-bottom: .55pt solid #e1e0d9; padding: 1.15mm 1.2mm 1.15mm 0; color: #52514e; }
+table.tbl td { border-bottom: .55pt solid #e1e0d9; padding: 1.15mm 1.2mm 1.15mm 0; color: #52514e; vertical-align: top; }
 table.tbl td.k { color: #0b0b0b; font-weight: 700; } table.tbl td.b { color: #2a78d6; font-weight: 700; }
 table.tbl .r { text-align: right; font-variant-numeric: tabular-nums; }
 .disc { background: #f5f4f0; border-radius: 1mm; padding: 1.8mm 2.5mm; font-size: 6.3pt; color: #898781; }
@@ -40,89 +41,76 @@ table.tbl .r { text-align: right; font-variant-numeric: tabular-nums; }
 .foot .c { text-align: center; } .foot .rr { text-align: right; font-weight: 700; color: #52514e; }
 </style></head><body>
 <section class="slide">
-  <div class="eyebrow">认证前提 · 上市节奏框架 · KA 双轨价盘（渠道共担首销）</div>
-  <h1>先取证，再开卖；价盘先定框架<br>优惠 $499×65% → 回抬 $599×65%</h1>
-  <p class="lead">BSMI 规划 <span class="hl">≈3 个月</span>，NCC 等 <span class="hl">≈1 个月</span>（可并行）。开局按竞争在<span class="hl">新品优惠 / 正常价</span>二选一；优惠期渠道按促销零售倒折提货。</p>
+  <div class="eyebrow">开局默认执行 · 回抬另议 · 视光半价戒</div>
+  <h1>高规同价绝杀：单光 $599 含镜<br>贴上 Even / Rokid 两万心智</h1>
+  <p class="lead">不说「更便宜」。说「<span class="hl">同样的标价带，你已经含镜、无摄像、更轻，还能半价带戒</span>」。平光开局 <span class="hl">$499</span>；是否回抬看数据。</p>
   <div class="rule"></div>
   <div class="metrics">
-    <div class="metric"><div class="num">≈3 月</div><div class="sub">BSMI + 电池路径</div><div class="note">稳妥排期，含整改缓冲</div></div>
-    <div class="metric tg"><div class="num">≈1 月</div><div class="sub">NCC 等无线认证</div><div class="note">资料齐、一次过测</div></div>
-    <div class="metric to"><div class="num">$324</div><div class="sub">优惠期销售收入</div><div class="note">$499 × 65% 平光</div></div>
-    <div class="metric tr"><div class="num">$389</div><div class="sub">回抬后销售收入</div><div class="note">$599 × 65% 平光</div></div>
+    <div class="metric"><div class="num">$599</div><div class="sub">单光 1.60 含镜</div><div class="note">≈NT$19,168 · 绝杀锚</div></div>
+    <div class="metric tg"><div class="num">$499</div><div class="sub">平光开局</div><div class="note">≈NT$15,968 · 尝鲜</div></div>
+    <div class="metric to"><div class="num">$124.5</div><div class="sub">视光半价戒</div><div class="note">MAP $249 · 仅验光台</div></div>
+    <div class="metric tp"><div class="num">同价+</div><div class="sub">规格全面占优</div><div class="note">含镜·无摄·更轻·半价戒</div></div>
   </div>
-  <div class="row c2">
-    <div class="persp"><div class="ptag"><span class="sq"></span>客户建议审视</div>
-      <ul>
-        <li>BSMI 3 个月：<b>基本准确</b>（锂电整机端到端常 8–12+ 周）</li>
-        <li>其他 1 个月：<b>大致准确偏乐观</b>（NCC 常 3–6 周）</li>
-        <li>实验室送测：正确；样品数以实验室报价终锁</li>
-        <li>客户表电芯≈89：说明电池是长周期，须早备</li>
-      </ul></div>
-    <div class="persp g"><div class="ptag"><span class="sq g"></span>开局二选一</div>
-      <ul>
-        <li><b>优惠轨</b>：对客 $499，提货 $324——脉冲开局</li>
-        <li><b>正常轨</b>：对客 $599，提货 $389——守锚</li>
-        <li>决策时点：开卖前 2–4 周看竞争</li>
-        <li>证书未齐：禁止上柜销售</li>
-      </ul></div>
-  </div>
-  <div class="foot"><span>NIMO · 台湾 KA / 认证与价盘 · 2026.08</span><span class="c">框架</span><span class="rr">01</span></div>
-</section>
-
-<section class="slide">
-  <div class="eyebrow"><span class="p">认证</span> / 样品与倒排</div>
-  <h1>合规清单与倒排：BSMI 定总工期</h1>
-  <p class="lead">客户经验样品量级作<b>备样参考</b>；NIMO 以认可实验室合同为准。</p>
-  <div class="rule"></div>
-  <table class="tbl" style="margin-bottom:2.6mm;">
-    <tr><th>项目</th><th>客户经验样品</th><th>排期假设</th><th>备注</th></tr>
-    <tr><td class="k">BSMI</td><td>4 整机 + 4 电池包</td><td class="b">≈3 个月</td><td>安全/EMC；长路径</td></tr>
-    <tr><td class="k">电池随机</td><td>约 89 电芯</td><td>含入 BSMI 路径</td><td>尽早备料</td></tr>
-    <tr><td class="k">NCC</td><td>1 整机 + 传导定频 + 辐射定频</td><td class="b">≈1 个月</td><td>可与 BSMI 并行</td></tr>
-    <tr><td class="k">本地申请人</td><td>—</td><td>认证启动前</td><td>进口商/代理必备</td></tr>
+  <table class="tbl">
+    <tr><th>竞品买单</th><th>他付出</th><th>NIMO 开局</th><th>绝杀点</th></tr>
+    <tr><td class="k">Even / Rokid 裸机心智</td><td>≈ NT$19,990–19,999</td><td class="b">单光含镜 $599</td><td>同价带多一副片 + 无摄像</td></tr>
+    <tr><td class="k">Even 裸机+处方</td><td>≈ 2.5–3.1 万</td><td class="b">$599</td><td>总拥有成本低一截</td></tr>
+    <tr><td class="k">Even +片 +半价 R1</td><td>更高</td><td class="b">$599 + $124.5</td><td>组合仍优，战场在验光台</td></tr>
+    <tr><td class="k">尝鲜 / 对照 Eagle</td><td>~1.5–1.6 万</td><td class="b">平光 $499</td><td>有屏入场低于 2 万锚</td></tr>
   </table>
-  <div class="row c3" style="margin-bottom:0;">
-    <div class="card"><div class="ck"><span class="sq"></span>T0</div><p>冻结构案→备样→实验室合同</p></div>
-    <div class="card"><div class="ck"><span class="sq g"></span>T0–T+12w</div><p>BSMI 主路径；NCC 并行；T+10w 闸门复盘</p></div>
-    <div class="card"><div class="ck"><span class="sq o"></span>证书后</div><p>才允许 KA 出货与公开零售；再锁开局价模式</p></div>
-  </div>
-  <div class="foot"><span>NIMO · 台湾 KA / 认证与价盘 · 2026.08</span><span class="c">认证</span><span class="rr">02</span></div>
+  <div class="foot"><span>NIMO · 高规同价绝杀 · KA价盘 v4 · 2026.08</span><span class="c">绝杀框架</span><span class="rr">01</span></div>
 </section>
 
 <section class="slide">
-  <div class="eyebrow"><span class="p">价盘</span> / 渠道共担</div>
-  <h1>新品优惠：按 $499 的 65 折提货，再回抬</h1>
-  <p class="lead">不再「$599 零售 + 总部补 $100」。优惠期品牌与 KA 一起让利；回抬后恢复标准锚。</p>
+  <div class="eyebrow"><span class="p">价盘</span> / 开局默认 · KA 提货</div>
+  <h1>开局执行表：零售与销售收入</h1>
+  <p class="lead">平光 ×65% · 单光 ×60% · 渐进 ×58%；返利 3%。回抬价盘仅作后备，<span class="hl">不自动启用</span>。</p>
   <div class="rule"></div>
   <table class="tbl" style="margin-bottom:2.4mm;">
-    <tr><th>SKU</th><th class="r">正常零售</th><th class="r">优惠零售</th><th class="r">优惠提货</th><th class="r">回抬提货</th></tr>
-    <tr><td class="k">平光（65%）</td><td class="r">599</td><td class="r b">499</td><td class="r b">324.35</td><td class="r b">389.35</td></tr>
-    <tr><td class="k">单光 1.60（60%）</td><td class="r">699</td><td class="r">599</td><td class="r">359.40</td><td class="r">419.40</td></tr>
-    <tr><td class="k">单光 1.67</td><td class="r">849</td><td class="r">749</td><td class="r">449.40</td><td class="r">509.40</td></tr>
-    <tr><td class="k">单光 1.74</td><td class="r">949</td><td class="r">849</td><td class="r">509.40</td><td class="r">569.40</td></tr>
-    <tr><td class="k">渐进 1.60（58%）</td><td class="r">849</td><td class="r">749</td><td class="r">434.42</td><td class="r">492.42</td></tr>
-    <tr><td class="k">渐进 1.67</td><td class="r">949</td><td class="r">849</td><td class="r">492.42</td><td class="r">550.42</td></tr>
-    <tr><td class="k">渐进 1.74</td><td class="r">1,099</td><td class="r">999</td><td class="r">579.42</td><td class="r">637.42</td></tr>
+    <tr><th>SKU</th><th class="r">开局零售 $</th><th class="r">开局提货 $</th><th class="r">后备回抬零售</th><th class="r">回抬提货</th></tr>
+    <tr><td class="k">平光</td><td class="r b">499</td><td class="r b">324.35</td><td class="r">599</td><td class="r">389.35</td></tr>
+    <tr><td class="k">单光 1.60（主销）</td><td class="r b">599</td><td class="r b">359.40</td><td class="r">699</td><td class="r">419.40</td></tr>
+    <tr><td class="k">单光 1.67 / 1.74</td><td class="r">749 / 849</td><td class="r">449.40 / 509.40</td><td class="r">849 / 949</td><td class="r">509.40 / 569.40</td></tr>
+    <tr><td class="k">渐进 1.60 / 1.67 / 1.74</td><td class="r">749 / 849 / 999</td><td class="r">434.42 / 492.42 / 579.42</td><td class="r">849 / 949 / 1099</td><td class="r">492 / 550 / 637</td></tr>
   </table>
-  <div class="persp g"><div class="ptag"><span class="sq g"></span>纪律</div>
-    <p>优惠窗 60–90 天或约定台数 → 回抬；未售库存书面价保。返利仍 3%（按实际提货额）。禁止优惠价上再叠私让。</p>
+  <div class="row c2" style="margin-bottom:0;">
+    <div class="persp"><div class="ptag"><span class="sq"></span>半价戒规则</div>
+      <ul>
+        <li>MAP $249 → 购镜加购 <b>$124.50</b></li>
+        <li>仅视光认证店；绑主机订单</li>
+        <li>不对电信专案打包、不拆零</li>
+        <li>对齐 Even 半价 R1 心智，战场在验光台</li>
+      </ul></div>
+    <div class="persp g"><div class="ptag"><span class="sq g"></span>回抬闸门（可选）</div>
+      <ul>
+        <li>配镜完成率达标</li>
+        <li>破价/窜货可控</li>
+        <li>竞品未大规模放血</li>
+        <li>未满足则延长优惠锚</li>
+      </ul></div>
   </div>
-  <div class="foot"><span>NIMO · 台湾 KA / 认证与价盘 · 2026.08</span><span class="c">价盘</span><span class="rr">03</span></div>
+  <div class="foot"><span>NIMO · 高规同价绝杀 · KA价盘 v4 · 2026.08</span><span class="c">价盘</span><span class="rr">02</span></div>
 </section>
 
 <section class="slide">
-  <div class="eyebrow"><span class="p">收束</span></div>
-  <h1>决策五句</h1>
+  <div class="eyebrow"><span class="p">执行</span> / 话术与节奏</div>
+  <h1>门店只讲同价更高规格；认证后开杀</h1>
   <div class="rule"></div>
-  <table class="tbl" style="margin-bottom:3mm;">
-    <tr><th style="width:8%">#</th><th>内容</th></tr>
-    <tr><td class="b">①</td><td>认证：BSMI≈3 月、NCC≈1 月并行；客户样品表作备样，实验室终锁。</td></tr>
-    <tr><td class="b">②</td><td>未取证不上柜；预热可做闭门与培训，不公开放价销售。</td></tr>
-    <tr><td class="b">③</td><td>价盘框架：标准锚 $599；开局可选新品优惠 $499。</td></tr>
-    <tr><td class="b">④</td><td>优惠期提货 <b>$499×65%</b>；回抬 <b>$599×65%</b>——渠道共担。</td></tr>
-    <tr><td class="b">⑤</td><td>开卖前 2–4 周按竞争选轨；主场仍是视光 KA + NIMO 镜片。</td></tr>
+  <div class="row c3" style="margin-bottom:2.6mm;">
+    <div class="card"><div class="ck"><span class="sq"></span>vs Even</div><p>他们 $599 多是裸机；我们 <b>$599 已含镜</b>，还能半价加戒，当场验配。</p></div>
+    <div class="card"><div class="ck"><span class="sq g"></span>vs Rokid</div><p>同在 2 万柜：我们 <b>无摄像、更轻、含镜清楚</b>，当本命镜。</p></div>
+    <div class="card"><div class="ck"><span class="sq o"></span>禁止</div><p>「更便宜 / 平替 / 吊打」。统一：<b>高规同价</b>。</p></div>
+  </div>
+  <table class="tbl" style="margin-bottom:2.4mm;">
+    <tr><th>阶段</th><th>动作</th></tr>
+    <tr><td class="k">认证期</td><td>BSMI≈3 月、NCC≈1 月；未取证不上柜</td></tr>
+    <tr><td class="k">M0–M1</td><td>开卖默认 $499 / 单光 $599 + 半价戒物料话术</td></tr>
+    <tr><td class="k">M2–M3</td><td>TCO 对照强化；评估回抬条件</td></tr>
+    <tr><td class="k">M4+</td><td>可选回抬或延长优惠锚；扩店</td></tr>
   </table>
-  <div class="disc">详见 GTM「认证与上市节奏」与《NIMO台湾KA政策与定价方案.md》。内部资料。</div>
-  <div class="foot"><span>NIMO · 台湾 KA / 认证与价盘 · 2026.08</span><span class="c">决策</span><span class="rr">04</span></div>
+  <div class="persp g"><div class="ptag"><span class="sq g"></span>决策六句</div>
+    <p>①开局平光 $499、单光 $599 含镜　②高规同价绝杀 Even/Rokid　③视光半价戒 $124.5　④KA 按开局零售倒折提货　⑤回抬不自动　⑥话术只讲同价更高规格。</p>
+  </div>
+  <div class="foot"><span>NIMO · 高规同价绝杀 · KA价盘 v4 · 2026.08</span><span class="c">执行</span><span class="rr">03</span></div>
 </section>
 </body></html>

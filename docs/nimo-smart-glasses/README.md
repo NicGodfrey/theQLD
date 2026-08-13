@@ -10,7 +10,7 @@
 | [NIMO台湾上市GTM方案.md](./NIMO台湾上市GTM方案.md) | 多版 GTM：洞察 / SWOT / A视光·B双轨·C电信·D精品 |
 | [NIMO台湾上市GTM汇报手册.pdf](./NIMO台湾上市GTM汇报手册.pdf) | **汇报型 PDF**（对齐产业手册组件：KPI 顶线 / 行业人视角框 / 细线表；12 页 A4 横版） |
 | [gtm_deck.html](./gtm_deck.html) | PDF 源稿（HTML/CSS 精排；Chrome headless 打印生成） |
-| [NIMO台湾KA政策与定价方案.md](./NIMO台湾KA政策与定价方案.md) | **老板汇报（现行）**：KA 价盘 · 平光零售 $599 · 首销 -$100 · 包运税收入 |
+| [NIMO台湾KA政策与定价方案.md](./NIMO台湾KA政策与定价方案.md) | **老板汇报（现行）**：高规同价绝杀：开局平光 $499 / 单光 $599 含镜 + 视光半价戒；回抬另议 |
 | [NIMO台湾KA政策与定价汇报.pdf](./NIMO台湾KA政策与定价汇报.pdf) | KA 定价汇报 PDF（5 页横版） |
 | [taiwan_ka_deck.html](./taiwan_ka_deck.html) | KA 汇报 PDF 源稿 |
 | [NIMO台湾省代政策与定价方案.md](./NIMO台湾省代政策与定价方案.md) | ~~旧省代版~~（已废止，仅存档） |
