@@ -117,6 +117,21 @@
 
 ---
 
+### 2.3b 《新英格兰医学杂志》· 未披露的 AI 改图（病例图片栏目）
+
+| 项 | 内容 |
+| --- | --- |
+| 论文 | Wang, Y. & Mu, X. *Bronchial Casts from Inhalation of Forest-Fire Smoke.* **N Engl J Med** 394, 1634 (2026). Images in Clinical Medicine. |
+| DOI | 原文 [10.1056/NEJMicm2518379](https://doi.org/10.1056/nejmicm2518379)；撤稿信 [10.1056/NEJMc2605962](https://doi.org/10.1056/NEJMc2605962) |
+| 单位 | 王玉玲（首都医科大学大兴教学医院）；牟向东（北京清华长庚医院） |
+| 发表 / 撤稿 | 2026-04-18 发表；**11 天后** 2026-04-29 撤稿 |
+
+**证据：** 作者承认用 AI 工具把图中卷尺移到画面上方，未按 NEJM 政策披露任何 AI 使用或图像改动。作者称未改临床内容。这是**政策违规导致的顶刊撤稿**，不是临床试验数据造假；与 §2.3 的 III 期试验完整性崩溃不是同一类问题。
+
+**来源：** [NEJM 撤稿信](https://www.nejm.org/doi/full/10.1056/NEJMc2605962)；[Retraction Watch](https://retractionwatch.com/2026/05/01/nejm-retracts-case-study-for-ai-manipulated-imagery/)
+
+---
+
 ### 2.4 中国地质大学（武汉） · Science · 质子导体燃料电池
 
 | 项 | 内容 |
@@ -314,15 +329,20 @@ PubPeer 上该文 2021 年即有图片重复质疑，2024 年才更正，2025–
 
 ### 6.1 Hindawi / Wiley 特刊崩盘（2022–2024）
 
-- 2022 年 9 月起 Hindawi 开始批量撤稿；2023 年当年撤稿超过 8,000 篇（Retraction Watch / Wiley 白皮书 *Tackling manipulation at scale*）。
-- 机制：客座编辑特刊 → 被论文工厂渗透 → 虚假/循环评审 → 模板化摘要、折磨短语（tortured phrases）、无关引用、AI 生成痕迹、克隆图。
-- 高撤稿期刊（Science Integrity Digest 2023 年中统计，此后还在增加）包括：*Computational Intelligence and Neuroscience*、*Evidence-Based Complementary and Alternative Medicine*、*Journal of Healthcare Engineering*、*Wireless Communications and Mobile Computing*、*Computational and Mathematical Methods in Medicine* 等。
-- 作者单位高度集中于中国高校与医院，这是文献计量中反复出现的事实；**不能把每一篇 Hindawi 撤稿都写成“某教授亲自造假”**，很多是买来的署名槽位。
+- 2022 年 9 月起 Hindawi 开始批量撤稿；2023 年当年超过 8,000 篇；中文期刊团队对 Hindawi XML 全量统计为 **2022-11 至 2024-03 累计 11,371 篇**。
+- Mallapaty（《Nature》新闻，2024）：**2023 年 Hindawi 约 9,600 篇撤稿中约 8,200 篇（约 85%）有中国合著者**。
+- 机制：客座编辑特刊被攻破。Dorothy Bishop 发现被 PubPeer 标记的客座编辑处理稿件更多、编辑响应显著更快；Nick Wise 通过社交平台署名出售广告匹配已发表论文，促成 850+ 篇撤稿。
+- BMJ 2022（Candal-Pedreira 等，[10.1136/bmj-2022-071517](https://doi.org/10.1136/bmj-2022-071517)）：Retraction Watch 中 1,182 篇论文工厂撤稿，**96.8% 作者来自中国机构，76.9% 第一作者单位为医院**；**没有一篇来自 Nature/Science/Cell**。后续计量（J Clin Epidemiol 2024、Scientometrics 2026）将论文工厂撤稿的中国占比收敛在约 **88–92%**。
+- 高撤稿期刊包括 *Computational Intelligence and Neuroscience*、*Evidence-Based Complementary and Alternative Medicine*、*Journal of Healthcare Engineering* 等。
+- 作者单位高度集中于中国高校与医院；**不能把每一篇 Hindawi 撤稿都写成“某教授亲自造假”**，很多是买来的署名槽位。
+- 更早、可独立核验的图像工厂：Elisabeth Bik 记录的 **Tadpole paper mill**（蝌蚪状伪造 western blot；济宁一院、吉大中日联谊医院等为高产单位）和 **Stock Photo paper mill**。
+- **工厂产品基本不进 CNS。** 顶刊问题是实验室/试验个案，不是同一条流水线。BMJ 2025 用模型给癌症论文打“疑似”标签，不能表述为“36% 中国癌症论文是假的”。
 
 ### 6.2 医院职称论文市场
 
-- 济宁市第一人民医院 2021 年底通报处理约 35 名与造假论文相关的人员，被 *Nature* 2025 年机构撤稿率报道作为中国医院端“清扫”的典型（Van Noorden, *Nature* 638, 596–599, 2025, DOI [10.1038/d41586-025-00455-y](https://doi.org/10.1038/d41586-025-00455-y)）。
+- 济宁市第一人民医院 2021 年底通报处理约 35 名人员；Van Noorden 2025 年分析：该院 2014–2024 年**总产出 5% 以上被撤（超 100 篇）**，居全球机构撤稿率之首，前 10 名中约 7 席为中国医院。
 - 卫健委 2021–2022 年 321 起医学诚信案件中近半数为论文工厂类。
+- 最高人民法院 2025 年科技创新司法意见要求严惩代写代投、买卖论文的商业机构（Mallapaty, *Nature* 2025, [10.1038/d41586-025-00612-3](https://doi.org/10.1038/d41586-025-00612-3)）。教育部 2024 年要求高校对近三年中英文撤稿自查。
 - 这类论文极少进入 Nature/Science/Cell；它们污染的是临床决策元分析、医院晋升和基金申请材料。
 
 ### 6.3 政策层
@@ -371,6 +391,7 @@ PubPeer 上该文 2021 年即有图片重复质疑，2024 年才更正，2025–
 | **已撤稿 + 数据不可信** | HDAC6 / 缬氨酸 | Nature | 2025 | 同济 | 学校不端 + 期刊撤稿 |
 | **已撤稿 + 作者承认改数据** | LGR4 / 铁死亡 | Nature Cancer | 2024 | 南开 | 学校不端 + 期刊撤稿 |
 | **已撤稿 + 试验完整性崩溃** | 昼夜免疫化疗 III 期 | Nature Medicine | 2026 | 湖南省肿瘤医院 | 期刊撤稿 |
+| **已撤稿 + 未披露 AI 改图** | 支气管铸型病例图 | NEJM | 2026 | 大兴教学医院 / 清华长庚 | 政策违规撤稿 |
 | **已撤稿 + 附图与旧文重复** | 质子导体异质结 | Science | 2020 | 中国地质大学（武汉） | 作者撤稿 |
 | **已撤稿 + 多处图像重叠** | 胶质母细胞瘤微环境 | Nat Cell Biol | 2024/2025 | 首都医科大天坛 + 新加坡/韩国 | 作者同意撤稿 |
 | **已撤稿 + 纳米图重复** | AgP2 电催化 | Nat Commun | 2019/2022 | 哈工大深圳等 | 作者撤稿 |
@@ -386,7 +407,8 @@ PubPeer 上该文 2021 年即有图片重复质疑，2024 年才更正，2025–
 
 - **贺建奎胚胎基因编辑：** 2018 年，超出“近五年发文”主窗口。
 - **曹雪涛：** 科技部 2021 年结论为“未发现造假、存在图片误用”；期刊层另有 JBC 约 16 篇撤稿及 2025 年 *Nat Commun* 撤稿。两种口径并列见 §4.5，不单方面写成“官方认定造假”。
-- **Lancet Macchiarini 气管移植：** 已撤稿，但不是中国单位主导。
+- **Lancet / Lancet Oncology / JAMA Internal Medicine 的“撤稿并重发”：** 曹彬团队 COVID 6 个月随访（Lancet，官方支持诚实错误后重发）；长海医院胰腺癌 II 期（生存起点算错后重发）；中日友好医院电子烟 RCT（组别标签编码错误后撤稿）。**现有记录不支持写成造假。**
+- **Lancet Global Health 2020 通信：** 曾迎春等自称援鄂一线护士，医院声明未随队，数日撤稿。属身份不实，不是试验数据造假。
 - **科学争论（新冠起源、重复失败但无图像/数值证据）：** 不是造假证据。
 - **PubPeer 上仅有质疑、无期刊/学校结论的帖子：** 列为线索，不进 A/B 级。
 - **把某校“撤稿数量高”写成该校某院士造假：** 计量热点（部分中国医院）≠ 点名到人。
