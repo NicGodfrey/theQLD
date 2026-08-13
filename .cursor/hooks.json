@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "command": "python3 .cursor/hooks/force_model.py",
+        "failClosed": true
+      }
+    ],
+    "subagentStart": [
+      {
+        "command": "python3 .cursor/hooks/force_model.py",
+        "failClosed": true
+      }
+    ]
+  }
+}
