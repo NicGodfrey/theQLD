@@ -10,6 +10,9 @@
 | [NIMO台湾上市GTM方案.md](./NIMO台湾上市GTM方案.md) | 多版 GTM：洞察 / SWOT / A视光·B双轨·C电信·D精品 |
 | [NIMO台湾上市GTM汇报手册.pdf](./NIMO台湾上市GTM汇报手册.pdf) | **汇报型 PDF**（对齐产业手册组件：KPI 顶线 / 行业人视角框 / 细线表；12 页 A4 横版） |
 | [gtm_deck.html](./gtm_deck.html) | PDF 源稿（HTML/CSS 精排；Chrome headless 打印生成） |
+| [NIMO台湾省代政策与定价方案.md](./NIMO台湾省代政策与定价方案.md) | **老板汇报**：七档光学定价 + 台湾省代价盘/政策/年度目标 |
+| [NIMO台湾省代政策与定价汇报.pdf](./NIMO台湾省代政策与定价汇报.pdf) | 省代政策汇报 PDF（7 页横版） |
+| [taiwan_dealer_deck.html](./taiwan_dealer_deck.html) | 省代汇报 PDF 源稿 |
 | [build_gtm_ppt.py](./build_gtm_ppt.py) | 旧版 reportlab 生成脚本（已由 `gtm_deck.html` 替代，仅作备份） |
 
 **核心结论速览**
