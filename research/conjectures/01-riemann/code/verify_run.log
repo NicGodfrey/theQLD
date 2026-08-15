@@ -1,0 +1,32 @@
+loaded 2000 Li coefficients
+(V) min lambda_n/n = 0.0230957089661  >= 0.0230 : True
+
+quadruple (b,g)=(0.75,45), n <= 2000:
+  (B1) T_n >= -1.29745 n/g^2        : True   (min slack 0.00162816)
+  (B2) |T_n| <= 6.595 n/g           : True
+  (B3) |T_n| <= (4n+3.3n^2)/g^2     : True
+  (C)  lambda_n + T_n > 0           : True   (min value 0.0240831)
+
+quadruple (b,g)=(0.99,8), n <= 64:
+  (B1) T_n >= -1.29745 n/g^2        : True   (min slack 0.051056)
+  (B2) |T_n| <= 6.595 n/g           : True
+  (B3) |T_n| <= (4n+3.3n^2)/g^2     : True
+  (C)  lambda_n + T_n > 0           : True   (min value 0.0538791)
+
+quadruple (b,g)=(0.51,45), n <= 2000:
+  (B1) T_n >= -1.29745 n/g^2        : True   (min slack 0.00162825)
+  (B2) |T_n| <= 6.595 n/g           : True
+  (B3) |T_n| <= (4n+3.3n^2)/g^2     : True
+  (C)  lambda_n + T_n > 0           : True   (min value 0.0240832)
+
+(D) lambda_n - 1.29745 n * sum_j (45j)^-2 > 0 for n<=2000 : True
+    sum_j 1/g_j^2 = 0.00081231312,  1.29745*S = 0.0010539357
+    n=    1: sum_(j<=4000) T_n^(j) = 0.0016241485  (tail<9.012e-7), one-sided bound -0.0010539357, lambda_n = 0.023095709
+    n=   10: sum_(j<=4000) T_n^(j) = 0.16198022  (tail<4.568e-5), one-sided bound -0.010539357, lambda_n = 2.2793394
+    n=  100: sum_(j<=4000) T_n^(j) = 12.468868  (tail<0.004123), one-sided bound -0.10539357, lambda_n = 118.60378
+    n= 1000: sum_(j<=4000) T_n^(j) = 139.55758  (tail<0.4079), one-sided bound -1.0539357, lambda_n = 2326.0532
+    n= 2000: sum_(j<=4000) T_n^(j) = 279.11373  (tail<1.631), one-sided bound -2.1078713, lambda_n = 5351.7595
+
+(E) (b,g)=(0.99,8): guaranteed blind window n <= 64;
+    first n with lambda_n + T_n < 0 : n = 955 (value -134.786)
+    (Li/Bombieri-Lagarias: some lambda_n must eventually go negative for this multiset.)

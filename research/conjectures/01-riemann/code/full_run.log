@@ -1,0 +1,54 @@
+N = 2000, M = 8192, dps = 40, radii = 0.99, 0.985
+radius r1 = 0.99 ...
+    eval m=0/4096  (0s)
+    eval m=512/4096  (1s)
+    eval m=1024/4096  (3s)
+    eval m=1536/4096  (4s)
+    eval m=2048/4096  (5s)
+    eval m=2560/4096  (7s)
+    eval m=3072/4096  (8s)
+    eval m=3584/4096  (9s)
+    eval m=4096/4096  (10s)
+    evaluations done in 10s
+    FFT done in 0s
+radius r2 = 0.985 ...
+    eval m=0/4096  (0s)
+    eval m=512/4096  (1s)
+    eval m=1024/4096  (2s)
+    eval m=1536/4096  (4s)
+    eval m=2048/4096  (5s)
+    eval m=2560/4096  (6s)
+    eval m=3072/4096  (7s)
+    eval m=3584/4096  (9s)
+    eval m=4096/4096  (10s)
+    evaluations done in 10s
+    FFT done in 0s
+max |lambda(r1) - lambda(r2)| over n<=N : 4.6409e-27
+lambda_1 computed  = 0.02309570896612103381431025
+lambda_1 exact     = 0.02309570896612103381431025
+|difference|       = 4.84363e-32
+sup|g| on |z|=0.995 (sampled): 69509.6
+aliasing bound at n=N: 1.86442e-9
+min_(n<=N) lambda_n / n = 0.023095708966121   attained at n = 1
+lambda_n >= 0.0230 * n for all n <= 2000 : True
+wrote li_lambda.csv
+
+sample values:
+  lambda_    1 = 0.023095708966121033814   lambda/n = 0.0230957089661
+  lambda_    2 = 0.092345735228046670386   lambda/n = 0.046172867614
+  lambda_    3 = 0.20763892055432480379   lambda/n = 0.0692129735181
+  lambda_    4 = 0.36879047949224163859   lambda/n = 0.0921976198731
+  lambda_    5 = 0.57554271446117745243   lambda/n = 0.115108542892
+  lambda_    6 = 0.82756601228237929743   lambda/n = 0.137927668714
+  lambda_    7 = 1.1244601175709594906   lambda/n = 0.160637159653
+  lambda_    8 = 1.4657556771470606327   lambda/n = 0.183219459643
+  lambda_    9 = 1.8509160483825341553   lambda/n = 0.205657338709
+  lambda_   10 = 2.2793393631931577437   lambda/n = 0.227933936319
+  lambda_   20 = 8.7692768720932151296   lambda/n = 0.438463843605
+  lambda_   50 = 43.531096488374019299   lambda/n = 0.870621929767
+  lambda_  100 = 118.60377537679132993   lambda/n = 1.18603775377
+  lambda_  200 = 306.65576485134476641   lambda/n = 1.53327882426
+  lambda_  500 = 991.90009299224494705   lambda/n = 1.98380018598
+  lambda_ 1000 = 2326.0531616864664574   lambda/n = 2.32605316169
+  lambda_ 1500 = 3791.7059726352177556   lambda/n = 2.52780398176
+  lambda_ 2000 = 5351.7595383815035138   lambda/n = 2.67587976919

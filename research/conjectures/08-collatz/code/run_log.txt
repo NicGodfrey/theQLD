@@ -1,0 +1,114 @@
+===== run_log.txt — actual outputs, 2026-08-15 06:56:07 UTC, Python 3.12.3, mpmath 1.4.1 =====
+
+----- $ python3 cycle_bound.py -----
+Lower bounds for nontrivial Collatz cycles via the cycle-ratio identity
+==========================================================================
+--- verification height B = 2^40  (Eliahou 1993 assumption) ---
+  simplest fraction K/L in (log2 3, log2(3+1/B)] : 17087915/10781274
+  => any nontrivial cycle has  L >= 10781274  odd elements,
+     K >= 17087915  elements per period under T,
+     K+L >= 27869189  steps under the unaccelerated Collatz map.
+  certified margins: K/L - log2(3)      > 1.633e-15
+                     log2(3+1/B) - K/L  > 4.357e-13
+
+--- verification height B = 2^68  (Barina 2021) ---
+  simplest fraction K/L in (log2 3, log2(3+1/B)] : 114208327604/72057431991
+  => any nontrivial cycle has  L >= 72057431991  odd elements,
+     K >= 114208327604  elements per period under T,
+     K+L >= 186265759595  steps under the unaccelerated Collatz map.
+  certified margins: K/L - log2(3)      > 1.103e-22
+                     log2(3+1/B) - K/L  > 1.519e-21
+
+--- verification height B = 2^71  (Barina 2025) ---
+  simplest fraction K/L in (log2 3, log2(3+1/B)] : 114208327604/72057431991
+  => any nontrivial cycle has  L >= 72057431991  odd elements,
+     K >= 114208327604  elements per period under T,
+     K+L >= 186265759595  steps under the unaccelerated Collatz map.
+  certified margins: K/L - log2(3)      > 1.103e-22
+                     log2(3+1/B) - K/L  > 9.333e-23
+
+exit code: 0
+
+----- $ python3 terras_density.py -----
+Exact densities D_k of { n : stopping time sigma(n) > k }
+(theta = log_3 2 = 0.630930,  predicted decay rate eta = 1-H(theta) = 0.050044)
+
+   k      surviving vectors   D_k = c_k/2^k   -log2(D_k)/k
+   1                      1    5.000000e-01       1.000000
+   2                      1    2.500000e-01       1.000000
+   3                      2    2.500000e-01       0.666667
+   4                      3    1.875000e-01       0.603759
+   5                      4    1.250000e-01       0.600000
+  10                     64    6.250000e-02       0.400000
+  15                   1295    3.952026e-02       0.310751
+  20                  27328    2.606201e-02       0.263095
+  30               12771274    1.189418e-02       0.213120
+  40             6402835000    5.823345e-03       0.185598
+  50          3734259929440    3.316689e-03       0.164721
+  60       2216134944775156    1.922191e-03       0.150384
+  70    1241503538986719152    1.051594e-03       0.141332
+  80  803209913882910595105    6.643997e-04       0.131946
+  90 508520069189622659715764    4.107792e-04       0.124993
+ 100 302560669500543257546172187    2.386783e-04       0.120326
+ 110 203300455050633918968350347728    1.566170e-04       0.114913
+ 120 131320930040438275830258155402960    9.879489e-05       0.110877
+
+Every column is exact integer arithmetic; the last column decreases
+towards eta from above as k grows (corrections of size O(log k / k)).
+exit code: 0
+
+----- $ python3 cycles_z.py -----
+Known cycles of T on the integers:
+  cycle trivial(+) length  2 under T : [1, 2]  -- verified
+  cycle zero       length  1 under T : [0]  -- verified
+  cycle neg-1      length  1 under T : [-1]  -- verified
+  cycle neg-5      length  3 under T : [-5, -7, -10]  -- verified
+  cycle neg-17     length 11 under T : [-17, -25, -37, -55, -82, -41, -61, -91, -136, -68, -34]  -- verified
+
+Exhaustive scan:
+  scanned all |n| <= 2000000 (4000001 integers): every orbit entered a known cycle
+    -> trivial(+): 2000000 starting values
+    -> zero      : 1 starting values
+    -> neg-1     : 654579 starting values
+    -> neg-5     : 648087 starting values
+    -> neg-17    : 697334 starting values
+exit code: 0
+
+----- $ python3 wave2_lemma_check.py -----
+Wave-2 lemma certification (predecessor-tree bound, exponent c* > 3/10)
+==========================================================================
+(1) The exponent c*: unique root of (3/16)^c + (3/64)^c = 1
+    exact certificate at c = 3/10 : (lo1+lo2-S)/S = 4.486476e-03 > 0   =>  c* > 3/10
+    exact certificate at c = 31/100: (S-hi1-hi2)/S = 1.759425e-02 > 0   =>  c* < 31/100
+    c* = 0.3020122755765594830905774  (bisection, 40 dps)
+
+(2) Two-Children Lemma, exhaustive for 3 <= n <= 1000000, 3 not | n
+    verified for 666665 values of n: exactly two children each
+    discarded candidate was m_(j0)/m_(j0+2)/m_(j0+4) in 222222/222222/222221 cases
+    (worst case for the bound = discarding m_(j0): 222222 cases, factors then {2^(j0+3)/3, 2^(j0+5)/3})
+
+(3) Stopped predecessor trees (theorem engine, demonstration roots)
+    a=5, x=10^6: nodes=13041, splits=6520, leaves=6521, max depth=78
+        all leaves distinct, in (3x/64, x], forward orbits all pass through 5: verified
+        guaranteed bound (3x/64a)^c* = 15.8338  <  6521 = leaves;   mass/[a^-c*] = 290.629 >= 1
+        binding factor pair {16/3,64/3} (j0=1, smallest candidate discarded) occurred in 1102/6520 splits
+    a=5, x=10^7: nodes=114381, splits=57190, leaves=57191, max depth=106
+        all leaves distinct, in (3x/64, x], forward orbits all pass through 5: verified
+        guaranteed bound (3x/64a)^c* = 31.7392  <  57191 = leaves;   mass/[a^-c*] = 1271.13 >= 1
+        binding factor pair {16/3,64/3} (j0=1, smallest candidate discarded) occurred in 9550/57190 splits
+    a=5, x=10^8: nodes=988819, splits=494409, leaves=494410, max depth=155
+        all leaves distinct, in (3x/64, x], forward orbits all pass through 5: verified
+        guaranteed bound (3x/64a)^c* = 63.6222  <  494410 = leaves;   mass/[a^-c*] = 5484.05 >= 1
+        binding factor pair {16/3,64/3} (j0=1, smallest candidate discarded) occurred in 82272/494409 splits
+    a=7, x=10^7: nodes=23335, splits=11667, leaves=11668, max depth=73
+        all leaves distinct, in (3x/64, x], forward orbits all pass through 7: verified
+        guaranteed bound (3x/64a)^c* = 28.6724  <  11668 = leaves;   mass/[a^-c*] = 287.612 >= 1
+        binding factor pair {16/3,64/3} (j0=1, smallest candidate discarded) occurred in 1926/11667 splits
+
+(4) Brute-force cross-check: true pi_5(1000000) vs tree vs bound
+    true pi_5(1000000) = 937711  (exact, memoised forward iteration)
+    chain: guaranteed bound 15.8338 < tree leaves 6521 < true count 937711   -- consistent
+
+ALL CHECKS PASSED
+exit code: 0
+
