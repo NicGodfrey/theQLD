@@ -23,6 +23,6 @@ This is **not** a claim that any Millennium Prize problem has been solved. Each 
 | 09 | Goldbach Conjecture | `conjectures/09-goldbach/` |
 | 10 | abc Conjecture | `conjectures/10-abc/` |
 
-See [`SYNTHESIS.md`](SYNTHESIS.md) for the cross-legion briefing.
+See [`SYNTHESIS.md`](SYNTHESIS.md) for the Wave-1 briefing and [`WAVE2.md`](WAVE2.md) for the second-pass theorems.
 
-**Execution note.** Ten Fable-5-max parent agents were launched in parallel. Child environments do not expose a nested Task tool, so each legion ran its ten specialist angles itself. Legion 01 (Riemann) timed out twice as a child; the parent commander wrote that dossier. **None of the ten conjectures is claimed as proved.**
+**Execution note.** Two parallel Fable-5-max waves (ten legions each). Child environments do not expose a nested Task tool. **None of the ten conjectures is claimed as proved.** Wave 2 put one checkable theorem in each `BREAKTHROUGH.md`.

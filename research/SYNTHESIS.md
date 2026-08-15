@@ -50,21 +50,20 @@ That bar was met on every legion. The recurring pattern is the same: the classic
 
 Start with this file, then the executive summary of the legion you care about, then Section 5 of that report (the proved or formalized claim). Citations marked “from memory” or with an asterisk must be re-checked before any external use.
 
+## Wave 2
+
+A second Fable-5-max pass converted each wall into a single proved statement. See [`WAVE2.md`](WAVE2.md) and each `BREAKTHROUGH.md`. The scoreboard above is unchanged: every conjecture remains open.
+
 ## Files
 
 ```
 research/README.md
 research/SYNTHESIS.md
-research/conjectures/01-riemann/REPORT.md
-research/conjectures/02-p-vs-np/REPORT.md
-research/conjectures/03-bsd/REPORT.md
-research/conjectures/03-bsd/verification.gp
-research/conjectures/04-hodge/REPORT.md
-research/conjectures/05-navier-stokes/REPORT.md
-research/conjectures/06-yang-mills/REPORT.md
-research/conjectures/07-twin-primes/REPORT.md
-research/conjectures/08-collatz/REPORT.md
-research/conjectures/08-collatz/code/*.py
-research/conjectures/09-goldbach/REPORT.md
-research/conjectures/10-abc/REPORT.md
+research/WAVE2.md
+research/conjectures/0x-*/REPORT.md
+research/conjectures/0x-*/BREAKTHROUGH.md
+research/conjectures/01-riemann/code/
+research/conjectures/03-bsd/{verification,breakthrough}.gp
+research/conjectures/08-collatz/code/
+research/conjectures/09-goldbach/code/
 ```
