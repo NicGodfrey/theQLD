@@ -23,6 +23,6 @@ This is **not** a claim that any Millennium Prize problem has been solved. Each 
 | 09 | Goldbach Conjecture | `conjectures/09-goldbach/` |
 | 10 | abc Conjecture | `conjectures/10-abc/` |
 
-See [`SYNTHESIS.md`](SYNTHESIS.md) (landscape), [`WAVE2.md`](WAVE2.md) (method barriers), and [`theory/WAVE3.md`](theory/WAVE3.md) (original proofs only).
+See [`SYNTHESIS.md`](SYNTHESIS.md) (landscape), [`WAVE2.md`](WAVE2.md) (method barriers), [`theory/WAVE3.md`](theory/WAVE3.md) (original notes), and [`papers/README.md`](papers/README.md) (two referee-ready manuscripts).
 
 **Execution note.** Two parallel Fable-5-max waves (ten legions each). Child environments do not expose a nested Task tool. **None of the ten conjectures is claimed as proved.** Wave 2 put one checkable theorem in each `BREAKTHROUGH.md`.
