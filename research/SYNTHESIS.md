@@ -52,7 +52,7 @@ Start with this file, then the executive summary of the legion you care about, t
 
 ## Wave 2
 
-A second Fable-5-max pass converted each wall into a single proved statement. See [`WAVE2.md`](WAVE2.md) and each `BREAKTHROUGH.md`. The scoreboard above is unchanged: every conjecture remains open.
+A second Fable-5-max pass converted each wall into a single proved statement. See [`WAVE2.md`](WAVE2.md) and each `BREAKTHROUGH.md`. Wave 3 is original-theory notes only (`theory/WAVE3.md`): no surveys. The scoreboard above is unchanged: every conjecture remains open.
 
 ## Files
 
