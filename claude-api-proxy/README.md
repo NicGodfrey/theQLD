@@ -1,43 +1,38 @@
 # claude-api-proxy
 
-自托管的 Claude Messages API 兼容反向代理。请求/响应风格与官方 Claude API 一致
-（`POST /v1/messages`、官方请求头、官方错误 JSON、官方 SSE 流事件）；部署后别人
-即可用官方 SDK 或 curl 直接提问。每个请求都会自动注入 `prompts/system.md` 里的
-预设系统提示（拼在调用方自己的 `system` 前面）。
+把**当前这个 Cursor Cloud Agent** 用官方 Claude Messages API 的外形反代出去。
 
-Self-hosted reverse proxy compatible with the Anthropic Claude Messages API.
-Callers use the official Claude SDK / curl style and simply point `base_url`
-at this service. The preset system prompt in `prompts/system.md` is prepended
-to every request.
+远程调用方用官方 SDK / curl 打 `POST /v1/messages`。本服务把它转成对
+`CURSOR_AGENT_ID` 的 follow-up run（`POST https://api.cursor.com/v1/agents/{id}/runs`），
+再把 Agent 的回复包装成官方 Claude 响应。默认打到本会话的 Cloud Agent
+`bc-f222349c-ced0-4c32-9a8e-c15d699654d3`，并要求它按 Fable 5 thinking xhigh /
+Claude Code 子 agent 来答。
 
-诚实边界 / honest limits：
-
-- 本服务不是 Anthropic 官网（`api.anthropic.com`）本身，只是接口风格完全兼容。
-- 当前 Cursor 会话里的子 agent 不能直接当公网 API；需要你把本目录部署到自己的
-  服务器上，别人才能调用。
-- 真正的模型回答需要上游：在服务器上配置官方（或兼容）的 Anthropic API key。
-  没配上游 key 时，代理会返回官方风格的错误 JSON，而不是伪造回答。
+This is not `api.anthropic.com`. Callers point `base_url` here. Completions come
+from the Cursor Cloud Agent, not from a generic Anthropic key (unless you
+explicitly set `ANTHROPIC_API_KEY` as a fallback backend).
 
 ## 运行 / Run
 
 ```bash
+export CURSOR_API_KEY="key_from_cursor_dashboard"
+export CURSOR_AGENT_ID="bc-f222349c-ced0-4c32-9a8e-c15d699654d3"  # optional, this is the default
 cd claude-api-proxy
-./run.sh          # 或 python3 server.py，仅需 Python 3 标准库
+./run.sh
 ```
 
 ## 环境变量 / Environment
 
 | 变量 | 说明 |
 | --- | --- |
-| `CLAUDE_PROXY_API_KEY` | 调用方使用的 key（默认 `sk-proxy-local`，仅限本地开发） |
-| `ANTHROPIC_API_KEY` / `CLAUDE_UPSTREAM_API_KEY` | 上游官方（或兼容）API key |
-| `ANTHROPIC_BASE_URL` / `CLAUDE_UPSTREAM_BASE_URL` | 上游地址，默认 `https://api.anthropic.com` |
-| `PORT` | 默认 `8080` |
-| `HOST` | 默认 `0.0.0.0` |
+| `CURSOR_API_KEY` | Cursor Dashboard → API Keys。用来远程驱动**这个** Cloud Agent |
+| `CURSOR_AGENT_ID` | 默认 `bc-f222349c-ced0-4c32-9a8e-c15d699654d3`（当前 agent） |
+| `CURSOR_API_BASE` | 默认 `https://api.cursor.com` |
+| `CLAUDE_PROXY_API_KEY` | 调用方放在 `x-api-key` 里的 key（默认 `sk-proxy-local`，仅限本地） |
+| `ANTHROPIC_API_KEY` | 可选回退：没有 Cursor key 时才走普通 Anthropic 反代 |
+| `PORT` / `HOST` | 默认 `8080` / `0.0.0.0` |
 
-## 调用示例 / Calling it (official style)
-
-curl：
+## 别人怎么调 / Official Claude style
 
 ```bash
 curl https://YOUR_HOST/v1/messages \
@@ -51,8 +46,6 @@ curl https://YOUR_HOST/v1/messages \
   }'
 ```
 
-Python 官方 SDK（只改 `base_url`）：
-
 ```python
 from anthropic import Anthropic
 
@@ -65,36 +58,27 @@ msg = client.messages.create(
 print(msg.content[0].text)
 ```
 
-流式（`"stream": true`）按官方 SSE 事件原样透传：`message_start`、
-`content_block_start`、`content_block_delta`、`content_block_stop`、
-`message_delta`、`message_stop`。
-
-其他端点 / other endpoints：
-
-- `GET /v1/models` — 模型列表（需 `x-api-key`）
-- `GET /health` — `{"ok": true, "api_style": "anthropic-messages-v1"}`
+同一时间一个 Agent 只能跑一个 run。代理会排队重试 `409 agent_busy`。
 
 ## 持久化部署 / Persistent deploy
 
-默认走 **Fly.io**，机器不休眠（`auto_stop_machines = "off"`，`min_machines_running = 1`）。公网地址形如 `https://theqld-claude-api-proxy.fly.dev`。
+Fly.io 常驻（`auto_stop_machines = "off"`，`min_machines_running = 1`）。
+公网地址形如 `https://theqld-claude-api-proxy.fly.dev`。
 
-需要的密钥（不要写进仓库）：
+Fly 机器只做 HTTP 门面；真正答题的是 Cursor 上的这个 Cloud Agent，不依赖本仓库所在的临时 VM。
 
-- `ANTHROPIC_API_KEY` — 上游官方（或兼容）Claude API key
-- `CLAUDE_PROXY_API_KEY` — 给调用方用的代理 key
-- `FLY_API_TOKEN` — Fly 个人访问令牌，用来创建应用并部署
+需要的密钥：
+
+- `CURSOR_API_KEY` — https://cursor.com/dashboard/api
+- `FLY_API_TOKEN` — https://fly.io/user/personal_access_tokens
+- `CLAUDE_PROXY_API_KEY` — 给远程调用方（可选，不填则部署时生成）
 
 ```bash
 cd claude-api-proxy
-flyctl auth token   # 或 export FLY_API_TOKEN=...
 flyctl apps create theqld-claude-api-proxy
-flyctl secrets set ANTHROPIC_API_KEY="..." CLAUDE_PROXY_API_KEY="..."
+flyctl secrets set CURSOR_API_KEY="..." CLAUDE_PROXY_API_KEY="..." CURSOR_AGENT_ID="bc-f222349c-ced0-4c32-9a8e-c15d699654d3"
 flyctl deploy
 ```
-
-合并到 `main` 后，`.github/workflows/deploy-claude-api-proxy.yml` 会在该目录有改动时自动再部署。仓库 Secrets 里需要 `FLY_API_TOKEN`。
-
-备选：**Render** 用仓库根目录 `render.yaml`（`starter` 常驻套餐，免费 Web 会休眠，不满足持久化）。
 
 ## 测试 / Tests
 

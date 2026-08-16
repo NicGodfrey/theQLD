@@ -24,7 +24,7 @@ python3 system/load_system.py --json    # Messages API-shaped payload {"model","
 
 ## Callable API
 
-`claude-api-proxy/` is a self-hosted Anthropic Messages API compatible reverse proxy. Persistent hosting is Fly.io (`claude-api-proxy/fly.toml`, always-on). Third parties call `POST /v1/messages` with official headers (`x-api-key`, `anthropic-version`) or the official Python SDK with `base_url` pointed at the deployed host. Each request injects `claude-api-proxy/prompts/system.md`. Real completions require an upstream `ANTHROPIC_API_KEY`. This is not `api.anthropic.com` itself. Secrets stay in the host, never in git.
+`claude-api-proxy/` is a Claude Messages API facade over **this Cursor Cloud Agent**. Persistent hosting is Fly.io (`claude-api-proxy/fly.toml`, always-on). Third parties call `POST /v1/messages`; the proxy creates a follow-up run on `CURSOR_AGENT_ID` (default `bc-f222349c-ced0-4c32-9a8e-c15d699654d3`) via `api.cursor.com`. Completions require `CURSOR_API_KEY`. This is not `api.anthropic.com`. Secrets stay in the host, never in git.
 
 ## Repo boundaries
 

@@ -1,7 +1,7 @@
 FROM python:3.12-slim
 
 WORKDIR /app
-COPY server.py run.sh ./
+COPY server.py cursor_backend.py run.sh ./
 COPY prompts ./prompts
 
 ENV HOST=0.0.0.0

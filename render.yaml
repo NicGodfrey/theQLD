@@ -12,9 +12,11 @@ services:
         value: 0.0.0.0
       - key: PORT
         value: 8080
-      - key: ANTHROPIC_API_KEY
+      - key: CURSOR_API_KEY
         sync: false
+      - key: CURSOR_AGENT_ID
+        value: bc-f222349c-ced0-4c32-9a8e-c15d699654d3
       - key: CLAUDE_PROXY_API_KEY
         sync: false
-      - key: ANTHROPIC_BASE_URL
-        value: https://api.anthropic.com
+      - key: ANTHROPIC_API_KEY
+        sync: false
