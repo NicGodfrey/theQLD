@@ -74,6 +74,28 @@ print(msg.content[0].text)
 - `GET /v1/models` — 模型列表（需 `x-api-key`）
 - `GET /health` — `{"ok": true, "api_style": "anthropic-messages-v1"}`
 
+## 持久化部署 / Persistent deploy
+
+默认走 **Fly.io**，机器不休眠（`auto_stop_machines = "off"`，`min_machines_running = 1`）。公网地址形如 `https://theqld-claude-api-proxy.fly.dev`。
+
+需要的密钥（不要写进仓库）：
+
+- `ANTHROPIC_API_KEY` — 上游官方（或兼容）Claude API key
+- `CLAUDE_PROXY_API_KEY` — 给调用方用的代理 key
+- `FLY_API_TOKEN` — Fly 个人访问令牌，用来创建应用并部署
+
+```bash
+cd claude-api-proxy
+flyctl auth token   # 或 export FLY_API_TOKEN=...
+flyctl apps create theqld-claude-api-proxy
+flyctl secrets set ANTHROPIC_API_KEY="..." CLAUDE_PROXY_API_KEY="..."
+flyctl deploy
+```
+
+合并到 `main` 后，`.github/workflows/deploy-claude-api-proxy.yml` 会在该目录有改动时自动再部署。仓库 Secrets 里需要 `FLY_API_TOKEN`。
+
+备选：**Render** 用仓库根目录 `render.yaml`（`starter` 常驻套餐，免费 Web 会休眠，不满足持久化）。
+
 ## 测试 / Tests
 
 ```bash

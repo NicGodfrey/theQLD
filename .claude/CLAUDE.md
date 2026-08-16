@@ -24,7 +24,7 @@ python3 system/load_system.py --json    # Messages API-shaped payload {"model","
 
 ## Callable API
 
-`claude-api-proxy/` is a self-hosted Anthropic Messages API compatible reverse proxy. Third parties call `POST /v1/messages` with official headers (`x-api-key`, `anthropic-version`) or the official Python SDK with `base_url` pointed at the deployed host. Each request injects `claude-api-proxy/prompts/system.md`. Real completions require an upstream `ANTHROPIC_API_KEY`. This is not `api.anthropic.com` itself.
+`claude-api-proxy/` is a self-hosted Anthropic Messages API compatible reverse proxy. Persistent hosting is Fly.io (`claude-api-proxy/fly.toml`, always-on). Third parties call `POST /v1/messages` with official headers (`x-api-key`, `anthropic-version`) or the official Python SDK with `base_url` pointed at the deployed host. Each request injects `claude-api-proxy/prompts/system.md`. Real completions require an upstream `ANTHROPIC_API_KEY`. This is not `api.anthropic.com` itself. Secrets stay in the host, never in git.
 
 ## Repo boundaries
 
