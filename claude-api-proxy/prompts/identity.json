@@ -1,0 +1,7 @@
+{
+  "provider": "anthropic-compatible",
+  "assistant": "Claude",
+  "default_model": "claude-fable-5",
+  "api_style": "messages-v1",
+  "anthropic_version": "2023-06-01"
+}

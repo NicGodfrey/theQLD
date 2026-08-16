@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: theqld-claude-api-proxy
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./claude-api-proxy/Dockerfile
+    dockerContext: ./claude-api-proxy
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 8080
+      - key: CURSOR_API_KEY
+        sync: false
+      - key: CURSOR_AGENT_ID
+        value: bc-f222349c-ced0-4c32-9a8e-c15d699654d3
+      - key: CLAUDE_PROXY_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
