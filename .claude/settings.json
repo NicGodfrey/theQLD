@@ -1,0 +1,6 @@
+{
+  "model": "claude-fable-5",
+  "env": {
+    "ANTHROPIC_MODEL": "claude-fable-5"
+  }
+}
