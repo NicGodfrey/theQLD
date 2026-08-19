@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Opus 5 中转站</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { max-width: 860px; margin: 0 auto; padding: 24px; }
+    h1 { font-size: 1.4rem; }
+    label { display: block; margin-top: 12px; font-weight: 600; }
+    input, textarea, button { width: 100%; box-sizing: border-box; margin-top: 6px; padding: 10px; font-size: 14px; }
+    textarea { min-height: 120px; resize: vertical; }
+    #log { white-space: pre-wrap; background: #111; color: #eee; padding: 12px; border-radius: 8px; min-height: 180px; margin-top: 16px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    button { cursor: pointer; background: #2563eb; color: #fff; border: 0; border-radius: 8px; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .hint { color: #666; font-size: 13px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Opus 5 中转站</h1>
+  <p class="hint">Cursor API Key 只在服务器端；浏览器/远程电脑只需访问令牌。</p>
+
+  <div class="row">
+    <div>
+      <label>访问令牌 (RELAY_AUTH_TOKEN)</label>
+      <input id="token" type="password" placeholder="Bearer token" />
+    </div>
+    <div>
+      <label>会话 ID（留空自动创建）</label>
+      <input id="session" type="text" placeholder="session_id" />
+    </div>
+  </div>
+
+  <label>消息</label>
+  <textarea id="message" placeholder="输入要问 Opus 5 的问题…"></textarea>
+
+  <div class="row" style="margin-top:12px">
+    <button id="send">发送</button>
+    <button id="reset" style="background:#64748b">重置会话</button>
+  </div>
+
+  <div id="log"></div>
+
+  <script>
+    const log = document.getElementById('log');
+    const tokenEl = document.getElementById('token');
+    const sessionEl = document.getElementById('session');
+    const messageEl = document.getElementById('message');
+    const sendBtn = document.getElementById('send');
+    const resetBtn = document.getElementById('reset');
+
+    tokenEl.value = localStorage.getItem('relay_token') || '';
+
+    function append(text) {
+      log.textContent += text + '\n';
+      log.scrollTop = log.scrollHeight;
+    }
+
+    async function ask(reset = false) {
+      const token = tokenEl.value.trim();
+      const message = messageEl.value.trim();
+      if (!token) { alert('请填写访问令牌'); return; }
+      if (!message && !reset) { alert('请填写消息'); return; }
+
+      localStorage.setItem('relay_token', token);
+      sendBtn.disabled = true;
+      append('>>> 请求中…（Opus 5 可能需要 1–3 分钟）');
+
+      try {
+        const res = await fetch('/api/v1/ask', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+          body: JSON.stringify({
+            message: message || '继续',
+            session_id: sessionEl.value.trim() || undefined,
+            reset,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || res.statusText);
+        if (data.session_id) sessionEl.value = data.session_id;
+        append('\n[Opus 5]\n' + data.reply + '\n');
+        if (data.agent_url) append('Agent: ' + data.agent_url);
+      } catch (e) {
+        append('\n[错误] ' + e.message);
+      } finally {
+        sendBtn.disabled = false;
+      }
+    }
+
+    sendBtn.onclick = () => ask(false);
+    resetBtn.onclick = async () => {
+      const token = tokenEl.value.trim();
+      const session = sessionEl.value.trim();
+      if (!token || !session) { alert('需要令牌和 session_id'); return; }
+      await fetch('/api/v1/reset', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify({ session_id: session }),
+      });
+      sessionEl.value = '';
+      append('\n[系统] 会话已重置');
+    };
+  </script>
+</body>
+</html>

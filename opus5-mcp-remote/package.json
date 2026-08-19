@@ -1,0 +1,24 @@
+{
+  "name": "opus5-mcp-remote",
+  "version": "1.0.0",
+  "description": "Local MCP client that calls Opus 5 via your relay server",
+  "type": "module",
+  "bin": {
+    "opus5-mcp-remote": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  }
+}

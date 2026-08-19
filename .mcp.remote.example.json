@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "opus5-remote": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["opus5-mcp-remote/dist/index.js"],
+      "env": {
+        "OPUS5_RELAY_URL": "https://your-relay.example.com",
+        "OPUS5_RELAY_TOKEN": "${OPUS5_RELAY_TOKEN}"
+      }
+    }
+  }
+}
