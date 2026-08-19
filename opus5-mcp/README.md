@@ -9,13 +9,28 @@
 
 ## 一键部署（推荐）
 
-在项目根目录运行：
+### Windows（PowerShell / CMD）
 
-```bash
-./deploy/install.sh
+```powershell
+# 1. 克隆仓库（只需一次）
+cd C:\Users\你的用户名
+git clone https://github.com/NicGodfrey/theQLD.git
+cd theQLD
+git checkout cursor/opus5-mcp-setup-e208
+
+# 2. 一键部署
+powershell -ExecutionPolicy Bypass -File deploy\install.ps1
+# 或双击 deploy\install.bat
 ```
 
-脚本会自动：构建 MCP、验证 API Key、注册 Claude Code MCP、配置 shell 环境。
+### macOS / Linux
+
+```bash
+git clone https://github.com/NicGodfrey/theQLD.git
+cd theQLD
+git checkout cursor/opus5-mcp-setup-e208
+./deploy/install.sh
+```
 
 ## 手动安装
 
