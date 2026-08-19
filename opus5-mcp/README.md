@@ -7,7 +7,17 @@
 1. 在 [Cursor Dashboard → API Keys](https://cursor.com/dashboard/api) 创建 API Key（`crsr_...`）
 2. Node.js 20+
 
-## 安装
+## 一键部署（推荐）
+
+在项目根目录运行：
+
+```bash
+./deploy/install.sh
+```
+
+脚本会自动：构建 MCP、验证 API Key、注册 Claude Code MCP、配置 shell 环境。
+
+## 手动安装
 
 ```bash
 cd opus5-mcp
