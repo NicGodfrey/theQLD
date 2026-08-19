@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "opus5": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["opus5-mcp/dist/index.js"],
+      "env": {
+        "CURSOR_API_KEY": "${CURSOR_API_KEY}",
+        "CURSOR_OPUS5_REPO_URL": "https://github.com/NicGodfrey/theQLD",
+        "CURSOR_OPUS5_STARTING_REF": "main"
+      }
+    }
+  }
+}
