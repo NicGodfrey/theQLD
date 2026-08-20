@@ -1,0 +1,17 @@
+{
+  "name": "theQLD SCM mount",
+  "install": "python3 -m py_compile scm/store.py scm/server.py",
+  "terminals": [
+    {
+      "name": "scm",
+      "command": "python3 scm/server.py --host 0.0.0.0 --port 8787",
+      "description": "Supply-chain sidecar mounted at http://127.0.0.1:8787/"
+    }
+  ],
+  "ports": [
+    {
+      "name": "scm",
+      "port": 8787
+    }
+  ]
+}

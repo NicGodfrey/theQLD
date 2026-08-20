@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "source": "local-scm-example",
+  "exportedAt": "2026-08-20T00:00:00Z",
+  "suppliers": [
+    {
+      "id": "sup-local-01",
+      "name": "本地示例供应商",
+      "contact": "张工",
+      "email": "supplier@example.local",
+      "phone": "+61 7 0000 0000",
+      "address": "Brisbane, QLD",
+      "leadDays": 7,
+      "status": "active"
+    }
+  ],
+  "products": [
+    {
+      "id": "prd-local-01",
+      "sku": "LOCAL-SKU-001",
+      "name": "本地示例物料",
+      "category": "零部件",
+      "unit": "pcs",
+      "supplierId": "sup-local-01",
+      "cost": 12.5,
+      "reorderPoint": 20,
+      "status": "active"
+    }
+  ],
+  "warehouses": [
+    {
+      "id": "wh-local-01",
+      "code": "BNE-01",
+      "name": "布里斯班主仓",
+      "location": "Brisbane",
+      "status": "active"
+    }
+  ],
+  "stock": [
+    {
+      "warehouseId": "wh-local-01",
+      "productId": "prd-local-01",
+      "qty": 80,
+      "reserved": 5
+    }
+  ],
+  "purchaseOrders": [],
+  "salesOrders": [],
+  "shipments": [],
+  "movements": []
+}

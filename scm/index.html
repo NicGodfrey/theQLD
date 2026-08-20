@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>供应链管理系统 · theQLD</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+</head>
+<body>
+    <aside class="rail">
+        <a class="brand" href="../index.html">
+            <span class="brand-kicker">theQLD</span>
+            <strong>供应链管理</strong>
+        </a>
+        <nav>
+            <a href="#/dashboard" data-route="dashboard"><i class="fa fa-tachometer"></i> 总览</a>
+            <a href="#/suppliers" data-route="suppliers"><i class="fa fa-industry"></i> 供应商</a>
+            <a href="#/products" data-route="products"><i class="fa fa-cubes"></i> 物料</a>
+            <a href="#/inventory" data-route="inventory"><i class="fa fa-archive"></i> 库存</a>
+            <a href="#/purchase-orders" data-route="purchase-orders"><i class="fa fa-file-text-o"></i> 采购单</a>
+            <a href="#/sales-orders" data-route="sales-orders"><i class="fa fa-shopping-cart"></i> 销售单</a>
+            <a href="#/shipments" data-route="shipments"><i class="fa fa-truck"></i> 物流</a>
+            <a href="#/mount" data-route="mount"><i class="fa fa-plug"></i> 挂载本地</a>
+        </nav>
+        <div class="rail-foot">
+            <span id="mode-badge">浏览器存储</span>
+            <a href="../index.html">返回法律目录</a>
+        </div>
+    </aside>
+    <main>
+        <header class="top">
+            <div>
+                <h1 id="page-title">总览</h1>
+                <p id="page-sub">供应商、库存、采购、履约一处管理。</p>
+            </div>
+            <div class="top-actions">
+                <button type="button" id="reload-btn" class="ghost">刷新</button>
+                <button type="button" id="export-btn">导出 JSON</button>
+            </div>
+        </header>
+        <section id="view"></section>
+    </main>
+    <div id="modal" class="modal" hidden>
+        <form id="modal-form" class="modal-card"></form>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
