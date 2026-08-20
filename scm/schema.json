@@ -1,0 +1,164 @@
+{
+  "$id": "https://theqld.com/scm/schema.json",
+  "title": "Local SCM mount dump",
+  "description": "JSON dump used to mount a local supply-chain system onto this site. Import via the Mount page or POST /api/mount.",
+  "type": "object",
+  "required": ["version"],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "source": { "type": "string", "description": "Origin system name or path" },
+    "exportedAt": { "type": "string" },
+    "suppliers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "contact": { "type": "string" },
+          "email": { "type": "string" },
+          "phone": { "type": "string" },
+          "address": { "type": "string" },
+          "leadDays": { "type": "integer" },
+          "status": { "type": "string", "enum": ["active", "inactive"] }
+        }
+      }
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "sku", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "sku": { "type": "string" },
+          "name": { "type": "string" },
+          "category": { "type": "string" },
+          "unit": { "type": "string" },
+          "supplierId": { "type": "string" },
+          "cost": { "type": "number" },
+          "reorderPoint": { "type": "integer" },
+          "status": { "type": "string", "enum": ["active", "inactive"] }
+        }
+      }
+    },
+    "warehouses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "code", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "code": { "type": "string" },
+          "name": { "type": "string" },
+          "location": { "type": "string" },
+          "status": { "type": "string", "enum": ["active", "inactive"] }
+        }
+      }
+    },
+    "stock": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["warehouseId", "productId", "qty"],
+        "properties": {
+          "warehouseId": { "type": "string" },
+          "productId": { "type": "string" },
+          "qty": { "type": "number" },
+          "reserved": { "type": "number" }
+        }
+      }
+    },
+    "purchaseOrders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "supplierId", "warehouseId", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "number": { "type": "string" },
+          "supplierId": { "type": "string" },
+          "warehouseId": { "type": "string" },
+          "status": { "type": "string", "enum": ["draft", "sent", "partial", "received", "cancelled"] },
+          "createdAt": { "type": "string" },
+          "expectedAt": { "type": "string" },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["productId", "qty"],
+              "properties": {
+                "productId": { "type": "string" },
+                "qty": { "type": "number" },
+                "unitCost": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "salesOrders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "warehouseId", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "number": { "type": "string" },
+          "customer": { "type": "string" },
+          "warehouseId": { "type": "string" },
+          "status": { "type": "string", "enum": ["draft", "allocated", "shipped", "delivered", "cancelled"] },
+          "createdAt": { "type": "string" },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["productId", "qty"],
+              "properties": {
+                "productId": { "type": "string" },
+                "qty": { "type": "number" },
+                "unitPrice": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "shipments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "type", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "number": { "type": "string" },
+          "type": { "type": "string", "enum": ["inbound", "outbound"] },
+          "orderId": { "type": "string" },
+          "orderType": { "type": "string", "enum": ["purchase", "sales"] },
+          "carrier": { "type": "string" },
+          "tracking": { "type": "string" },
+          "status": { "type": "string", "enum": ["planned", "in_transit", "delivered", "cancelled"] },
+          "shippedAt": { "type": "string" },
+          "deliveredAt": { "type": "string" }
+        }
+      }
+    },
+    "movements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "at", "type", "productId", "warehouseId", "qty"],
+        "properties": {
+          "id": { "type": "string" },
+          "at": { "type": "string" },
+          "type": { "type": "string", "enum": ["receive", "ship", "adjust", "reserve", "release"] },
+          "productId": { "type": "string" },
+          "warehouseId": { "type": "string" },
+          "qty": { "type": "number" },
+          "ref": { "type": "string" }
+        }
+      }
+    }
+  }
+}
