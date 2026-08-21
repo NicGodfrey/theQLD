@@ -1,9 +1,9 @@
 # 20-round legion — sequential from here
 
-Done with live agents: R1–R16.
+Done with live agents: R1–R17.
 Remaining run **one round at a time** (implement → test → commit → one blocking verifier → next):
 
-R17 CI → R18 contract → R19 eval → R20 scorecard.
+R18 contract → R19 eval → R20 scorecard.
 
 | Agent | Model | Round | Slice | Status |
 |---|---|---|---|---|
@@ -23,8 +23,8 @@ R17 CI → R18 contract → R19 eval → R20 scorecard.
 | opus-07 | claude-opus-5-thinking-high-fast | 14 | launcher | done `bc-a87b48b1-2bce-5790-9993-d4e777a16a1b` |
 | fable-08 | claude-fable-5-thinking-high | 15 | host-pin | done `bc-0c059fa2-94ba-577f-911b-83b3d29efd47` |
 | opus-08 | claude-opus-5-thinking-high-fast | 16 | budget 402 | done `bc-127658e9-1325-5838-be73-fee8d341a8ec` |
-| fable-09 | claude-fable-5-thinking-high | 17 | CI | awaiting live agent |
-| opus-09 | claude-opus-5-thinking-high-fast | 18 | live contract | conductor fill |
+| fable-09 | claude-fable-5-thinking-high | 17 | CI | done `bc-8e733077-73e6-56a9-9e5f-eaacd80dcf12` |
+| opus-09 | claude-opus-5-thinking-high-fast | 18 | live contract | awaiting live agent |
 | fable-10 | claude-fable-5-thinking-high | 19 | eval fixtures | conductor fill |
 | opus-10 | claude-opus-5-thinking-high-fast | 20 | scorecard | conductor fill |
 
