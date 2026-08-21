@@ -20,7 +20,7 @@ Odd rounds are Fable-shaped (expose a gap with a test). Even rounds are Opus-sha
 | 14 | Launcher | `pyproject.toml` console script + `--host`/`--port` |
 | 15 | Host pin | Official hosts + no-redirect + pinned image CDN fetch |
 | 16 | Budget 402 | Pre-call quote + HTTP 402 |
-| 17 | CI | `.github/workflows/atelier.yml` |
+| 17 | CI | Gate + evolve legion on 3.11; pyproject is a trigger |
 | 18 | Contract | This tree’s `CONTRACT.md` (live ≠ research `/api/chat`) |
 | 19 | Eval | `atelier/data/eval/*.json` |
 | 20 | Scorecard | `SCORECARD.json` gate ≥ 16/20 |

@@ -4,19 +4,31 @@ on:
   push:
     paths:
       - "atelier/**"
+      - "pyproject.toml"
       - ".github/workflows/atelier.yml"
   pull_request:
     paths:
       - "atelier/**"
+      - "pyproject.toml"
       - ".github/workflows/atelier.yml"
 
 jobs:
-  test:
+  gate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Helix unit tests
+      - name: Release gate
         run: python3 -m unittest atelier.tests.test_helix atelier.tests.test_evolve
+
+  legion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Evolve legion
+        run: python3 -m unittest discover -s atelier/tests/evolve

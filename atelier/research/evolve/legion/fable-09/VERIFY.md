@@ -1,7 +1,10 @@
-# Fable-09 · R17 CI (conductor fill — agent slot full)
+# Fable-09 · R17 CI — awaiting live agent
 
-**Pass.** `.github/workflows/atelier.yml` runs `python3 -m unittest atelier.tests.test_helix atelier.tests.test_evolve` on Python 3.11.
+Live leftovers now in the tree:
 
-## Remaining
-- Path filters skip the workflow when only non-atelier files change (intentional).
-- No live-key smoke job (correct: no secrets in CI).
+- `.github/workflows/atelier.yml` has two jobs: release gate + evolve legion
+- Triggers include `atelier/**`, `pyproject.toml`, and the workflow file
+- No live-key smoke job (no secrets)
+
+Verifier: one blocking `claude-fable-5-thinking-high` agent. Do not start
+R18 until this note is replaced with the agent's own evidence.

@@ -423,6 +423,10 @@ class Round17to20Meta(unittest.TestCase):
         text = wf.read_text()
         self.assertIn("atelier.tests.test_helix", text)
         self.assertIn("atelier.tests.test_evolve", text)
+        self.assertIn("unittest discover -s atelier/tests/evolve", text)
+        self.assertIn("pyproject.toml", text)
+        self.assertNotIn("OPENAI_API_KEY", text)
+        self.assertNotIn("GEMINI_API_KEY", text)
 
     def test_live_contract_notes_exist(self):
         text = (ROOT / "atelier" / "research" / "evolve" / "CONTRACT.md").read_text()
