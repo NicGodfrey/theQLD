@@ -1,7 +1,12 @@
-# Fable-04 · R7 plan visible (conductor fill — agent slot full)
+# Fable-04 · R7 plan visible — awaiting live agent
 
-**Pass.** Assistant messages store `plan_json`. Dock `#planCard` renders intent, route, and up to 4 weave steps after refresh / run.
+Live leftovers now in the tree:
 
-## Remaining
-- Steps are not a clickable / skippable checklist.
-- Thinking critique is in the message body, not a separate critic card.
+- `#planCard` lists weave steps as clickable `.plan-step` checkboxes (toggle
+  done / load the step into the composer).
+- `plan.critique` renders in a separate `.plan-critic` card.
+- Thinking-mode demo runs store the plan (and a critique) on the assistant
+  message.
+
+Verifier: one blocking `claude-fable-5-thinking-high` agent. Do not start R10
+until this note is replaced with the agent's own evidence.

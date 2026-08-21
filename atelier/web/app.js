@@ -174,13 +174,29 @@ function renderPlan(plan) {
   const route = plan.route || {};
   const weave = plan.weave || [];
   card.innerHTML = "";
+  const steps = el("ol", { class: "plan-steps" }, weave.slice(0, 4).map((w) => {
+    const label = `${w.kind || "image"}: ${(w.prompt || "").slice(0, 80)}`;
+    return el("li", {
+      class: "plan-step",
+      text: label,
+      title: "Click to skip / load this step into the composer",
+      onclick: (ev) => {
+        ev.currentTarget.classList.toggle("done");
+        const box = document.getElementById("prompt");
+        if (box && !ev.currentTarget.classList.contains("done")) box.value = w.prompt || "";
+        else if (box && ev.currentTarget.classList.contains("done") && box.value === (w.prompt || "")) box.value = "";
+      },
+    });
+  }));
   card.append(
     el("div", { class: "plan-title", text: "Plan · " + (plan.intent || "brief") }),
     el("div", { class: "plan-meta", text: `${plan.mode || "fast"} · ${route.provider || "demo"} / ${route.model || ""}` }),
-    el("ol", { class: "plan-steps" }, weave.slice(0, 4).map((w, i) =>
-      el("li", { text: `${w.kind || "image"}: ${(w.prompt || "").slice(0, 80)}` })
-    )),
+    steps,
   );
+  const critique = (plan.critique || "").trim();
+  if (critique) {
+    card.append(el("div", { class: "plan-critic", text: "Critique · " + critique }));
+  }
 }
 
 async function refreshBoard() {

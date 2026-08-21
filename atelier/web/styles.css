@@ -122,5 +122,15 @@ h2, h3 { margin: 0 0 10px; font-weight: 500; font-size: 13px; letter-spacing: 0.
 .plan-title { font-weight: 600; margin-bottom: 4px; }
 .plan-meta { color: var(--muted); margin-bottom: 6px; }
 .plan-steps { margin: 0; padding-left: 18px; color: var(--ink); }
+.plan-step { cursor: pointer; }
+.plan-step.done { color: var(--muted); text-decoration: line-through; }
+.plan-critic {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
 .check { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); margin-bottom: 10px; }
 .hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
