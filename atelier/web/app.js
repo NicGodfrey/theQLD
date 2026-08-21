@@ -235,16 +235,31 @@ function enableDrag(card, node) {
   });
 }
 
+function zoomAt(px, py, factor) {
+  const z = state.camera.zoom || 1;
+  const next = clampCamera({ ...state.camera, zoom: z * factor });
+  const z2 = next.zoom;
+  const ratio = z ? z2 / z : 1;
+  next.x = px - (px - (state.camera.x || 0)) * ratio;
+  next.y = py - (py - (state.camera.y || 0)) * ratio;
+  state.camera = next;
+}
+
 function enableBoardCamera() {
   const wrap = document.getElementById("boardWrap");
   let panning = false, sx = 0, sy = 0, ox = 0, oy = 0;
   wrap.addEventListener("wheel", (e) => {
     e.preventDefault();
-    const factor = e.deltaY > 0 ? 0.92 : 1.08;
-    state.camera = clampCamera({
-      ...state.camera,
-      zoom: (state.camera.zoom || 1) * factor,
-    });
+    const rect = wrap.getBoundingClientRect ? wrap.getBoundingClientRect() : { left: 0, top: 0 };
+    const px = (e.clientX || 0) - (rect.left || 0);
+    const py = (e.clientY || 0) - (rect.top || 0);
+    if (e.shiftKey && !e.ctrlKey && !e.metaKey) {
+      state.camera.x -= e.deltaX || e.deltaY || 0;
+      state.camera.y -= e.deltaY || 0;
+    } else {
+      const factor = e.deltaY > 0 ? 0.92 : 1.08;
+      zoomAt(px, py, factor);
+    }
     applyCamera();
     persistCamera();
   }, { passive: false });
@@ -483,6 +498,14 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "u" || e.key === "U") {
     e.preventDefault();
     document.getElementById("filePick").click();
+  }
+  if (e.key === "0" || e.key === "h" || e.key === "H") {
+    e.preventDefault();
+    resetCamera();
+  }
+  if (e.key === "f" || e.key === "F") {
+    e.preventDefault();
+    fitCamera();
   }
 });
 

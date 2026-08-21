@@ -258,8 +258,11 @@ class Handler(BaseHTTPRequestHandler):
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "board":
             project = app.memory.get_project(parts[2])
+            if not project:
+                _json(self, 404, {"error": "missing project"})
+                return
             nodes = app.memory.list_nodes(parts[2])
-            _json(self, 200, {"nodes": nodes, "camera": (project or {}).get("camera") or {"x": 0, "y": 0, "zoom": 1}})
+            _json(self, 200, {"nodes": nodes, "camera": project.get("camera") or {"x": 0, "y": 0, "zoom": 1}})
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "camera":
             project = app.memory.get_project(parts[2])

@@ -165,6 +165,8 @@ class Memory:
                 return default
             return out if math.isfinite(out) else default
 
+        if not self.get_project(project_id):
+            return None
         zoom = _num(cam.get("zoom"), 1.0)
         if zoom <= 0:
             zoom = 1.0

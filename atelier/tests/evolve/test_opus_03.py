@@ -74,6 +74,7 @@ class Elem {
   get clientWidth() { return this._cw; }
   get clientHeight() { return this._ch; }
   get scrollHeight() { return 0; }
+  getBoundingClientRect() { return { left: 0, top: 0, width: this._cw, height: this._ch }; }
   addEventListener(kind, fn) { (this.listeners[kind] = this.listeners[kind] || []).push(fn); }
   dispatch(kind, ev = {}) {
     ev.target = ev.target || this;
@@ -382,6 +383,9 @@ class CameraWiring(unittest.TestCase):
         self.in_js('wrap.addEventListener("wheel"')
         self.in_js("persistCamera()")
         self.in_js("clampCamera")
+        self.in_js("function zoomAt(px, py, factor)")
+        self.in_js("px - (px - (state.camera.x || 0)) * ratio")
+        self.in_js('e.key === "0"')
 
     def test_debounced_write_captures_its_project(self):
         self.in_js("pendingCamera = { projectId: state.projectId")
@@ -493,13 +497,10 @@ class CameraRoute(unittest.TestCase):
                 _, body = self.live.raw("GET", path)
                 self.assertTrue(_strict_json(body), f"{literal!r} poisoned {path}")
 
-    def test_board_of_a_missing_project_is_200_with_a_home_camera(self):
-        # pins current behaviour — GET .../camera 404s but GET .../board does
-        # not, it answers 200 with an empty board. Listed as a remaining hole.
+    def test_board_of_a_missing_project_is_404(self):
         status, body = self._json("GET", "/api/projects/deadbeef/board")
-        self.assertEqual(status, 200)
-        self.assertEqual(body["nodes"], [])
-        self.assertEqual(body["camera"], {"x": 0, "y": 0, "zoom": 1})
+        self.assertEqual(status, 404)
+        self.assertEqual(body["error"], "missing project")
 
     def test_pan_offsets_are_unbounded(self):
         # pins current behaviour: only zoom is clamped, x/y take any finite

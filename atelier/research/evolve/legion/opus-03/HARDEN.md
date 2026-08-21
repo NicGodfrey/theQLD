@@ -88,45 +88,26 @@ the project-switch handler flushes first, and `pagehide` flushes the last write
 instead of dropping it. Same scenario now: A holds `(310,170)`, B untouched, and
 no write is addressed to B.
 
+## Folded after this note (conductor close)
+
+Pointer-anchored zoom (`zoomAt`). Shift+wheel pans. `0`/`h` Home, `f` Fit.
+Missing-project board GET is 404. `set_camera` no longer UPDATE+COMMITs a
+missing id.
+
 ## Remaining holes
 
-**R1 — zoom is anchored at the board origin, not the pointer.** The wheel
-handler scales around `(0,0)` and leaves `x` / `y` alone, so zooming in walks
-your content toward the bottom-right and you have to pan back or press Fit.
-This is the biggest leftover for a canvas round and the one users notice first.
-Anchoring needs the pointer position relative to `#boardWrap`:
-`x' = px - (px - x) * z'/z`.
+**R2 leftover — pinch is not a gesture.** Wheel still zooms (design-board
+default). Trackpad two-finger scroll zooms; Shift+wheel pans. macOS pinch is
+still a stepped ctrl+wheel.
 
-**R2 — a trackpad cannot pan, and pinch is not a gesture.** Every `wheel` event
-zooms; two-finger scroll is a `wheel` event, so the ordinary pan gesture zooms
-instead. macOS pinch arrives as ctrl+`wheel` and gets the same fixed step. The
-handler also ignores `deltaY` magnitude and `deltaMode`, so one flick and one
-careful tick move the same 8%.
+**R3 — `x` / `y` are unbounded.** Home and Fit are the way back. Pinned by
+`test_pan_offsets_are_unbounded`.
 
-**R3 — `x` / `y` are unbounded.** Only zoom is clamped. A fast pan can park the
-content arbitrarily far off-screen; Home and Fit are the only way back. Pinned
-by `test_pan_offsets_are_unbounded` (asserts current behaviour: `1e9` persists).
+**R6 — `_json` still serialises with `allow_nan` on.** Guard is local to camera.
 
-**R4 — `GET /api/projects/:id/board` does not 404.** An unknown id answers
-`200 {"nodes": [], "camera": {0,0,1}}` while `.../camera` on the same id is a
-404. Pinned by `test_board_of_a_missing_project_is_200_with_a_home_camera`.
+**R8 — Fit ignores the toolbar and the dock.** Flat 64 px padding.
 
-**R5 — `POST .../camera` on an unknown id still runs `UPDATE` + `COMMIT`** before
-discovering the project is missing and answering 404. No row changes, but it is
-a pointless write under the app lock on every stray request.
-
-**R6 — `_json` still serialises with `allow_nan` on.** The camera path is now
-guarded at the store, but the guard is local. Any future float that reaches a
-response non-finite reintroduces H1 on a different route.
-
-**R7 — no keyboard path to Home / Fit.** Upload has `U`; the camera has nothing.
-Click-to-reset on the readout is discoverable only through a `title` tooltip.
-
-**R8 — Fit ignores the toolbar and the dock.** The padding is a flat 64 px, so
-`.board-tools` still overlaps the top-left card after a Fit on a small window.
-
-**R9 — two windows on one project fight.** The camera is per-project, not
-per-view; the last debounced write wins and the other window is not told.
+**R9 — two windows on one project fight.** Last debounced write wins.
 
 ## Repro
 
