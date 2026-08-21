@@ -454,7 +454,7 @@ var dict = new Object();
     "Central Queensland Community Legal Centre (CQCLC) is a Rockhampton based centre which can provide advice on consumer law, criminal law, neighbourhood and tenancy disputes, estate administration, family law, employment law, and migration law. They hold advice clinics regularly, and can otherwise provide assistance in-person, over the phone, or by video call.",
     "https://www.cqclc.org.au/",
     "admin@cqclc.org.au",
-    ["(07) 4922 1200", "1800 155 121"],["Phone",""],
+    [["(07) 4922 1200", "1800 155 121"],["Phone",""]],
     "https://www.google.com/maps/place/Central+Queensland+Community+Legal+Centre+Inc./@-23.3799527,150.515067,18.2z/data=!4m13!1m7!3m6!1s0x6bc300991aeb5a41:0x83113c8a10cf4f9d!2s240+Quay+St,+Rockhampton+QLD+4700!3b1!8m2!3d-23.3803746!4d150.5159459!3m4!1s0x6bc300980e20cd85:0x9943b8c4bbfc82d2!8m2!3d-23.3802694!4d150.5161044", 
     "240 Quay St, Rockhampton, Queensland 4700",
     "central_qld_clc",
