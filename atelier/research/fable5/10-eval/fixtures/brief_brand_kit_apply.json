@@ -1,0 +1,25 @@
+{
+  "id": "brand_apply",
+  "title": "Brand kit apply — restyle launch poster",
+  "request": "Apply our existing brand kit to the attached launch poster: recolour to the kit palette (#1A5FB4 primary, #F5C211 accent, #101020 ink), swap the placeholder mark for the 'Atelier Helix' logo, set headings in Archivo and body copy in Inter. Keep the composition unchanged, restyle only, and give me a change log of everything that was touched.",
+  "brand": {
+    "name": "Atelier Helix",
+    "palette": ["#1A5FB4", "#F5C211", "#101020"],
+    "fonts": {"heading": "Archivo", "body": "Inter"}
+  },
+  "assets": [
+    {"name": "launch-poster", "kind": "image", "note": "placeholder attachment; the demo loom synthesises it"}
+  ],
+  "expected": {
+    "task_type": "brand_kit_apply",
+    "crafts_required": ["refine-image"],
+    "crafts_any_of": ["analyze-visual", "synthesize"],
+    "lanes_required": ["gemini", "image"],
+    "lanes_forbidden": ["video", "audio", "3d"],
+    "min_steps": 2,
+    "handoff_min": 2,
+    "deliverable_kinds": ["image", "text"],
+    "palette": ["#1A5FB4", "#F5C211"],
+    "must_mention": ["Archivo", "Inter"]
+  }
+}

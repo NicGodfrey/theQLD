@@ -1,0 +1,22 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Golden-hour glaze over wet cobblestones."
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "modelVersion": "gemini-2.5-flash",
+  "usageMetadata": {
+    "candidatesTokenCount": 9,
+    "promptTokenCount": 21,
+    "totalTokenCount": 30
+  }
+}

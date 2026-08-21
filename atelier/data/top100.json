@@ -1,0 +1,1045 @@
+{
+  "title": "Atelier Helix TOP100",
+  "captured_at": "2026-08-21",
+  "architecture": "Helix",
+  "rule": "Integrate patterns and official APIs. Do not vendor monorepos. No unofficial ChatGPT website clients.",
+  "mvp_wire": [
+    "BerriAI/litellm",
+    "open-webui/open-webui",
+    "Comfy-Org/ComfyUI",
+    "excalidraw/excalidraw",
+    "tldraw/tldraw",
+    "fabricjs/fabric.js",
+    "langchain-ai/langgraph",
+    "567-labs/instructor",
+    "openai/openai-python",
+    "googleapis/python-genai",
+    "ollama/ollama",
+    "langfuse/langfuse",
+    "invoke-ai/InvokeAI",
+    "danny-avila/LibreChat",
+    "All-The-Vibes/ATV-Design"
+  ],
+  "categories": {
+    "gateway": 6,
+    "studio-ui": 7,
+    "agent-studio": 4,
+    "agent": 16,
+    "image": 13,
+    "canvas": 7,
+    "design-editor": 4,
+    "video": 4,
+    "audio": 4,
+    "local-llm": 10,
+    "sdk": 5,
+    "observability": 2,
+    "memory": 5,
+    "backend": 2,
+    "byok-design": 4,
+    "vision": 4,
+    "runtime": 1,
+    "export": 2
+  },
+  "projects": [
+    {
+      "rank": 1,
+      "repo": "BerriAI/litellm",
+      "stars_approx": 56943,
+      "license": "NOASSERTION",
+      "category": "gateway",
+      "why": "Unified 100+ provider router and spend tracking",
+      "integrate_as": "spoke + cost table",
+      "url": "https://github.com/BerriAI/litellm"
+    },
+    {
+      "rank": 2,
+      "repo": "songquanpeng/one-api",
+      "stars_approx": 36517,
+      "license": "MIT",
+      "category": "gateway",
+      "why": "Self-hosted OpenAI-compatible gateway",
+      "integrate_as": "keyring table",
+      "url": "https://github.com/songquanpeng/one-api"
+    },
+    {
+      "rank": 3,
+      "repo": "QuantumNous/new-api",
+      "stars_approx": 45855,
+      "license": "AGPL-3.0",
+      "category": "gateway",
+      "why": "Multi-channel billing gateway",
+      "integrate_as": "usage ledger",
+      "url": "https://github.com/QuantumNous/new-api"
+    },
+    {
+      "rank": 4,
+      "repo": "Portkey-AI/gateway",
+      "stars_approx": 12790,
+      "license": "MIT",
+      "category": "gateway",
+      "why": "Observability-first AI gateway",
+      "integrate_as": "redaction + route",
+      "url": "https://github.com/Portkey-AI/gateway"
+    },
+    {
+      "rank": 5,
+      "repo": "mudler/LocalAI",
+      "stars_approx": 48609,
+      "license": "MIT",
+      "category": "gateway",
+      "why": "Local OpenAI-compatible inference",
+      "integrate_as": "openai_compat spoke",
+      "url": "https://github.com/mudler/LocalAI"
+    },
+    {
+      "rank": 6,
+      "repo": "open-webui/open-webui",
+      "stars_approx": 149488,
+      "license": "NOASSERTION",
+      "category": "studio-ui",
+      "why": "Self-host chat, image gen, BYOK",
+      "integrate_as": "settings / model picker",
+      "url": "https://github.com/open-webui/open-webui"
+    },
+    {
+      "rank": 7,
+      "repo": "danny-avila/LibreChat",
+      "stars_approx": 42311,
+      "license": "MIT",
+      "category": "studio-ui",
+      "why": "Multi-provider chat + agents",
+      "integrate_as": "threads / artifacts",
+      "url": "https://github.com/danny-avila/LibreChat"
+    },
+    {
+      "rank": 8,
+      "repo": "lobehub/lobe-chat",
+      "stars_approx": 81908,
+      "license": "NOASSERTION",
+      "category": "studio-ui",
+      "why": "Polished multi-model client",
+      "integrate_as": "provider switch UX",
+      "url": "https://github.com/lobehub/lobe-chat"
+    },
+    {
+      "rank": 9,
+      "repo": "chatboxai/chatbox",
+      "stars_approx": 41510,
+      "license": "GPL-3.0",
+      "category": "studio-ui",
+      "why": "Desktop BYOK client",
+      "integrate_as": "local key UX",
+      "url": "https://github.com/chatboxai/chatbox"
+    },
+    {
+      "rank": 10,
+      "repo": "langgenius/dify",
+      "stars_approx": 153133,
+      "license": "NOASSERTION",
+      "category": "agent-studio",
+      "why": "Visual agent + RAG studio",
+      "integrate_as": "future workflow graph",
+      "url": "https://github.com/langgenius/dify"
+    },
+    {
+      "rank": 11,
+      "repo": "langflow-ai/langflow",
+      "stars_approx": 153534,
+      "license": "MIT",
+      "category": "agent-studio",
+      "why": "Visual LangChain flows",
+      "integrate_as": "node graph idea",
+      "url": "https://github.com/langflow-ai/langflow"
+    },
+    {
+      "rank": 12,
+      "repo": "FlowiseAI/Flowise",
+      "stars_approx": 55382,
+      "license": "NOASSERTION",
+      "category": "agent-studio",
+      "why": "No-code LLM flows",
+      "integrate_as": "tool compose",
+      "url": "https://github.com/FlowiseAI/Flowise"
+    },
+    {
+      "rank": 13,
+      "repo": "n8n-io/n8n",
+      "stars_approx": 201517,
+      "license": "NOASSERTION",
+      "category": "agent-studio",
+      "why": "Automation with AI nodes",
+      "integrate_as": "future loom workers",
+      "url": "https://github.com/n8n-io/n8n"
+    },
+    {
+      "rank": 14,
+      "repo": "langchain-ai/langgraph",
+      "stars_approx": 40185,
+      "license": "MIT",
+      "category": "agent",
+      "why": "Stateful multi-actor graphs",
+      "integrate_as": "conductor phases",
+      "url": "https://github.com/langchain-ai/langgraph"
+    },
+    {
+      "rank": 15,
+      "repo": "langchain-ai/langchain",
+      "stars_approx": 144725,
+      "license": "MIT",
+      "category": "agent",
+      "why": "Tool and chain abstractions",
+      "integrate_as": "pattern only",
+      "url": "https://github.com/langchain-ai/langchain"
+    },
+    {
+      "rank": 16,
+      "repo": "crewAIInc/crewAI",
+      "stars_approx": 57428,
+      "license": "MIT",
+      "category": "agent",
+      "why": "Role-based crews",
+      "integrate_as": "planner/critic roles",
+      "url": "https://github.com/crewAIInc/crewAI"
+    },
+    {
+      "rank": 17,
+      "repo": "microsoft/autogen",
+      "stars_approx": 60562,
+      "license": "CC-BY-4.0",
+      "category": "agent",
+      "why": "Multi-agent conversations",
+      "integrate_as": "message protocol",
+      "url": "https://github.com/microsoft/autogen"
+    },
+    {
+      "rank": 18,
+      "repo": "pydantic/pydantic-ai",
+      "stars_approx": 19432,
+      "license": "MIT",
+      "category": "agent",
+      "why": "Typed agents",
+      "integrate_as": "plan schema",
+      "url": "https://github.com/pydantic/pydantic-ai"
+    },
+    {
+      "rank": 19,
+      "repo": "stanfordnlp/dspy",
+      "stars_approx": 37478,
+      "license": "MIT",
+      "category": "agent",
+      "why": "Programmatic prompting",
+      "integrate_as": "planner compile",
+      "url": "https://github.com/stanfordnlp/dspy"
+    },
+    {
+      "rank": 20,
+      "repo": "567-labs/instructor",
+      "stars_approx": 13760,
+      "license": "MIT",
+      "category": "agent",
+      "why": "Structured JSON from LLMs",
+      "integrate_as": "extract_json",
+      "url": "https://github.com/567-labs/instructor"
+    },
+    {
+      "rank": 21,
+      "repo": "dottxt-ai/outlines",
+      "stars_approx": 15659,
+      "license": "Apache-2.0",
+      "category": "agent",
+      "why": "Constrained generation",
+      "integrate_as": "future grammar plans",
+      "url": "https://github.com/dottxt-ai/outlines"
+    },
+    {
+      "rank": 22,
+      "repo": "microsoft/semantic-kernel",
+      "stars_approx": 28477,
+      "license": "MIT",
+      "category": "agent",
+      "why": "Skills kernel",
+      "integrate_as": "brand kit as skill",
+      "url": "https://github.com/microsoft/semantic-kernel"
+    },
+    {
+      "rank": 23,
+      "repo": "FoundationAgents/MetaGPT",
+      "stars_approx": 69936,
+      "license": "MIT",
+      "category": "agent",
+      "why": "SOP multi-agent company",
+      "integrate_as": "role SOPs",
+      "url": "https://github.com/FoundationAgents/MetaGPT"
+    },
+    {
+      "rank": 24,
+      "repo": "OpenBMB/ChatDev",
+      "stars_approx": 34086,
+      "license": "Apache-2.0",
+      "category": "agent",
+      "why": "Chat-powered org",
+      "integrate_as": "critique loop",
+      "url": "https://github.com/OpenBMB/ChatDev"
+    },
+    {
+      "rank": 25,
+      "repo": "Significant-Gravitas/AutoGPT",
+      "stars_approx": 186719,
+      "license": "NOASSERTION",
+      "category": "agent",
+      "why": "Autonomous loop reference",
+      "integrate_as": "hard phase cap",
+      "url": "https://github.com/Significant-Gravitas/AutoGPT"
+    },
+    {
+      "rank": 26,
+      "repo": "run-llama/llama_index",
+      "stars_approx": 51790,
+      "license": "MIT",
+      "category": "agent",
+      "why": "Data / RAG index",
+      "integrate_as": "asset memory later",
+      "url": "https://github.com/run-llama/llama_index"
+    },
+    {
+      "rank": 27,
+      "repo": "infiniflow/ragflow",
+      "stars_approx": 88983,
+      "license": "Apache-2.0",
+      "category": "agent",
+      "why": "RAG engine",
+      "integrate_as": "reference boards",
+      "url": "https://github.com/infiniflow/ragflow"
+    },
+    {
+      "rank": 28,
+      "repo": "Comfy-Org/ComfyUI",
+      "stars_approx": 128817,
+      "license": "GPL-3.0",
+      "category": "image",
+      "why": "Node graph local gen",
+      "integrate_as": "optional loom worker",
+      "url": "https://github.com/Comfy-Org/ComfyUI"
+    },
+    {
+      "rank": 29,
+      "repo": "AUTOMATIC1111/stable-diffusion-webui",
+      "stars_approx": 164605,
+      "license": "AGPL-3.0",
+      "category": "image",
+      "why": "Canonical local SD UI",
+      "integrate_as": "optional worker",
+      "url": "https://github.com/AUTOMATIC1111/stable-diffusion-webui"
+    },
+    {
+      "rank": 30,
+      "repo": "lllyasviel/Fooocus",
+      "stars_approx": 52461,
+      "license": "GPL-3.0",
+      "category": "image",
+      "why": "Opinionated SDXL studio",
+      "integrate_as": "fewer knobs",
+      "url": "https://github.com/lllyasviel/Fooocus"
+    },
+    {
+      "rank": 31,
+      "repo": "invoke-ai/InvokeAI",
+      "stars_approx": 27923,
+      "license": "Apache-2.0",
+      "category": "image",
+      "why": "Pro local canvas gen",
+      "integrate_as": "unified canvas UX",
+      "url": "https://github.com/invoke-ai/InvokeAI"
+    },
+    {
+      "rank": 32,
+      "repo": "lllyasviel/stable-diffusion-webui-forge",
+      "stars_approx": 12966,
+      "license": "AGPL-3.0",
+      "category": "image",
+      "why": "Performance SD fork",
+      "integrate_as": "optional worker",
+      "url": "https://github.com/lllyasviel/stable-diffusion-webui-forge"
+    },
+    {
+      "rank": 33,
+      "repo": "huggingface/diffusers",
+      "stars_approx": 34347,
+      "license": "Apache-2.0",
+      "category": "image",
+      "why": "Diffusers pipelines",
+      "integrate_as": "future local spoke",
+      "url": "https://github.com/huggingface/diffusers"
+    },
+    {
+      "rank": 34,
+      "repo": "huggingface/transformers",
+      "stars_approx": 164311,
+      "license": "Apache-2.0",
+      "category": "image",
+      "why": "Model runtime",
+      "integrate_as": "future local spoke",
+      "url": "https://github.com/huggingface/transformers"
+    },
+    {
+      "rank": 35,
+      "repo": "lllyasviel/ControlNet",
+      "stars_approx": 34076,
+      "license": "Apache-2.0",
+      "category": "image",
+      "why": "Structure-conditioned gen",
+      "integrate_as": "touch-edit analog",
+      "url": "https://github.com/lllyasviel/ControlNet"
+    },
+    {
+      "rank": 36,
+      "repo": "Mikubill/sd-webui-controlnet",
+      "stars_approx": 17847,
+      "license": "GPL-3.0",
+      "category": "image",
+      "why": "ControlNet in A1111",
+      "integrate_as": "optional",
+      "url": "https://github.com/Mikubill/sd-webui-controlnet"
+    },
+    {
+      "rank": 37,
+      "repo": "Stability-AI/generative-models",
+      "stars_approx": 27267,
+      "license": "MIT",
+      "category": "image",
+      "why": "Official Stability generators",
+      "integrate_as": "route note",
+      "url": "https://github.com/Stability-AI/generative-models"
+    },
+    {
+      "rank": 38,
+      "repo": "black-forest-labs/flux",
+      "stars_approx": 25898,
+      "license": "Apache-2.0",
+      "category": "image",
+      "why": "FLUX family",
+      "integrate_as": "route note",
+      "url": "https://github.com/black-forest-labs/flux"
+    },
+    {
+      "rank": 39,
+      "repo": "Comfy-Org/ComfyUI-Manager",
+      "stars_approx": 15855,
+      "license": "GPL-3.0",
+      "category": "image",
+      "why": "Comfy custom-node manager",
+      "integrate_as": "optional ops",
+      "url": "https://github.com/Comfy-Org/ComfyUI-Manager"
+    },
+    {
+      "rank": 40,
+      "repo": "cubiq/ComfyUI_IPAdapter_plus",
+      "stars_approx": 6105,
+      "license": "GPL-3.0",
+      "category": "image",
+      "why": "Reference identity",
+      "integrate_as": "visual brand lock",
+      "url": "https://github.com/cubiq/ComfyUI_IPAdapter_plus"
+    },
+    {
+      "rank": 41,
+      "repo": "excalidraw/excalidraw",
+      "stars_approx": 130157,
+      "license": "MIT",
+      "category": "canvas",
+      "why": "Infinite whiteboard",
+      "integrate_as": "board gestures",
+      "url": "https://github.com/excalidraw/excalidraw"
+    },
+    {
+      "rank": 42,
+      "repo": "tldraw/tldraw",
+      "stars_approx": 49894,
+      "license": "NOASSERTION",
+      "category": "canvas",
+      "why": "Infinite canvas SDK",
+      "integrate_as": "future board engine",
+      "url": "https://github.com/tldraw/tldraw"
+    },
+    {
+      "rank": 43,
+      "repo": "fabricjs/fabric.js",
+      "stars_approx": 31398,
+      "license": "MIT",
+      "category": "canvas",
+      "why": "Object 2d canvas",
+      "integrate_as": "layer model",
+      "url": "https://github.com/fabricjs/fabric.js"
+    },
+    {
+      "rank": 44,
+      "repo": "konvajs/konva",
+      "stars_approx": 14708,
+      "license": "NOASSERTION",
+      "category": "canvas",
+      "why": "2d scene graph",
+      "integrate_as": "node drag",
+      "url": "https://github.com/konvajs/konva"
+    },
+    {
+      "rank": 45,
+      "repo": "pixijs/pixijs",
+      "stars_approx": 48042,
+      "license": "MIT",
+      "category": "canvas",
+      "why": "WebGL scene",
+      "integrate_as": "future zoom",
+      "url": "https://github.com/pixijs/pixijs"
+    },
+    {
+      "rank": 46,
+      "repo": "paperjs/paper.js",
+      "stars_approx": 15065,
+      "license": "NOASSERTION",
+      "category": "canvas",
+      "why": "Vector scripting",
+      "integrate_as": "vector notes",
+      "url": "https://github.com/paperjs/paper.js"
+    },
+    {
+      "rank": 47,
+      "repo": "GrapesJS/grapesjs",
+      "stars_approx": 26152,
+      "license": "NOASSERTION",
+      "category": "design-editor",
+      "why": "Web builder",
+      "integrate_as": "layout blocks",
+      "url": "https://github.com/GrapesJS/grapesjs"
+    },
+    {
+      "rank": 48,
+      "repo": "penpot/penpot",
+      "stars_approx": 58984,
+      "license": "MPL-2.0",
+      "category": "design-editor",
+      "why": "Open design tool",
+      "integrate_as": "export ideas",
+      "url": "https://github.com/penpot/penpot"
+    },
+    {
+      "rank": 49,
+      "repo": "jgraph/drawio",
+      "stars_approx": 7632,
+      "license": "Apache-2.0",
+      "category": "design-editor",
+      "why": "Diagram canvas",
+      "integrate_as": "board export",
+      "url": "https://github.com/jgraph/drawio"
+    },
+    {
+      "rank": 50,
+      "repo": "photopea/photopea",
+      "stars_approx": 8400,
+      "license": "NOASSERTION",
+      "category": "design-editor",
+      "why": "Browser PSD editor",
+      "integrate_as": "touch-edit inspiration",
+      "url": "https://github.com/photopea/photopea"
+    },
+    {
+      "rank": 51,
+      "repo": "remotion-dev/remotion",
+      "stars_approx": 56992,
+      "license": "NOASSERTION",
+      "category": "video",
+      "why": "Programmatic video",
+      "integrate_as": "future loom video",
+      "url": "https://github.com/remotion-dev/remotion"
+    },
+    {
+      "rank": 52,
+      "repo": "FFmpeg/FFmpeg",
+      "stars_approx": 63513,
+      "license": "NOASSERTION",
+      "category": "video",
+      "why": "Transcode / compose",
+      "integrate_as": "future worker",
+      "url": "https://github.com/FFmpeg/FFmpeg"
+    },
+    {
+      "rank": 53,
+      "repo": "guoyww/AnimateDiff",
+      "stars_approx": 12217,
+      "license": "Apache-2.0",
+      "category": "video",
+      "why": "Image-to-motion",
+      "integrate_as": "optional",
+      "url": "https://github.com/guoyww/AnimateDiff"
+    },
+    {
+      "rank": 54,
+      "repo": "kijai/ComfyUI-WanVideoWrapper",
+      "stars_approx": 6670,
+      "license": "Apache-2.0",
+      "category": "video",
+      "why": "Wan video in Comfy",
+      "integrate_as": "optional",
+      "url": "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+    },
+    {
+      "rank": 55,
+      "repo": "openai/whisper",
+      "stars_approx": 107740,
+      "license": "MIT",
+      "category": "audio",
+      "why": "Speech recognition",
+      "integrate_as": "voice brief later",
+      "url": "https://github.com/openai/whisper"
+    },
+    {
+      "rank": 56,
+      "repo": "ggml-org/whisper.cpp",
+      "stars_approx": 53083,
+      "license": "MIT",
+      "category": "audio",
+      "why": "Local whisper",
+      "integrate_as": "optional",
+      "url": "https://github.com/ggml-org/whisper.cpp"
+    },
+    {
+      "rank": 57,
+      "repo": "suno-ai/bark",
+      "stars_approx": 39246,
+      "license": "MIT",
+      "category": "audio",
+      "why": "Generative audio",
+      "integrate_as": "audio stub",
+      "url": "https://github.com/suno-ai/bark"
+    },
+    {
+      "rank": 58,
+      "repo": "coqui-ai/TTS",
+      "stars_approx": 45929,
+      "license": "MPL-2.0",
+      "category": "audio",
+      "why": "Local TTS",
+      "integrate_as": "audio stub",
+      "url": "https://github.com/coqui-ai/TTS"
+    },
+    {
+      "rank": 59,
+      "repo": "ollama/ollama",
+      "stars_approx": 179116,
+      "license": "MIT",
+      "category": "local-llm",
+      "why": "Local model runner",
+      "integrate_as": "ollama spoke",
+      "url": "https://github.com/ollama/ollama"
+    },
+    {
+      "rank": 60,
+      "repo": "ggml-org/llama.cpp",
+      "stars_approx": 125013,
+      "license": "MIT",
+      "category": "local-llm",
+      "why": "GGUF runtime",
+      "integrate_as": "future spoke",
+      "url": "https://github.com/ggml-org/llama.cpp"
+    },
+    {
+      "rank": 61,
+      "repo": "vllm-project/vllm",
+      "stars_approx": 89645,
+      "license": "Apache-2.0",
+      "category": "local-llm",
+      "why": "Fast local serving",
+      "integrate_as": "openai_compat",
+      "url": "https://github.com/vllm-project/vllm"
+    },
+    {
+      "rank": 62,
+      "repo": "nomic-ai/gpt4all",
+      "stars_approx": 77398,
+      "license": "MIT",
+      "category": "local-llm",
+      "why": "Local desktop models",
+      "integrate_as": "compat spoke",
+      "url": "https://github.com/nomic-ai/gpt4all"
+    },
+    {
+      "rank": 63,
+      "repo": "mozilla-ai/llamafile",
+      "stars_approx": 25666,
+      "license": "NOASSERTION",
+      "category": "local-llm",
+      "why": "Single-file local LLM",
+      "integrate_as": "compat",
+      "url": "https://github.com/mozilla-ai/llamafile"
+    },
+    {
+      "rank": 64,
+      "repo": "lm-sys/FastChat",
+      "stars_approx": 39515,
+      "license": "Apache-2.0",
+      "category": "local-llm",
+      "why": "FastChat serve",
+      "integrate_as": "compat",
+      "url": "https://github.com/lm-sys/FastChat"
+    },
+    {
+      "rank": 65,
+      "repo": "xorbitsai/inference",
+      "stars_approx": 9504,
+      "license": "Apache-2.0",
+      "category": "local-llm",
+      "why": "Xinference multi-model",
+      "integrate_as": "compat",
+      "url": "https://github.com/xorbitsai/inference"
+    },
+    {
+      "rank": 66,
+      "repo": "openai/openai-python",
+      "stars_approx": 31426,
+      "license": "Apache-2.0",
+      "category": "sdk",
+      "why": "Official OpenAI SDK",
+      "integrate_as": "HTTP contract",
+      "url": "https://github.com/openai/openai-python"
+    },
+    {
+      "rank": 67,
+      "repo": "openai/openai-node",
+      "stars_approx": 11127,
+      "license": "Apache-2.0",
+      "category": "sdk",
+      "why": "Official OpenAI Node SDK",
+      "integrate_as": "HTTP contract",
+      "url": "https://github.com/openai/openai-node"
+    },
+    {
+      "rank": 68,
+      "repo": "googleapis/python-genai",
+      "stars_approx": 3929,
+      "license": "Apache-2.0",
+      "category": "sdk",
+      "why": "Official Gemini SDK",
+      "integrate_as": "HTTP contract",
+      "url": "https://github.com/googleapis/python-genai"
+    },
+    {
+      "rank": 69,
+      "repo": "anthropics/anthropic-sdk-python",
+      "stars_approx": 3842,
+      "license": "MIT",
+      "category": "sdk",
+      "why": "Official Anthropic SDK",
+      "integrate_as": "future spoke",
+      "url": "https://github.com/anthropics/anthropic-sdk-python"
+    },
+    {
+      "rank": 70,
+      "repo": "vercel/ai",
+      "stars_approx": 26337,
+      "license": "NOASSERTION",
+      "category": "sdk",
+      "why": "Vercel AI SDK",
+      "integrate_as": "streaming later",
+      "url": "https://github.com/vercel/ai"
+    },
+    {
+      "rank": 71,
+      "repo": "langfuse/langfuse",
+      "stars_approx": 33525,
+      "license": "NOASSERTION",
+      "category": "observability",
+      "why": "LLM traces and cost",
+      "integrate_as": "usage events",
+      "url": "https://github.com/langfuse/langfuse"
+    },
+    {
+      "rank": 72,
+      "repo": "traceloop/openllmetry",
+      "stars_approx": 7387,
+      "license": "Apache-2.0",
+      "category": "observability",
+      "why": "OpenTelemetry for LLMs",
+      "integrate_as": "future traces",
+      "url": "https://github.com/traceloop/openllmetry"
+    },
+    {
+      "rank": 73,
+      "repo": "chroma-core/chroma",
+      "stars_approx": 29119,
+      "license": "Apache-2.0",
+      "category": "memory",
+      "why": "Embedding DB",
+      "integrate_as": "asset search later",
+      "url": "https://github.com/chroma-core/chroma"
+    },
+    {
+      "rank": 74,
+      "repo": "qdrant/qdrant",
+      "stars_approx": 34115,
+      "license": "Apache-2.0",
+      "category": "memory",
+      "why": "Vector search",
+      "integrate_as": "future",
+      "url": "https://github.com/qdrant/qdrant"
+    },
+    {
+      "rank": 75,
+      "repo": "milvus-io/milvus",
+      "stars_approx": 45728,
+      "license": "Apache-2.0",
+      "category": "memory",
+      "why": "Vector DB",
+      "integrate_as": "future",
+      "url": "https://github.com/milvus-io/milvus"
+    },
+    {
+      "rank": 76,
+      "repo": "weaviate/weaviate",
+      "stars_approx": 16745,
+      "license": "BSD-3-Clause",
+      "category": "memory",
+      "why": "Vector search",
+      "integrate_as": "future",
+      "url": "https://github.com/weaviate/weaviate"
+    },
+    {
+      "rank": 77,
+      "repo": "HKUDS/LightRAG",
+      "stars_approx": 39062,
+      "license": "MIT",
+      "category": "memory",
+      "why": "Graph RAG",
+      "integrate_as": "future memory",
+      "url": "https://github.com/HKUDS/LightRAG"
+    },
+    {
+      "rank": 78,
+      "repo": "pocketbase/pocketbase",
+      "stars_approx": 60760,
+      "license": "MIT",
+      "category": "backend",
+      "why": "Single-file backend",
+      "integrate_as": "alt to sqlite",
+      "url": "https://github.com/pocketbase/pocketbase"
+    },
+    {
+      "rank": 79,
+      "repo": "minio/minio",
+      "stars_approx": 61382,
+      "license": "AGPL-3.0",
+      "category": "backend",
+      "why": "S3-compatible artifacts",
+      "integrate_as": "future object store",
+      "url": "https://github.com/minio/minio"
+    },
+    {
+      "rank": 80,
+      "repo": "All-The-Vibes/ATV-Design",
+      "stars_approx": 5,
+      "license": "MIT",
+      "category": "byok-design",
+      "why": "Local-first BYOK design agent",
+      "integrate_as": "cousin, not vendored",
+      "url": "https://github.com/All-The-Vibes/ATV-Design"
+    },
+    {
+      "rank": 81,
+      "repo": "1nkfox/open-design",
+      "stars_approx": 0,
+      "license": "Apache-2.0",
+      "category": "byok-design",
+      "why": "Skill-driven design harness",
+      "integrate_as": "skills idea",
+      "url": "https://github.com/1nkfox/open-design"
+    },
+    {
+      "rank": 82,
+      "repo": "JustinPerea/nebula-nodes",
+      "stars_approx": 16,
+      "license": "AGPL-3.0",
+      "category": "byok-design",
+      "why": "Node media canvas + BYOK",
+      "integrate_as": "loom graph later",
+      "url": "https://github.com/JustinPerea/nebula-nodes"
+    },
+    {
+      "rank": 83,
+      "repo": "manujajay/manudesign",
+      "stars_approx": 3,
+      "license": "MIT",
+      "category": "byok-design",
+      "why": "Studio + compose + canvas",
+      "integrate_as": "brand presets",
+      "url": "https://github.com/manujajay/manudesign"
+    },
+    {
+      "rank": 84,
+      "repo": "binary-husky/gpt_academic",
+      "stars_approx": 71224,
+      "license": "GPL-3.0",
+      "category": "studio-ui",
+      "why": "Academic multimodal BYOK UI",
+      "integrate_as": "key UX",
+      "url": "https://github.com/binary-husky/gpt_academic"
+    },
+    {
+      "rank": 85,
+      "repo": "chatchat-space/Langchain-Chatchat",
+      "stars_approx": 38563,
+      "license": "Apache-2.0",
+      "category": "studio-ui",
+      "why": "Local knowledge + models",
+      "integrate_as": "RAG later",
+      "url": "https://github.com/chatchat-space/Langchain-Chatchat"
+    },
+    {
+      "rank": 86,
+      "repo": "Cinnamon/kotaemon",
+      "stars_approx": 25708,
+      "license": "Apache-2.0",
+      "category": "studio-ui",
+      "why": "RAG document UI",
+      "integrate_as": "refs",
+      "url": "https://github.com/Cinnamon/kotaemon"
+    },
+    {
+      "rank": 87,
+      "repo": "opencv/opencv",
+      "stars_approx": 90539,
+      "license": "Apache-2.0",
+      "category": "vision",
+      "why": "Image operations",
+      "integrate_as": "local touch-edit",
+      "url": "https://github.com/opencv/opencv"
+    },
+    {
+      "rank": 88,
+      "repo": "pytorch/pytorch",
+      "stars_approx": 102518,
+      "license": "NOASSERTION",
+      "category": "runtime",
+      "why": "Training / inference",
+      "integrate_as": "local workers",
+      "url": "https://github.com/pytorch/pytorch"
+    },
+    {
+      "rank": 89,
+      "repo": "mrdoob/three.js",
+      "stars_approx": 114659,
+      "license": "MIT",
+      "category": "canvas",
+      "why": "3D web renderer",
+      "integrate_as": "future 3D board",
+      "url": "https://github.com/mrdoob/three.js"
+    },
+    {
+      "rank": 90,
+      "repo": "mozilla/pdf.js",
+      "stars_approx": 53762,
+      "license": "Apache-2.0",
+      "category": "export",
+      "why": "PDF renderer",
+      "integrate_as": "export later",
+      "url": "https://github.com/mozilla/pdf.js"
+    },
+    {
+      "rank": 91,
+      "repo": "niklasvh/html2canvas",
+      "stars_approx": 31913,
+      "license": "MIT",
+      "category": "export",
+      "why": "DOM to canvas",
+      "integrate_as": "board flatten",
+      "url": "https://github.com/niklasvh/html2canvas"
+    },
+    {
+      "rank": 92,
+      "repo": "facebookresearch/segment-anything",
+      "stars_approx": 54738,
+      "license": "Apache-2.0",
+      "category": "vision",
+      "why": "Segment anything",
+      "integrate_as": "touch-edit mask",
+      "url": "https://github.com/facebookresearch/segment-anything"
+    },
+    {
+      "rank": 93,
+      "repo": "ultralytics/ultralytics",
+      "stars_approx": 60839,
+      "license": "AGPL-3.0",
+      "category": "vision",
+      "why": "YOLO vision stack",
+      "integrate_as": "layout detect later",
+      "url": "https://github.com/ultralytics/ultralytics"
+    },
+    {
+      "rank": 94,
+      "repo": "google-ai-edge/mediapipe",
+      "stars_approx": 36685,
+      "license": "Apache-2.0",
+      "category": "vision",
+      "why": "On-device vision",
+      "integrate_as": "optional",
+      "url": "https://github.com/google-ai-edge/mediapipe"
+    },
+    {
+      "rank": 95,
+      "repo": "hiyouga/LlamaFactory",
+      "stars_approx": 74281,
+      "license": "Apache-2.0",
+      "category": "local-llm",
+      "why": "Fine-tune factory",
+      "integrate_as": "out of MVP",
+      "url": "https://github.com/hiyouga/LlamaFactory"
+    },
+    {
+      "rank": 96,
+      "repo": "unslothai/unsloth",
+      "stars_approx": 74233,
+      "license": "Apache-2.0",
+      "category": "local-llm",
+      "why": "Fast fine-tune",
+      "integrate_as": "out of MVP",
+      "url": "https://github.com/unslothai/unsloth"
+    },
+    {
+      "rank": 97,
+      "repo": "mlc-ai/mlc-llm",
+      "stars_approx": 23079,
+      "license": "Apache-2.0",
+      "category": "local-llm",
+      "why": "Compile LLMs for devices",
+      "integrate_as": "future",
+      "url": "https://github.com/mlc-ai/mlc-llm"
+    },
+    {
+      "rank": 98,
+      "repo": "OpenRouterTeam/openrouter-examples",
+      "stars_approx": 372,
+      "license": "MIT",
+      "category": "gateway",
+      "why": "OpenRouter examples — we do not require their proxy",
+      "integrate_as": "compat mapping only",
+      "url": "https://github.com/OpenRouterTeam/openrouter-examples"
+    },
+    {
+      "rank": 99,
+      "repo": "yoheinakajima/babyagi",
+      "stars_approx": 22355,
+      "license": "NOASSERTION",
+      "category": "agent",
+      "why": "Tiny task loop",
+      "integrate_as": "phase cap reminder",
+      "url": "https://github.com/yoheinakajima/babyagi"
+    },
+    {
+      "rank": 100,
+      "repo": "TransformerOptimus/SuperAGI",
+      "stars_approx": 17658,
+      "license": "MIT",
+      "category": "agent",
+      "why": "Agent toolkit",
+      "integrate_as": "tool registry idea",
+      "url": "https://github.com/TransformerOptimus/SuperAGI"
+    }
+  ]
+}

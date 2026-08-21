@@ -1,0 +1,21 @@
+{
+  "id": "logo",
+  "title": "Logo — Atelier Helix monogram",
+  "request": "Design a logo for 'Atelier Helix', an AI-native design studio. We want a geometric double-helix monogram that still reads at small sizes, flat vector style, one-colour mark in deep blue #1A5FB4, with a warm accent #F5C211 reserved for the wordmark. Give us three directions to compare. Deliver the final mark plus a short style note.",
+  "brand": {
+    "name": "Atelier Helix",
+    "palette": ["#1A5FB4", "#F5C211"]
+  },
+  "expected": {
+    "task_type": "logo",
+    "crafts_required": ["render-image"],
+    "crafts_any_of": ["compose-text", "synthesize"],
+    "lanes_required": ["openai", "image", "gemini"],
+    "lanes_forbidden": ["video", "audio", "3d"],
+    "min_steps": 2,
+    "handoff_min": 1,
+    "deliverable_kinds": ["image", "text"],
+    "palette": ["#1A5FB4"],
+    "must_mention": ["Atelier Helix"]
+  }
+}

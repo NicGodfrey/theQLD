@@ -1,0 +1,17 @@
+{
+  "id": "poster",
+  "title": "Poster — Night Loom exhibition",
+  "request": "Create an A3 exhibition poster for 'Night Loom', a generative art show at Brisbane Powerhouse, 12-14 September. Dark ground #101020 with neon accents #39F2AE and #FF5DA2. Bold typographic hierarchy: title, dates, venue, one-line blurb. It must stay legible from three metres. Deliver the poster plus the final copy block.",
+  "expected": {
+    "task_type": "poster",
+    "crafts_required": ["render-image", "compose-text"],
+    "crafts_any_of": [],
+    "lanes_required": ["openai", "image", "gemini"],
+    "lanes_forbidden": ["video", "audio", "3d"],
+    "min_steps": 2,
+    "handoff_min": 1,
+    "deliverable_kinds": ["image", "text"],
+    "palette": ["#101020", "#39F2AE", "#FF5DA2"],
+    "must_mention": ["Night Loom", "Brisbane Powerhouse"]
+  }
+}

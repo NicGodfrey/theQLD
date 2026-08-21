@@ -1,0 +1,1039 @@
+{
+  "title": "Atelier Helix TOP100 (live GitHub GraphQL, 2026-08-21)",
+  "captured_at": "2026-08-21",
+  "architecture": "Helix",
+  "source": "fable5/02-top100",
+  "rule": "Live-verified stars/licenses. Archived Flowise/TensorZero/openai-forward dropped. Patterns only, no vendoring.",
+  "mvp_wire": [
+    "BerriAI/litellm",
+    "langchain-ai/langgraph",
+    "pydantic/pydantic-ai",
+    "tldraw/tldraw",
+    "xyflow/xyflow",
+    "vercel/ai",
+    "Comfy-Org/ComfyUI",
+    "danielgatis/rembg",
+    "xinntao/Real-ESRGAN",
+    "ggml-org/whisper.cpp",
+    "SWivid/F5-TTS",
+    "remotion-dev/remotion",
+    "vercel/satori",
+    "run-llama/llama_index",
+    "langfuse/langfuse"
+  ],
+  "categories": {
+    "local-first-byok-studio": 11,
+    "image-gen-ui": 12,
+    "agent-framework": 15,
+    "infinite-canvas-editor": 8,
+    "design-system": 8,
+    "3d": 8,
+    "audio": 9,
+    "video": 8,
+    "llm-router-gateway": 7,
+    "observability-quota": 7,
+    "brand-kit": 7
+  },
+  "projects": [
+    {
+      "rank": 1,
+      "repo": "n8n-io/n8n",
+      "stars_approx": 201517,
+      "license": "SUL-1.0 (fair-code)",
+      "category": "local-first-byok-studio",
+      "why": "Fair-code workflow automation with 400+ integrations and native AI agent nodes; the glue layer of self-hosted AI stacks.",
+      "integrate_as": "Automation spoke: publish finished assets to CMS/socials/storage via n8n webhooks from loom.",
+      "url": "https://github.com/n8n-io/n8n"
+    },
+    {
+      "rank": 2,
+      "repo": "ollama/ollama",
+      "stars_approx": 179116,
+      "license": "MIT",
+      "category": "local-first-byok-studio",
+      "why": "The standard for running LLMs locally with an OpenAI-compatible server; one-line model pulls.",
+      "integrate_as": "The 'no-key' spoke: Helix treats a local Ollama endpoint as just another keyring provider.",
+      "url": "https://github.com/ollama/ollama"
+    },
+    {
+      "rank": 3,
+      "repo": "AUTOMATIC1111/stable-diffusion-webui",
+      "stars_approx": 164605,
+      "license": "AGPL-3.0",
+      "category": "image-gen-ui",
+      "why": "The historic Stable Diffusion web UI with a huge extension ecosystem; development has slowed but the API and extensions remain widely deployed.",
+      "integrate_as": "Legacy/alt image spoke via its txt2img/img2img REST API for users who already run it.",
+      "url": "https://github.com/AUTOMATIC1111/stable-diffusion-webui"
+    },
+    {
+      "rank": 4,
+      "repo": "langgenius/dify",
+      "stars_approx": 153133,
+      "license": "Dify Open Source License (Apache-2.0 + conditions)",
+      "category": "local-first-byok-studio",
+      "why": "Production platform for agentic workflows: visual pipeline builder, RAG, model-agnostic BYOK, observability built in.",
+      "integrate_as": "Benchmark for the whole studio; its workflow-node taxonomy informs loom's node palette.",
+      "url": "https://github.com/langgenius/dify"
+    },
+    {
+      "rank": 5,
+      "repo": "open-webui/open-webui",
+      "stars_approx": 149489,
+      "license": "Open WebUI License (BSD-3 derived + branding clause)",
+      "category": "local-first-byok-studio",
+      "why": "The most popular self-hosted AI interface: offline-capable, Ollama + any OpenAI-compatible API, RBAC, pipelines plugin system.",
+      "integrate_as": "Reference for BYOK settings UX, model management and its 'Pipelines' plugin bus.",
+      "url": "https://github.com/open-webui/open-webui"
+    },
+    {
+      "rank": 6,
+      "repo": "langchain-ai/langchain",
+      "stars_approx": 144725,
+      "license": "MIT",
+      "category": "agent-framework",
+      "why": "Largest LLM application framework; exhaustive integrations for models, tools, retrievers and output parsers.",
+      "integrate_as": "Integration library mined selectively; use its loaders/parsers inside spokes rather than whole-app adoption.",
+      "url": "https://github.com/langchain-ai/langchain"
+    },
+    {
+      "rank": 7,
+      "repo": "excalidraw/excalidraw",
+      "stars_approx": 130157,
+      "license": "MIT",
+      "category": "infinite-canvas-editor",
+      "why": "Beloved MIT virtual whiteboard with hand-drawn aesthetic, embeddable React component and E2E-encrypted collab.",
+      "integrate_as": "Alternative board engine; also great for agent-generated wireframe/moodboard sketches.",
+      "url": "https://github.com/excalidraw/excalidraw"
+    },
+    {
+      "rank": 8,
+      "repo": "Comfy-Org/ComfyUI",
+      "stars_approx": 128817,
+      "license": "GPL-3.0",
+      "category": "image-gen-ui",
+      "why": "The most powerful modular diffusion engine: node-graph workflows, an HTTP/WebSocket API, and day-one support for nearly every open image/video model (SDXL, FLUX, Qwen-Image, Wan...).",
+      "integrate_as": "Primary local generation spoke: Helix submits workflow JSON via API; workflows stored as loom templates.",
+      "url": "https://github.com/Comfy-Org/ComfyUI"
+    },
+    {
+      "rank": 9,
+      "repo": "ggml-org/llama.cpp",
+      "stars_approx": 125013,
+      "license": "MIT",
+      "category": "local-first-byok-studio",
+      "why": "The engine of local inference (GGUF, CPU/Metal/CUDA) powering Ollama, Jan and countless apps; includes its own OpenAI-compatible server.",
+      "integrate_as": "Embedded fallback runtime for fully-offline Helix installs (llama-server as a spoke).",
+      "url": "https://github.com/ggml-org/llama.cpp"
+    },
+    {
+      "rank": 10,
+      "repo": "shadcn-ui/ui",
+      "stars_approx": 121782,
+      "license": "MIT",
+      "category": "design-system",
+      "why": "Copy-paste component distribution built on Radix + Tailwind; the default UI substrate of the AI-app era and the format LLMs generate best.",
+      "integrate_as": "Helix's own UI kit, and the target vocabulary when agents generate UI mockups/code.",
+      "url": "https://github.com/shadcn-ui/ui"
+    },
+    {
+      "rank": 11,
+      "repo": "mrdoob/three.js",
+      "stars_approx": 114659,
+      "license": "MIT",
+      "category": "3d",
+      "why": "The standard JavaScript 3D library; renderer for every GLB/GLTF asset on the web.",
+      "integrate_as": "Board's 3D viewport: preview and stage generated meshes/splats inline on the canvas.",
+      "url": "https://github.com/mrdoob/three.js"
+    },
+    {
+      "rank": 12,
+      "repo": "openai/whisper",
+      "stars_approx": 107740,
+      "license": "MIT",
+      "category": "audio",
+      "why": "The reference robust speech-recognition model; multilingual STT + translation.",
+      "integrate_as": "Canonical STT weights; used by the transcription spoke for voice-note briefs and video captioning.",
+      "url": "https://github.com/openai/whisper"
+    },
+    {
+      "rank": 13,
+      "repo": "ant-design/ant-design",
+      "stars_approx": 99137,
+      "license": "MIT",
+      "category": "design-system",
+      "why": "Enterprise-grade React design language with the deepest component catalog.",
+      "integrate_as": "Target vocabulary for enterprise/dashboard deliverables generated by the design agents.",
+      "url": "https://github.com/ant-design/ant-design"
+    },
+    {
+      "rank": 14,
+      "repo": "mui/material-ui",
+      "stars_approx": 98886,
+      "license": "MIT",
+      "category": "design-system",
+      "why": "The most-used React component library (Material Design) with a mature theming engine.",
+      "integrate_as": "Optional target vocabulary when clients require Material; theming schema informs brand-token mapping.",
+      "url": "https://github.com/mui/material-ui"
+    },
+    {
+      "rank": 15,
+      "repo": "tailwindlabs/tailwindcss",
+      "stars_approx": 97296,
+      "license": "MIT",
+      "category": "design-system",
+      "why": "Utility-first CSS framework; the lingua franca of AI-generated styling.",
+      "integrate_as": "Style substrate: brand kits compile to Tailwind theme tokens the agents reference in all UI output.",
+      "url": "https://github.com/tailwindlabs/tailwindcss"
+    },
+    {
+      "rank": 16,
+      "repo": "storybookjs/storybook",
+      "stars_approx": 90889,
+      "license": "MIT",
+      "category": "design-system",
+      "why": "Industry-standard workshop for building/documenting UI components in isolation.",
+      "integrate_as": "QA surface: agent-generated components render into Storybook stories for visual regression review.",
+      "url": "https://github.com/storybookjs/storybook"
+    },
+    {
+      "rank": 17,
+      "repo": "modelcontextprotocol/servers",
+      "stars_approx": 89747,
+      "license": "MIT -> Apache-2.0 (transition)",
+      "category": "agent-framework",
+      "why": "Reference implementations of Model Context Protocol servers (filesystem, fetch, git, memory...); the emerging standard for agent tool connectivity.",
+      "integrate_as": "Tool bus: expose each spoke as an MCP server so any MCP-capable model/client can drive the studio.",
+      "url": "https://github.com/modelcontextprotocol/servers"
+    },
+    {
+      "rank": 18,
+      "repo": "OpenCut-app/OpenCut",
+      "stars_approx": 85388,
+      "license": "MIT",
+      "category": "video",
+      "why": "Fast-growing open-source CapCut alternative (timeline editor, privacy-first, web/desktop).",
+      "integrate_as": "Embedded timeline editor for human touch-up after agent assembly; export/import loom compositions.",
+      "url": "https://github.com/OpenCut-app/OpenCut"
+    },
+    {
+      "rank": 19,
+      "repo": "lobehub/lobehub",
+      "stars_approx": 81908,
+      "license": "LobeHub Community License",
+      "category": "local-first-byok-studio",
+      "why": "Modern open agent workspace (formerly LobeChat): multi-provider BYOK, plugin marketplace, artifacts, knowledge base, image gen.",
+      "integrate_as": "Closest existing product to a Lovart-lite; mine its provider-config schema and artifact rendering.",
+      "url": "https://github.com/lobehub/lobehub"
+    },
+    {
+      "rank": 20,
+      "repo": "toeverything/AFFiNE",
+      "stars_approx": 71732,
+      "license": "MIT (core) + ee",
+      "category": "infinite-canvas-editor",
+      "why": "Local-first knowledge base fusing docs + infinite whiteboard (edgeless mode) with CRDT sync (BlockSuite).",
+      "integrate_as": "Architecture reference for local-first board persistence and doc<->canvas duality; BlockSuite is reusable.",
+      "url": "https://github.com/toeverything/AFFiNE"
+    },
+    {
+      "rank": 21,
+      "repo": "FoundationAgents/MetaGPT",
+      "stars_approx": 69936,
+      "license": "MIT",
+      "category": "agent-framework",
+      "why": "Multi-agent 'software company' with SOP-driven role choreography (PRD -> design -> code).",
+      "integrate_as": "Reference for SOP-style pipelines: brief -> moodboard -> comps -> final assets as staged roles.",
+      "url": "https://github.com/FoundationAgents/MetaGPT"
+    },
+    {
+      "rank": 22,
+      "repo": "Mintplex-Labs/anything-llm",
+      "stars_approx": 65017,
+      "license": "MIT",
+      "category": "local-first-byok-studio",
+      "why": "All-in-one desktop + docker AI app: private RAG workspaces over any LLM (local or API), agents, no-code skills.",
+      "integrate_as": "Pattern for desktop-first distribution and workspace-scoped memory isolation.",
+      "url": "https://github.com/Mintplex-Labs/anything-llm"
+    },
+    {
+      "rank": 23,
+      "repo": "RVC-Boss/GPT-SoVITS",
+      "stars_approx": 61115,
+      "license": "MIT",
+      "category": "audio",
+      "why": "Few-shot voice cloning (1-minute samples) with cross-lingual inference and a full WebUI toolkit; massive community.",
+      "integrate_as": "Character-voice spoke for mascots and dubbing; MIT licensed.",
+      "url": "https://github.com/RVC-Boss/GPT-SoVITS"
+    },
+    {
+      "rank": 24,
+      "repo": "microsoft/autogen",
+      "stars_approx": 60562,
+      "license": "MIT (code); CC-BY-4.0 docs",
+      "category": "agent-framework",
+      "why": "Microsoft multi-agent conversation framework (AgentChat, event-driven core, cross-language support).",
+      "integrate_as": "Reference for multi-agent critique loops (art-director agent reviewing generator agent output).",
+      "url": "https://github.com/microsoft/autogen"
+    },
+    {
+      "rank": 25,
+      "repo": "penpot/penpot",
+      "stars_approx": 58984,
+      "license": "MPL-2.0",
+      "category": "design-system",
+      "why": "The open-source design & prototyping platform (Figma alternative), self-hostable, with SVG-native files and plugin API.",
+      "integrate_as": "Design-file interchange target: loom exports editable Penpot files so humans finish in a real tool.",
+      "url": "https://github.com/penpot/penpot"
+    },
+    {
+      "rank": 26,
+      "repo": "crewAIInc/crewAI",
+      "stars_approx": 57428,
+      "license": "MIT",
+      "category": "agent-framework",
+      "why": "Role-based multi-agent crews with tasks, tools and process templates; independent of LangChain.",
+      "integrate_as": "Pattern source for role prompts (Designer / Copywriter / Brand-Guardian crew presets in conductor).",
+      "url": "https://github.com/crewAIInc/crewAI"
+    },
+    {
+      "rank": 27,
+      "repo": "remotion-dev/remotion",
+      "stars_approx": 56992,
+      "license": "Remotion License (free for individuals/small teams)",
+      "category": "video",
+      "why": "Write videos programmatically in React: parametric motion graphics, server-side rendering, Lambda farm.",
+      "integrate_as": "Loom's motion-graphics compositor: templated brand intros/outros/social cuts rendered from JSON props.",
+      "url": "https://github.com/remotion-dev/remotion"
+    },
+    {
+      "rank": 28,
+      "repo": "BerriAI/litellm",
+      "stars_approx": 56943,
+      "license": "MIT (core) + enterprise dir",
+      "category": "llm-router-gateway",
+      "why": "De-facto standard BYOK gateway: one OpenAI-format SDK + proxy for 100+ providers (OpenAI, Gemini, Anthropic, Ollama, any OpenAI-compatible), with virtual keys, budgets, rate limits and spend tracking.",
+      "integrate_as": "Core routing layer behind the keyring; run as sidecar proxy so every spoke speaks one dialect.",
+      "url": "https://github.com/BerriAI/litellm"
+    },
+    {
+      "rank": 29,
+      "repo": "ggml-org/whisper.cpp",
+      "stars_approx": 53083,
+      "license": "MIT",
+      "category": "audio",
+      "why": "Dependency-free C/C++ Whisper inference running on CPU/Metal/CUDA; ideal for local-first deployment.",
+      "integrate_as": "Local STT spoke: realtime mic capture on the board ('talk to your canvas') without any API key.",
+      "url": "https://github.com/ggml-org/whisper.cpp"
+    },
+    {
+      "rank": 30,
+      "repo": "lllyasviel/Fooocus",
+      "stars_approx": 52461,
+      "license": "GPL-3.0",
+      "category": "image-gen-ui",
+      "why": "Midjourney-like 'prompt and go' SDXL UI with built-in prompt expansion and quality presets (project frozen but stable).",
+      "integrate_as": "UX reference for the one-box generate flow; its GPT-2 prompt expansion is worth porting into spokes.",
+      "url": "https://github.com/lllyasviel/Fooocus"
+    },
+    {
+      "rank": 31,
+      "repo": "run-llama/llama_index",
+      "stars_approx": 51790,
+      "license": "MIT",
+      "category": "agent-framework",
+      "why": "Data framework for LLM apps: ingestion, indexing, retrieval, agent tools over private data.",
+      "integrate_as": "Memory module backbone: index brand guidelines, past projects and asset metadata for retrieval.",
+      "url": "https://github.com/run-llama/llama_index"
+    },
+    {
+      "rank": 32,
+      "repo": "CherryHQ/cherry-studio",
+      "stars_approx": 50885,
+      "license": "AGPL-3.0",
+      "category": "local-first-byok-studio",
+      "why": "Desktop LLM client supporting dozens of providers + local models, assistants, knowledge bases, MCP; huge momentum in 2025-26.",
+      "integrate_as": "Reference for multi-provider assistant presets and MCP integration in a desktop BYOK app.",
+      "url": "https://github.com/CherryHQ/cherry-studio"
+    },
+    {
+      "rank": 33,
+      "repo": "tldraw/tldraw",
+      "stars_approx": 49894,
+      "license": "tldraw License (free with watermark)",
+      "category": "infinite-canvas-editor",
+      "why": "Production-grade infinite canvas SDK (React) with multiplayer sync, custom shapes and the famous 'make real' AI demos.",
+      "integrate_as": "The board itself: Helix canvas is a tldraw instance with custom asset/gen-node shape types.",
+      "url": "https://github.com/tldraw/tldraw"
+    },
+    {
+      "rank": 34,
+      "repo": "upscayl/upscayl",
+      "stars_approx": 48669,
+      "license": "AGPL-3.0",
+      "category": "image-gen-ui",
+      "why": "Cross-platform desktop AI upscaler built on Real-ESRGAN/NCNN; the consumer standard for local upscaling.",
+      "integrate_as": "Desktop companion + CLI (upscayl-ncnn) callable as an upscale spoke for final asset export.",
+      "url": "https://github.com/upscayl/upscayl"
+    },
+    {
+      "rank": 35,
+      "repo": "pixijs/pixijs",
+      "stars_approx": 48042,
+      "license": "MIT",
+      "category": "infinite-canvas-editor",
+      "why": "The fastest WebGL/WebGPU 2D renderer; used for creative tooling at scale.",
+      "integrate_as": "Performance tier for the board when canvases hold thousands of generated assets.",
+      "url": "https://github.com/pixijs/pixijs"
+    },
+    {
+      "rank": 36,
+      "repo": "coqui-ai/TTS",
+      "stars_approx": 45929,
+      "license": "MPL-2.0",
+      "category": "audio",
+      "why": "The classic deep-learning TTS toolkit (XTTS-v2 voice cloning in 17 languages); company gone but the idiap fork keeps it alive.",
+      "integrate_as": "Baseline multilingual TTS/cloning spoke; XTTS-v2 for quick voiceover drafts.",
+      "url": "https://github.com/coqui-ai/TTS"
+    },
+    {
+      "rank": 37,
+      "repo": "janhq/jan",
+      "stars_approx": 44088,
+      "license": "Apache-2.0",
+      "category": "local-first-byok-studio",
+      "why": "Offline-first ChatGPT alternative (Apache-2.0) running local models via llama.cpp with optional cloud keys.",
+      "integrate_as": "Reference for local model lifecycle (download/quantize/run) inside a polished desktop shell.",
+      "url": "https://github.com/janhq/jan"
+    },
+    {
+      "rank": 38,
+      "repo": "danny-avila/LibreChat",
+      "stars_approx": 42311,
+      "license": "MIT",
+      "category": "local-first-byok-studio",
+      "why": "Enhanced multi-provider chat platform: agents, MCP, code interpreter, DALL-E/SD image tools, full BYOK key management per user.",
+      "integrate_as": "Reference for per-user encrypted key storage (keyring) and its agent/tool marketplace model.",
+      "url": "https://github.com/danny-avila/LibreChat"
+    },
+    {
+      "rank": 39,
+      "repo": "agno-agi/agno",
+      "stars_approx": 41825,
+      "license": "Apache-2.0",
+      "category": "agent-framework",
+      "why": "High-performance multi-agent runtime with built-in memory, knowledge, tools and reasoning; strong benchmarks on instantiation speed.",
+      "integrate_as": "Candidate for lightweight per-canvas helper agents where LangGraph is overkill.",
+      "url": "https://github.com/agno-agi/agno"
+    },
+    {
+      "rank": 40,
+      "repo": "chatboxai/chatbox",
+      "stars_approx": 41510,
+      "license": "GPL-3.0",
+      "category": "local-first-byok-studio",
+      "why": "Long-standing cross-platform desktop client for many providers with local data storage.",
+      "integrate_as": "Baseline BYOK desktop UX; informs minimal keyring settings surface.",
+      "url": "https://github.com/chatboxai/chatbox"
+    },
+    {
+      "rank": 41,
+      "repo": "langchain-ai/langgraph",
+      "stars_approx": 40185,
+      "license": "MIT",
+      "category": "agent-framework",
+      "why": "Low-level durable agent orchestration as stateful graphs: checkpoints, human-in-the-loop interrupts, streaming, subgraphs. Powers many production agent products.",
+      "integrate_as": "The conductor runtime: each design job is a LangGraph with persisted state and resumable steps.",
+      "url": "https://github.com/langchain-ai/langgraph"
+    },
+    {
+      "rank": 42,
+      "repo": "xyflow/xyflow",
+      "stars_approx": 38087,
+      "license": "MIT",
+      "category": "infinite-canvas-editor",
+      "why": "React Flow / Svelte Flow: the standard for node-based UIs (workflow builders, pipelines, DAG editors).",
+      "integrate_as": "Loom's visual editor: users see and rewire the generation pipeline (prompt -> model -> post) as nodes.",
+      "url": "https://github.com/xyflow/xyflow"
+    },
+    {
+      "rank": 43,
+      "repo": "CopilotKit/CopilotKit",
+      "stars_approx": 36934,
+      "license": "MIT",
+      "category": "agent-framework",
+      "why": "React infrastructure for in-app AI copilots: shared state with agents, generative UI, AG-UI protocol.",
+      "integrate_as": "Board <-> conductor bridge: surface agent progress and interactive suggestions inside the canvas UI.",
+      "url": "https://github.com/CopilotKit/CopilotKit"
+    },
+    {
+      "rank": 44,
+      "repo": "xinntao/Real-ESRGAN",
+      "stars_approx": 36537,
+      "license": "BSD-3-Clause",
+      "category": "image-gen-ui",
+      "why": "The reference super-resolution models/algorithms for practical image restoration.",
+      "integrate_as": "Upscale spoke primitive: run ncnn/PyTorch weights server-side for 2x-4x asset export.",
+      "url": "https://github.com/xinntao/Real-ESRGAN"
+    },
+    {
+      "rank": 45,
+      "repo": "songquanpeng/one-api",
+      "stars_approx": 36517,
+      "license": "MIT",
+      "category": "llm-router-gateway",
+      "why": "Self-hosted OpenAI-compatible gateway focused on key issuance, token quota accounting and channel load-balancing across providers; single Go binary.",
+      "integrate_as": "Alternative quota/billing gateway if LiteLLM proxy is too heavy; good reference for token metering.",
+      "url": "https://github.com/songquanpeng/one-api"
+    },
+    {
+      "rank": 46,
+      "repo": "huggingface/diffusers",
+      "stars_approx": 34347,
+      "license": "Apache-2.0",
+      "category": "image-gen-ui",
+      "why": "The standard Python library for diffusion pipelines across image/video/audio; every new model lands here.",
+      "integrate_as": "Direct-pipeline spoke for headless batch generation where a full ComfyUI graph is unnecessary.",
+      "url": "https://github.com/huggingface/diffusers"
+    },
+    {
+      "rank": 47,
+      "repo": "langfuse/langfuse",
+      "stars_approx": 33525,
+      "license": "MIT (core) + ee",
+      "category": "observability-quota",
+      "why": "Leading open LLM engineering platform: traces, evals, prompt management, cost/usage metrics; OTel-based, self-hostable.",
+      "integrate_as": "Primary observability: LiteLLM + LangGraph callbacks stream every generation to Langfuse; cost per canvas.",
+      "url": "https://github.com/langfuse/langfuse"
+    },
+    {
+      "rank": 48,
+      "repo": "fishaudio/fish-speech",
+      "stars_approx": 32316,
+      "license": "Fish Audio Research License (code); weights CC-BY-NC-SA",
+      "category": "audio",
+      "why": "SOTA open multilingual TTS (OpenAudio S1 lineage) with strong emotion control and low-latency serving.",
+      "integrate_as": "High-quality expressive TTS spoke where its research license fits the deployment.",
+      "url": "https://github.com/fishaudio/fish-speech"
+    },
+    {
+      "rank": 49,
+      "repo": "pmndrs/react-three-fiber",
+      "stars_approx": 31760,
+      "license": "MIT",
+      "category": "3d",
+      "why": "React renderer for three.js: declarative, componentized 3D scenes with a huge helper ecosystem (drei).",
+      "integrate_as": "How the board embeds three.js: 3D canvas nodes as React components synced with app state.",
+      "url": "https://github.com/pmndrs/react-three-fiber"
+    },
+    {
+      "rank": 50,
+      "repo": "mantinedev/mantine",
+      "stars_approx": 31590,
+      "license": "MIT",
+      "category": "design-system",
+      "why": "Full-featured React components + hooks library with excellent dark-mode and form primitives.",
+      "integrate_as": "Alternative component target; its hooks library is useful inside Helix's own front-end.",
+      "url": "https://github.com/mantinedev/mantine"
+    },
+    {
+      "rank": 51,
+      "repo": "fabricjs/fabric.js",
+      "stars_approx": 31398,
+      "license": "MIT",
+      "category": "infinite-canvas-editor",
+      "why": "Canvas object model with interactive transforms and JSON/SVG serialization; the engine behind many web design editors.",
+      "integrate_as": "Deterministic layout renderer: agent emits fabric JSON, humans tweak it, loom exports SVG/PNG.",
+      "url": "https://github.com/fabricjs/fabric.js"
+    },
+    {
+      "rank": 52,
+      "repo": "hpcaitech/Open-Sora",
+      "stars_approx": 29281,
+      "license": "Apache-2.0",
+      "category": "video",
+      "why": "Fully open video generation stack (weights, training code, data pipeline) democratizing Sora-style models.",
+      "integrate_as": "Research/self-training spoke; useful when Helix users want to fine-tune house-style video models.",
+      "url": "https://github.com/hpcaitech/Open-Sora"
+    },
+    {
+      "rank": 53,
+      "repo": "huggingface/smolagents",
+      "stars_approx": 28918,
+      "license": "Apache-2.0",
+      "category": "agent-framework",
+      "why": "Minimal agent library where agents write Python code to act; ~1k LOC core, sandboxed execution, model-agnostic.",
+      "integrate_as": "Lightweight code-acting agent for asset-processing scripts inside sandboxed spokes.",
+      "url": "https://github.com/huggingface/smolagents"
+    },
+    {
+      "rank": 54,
+      "repo": "openai/openai-agents-python",
+      "stars_approx": 28835,
+      "license": "MIT",
+      "category": "agent-framework",
+      "why": "OpenAI Agents SDK: handoffs, guardrails, sessions and tracing; provider-agnostic (works with 100+ LLMs via LiteLLM).",
+      "integrate_as": "Conductor alternative/reference; its handoff + guardrail primitives map cleanly onto BYOK via keyring.",
+      "url": "https://github.com/openai/openai-agents-python"
+    },
+    {
+      "rank": 55,
+      "repo": "invoke-ai/InvokeAI",
+      "stars_approx": 27923,
+      "license": "Apache-2.0",
+      "category": "image-gen-ui",
+      "why": "Professional creative studio for open image models: unified canvas, layers, regional prompts, workflow engine, model manager.",
+      "integrate_as": "Reference architecture for board<->diffusion integration (layered inpainting, canvas regions); optional spoke.",
+      "url": "https://github.com/invoke-ai/InvokeAI"
+    },
+    {
+      "rank": 56,
+      "repo": "mastra-ai/mastra",
+      "stars_approx": 27352,
+      "license": "Apache-2.0 (core) + ee",
+      "category": "agent-framework",
+      "why": "TypeScript agent framework (workflows, RAG, evals, observability) from the Gatsby team; strong DX for JS-native stacks.",
+      "integrate_as": "Conductor option if Helix stays all-TypeScript; its workflow primitives suit render pipelines.",
+      "url": "https://github.com/mastra-ai/mastra"
+    },
+    {
+      "rank": 57,
+      "repo": "onlook-dev/onlook",
+      "stars_approx": 26528,
+      "license": "Apache-2.0",
+      "category": "infinite-canvas-editor",
+      "why": "'Cursor for designers': open-source visual editor that manipulates live React/Tailwind code in a Figma-like canvas.",
+      "integrate_as": "Blueprint for Helix's design-to-code lane; potential spoke to hand off web-design artifacts.",
+      "url": "https://github.com/onlook-dev/onlook"
+    },
+    {
+      "rank": 58,
+      "repo": "vercel/ai",
+      "stars_approx": 26337,
+      "license": "Apache-2.0",
+      "category": "llm-router-gateway",
+      "why": "Vercel AI SDK: TypeScript provider abstraction plus React hooks for streaming chat/completions and generative UI; supports OpenAI, Google, Anthropic and OpenAI-compatible endpoints.",
+      "integrate_as": "Frontend model-access layer: board talks to keyring through AI SDK providers with streamed tool-calls.",
+      "url": "https://github.com/vercel/ai"
+    },
+    {
+      "rank": 59,
+      "repo": "ahujasid/blender-mcp",
+      "stars_approx": 26133,
+      "license": "MIT",
+      "category": "3d",
+      "why": "MCP server that lets Claude/LLMs drive Blender (scene creation, materials, PolyHaven assets) - viral proof of agent-driven DCC control.",
+      "integrate_as": "Pro-3D escape hatch: conductor delegates complex modeling/render jobs to Blender through MCP.",
+      "url": "https://github.com/ahujasid/blender-mcp"
+    },
+    {
+      "rank": 60,
+      "repo": "resemble-ai/chatterbox",
+      "stars_approx": 26091,
+      "license": "MIT",
+      "category": "audio",
+      "why": "Production-grade open TTS (MIT) with emotion exaggeration control and built-in watermarking; benchmarked against ElevenLabs.",
+      "integrate_as": "Default English TTS spoke: expressive reads with responsible-AI watermark for client deliverables.",
+      "url": "https://github.com/resemble-ai/chatterbox"
+    },
+    {
+      "rank": 61,
+      "repo": "black-forest-labs/flux",
+      "stars_approx": 25898,
+      "license": "Apache-2.0",
+      "category": "image-gen-ui",
+      "why": "Official inference repo for the FLUX.1/FLUX.2 family (dev/schnell/Kontext) - the strongest open image models.",
+      "integrate_as": "Model backend consumed through ComfyUI/diffusers spokes; Kontext powers instruction-based image edits.",
+      "url": "https://github.com/black-forest-labs/flux"
+    },
+    {
+      "rank": 62,
+      "repo": "simple-icons/simple-icons",
+      "stars_approx": 25672,
+      "license": "CC0-1.0",
+      "category": "brand-kit",
+      "why": "3300+ SVG brand icons with official brand colors, CC0 - the canonical machine-readable brand-mark dataset.",
+      "integrate_as": "Brand-kit spoke data: auto-populate competitor/partner logos and validate brand colors.",
+      "url": "https://github.com/simple-icons/simple-icons"
+    },
+    {
+      "rank": 63,
+      "repo": "promptfoo/promptfoo",
+      "stars_approx": 24441,
+      "license": "MIT",
+      "category": "observability-quota",
+      "why": "Test-driven LLM development: prompt evals, regression testing and red-teaming in CI.",
+      "integrate_as": "CI gate: every conductor prompt/pipeline change runs promptfoo suites before release.",
+      "url": "https://github.com/promptfoo/promptfoo"
+    },
+    {
+      "rank": 64,
+      "repo": "danielgatis/rembg",
+      "stars_approx": 24353,
+      "license": "MIT",
+      "category": "image-gen-ui",
+      "why": "One-command background removal (U2Net/BiRefNet) as a Python lib, CLI and Docker HTTP server.",
+      "integrate_as": "Cutout spoke: containerized rembg endpoint for product shots, sticker generation, layer extraction.",
+      "url": "https://github.com/danielgatis/rembg"
+    },
+    {
+      "rank": 65,
+      "repo": "lucide-icons/lucide",
+      "stars_approx": 24072,
+      "license": "ISC",
+      "category": "brand-kit",
+      "why": "Community icon toolkit (Feather successor) with 1500+ consistent icons and per-framework packages.",
+      "integrate_as": "Default product-icon set injected into generated UI comps and brand sheets.",
+      "url": "https://github.com/lucide-icons/lucide"
+    },
+    {
+      "rank": 66,
+      "repo": "facebookresearch/audiocraft",
+      "stars_approx": 23566,
+      "license": "MIT",
+      "category": "audio",
+      "why": "Meta's audio generation library: MusicGen (controllable music) and AudioGen (sound effects).",
+      "integrate_as": "Music/SFX spoke: background beds and UI sounds generated to brief; MIT code, weights CC-BY-NC.",
+      "url": "https://github.com/facebookresearch/audiocraft"
+    },
+    {
+      "rank": 67,
+      "repo": "Sanster/IOPaint",
+      "stars_approx": 23350,
+      "license": "Apache-2.0",
+      "category": "image-gen-ui",
+      "why": "Best standalone inpainting/eraser tool (LaMa, SD, remove-anything) with clean web UI and API. Archived 2025 but stable and widely deployed.",
+      "integrate_as": "Object-removal microservice spoke; pin version and wrap its FastAPI endpoints.",
+      "url": "https://github.com/Sanster/IOPaint"
+    },
+    {
+      "rank": 68,
+      "repo": "graphdeco-inria/gaussian-splatting",
+      "stars_approx": 22991,
+      "license": "Inria/MPII research license (non-commercial)",
+      "category": "3d",
+      "why": "The original 3D Gaussian Splatting reference (SIGGRAPH 2023) for real-time radiance-field rendering. License is research/non-commercial - integrate ideas, not code, for commercial use.",
+      "integrate_as": "Reference tech for photoreal scene capture; use MIT reimplementations (e.g. gsplat) in production spokes.",
+      "url": "https://github.com/graphdeco-inria/gaussian-splatting"
+    },
+    {
+      "rank": 69,
+      "repo": "comet-ml/opik",
+      "stars_approx": 21521,
+      "license": "Apache-2.0",
+      "category": "observability-quota",
+      "why": "Fast-growing open platform for tracing, evals and guardrails across dev->prod (Comet).",
+      "integrate_as": "Alternative all-in-one observability if teams already use Comet; strong agent-trace UI.",
+      "url": "https://github.com/comet-ml/opik"
+    },
+    {
+      "rank": 70,
+      "repo": "google/adk-python",
+      "stars_approx": 21216,
+      "license": "Apache-2.0",
+      "category": "agent-framework",
+      "why": "Google Agent Development Kit: code-first multi-agent framework, Gemini-optimized but model-agnostic, with eval and deployment tooling.",
+      "integrate_as": "First-class Gemini path in conductor; use its tool/agent schemas when user key is Google.",
+      "url": "https://github.com/google/adk-python"
+    },
+    {
+      "rank": 71,
+      "repo": "pydantic/pydantic-ai",
+      "stars_approx": 19432,
+      "license": "MIT",
+      "category": "agent-framework",
+      "why": "Type-safe agent framework from the Pydantic team: structured outputs, dependency injection, model-agnostic across OpenAI/Gemini/Anthropic/Ollama.",
+      "integrate_as": "Schema layer for conductor: every design-brief, layer-spec and asset-manifest is a validated Pydantic model.",
+      "url": "https://github.com/pydantic/pydantic-ai"
+    },
+    {
+      "rank": 72,
+      "repo": "radix-ui/primitives",
+      "stars_approx": 19197,
+      "license": "MIT",
+      "category": "design-system",
+      "why": "Unstyled, accessible React primitives underpinning shadcn/ui.",
+      "integrate_as": "Accessibility base for all board chrome (dialogs, menus, popovers) without design lock-in.",
+      "url": "https://github.com/radix-ui/primitives"
+    },
+    {
+      "rank": 73,
+      "repo": "KlingAIResearch/LivePortrait",
+      "stars_approx": 18949,
+      "license": "MIT (code); model weights restricted",
+      "category": "video",
+      "why": "Efficient portrait animation with stitching and retargeting control (Kuaishou/Kling research).",
+      "integrate_as": "Talking-head/avatar spoke: animate brand mascots and spokesperson stills from audio/driving video.",
+      "url": "https://github.com/KlingAIResearch/LivePortrait"
+    },
+    {
+      "rank": 74,
+      "repo": "Wan-Video/Wan2.2",
+      "stars_approx": 17238,
+      "license": "Apache-2.0",
+      "category": "video",
+      "why": "Alibaba's Apache-2.0 SOTA open video suite (T2V/I2V, MoE, 5B runs on consumer GPUs); the default open video model family in 2026.",
+      "integrate_as": "Primary open video spoke (text->video, image->video) through ComfyUI or diffusers.",
+      "url": "https://github.com/Wan-Video/Wan2.2"
+    },
+    {
+      "rank": 75,
+      "repo": "lllyasviel/FramePack",
+      "stars_approx": 17224,
+      "license": "Apache-2.0",
+      "category": "video",
+      "why": "Next-frame-section prediction that makes long video generation feasible on 6GB VRAM laptops.",
+      "integrate_as": "Low-VRAM video spoke tier so BYOK users without big GPUs still get local video.",
+      "url": "https://github.com/lllyasviel/FramePack"
+    },
+    {
+      "rank": 76,
+      "repo": "andrewyng/aisuite",
+      "stars_approx": 16121,
+      "license": "MIT",
+      "category": "llm-router-gateway",
+      "why": "Thin, dependency-light unified Python client for swapping OpenAI/Gemini/Anthropic/Ollama with one interface string like 'openai:gpt-4o'.",
+      "integrate_as": "Minimal embedded fallback when running without a proxy; pattern for provider-id naming in keyring.",
+      "url": "https://github.com/andrewyng/aisuite"
+    },
+    {
+      "rank": 77,
+      "repo": "SWivid/F5-TTS",
+      "stars_approx": 15140,
+      "license": "MIT",
+      "category": "audio",
+      "why": "Flow-matching TTS with fluent, faithful zero-shot voice cloning; strong quality/speed balance, active in 2026.",
+      "integrate_as": "Primary voice-clone spoke for narrated brand videos and localized voiceovers.",
+      "url": "https://github.com/SWivid/F5-TTS"
+    },
+    {
+      "rank": 78,
+      "repo": "konvajs/konva",
+      "stars_approx": 14708,
+      "license": "MIT",
+      "category": "infinite-canvas-editor",
+      "why": "2D canvas scene-graph library (layering, hit detection, transforms) for HTML5 canvas apps.",
+      "integrate_as": "Board rendering primitive if building a custom canvas instead of tldraw; powers polotno-style editors.",
+      "url": "https://github.com/konvajs/konva"
+    },
+    {
+      "rank": 79,
+      "repo": "Tencent-Hunyuan/Hunyuan3D-2",
+      "stars_approx": 14537,
+      "license": "Tencent Hunyuan Community License",
+      "category": "3d",
+      "why": "Leading open image/text-to-3D system (shape + PBR texture synthesis) with studio UI and blender addon.",
+      "integrate_as": "Hero 3D-asset spoke: product mockups and mascot meshes; check Hunyuan community license terms.",
+      "url": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2"
+    },
+    {
+      "rank": 80,
+      "repo": "vercel/satori",
+      "stars_approx": 13829,
+      "license": "MPL-2.0",
+      "category": "brand-kit",
+      "why": "HTML/CSS (JSX) to SVG at incredible speed; the engine behind OG-image generation everywhere.",
+      "integrate_as": "Deterministic brand-asset renderer: social cards, banners and quote graphics from templates + tokens.",
+      "url": "https://github.com/vercel/satori"
+    },
+    {
+      "rank": 81,
+      "repo": "lokesh/color-thief",
+      "stars_approx": 13613,
+      "license": "MIT",
+      "category": "brand-kit",
+      "why": "Extract dominant colors and palettes from images in JS/Node.",
+      "integrate_as": "Brand-extraction spoke step 1: derive palettes from uploaded client assets to seed the brand kit.",
+      "url": "https://github.com/lokesh/color-thief"
+    },
+    {
+      "rank": 82,
+      "repo": "e2b-dev/E2B",
+      "stars_approx": 13507,
+      "license": "Apache-2.0",
+      "category": "agent-framework",
+      "why": "Open-source secure cloud sandboxes for AI agents to run untrusted code (Firecracker microVMs).",
+      "integrate_as": "Sandbox spoke for agent-authored scripts (batch image processing, data viz, font manipulation).",
+      "url": "https://github.com/e2b-dev/E2B"
+    },
+    {
+      "rank": 83,
+      "repo": "microsoft/TRELLIS",
+      "stars_approx": 13476,
+      "license": "MIT",
+      "category": "3d",
+      "why": "Microsoft's structured-latent 3D generator producing meshes, radiance fields and 3D Gaussians from text/image.",
+      "integrate_as": "Quality 3D spoke tier above TripoSR; outputs GLB straight into the three.js viewer.",
+      "url": "https://github.com/microsoft/TRELLIS"
+    },
+    {
+      "rank": 84,
+      "repo": "Portkey-AI/gateway",
+      "stars_approx": 12790,
+      "license": "MIT",
+      "category": "llm-router-gateway",
+      "why": "Fast (~10ms) edge-deployable AI gateway with retries, fallbacks, load balancing, guardrails and multimodal routing across 250+ models.",
+      "integrate_as": "Drop-in HTTP router option; borrow its config-as-JSON routing rules for keyring failover policies.",
+      "url": "https://github.com/Portkey-AI/gateway"
+    },
+    {
+      "rank": 85,
+      "repo": "Tencent-Hunyuan/HunyuanVideo",
+      "stars_approx": 12448,
+      "license": "Tencent Hunyuan Community License",
+      "category": "video",
+      "why": "13B open video generation model with strong motion quality; large ecosystem (ComfyUI nodes, LoRAs, distills).",
+      "integrate_as": "Local text-to-video spoke via ComfyUI workflow; community license permits <100M MAU commercial use.",
+      "url": "https://github.com/Tencent-Hunyuan/HunyuanVideo"
+    },
+    {
+      "rank": 86,
+      "repo": "simonw/llm",
+      "stars_approx": 12379,
+      "license": "Apache-2.0",
+      "category": "llm-router-gateway",
+      "why": "CLI + Python library with a plugin ecosystem for dozens of providers and local models; logs every prompt/response to SQLite.",
+      "integrate_as": "Dev/ops harness for smoke-testing keyring credentials and batch prompt experiments.",
+      "url": "https://github.com/simonw/llm"
+    },
+    {
+      "rank": 87,
+      "repo": "nerfstudio-project/nerfstudio",
+      "stars_approx": 11918,
+      "license": "Apache-2.0",
+      "category": "3d",
+      "why": "Modular NeRF/3DGS training and viewer framework with clean Python APIs and an active plugin ecosystem.",
+      "integrate_as": "Photogrammetry spoke: turn client product photos into orbitable 3D for canvas placement.",
+      "url": "https://github.com/nerfstudio-project/nerfstudio"
+    },
+    {
+      "rank": 88,
+      "repo": "Arize-ai/phoenix",
+      "stars_approx": 11137,
+      "license": "Elastic License 2.0",
+      "category": "observability-quota",
+      "why": "Open-source AI observability + evaluation (OTel-native tracing, dataset experiments, eval library).",
+      "integrate_as": "Eval harness for conductor prompts (brief adherence, style consistency scoring).",
+      "url": "https://github.com/Arize-ai/phoenix"
+    },
+    {
+      "rank": 89,
+      "repo": "Lightricks/LTX-Video",
+      "stars_approx": 10880,
+      "license": "Apache-2.0",
+      "category": "video",
+      "why": "Real-time-class DiT video generation (30 FPS faster than playback on H100); production-oriented with keyframe conditioning.",
+      "integrate_as": "Fast-preview video spoke: near-realtime animatics before committing to heavier Wan/Hunyuan renders.",
+      "url": "https://github.com/Lightricks/LTX-Video"
+    },
+    {
+      "rank": 90,
+      "repo": "Acly/krita-ai-diffusion",
+      "stars_approx": 10485,
+      "license": "GPL-3.0",
+      "category": "image-gen-ui",
+      "why": "Generative AI inside Krita: seamless region fill, live painting, ControlNet, using a ComfyUI backend.",
+      "integrate_as": "Pattern donor for pro-tool integration; proves the ComfyUI-as-backend spoke model Helix uses.",
+      "url": "https://github.com/Acly/krita-ai-diffusion"
+    },
+    {
+      "rank": 91,
+      "repo": "hexgrad/kokoro",
+      "stars_approx": 8504,
+      "license": "Apache-2.0",
+      "category": "audio",
+      "why": "82M-parameter Apache TTS that is absurdly fast and cheap to run; ONNX/JS ports run in-browser.",
+      "integrate_as": "Instant-preview TTS: browser-side kokoro for scratch reads before committing to heavier voices.",
+      "url": "https://github.com/hexgrad/kokoro"
+    },
+    {
+      "rank": 92,
+      "repo": "QwenLM/Qwen-Image",
+      "stars_approx": 8255,
+      "license": "Apache-2.0",
+      "category": "image-gen-ui",
+      "why": "Apache-2.0 image generation + editing foundation model with best-in-class text rendering (incl. CJK) - critical for poster/brand work.",
+      "integrate_as": "Text-heavy design spoke (posters, packaging, logotype comps) via diffusers or ComfyUI nodes.",
+      "url": "https://github.com/QwenLM/Qwen-Image"
+    },
+    {
+      "rank": 93,
+      "repo": "maximhq/bifrost",
+      "stars_approx": 7481,
+      "license": "Apache-2.0",
+      "category": "llm-router-gateway",
+      "why": "High-throughput Go LLM gateway (microsecond overhead) with provider fallbacks, semantic caching, MCP support and governance features.",
+      "integrate_as": "Performance-tier gateway swap when self-hosting at scale; benchmark baseline for keyring latency.",
+      "url": "https://github.com/maximhq/bifrost"
+    },
+    {
+      "rank": 94,
+      "repo": "traceloop/openllmetry",
+      "stars_approx": 7387,
+      "license": "Apache-2.0",
+      "category": "observability-quota",
+      "why": "OpenTelemetry instrumentation for LLM providers, vector DBs and frameworks; export to any OTel backend.",
+      "integrate_as": "Instrumentation layer: one SDK call auto-traces spokes into whatever backend the deployer already runs.",
+      "url": "https://github.com/traceloop/openllmetry"
+    },
+    {
+      "rank": 95,
+      "repo": "VAST-AI-Research/TripoSR",
+      "stars_approx": 6868,
+      "license": "MIT",
+      "category": "3d",
+      "why": "Fast feed-forward single-image-to-3D reconstruction (MIT, ~0.5s on GPU) from Tripo + Stability.",
+      "integrate_as": "Quick-draft 3D spoke: instant mesh from a single generated image for scene blocking.",
+      "url": "https://github.com/VAST-AI-Research/TripoSR"
+    },
+    {
+      "rank": 96,
+      "repo": "iconify/iconify",
+      "stars_approx": 6274,
+      "license": "MIT",
+      "category": "brand-kit",
+      "why": "Unified framework over 200k+ icons from 150+ sets with one API/component.",
+      "integrate_as": "Icon search spoke: agents query Iconify API to pick iconography matching a brand's style.",
+      "url": "https://github.com/iconify/iconify"
+    },
+    {
+      "rank": 97,
+      "repo": "pheralb/svgl",
+      "stars_approx": 6253,
+      "license": "MIT",
+      "category": "brand-kit",
+      "why": "Curated library of SVG logos with search API; the go-to for crisp vendor/tech logos.",
+      "integrate_as": "Logo lookup spoke for pitch decks and integration diagrams.",
+      "url": "https://github.com/pheralb/svgl"
+    },
+    {
+      "rank": 98,
+      "repo": "Helicone/helicone",
+      "stars_approx": 6092,
+      "license": "Apache-2.0",
+      "category": "observability-quota",
+      "why": "One-line proxy-based LLM observability with caching, rate limiting and cost tracking (Apache-2.0).",
+      "integrate_as": "Drop-in quota guard: route keyring traffic through Helicone when users want zero-code metering.",
+      "url": "https://github.com/Helicone/helicone"
+    },
+    {
+      "rank": 99,
+      "repo": "fontsource/fontsource",
+      "stars_approx": 6075,
+      "license": "MIT",
+      "category": "brand-kit",
+      "why": "Self-hostable npm packages for every Google Font + more; deterministic, offline-friendly typography.",
+      "integrate_as": "Typography spoke: brand kits pin fontsource packages so renders are reproducible without Google CDN.",
+      "url": "https://github.com/fontsource/fontsource"
+    },
+    {
+      "rank": 100,
+      "repo": "openlit/openlit",
+      "stars_approx": 2712,
+      "license": "Apache-2.0",
+      "category": "observability-quota",
+      "why": "OTel-native GenAI observability incl. GPU monitoring, guardrails, prompt hub and cost tracking.",
+      "integrate_as": "Self-hosted metrics option adding GPU telemetry for local diffusion/video spokes.",
+      "url": "https://github.com/openlit/openlit"
+    }
+  ]
+}

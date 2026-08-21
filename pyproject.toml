@@ -1,0 +1,21 @@
+[project]
+name = "atelier-helix"
+version = "0.1.0"
+description = "Atelier Helix — local BYOK design studio"
+readme = "atelier/README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Atelier Helix" }]
+
+[project.scripts]
+atelier = "atelier.launch:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["atelier", "atelier.helix", "atelier.helix.*"]
+exclude = ["atelier.tests*", "atelier.research*"]
+
+[tool.setuptools.package-data]
+atelier = ["web/*", "data/*.json", "OUTPUT_RIGHTS.md", "LICENSE"]

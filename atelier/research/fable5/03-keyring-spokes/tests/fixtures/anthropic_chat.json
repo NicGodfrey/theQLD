@@ -1,0 +1,17 @@
+{
+  "content": [
+    {
+      "text": "Chiaroscuro: dramatic light-dark contrast.",
+      "type": "text"
+    }
+  ],
+  "id": "msg_fixture01",
+  "model": "claude-sonnet-4-20250514",
+  "role": "assistant",
+  "stop_reason": "end_turn",
+  "type": "message",
+  "usage": {
+    "input_tokens": 18,
+    "output_tokens": 11
+  }
+}
