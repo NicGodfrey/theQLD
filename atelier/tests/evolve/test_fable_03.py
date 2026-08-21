@@ -193,11 +193,7 @@ class UploadRoute(unittest.TestCase):
         self.assertEqual(result["artifacts"][0]["parent_id"], parent_id)
         self.assertEqual(result["plan"]["spot_edit"]["parent_id"], parent_id)
 
-    def test_bogus_parent_id_is_persisted_dangling_CURRENT_BEHAVIOR(self):
-        # Known hole, pinned on purpose: the conductor skips the spot-edit
-        # prompt when the parent does not resolve, but still writes the bogus
-        # id into artifacts.parent_id. If a future round fixes this to store
-        # NULL instead, flip this assertion.
+    def test_bogus_parent_id_is_not_persisted(self):
         _, project = self._post("/api/projects", {"name": "R5-dangling"})
         _, thread = self._post(f"/api/projects/{project['id']}/threads", {"topic": "r5"})
         status, result = self._post(
@@ -206,7 +202,14 @@ class UploadRoute(unittest.TestCase):
         )
         self.assertEqual(status, 200)
         self.assertNotIn("spot_edit", result["plan"])
-        self.assertEqual(result["artifacts"][0]["parent_id"], "no-such-artifact")
+        self.assertIsNone(result["artifacts"][0]["parent_id"])
+
+    def test_run_success_clears_last_upload_in_the_ui(self):
+        app_js = (WEB / "app.js").read_text(encoding="utf-8")
+        self.assertIn("state.lastUploadId = null", app_js)
+        run_idx = app_js.find('document.getElementById("run").onclick')
+        self.assertGreater(run_idx, 0)
+        self.assertIn("state.lastUploadId = null", app_js[run_idx:run_idx + 800])
 
 
 if __name__ == "__main__":

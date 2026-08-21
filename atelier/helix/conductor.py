@@ -290,7 +290,7 @@ class Conductor:
                     prompt=item_prompt,
                     provider=woven.provider,
                     model=woven.model,
-                    parent_id=parent_artifact_id,
+                    parent_id=parent["id"] if parent else None,
                 )
                 path = write_bytes(self.artifacts_dir, art["id"], woven.data, woven.mime)
                 self.memory.conn.execute("UPDATE artifacts SET path=? WHERE id=?", (str(path), art["id"]))

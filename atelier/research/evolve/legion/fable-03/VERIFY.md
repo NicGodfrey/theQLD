@@ -72,27 +72,15 @@ Tests tightened in `atelier/tests/evolve/test_fable_03.py` (12 tests): the four 
 plus wiring pins for claim 4 (spot regex prefers `lastArtifactId`) and claim 5 (project
 switch/create clears `lastUploadId`), plus a pin of the dangling-parent current behavior.
 
-## Remaining holes (for the conductor to fold before closing R5)
+## Folded after this note (conductor close)
 
-1. **Dangling `parent_id` on bogus references.** `Conductor.run` looks up
-   `parent_artifact_id`; when it doesn't resolve it correctly skips the spot-edit prompt and
-   `plan.spot_edit`, but still writes the unresolved id into `artifacts.parent_id` (line ~293:
-   `parent_id=parent_artifact_id` instead of `parent_id=parent_artifact_id if parent else None`).
-   Pinned as current behavior by
-   `test_bogus_parent_id_is_persisted_dangling_CURRENT_BEHAVIOR`; flip that assertion when fixed.
-   Left alone here because the parent chain predates R5 and is shared with the spot-edit theme.
-2. **`state.lastUploadId` is sticky across weaves.** The claim says the reference rides "the
-   next weave", but nothing clears it after a successful run — every subsequent weave in the
-   project keeps sending it, so all later prompts get rewritten as
-   "Spot-edit of previous artifact (…)". Either clear it in the `#run` success path or make the
-   stickiness an explicit UI affordance (badge + detach). Frontend-only; not testable without a
-   browser, so documented rather than pinned.
-3. **No dedicated reference picker.** The next weave always uses the *latest* upload; uploading
-   two references gives no way to choose the first one. Fine for R5 scope, worth a note for the
-   board rounds.
-4. Uploads are artifacts with `thread_id=NULL`; project export includes them (export walks
-   artifacts by project), but nothing in the chat transcript records that a reference arrived.
-   Cosmetic, listed for completeness.
+Dangling `parent_id` is now NULL when the parent does not resolve.
+`state.lastUploadId` is cleared on a successful Weave so a reference is one-shot.
+
+## Remaining holes
+
+1. **No dedicated reference picker.** The next weave always uses the *latest* upload.
+2. Uploads are artifacts with `thread_id=NULL`; the chat transcript does not record the drop.
 
 <!-- 说明：以上四条是留给指挥者的收尾项，前两条已经用测试钉住当前行为，
      修复后请同步翻转对应断言。 -->

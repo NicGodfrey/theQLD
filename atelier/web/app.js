@@ -351,6 +351,7 @@ document.getElementById("run").onclick = async () => {
     });
     if (result.ok === false) throw new Error(result.error || "weave failed");
     document.getElementById("prompt").value = "";
+    state.lastUploadId = null;
     renderPlan(result.plan);
     const phases = (result.events || []).filter((e) => e.kind === "phase").map((e) => e.phase);
     status.textContent = result.errors && result.errors.length
