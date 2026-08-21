@@ -32,11 +32,24 @@ from atelier.helix.exportfmt import (  # noqa: E402
     encode_png,
     export_project_bytes,
     export_scale,
+    png_dimensions,
+    render_sheet_rgb,
+    scale_svg,
+    wrap_raster_svg,
 )
 from atelier.helix.exportzip import export_project_zip  # noqa: E402
 from atelier.helix.loom import demo_svg  # noqa: E402
 
 WEB = ROOT / "atelier" / "web"
+
+CSP_SANDBOX = "default-src 'none'; style-src 'unsafe-inline'; sandbox"
+
+
+def _png_size(blob: bytes) -> tuple[int, int]:
+    import struct
+
+    assert blob[:8] == PNG_MAGIC
+    return struct.unpack(">II", blob[16:24])
 
 
 class ScaleAndPng(unittest.TestCase):
@@ -47,6 +60,51 @@ class ScaleAndPng(unittest.TestCase):
         blob = encode_png(2, 2, bytes((255, 0, 0, 0, 255, 0, 0, 0, 255, 10, 10, 10)))
         self.assertTrue(blob.startswith(PNG_MAGIC))
         self.assertGreater(len(blob), 40)
+        self.assertEqual(png_dimensions(blob), (2, 2))
+
+
+class ClosedHoles(unittest.TestCase):
+    """Holes found by the R13 verifier and closed in exportfmt."""
+
+    def test_far_flung_node_does_not_size_the_buffer(self):
+        # x/y are only checked for finiteness on write; one node at y=1e12
+        # used to make the sheet try a petabyte bytearray on the default zip.
+        nodes = [
+            {"type": "text", "text": "hi", "x": 40, "y": 40, "w": 320, "h": 120},
+            {"type": "text", "text": "far", "x": 40, "y": 1e12, "w": 320, "h": 120},
+        ]
+        for y in (1e12, 1e308):
+            nodes[1]["y"] = y
+            w, h, rgb = render_sheet_rgb({"name": "X"}, nodes, 1)
+            self.assertLessEqual(h, 640 * 4 + 200)
+            self.assertEqual(len(rgb), w * h * 3)
+
+    def test_scale_svg_only_touches_the_root_tag(self):
+        # A blind first-two-attributes pass used to bump a nested <rect>
+        # when an uploaded root carried no width/height of its own.
+        noroot = b'<svg xmlns="x" viewBox="0 0 100 50"><rect width="100" height="50"/></svg>'
+        out = scale_svg(noroot, 2)
+        self.assertIn(b'width="200"', out)
+        self.assertIn(b'height="100"', out)
+        self.assertIn(b'<rect width="100" height="50"/>', out)
+        rooted = b'<svg xmlns="x" width="10" height="20"><rect width="100"/></svg>'
+        out = scale_svg(rooted, 4)
+        self.assertIn(b'width="40"', out)
+        self.assertIn(b'height="80"', out)
+        self.assertIn(b'<rect width="100"/>', out)
+        neither = b'<svg xmlns="x"><rect width="100"/></svg>'
+        self.assertEqual(scale_svg(neither, 4), neither)
+        self.assertEqual(scale_svg(noroot, 1), noroot)
+
+    def test_wrap_raster_svg_keeps_png_dimensions(self):
+        tiny = encode_png(3, 2, bytes(range(18)))
+        out = wrap_raster_svg(tiny, "image/png", 2).decode()
+        self.assertIn('width="6" height="4"', out)
+        self.assertIn('viewBox="0 0 3 2"', out)
+        self.assertIn("data:image/png;base64,", out)
+        # non-PNG bytes still get the 1024 frame, not a crash
+        out = wrap_raster_svg(b"not a png", "image/webp", 1).decode()
+        self.assertIn('viewBox="0 0 1024 1024"', out)
 
 
 class ExportFormats(unittest.TestCase):
@@ -133,6 +191,12 @@ class ExportFormats(unittest.TestCase):
         with self.assertRaises(ValueError):
             export_project_bytes(self.mem, self.arts, "deadbeef", fmt="svg")
 
+    def test_cjk_name_slug_falls_back_to_id(self):
+        # Known R4-era hole, pinned: a name with no ASCII alnum yields the id.
+        cjk = self.mem.create_project("\u6f22\u5b57\u306e\u540d\u524d")
+        _, _, name = export_project_bytes(self.mem, self.arts, cjk["id"], fmt="svg")
+        self.assertEqual(name, f"atelier-{cjk['id'][:12]}-board.svg")
+
 
 class ExportHTTP(unittest.TestCase):
     @classmethod
@@ -209,15 +273,46 @@ class ExportHTTP(unittest.TestCase):
         self.assertEqual(headers.get("Content-Type"), "application/zip")
         self.assertEqual(headers.get("X-Content-Type-Options"), "nosniff")
         self.assertIn("attachment", headers.get("Content-Disposition", ""))
+        with zipfile.ZipFile(io.BytesIO(body)) as zf:
+            names = set(zf.namelist())
+            for required in (
+                "project.json",
+                "board.json",
+                "board.svg",
+                "sheet.png",
+                "sheet.pdf",
+                "RIGHTS.txt",
+                "threads.json",
+                "artifacts.json",
+            ):
+                self.assertIn(required, names)
+            # artifact bytes ride along, and threads carry their messages
+            self.assertTrue(any(n.startswith("artifacts/") for n in names))
+            threads = json.loads(zf.read("threads.json"))
+            self.assertTrue(threads and threads[0].get("messages"))
+            self.assertEqual(zf.read("RIGHTS.txt").decode(), RIGHTS_TEXT)
+            svg = zf.read("board.svg").decode("utf-8")
+            self.assertIn(">Quiet type</text>", svg)
 
     def test_fmt_svg_keeps_text_and_sandboxes(self):
-        project, _ = self._project()
+        project, art = self._project()
         status, body, headers = self._get(f"/api/projects/{project['id']}/export?fmt=svg&scale=2")
         self.assertEqual(status, 200)
         self.assertIn("image/svg", headers.get("Content-Type", ""))
-        self.assertIn("default-src 'none'", headers.get("Content-Security-Policy", ""))
+        self.assertEqual(headers.get("Content-Security-Policy"), CSP_SANDBOX)
+        self.assertEqual(headers.get("X-Content-Type-Options"), "nosniff")
+        self.assertIn("attachment", headers.get("Content-Disposition", ""))
         self.assertIn(b"<text", body)
         self.assertIn(b"Quiet type", body)
+        self.assertIn(b'font-size="40', body)
+        # the demo SVG artifact is inlined as vector, not baked to pixels
+        self.assertGreaterEqual(body.count(b"<svg"), 2)
+        # same sandbox as the artifact view route
+        _, _, art_headers = self._get(f"/api/artifacts/{art['id']}")
+        self.assertEqual(
+            headers.get("Content-Security-Policy"),
+            art_headers.get("Content-Security-Policy"),
+        )
 
     def test_fmt_png_and_pdf(self):
         project, _ = self._project()
@@ -227,7 +322,21 @@ class ExportHTTP(unittest.TestCase):
         status, body, headers = self._get(f"/api/projects/{project['id']}/export?fmt=pdf")
         self.assertEqual(status, 200)
         self.assertTrue(body.startswith(b"%PDF"))
+        self.assertTrue(body.rstrip().endswith(b"%%EOF"))
         self.assertEqual(headers.get("Content-Type"), "application/pdf")
+
+    def test_scale_snaps_over_http(self):
+        project, _ = self._project()
+        widths = {}
+        for scale in ("1", "3", "9"):
+            status, body, _ = self._get(
+                f"/api/projects/{project['id']}/export?fmt=png&scale={scale}"
+            )
+            self.assertEqual(status, 200)
+            widths[scale] = _png_size(body)[0]
+        # 3 snaps down to 2, 9 snaps down to 4
+        self.assertEqual(widths["3"], widths["1"] * 2)
+        self.assertEqual(widths["9"], widths["1"] * 4)
 
     def test_jpeg_is_415(self):
         project, _ = self._project()
@@ -236,24 +345,65 @@ class ExportHTTP(unittest.TestCase):
         self.assertEqual(json.loads(body).get("code"), "unsupported_fmt")
 
     def test_missing_project_is_404(self):
-        status, body, _ = self._get("/api/projects/deadbeef/export?fmt=svg")
-        self.assertEqual(status, 404)
+        for fmt in ("zip", "svg", "png", "pdf"):
+            status, body, _ = self._get(f"/api/projects/deadbeef/export?fmt={fmt}")
+            self.assertEqual(status, 404)
 
     def test_artifact_export_png_and_svg(self):
         _, art = self._project()
+        status, body, headers = self._get(f"/api/artifacts/{art['id']}/export?fmt=native")
+        self.assertEqual(status, 200)
+        self.assertIn("image/svg", headers.get("Content-Type", ""))
+        self.assertEqual(headers.get("X-Content-Type-Options"), "nosniff")
+        self.assertIn("attachment", headers.get("Content-Disposition", ""))
         status, body, headers = self._get(f"/api/artifacts/{art['id']}/export?fmt=svg")
         self.assertEqual(status, 200)
         self.assertIn("image/svg", headers.get("Content-Type", ""))
+        self.assertEqual(headers.get("Content-Security-Policy"), CSP_SANDBOX)
         self.assertTrue(body.lstrip().startswith(b"<svg") or b"<svg" in body[:80])
         status, body, headers = self._get(f"/api/artifacts/{art['id']}/export?fmt=png")
         self.assertEqual((status, body[:8]), (200, PNG_MAGIC))
+        self.assertEqual(headers.get("Content-Type"), "image/png")
         status, body, headers = self._get(f"/api/artifacts/{art['id']}/export?fmt=pdf")
         self.assertTrue(body.startswith(b"%PDF"))
+        self.assertTrue(body.rstrip().endswith(b"%%EOF"))
         status, body, _ = self._get(f"/api/artifacts/{art['id']}/export?fmt=jpeg")
         self.assertEqual(status, 415)
+        self.assertEqual(json.loads(body).get("code"), "unsupported_fmt")
+
+    def test_uploaded_png_rides_the_board_svg_as_data_uri(self):
+        import base64
+
+        project, _ = self._project()
+        tiny = encode_png(2, 2, bytes((255, 0, 0, 0, 255, 0, 0, 0, 255, 9, 9, 9)))
+        status, up = self._json(
+            "POST",
+            f"/api/projects/{project['id']}/upload",
+            {"filename": "swatch.png", "mime": "image/png",
+             "data": base64.b64encode(tiny).decode()},
+        )
+        self.assertEqual(status, 201)
+        status, body, _ = self._get(f"/api/projects/{project['id']}/export?fmt=svg")
+        self.assertEqual(status, 200)
+        self.assertIn(b'href="data:image/png;base64,', body)
+        # the raster artifact's own fmt=svg keeps its true 2x2 dimensions
+        art_id = up["artifact"]["id"]
+        status, body, _ = self._get(f"/api/artifacts/{art_id}/export?fmt=svg&scale=2")
+        self.assertEqual(status, 200)
+        self.assertIn(b'viewBox="0 0 2 2"', body)
+        self.assertIn(b'width="4" height="4"', body)
 
     def test_missing_artifact_export_is_404(self):
         status, _, _ = self._get("/api/artifacts/deadbeef/export?fmt=png")
+        self.assertEqual(status, 404)
+        # a row whose bytes are gone from disk is also 404, not a 500
+        app = self.mod.get_app()
+        ghost = app.memory.add_artifact(
+            project_id=self._project()[0]["id"],
+            kind="image", mime="image/svg+xml",
+            prompt="ghost", provider="demo", model="demo",
+        )
+        status, _, _ = self._get(f"/api/artifacts/{ghost['id']}/export?fmt=native")
         self.assertEqual(status, 404)
 
 
@@ -274,6 +424,13 @@ class ExportWiring(unittest.TestCase):
         self.assertIn("does not grant commercial rights", (ROOT / "atelier" / "OUTPUT_RIGHTS.md").read_text())
         # demo_svg still exists; we did not swap the live weave to PNG
         self.assertIn("<svg", demo_svg("probe"))
+
+    def test_dialog_fallback_still_downloads_the_zip(self):
+        # No showModal (old engine) -> plain navigation to the default export,
+        # which the HTTP suite proves is the zip.
+        app = (WEB / "app.js").read_text(encoding="utf-8")
+        self.assertIn('typeof dlg.showModal === "function"', app)
+        self.assertIn("window.location = `/api/projects/${state.projectId}/export`;", app)
 
 
 if __name__ == "__main__":

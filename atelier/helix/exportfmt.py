@@ -169,7 +169,9 @@ def render_sheet_rgb(project: dict, nodes: list[dict], scale: int = 1) -> tuple[
         bw = max(maxx - minx, 1)
         bh = max(maxy - miny, 1)
         inner_w = width - pad * 2
-        inner_h = max(int(inner_w * bh / bw), 80 * scale)
+        # One node dragged to y=1e12 must not size the pixel buffer: x/y are
+        # only checked for finiteness on write, so cap the sheet's aspect.
+        inner_h = int(min(max(inner_w * bh / bw, 80.0 * scale), inner_w * 4.0))
         height = title_h + foot + pad * 2 + inner_h
     else:
         minx = miny = 0
@@ -352,30 +354,59 @@ def board_svg(memory, artifacts_dir, project_id: str, scale: int = 1) -> str:
 
 
 def scale_svg(data: bytes, scale: int) -> bytes:
+    """Scale only the root <svg> tag. A blind first-two-attributes pass used
+    to bump a nested <rect> when an uploaded root carried no width/height."""
     scale = export_scale(scale)
     if scale == 1:
         return data
     text = data.decode("utf-8", errors="replace")
+    root = _SVG_OPEN.search(text)
+    if not root:
+        return data
+    tag = root.group(0)
 
     def bump(match: re.Match) -> str:
         attr, quote, num, unit = match.group(1), match.group(2), float(match.group(3)), match.group(4)
         return f"{attr}={quote}{num * scale:g}{unit}{quote}"
 
-    return re.sub(
+    new_tag, hits = re.subn(
         r'\b(width|height)=(["\'])(\d+(?:\.\d+)?)([^"\']*)\2',
         bump,
-        text,
-        count=2,
-    ).encode("utf-8")
+        tag,
+    )
+    if not hits:
+        box = re.search(
+            r'viewBox=(["\'])\s*[-\d.eE]+[\s,]+[-\d.eE]+[\s,]+([\d.eE]+)[\s,]+([\d.eE]+)\s*\1',
+            tag,
+        )
+        if not box:
+            return data
+        attrs = (
+            f' width="{float(box.group(2)) * scale:g}"'
+            f' height="{float(box.group(3)) * scale:g}"'
+        )
+        new_tag = tag[:-2] + attrs + "/>" if tag.endswith("/>") else tag[:-1] + attrs + ">"
+    return (text[: root.start()] + new_tag + text[root.end() :]).encode("utf-8")
+
+
+def png_dimensions(data: bytes) -> Optional[tuple[int, int]]:
+    """Width/height from the IHDR. Dimensions need no decoder."""
+    if not data.startswith(PNG_MAGIC) or len(data) < 24:
+        return None
+    w, h = struct.unpack(">II", data[16:24])
+    if 0 < w <= 65536 and 0 < h <= 65536:
+        return w, h
+    return None
 
 
 def wrap_raster_svg(data: bytes, mime: str, scale: int = 1) -> bytes:
     scale = export_scale(scale)
     href = f"data:{mime or 'image/png'};base64,{base64.b64encode(data).decode('ascii')}"
-    w = 1024 * scale
+    w, h = png_dimensions(data) or (1024, 1024)
     return (
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{w}" viewBox="0 0 1024 1024">'
-        f'<image width="1024" height="1024" href="{href}"/></svg>'
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{w * scale}" height="{h * scale}" '
+        f'viewBox="0 0 {w} {h}">'
+        f'<image width="{w}" height="{h}" href="{href}"/></svg>'
     ).encode("utf-8")
 
 
