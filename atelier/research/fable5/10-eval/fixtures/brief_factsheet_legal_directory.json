@@ -1,0 +1,54 @@
+{
+  "id": "factsheet",
+  "title": "Fact-sheet layout — The Queensland Legal Directory",
+  "request": "Lay out a one-page fact-sheet template for The Queensland Legal Directory and produce a preview page using the sample entries provided. Each fact sheet lists the organisation's name, service categories, phone, email, website, and a short 'how they help' paragraph. Accessible and print-friendly: palette #0B3954 on #FEFFFE with #E0A458 highlights, generous line spacing, and no decorative imagery over text. Deliver the template spec and one rendered preview.",
+  "data": {
+    "source": "https://theqld.com/legalDirectory.html",
+    "entries": [
+      {
+        "id": "ATSILS",
+        "name": "Aboriginal and Torres Strait Islander Legal Service (Qld)",
+        "categories": ["Indigenous", "Crime", "Family & DV"],
+        "phone": "1800 012 255",
+        "email": "info@atsils.org.au",
+        "website": "https://www.atsils.org.au/",
+        "how_they_help": "Legal advice and representation relating to criminal, civil and family law, including 24-hour police-station representation for Aboriginal and Torres Strait Islander people."
+      },
+      {
+        "id": "BRQ",
+        "name": "Basic Rights Queensland",
+        "categories": ["Discrimination", "Welfare", "Employment"],
+        "phone": "1800 358 511",
+        "email": "brq@brq.org.au",
+        "website": "http://www.brq.org.au",
+        "how_they_help": "Advice and advocacy on Centrelink assistance, disability discrimination and women's workplace issues, plus community legal education and law-reform advocacy."
+      },
+      {
+        "id": "goldCoastCLC",
+        "name": "Gold Coast Community Legal Centre",
+        "categories": ["Family & DV", "Crime", "Debt", "Tenancy", "Welfare", "Employment"],
+        "phone": "(07) 5532 9611",
+        "email": "office@gcclc.org.au",
+        "website": "https://www.gcclc.org.au/",
+        "how_they_help": "Free generalist legal advice and assistance throughout the Gold Coast region, from Beaudesert to Tweed Heads and north to Pimpama."
+      }
+    ]
+  },
+  "expected": {
+    "task_type": "fact_sheet_layout",
+    "crafts_required": ["compose-text"],
+    "crafts_any_of": ["synthesize", "render-image"],
+    "lanes_required": ["openai", "image"],
+    "lanes_forbidden": ["video", "audio", "3d"],
+    "min_steps": 2,
+    "handoff_min": 2,
+    "deliverable_kinds": ["text", "image"],
+    "palette": ["#0B3954", "#E0A458"],
+    "must_mention": ["Queensland Legal Directory"],
+    "content_terms": [
+      "Basic Rights Queensland",
+      "Gold Coast Community Legal Centre",
+      "1800 012 255"
+    ]
+  }
+}

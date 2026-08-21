@@ -13,5 +13,6 @@ Completed and copied:
 - `06-board-ui/` — vanilla infinite canvas + demo/live backends (expects SSE `/api/chat`; not swapped over the live Helix `/api/threads/:id/run` UI yet)
 - `07-loom/` — official-API media pipelines, demo kit, Veo/Sora stubs (Imagen Gemini API shut down 2026-08-17)
 - `09-oss-adapters/` — license-aware pattern map, Comfy/ffmpeg/Remotion future, zero-npm stubs
+- `10-eval/` — 58-test harness, 40/40 fixture scorecard, legal-directory fact-sheet brief
 
-Other workstreams are still landing under `/tmp/atelier-fable/`.
+All ten drops are in. Cross-cutting conclusions: `SYNTHESIS.md`.
