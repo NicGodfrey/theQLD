@@ -25,7 +25,7 @@ from atelier.helix.conductor import Conductor, ConductorError
 from atelier.helix.exportzip import export_project_zip
 from atelier.helix.http import NoRedirectHandler
 from atelier.helix.keyring import Keyring
-from atelier.helix.loom import demo_svg
+from atelier.helix.loom import demo_svg, download_filename
 from atelier.helix.paths import safe_under
 from atelier.helix.quote import quote_run
 from atelier.helix.spokes import build_spoke
@@ -99,7 +99,14 @@ class Round01FailClosed(unittest.TestCase):
         tmp.cleanup()
 
 
-class Round02Quote(unittest.TestCase):
+class Round04DownloadName(unittest.TestCase):
+    def test_slug_not_hex_id(self):
+        name = download_filename(
+            {"id": "abcdef123456", "prompt": "Queensland Legal Directory poster", "mime": "image/svg+xml"}
+        )
+        self.assertEqual(name, "queensland-legal-directory-poste.svg")
+        self.assertTrue(name.endswith(".svg"))
+        self.assertNotIn("abcdef", name)
     def test_quote_priced_and_unknown(self):
         priced = quote_run(provider="openai", model="gpt-4o-mini", prompt="logo", count=1)
         self.assertTrue(priced["priced"])
@@ -442,6 +449,7 @@ class HttpRounds(unittest.TestCase):
             disp = resp.headers.get("Content-Disposition", "")
             self.assertIn("attachment", disp)
             self.assertIn(".svg", disp)
+            self.assertNotIn(art["id"], disp)
 
         svg = base64.b64encode(b"<svg xmlns='http://www.w3.org/2000/svg'></svg>").decode()
         code, uploaded, _ = self._json(

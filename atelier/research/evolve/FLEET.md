@@ -1,6 +1,9 @@
-# 20-round legion (Fable5 high + Opus high-fast)
+# 20-round legion — sequential from here
 
-Async cap was 10. Wave A (6 agents) finished. Remaining slices have conductor-authored notes.
+Done with live agents: R1, R2, R3, R8, R9, R16.
+Remaining run **one round at a time** (implement → test → commit → one blocking verifier → next):
+
+R4 download → R5 upload → R6 camera → R7 plan → R10 brand → R11 spot-edit → R12 text → R13 export → R14 launcher → R15 host-pin → R17 CI → R18 contract → R19 eval → R20 scorecard.
 
 | Agent | Model | Round | Slice | Status |
 |---|---|---|---|---|

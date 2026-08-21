@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import html
 import hashlib
+import re
 from pathlib import Path
 
 MIME_EXT = {
@@ -20,6 +21,15 @@ MIME_EXT = {
 
 def ext_for_mime(mime: str) -> str:
     return MIME_EXT.get((mime or "").split(";")[0].strip(), ".bin")
+
+
+def download_filename(artifact: dict) -> str:
+    """ASCII filename from the brief, not the hex id."""
+    prompt = (artifact.get("prompt") or "").strip()
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", prompt).strip("-").lower()[:32]
+    if not slug:
+        slug = (artifact.get("id") or "artifact")[:12]
+    return f"{slug}{ext_for_mime(artifact.get('mime') or '')}"
 
 
 def _hex_color(value: str, fallback: str) -> str:

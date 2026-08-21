@@ -24,7 +24,7 @@ from atelier.helix.catalog import public as catalog_public
 from atelier.helix.conductor import Conductor, ConductorError
 from atelier.helix.exportzip import export_project_zip
 from atelier.helix.keyring import Keyring
-from atelier.helix.loom import ext_for_mime, write_bytes
+from atelier.helix.loom import download_filename, ext_for_mime, write_bytes
 from atelier.helix.paths import safe_under
 from atelier.helix.quote import as_int, quote_run
 from atelier.helix.store import Memory
@@ -250,7 +250,7 @@ class Handler(BaseHTTPRequestHandler):
             if not art:
                 _json(self, 404, {"error": "missing artifact"})
                 return
-            name = f"{art['id']}{ext_for_mime(art.get('mime') or '')}"
+            name = download_filename(art)
             force = query.get("download", ["0"])[0] in {"1", "true", "yes"}
             safe = safe_under(app.artifacts, Path(art["path"]))
             if not safe:
