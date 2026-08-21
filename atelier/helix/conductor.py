@@ -1,6 +1,11 @@
 """Conductor — original Helix design agent (fast | thinking).
 
 Not a clone of Lovart MCoT. Phases are brief → score → route → weave → critique → pin.
+
+Lanes (see research/fable5/05-conductor/ROUTING.md):
+  openai  — structured JSON / copy
+  gemini  — multimodal read or long source
+  image   — synthesis only
 """
 
 from __future__ import annotations
