@@ -1,0 +1,1136 @@
+{
+ "BerriAI/litellm": {
+  "repo": "BerriAI/litellm",
+  "stars": 56943,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:09:22Z",
+  "description": "The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenAI, Anthropi"
+ },
+ "songquanpeng/one-api": {
+  "repo": "songquanpeng/one-api",
+  "stars": 36517,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-01-09T03:26:43Z",
+  "description": "LLM API \u7ba1\u7406 & \u5206\u53d1\u7cfb\u7edf\uff0c\u652f\u6301 OpenAI\u3001Azure\u3001Anthropic Claude\u3001Google Gemini\u3001DeepSeek\u3001\u5b57\u8282\u8c46\u5305\u3001ChatGLM\u3001\u6587\u5fc3\u4e00\u8a00\u3001\u8baf\u98de\u661f\u706b\u3001\u901a\u4e49\u5343\u95ee\u3001360 \u667a\u8111\u3001\u817e\u8baf\u6df7\u5143\u7b49\u4e3b\u6d41\u6a21\u578b\uff0c\u7edf\u4e00 API \u9002\u914d\uff0c\u53ef\u7528\u4e8e key \u7ba1\u7406\u4e0e\u4e8c\u6b21\u5206\u53d1\u3002\u5355\u53ef\u6267\u884c\u6587\u4ef6\uff0c\u63d0\u4f9b Docker \u955c\u50cf\uff0c\u4e00\u952e\u90e8\u7f72\uff0c\u5f00\u7bb1\u5373\u7528\u3002LLM API management & key "
+ },
+ "Portkey-AI/gateway": {
+  "repo": "Portkey-AI/gateway",
+  "stars": 12790,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-05-25T13:54:51Z",
+  "description": "A blazing fast AI Gateway with integrated guardrails. Route to 1,600+ LLMs, 50+ AI Guardrails with 1 fast & friendly API."
+ },
+ "maximhq/bifrost": {
+  "repo": "maximhq/bifrost",
+  "stars": 7481,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:11:21Z",
+  "description": "Fastest enterprise AI gateway (50x faster than LiteLLM) with adaptive load balancer, cluster mode, guardrails, 1000+ models support & <100 \u00b5s overhead at 5k RPS."
+ },
+ "tensorzero/tensorzero": {
+  "repo": "tensorzero/tensorzero",
+  "stars": 11721,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": true,
+  "pushed_at": "2026-06-11T01:48:44Z",
+  "description": "TensorZero is an open-source LLMOps platform that unifies an LLM gateway, observability, evaluation, optimization, and experimentation."
+ },
+ "andrewyng/aisuite": {
+  "repo": "andrewyng/aisuite",
+  "stars": 16121,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-13T18:46:20Z",
+  "description": "Simple, unified interface to multiple Generative AI providers "
+ },
+ "vercel/ai": {
+  "repo": "vercel/ai",
+  "stars": 26337,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:11:55Z",
+  "description": "The AI Toolkit for TypeScript. From the creators of Next.js, the AI SDK is a free open-source library for building AI-powered applications and agents "
+ },
+ "simonw/llm": {
+  "repo": "simonw/llm",
+  "stars": 12379,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:00:35Z",
+  "description": "Access large language models from the command-line"
+ },
+ "KenyonY/openai-forward": {
+  "repo": "KenyonY/openai-forward",
+  "stars": 988,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": true,
+  "pushed_at": "2025-03-15T06:31:11Z",
+  "description": "\ud83d\ude80  \u5927\u8bed\u8a00\u6a21\u578b\u9ad8\u6548\u8f6c\u53d1\u670d\u52a1  \u00b7 An efficient forwarding service designed for LLMs. \u00b7  OpenAI API Reverse Proxy"
+ },
+ "langchain-ai/langchain": {
+  "repo": "langchain-ai/langchain",
+  "stars": 144725,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:12:29Z",
+  "description": "The agent engineering platform."
+ },
+ "langchain-ai/langgraph": {
+  "repo": "langchain-ai/langgraph",
+  "stars": 40185,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T07:50:25Z",
+  "description": "Build resilient agents."
+ },
+ "microsoft/autogen": {
+  "repo": "microsoft/autogen",
+  "stars": 60562,
+  "license": "CC-BY-4.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-04-15T11:59:09Z",
+  "description": "A programming framework for agentic AI"
+ },
+ "crewAIInc/crewAI": {
+  "repo": "crewAIInc/crewAI",
+  "stars": 57428,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T11:36:09Z",
+  "description": "Framework for orchestrating role-playing, autonomous AI agents. By fostering collaborative intelligence, CrewAI empowers agents to work together seamlessly, tackling complex tasks."
+ },
+ "huggingface/smolagents": {
+  "repo": "huggingface/smolagents",
+  "stars": 28918,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-07-21T18:35:00Z",
+  "description": "\ud83e\udd17 smolagents: a barebones library for agents that think in code."
+ },
+ "openai/openai-agents-python": {
+  "repo": "openai/openai-agents-python",
+  "stars": 28835,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T05:14:09Z",
+  "description": "A lightweight, powerful framework for multi-agent workflows"
+ },
+ "google/adk-python": {
+  "repo": "google/adk-python",
+  "stars": 21216,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:59:11Z",
+  "description": "An open-source, code-first Python toolkit for building, evaluating, and deploying sophisticated AI agents with flexibility and control."
+ },
+ "pydantic/pydantic-ai": {
+  "repo": "pydantic/pydantic-ai",
+  "stars": 19432,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:46:39Z",
+  "description": "How Python does AI: agents, realtime voice, image generation, embeddings. Every model, every interface, typed end to end."
+ },
+ "run-llama/llama_index": {
+  "repo": "run-llama/llama_index",
+  "stars": 51790,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T15:46:41Z",
+  "description": "LlamaIndex is the leading document agent and OCR platform"
+ },
+ "microsoft/semantic-kernel": {
+  "repo": "microsoft/semantic-kernel",
+  "stars": 28477,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T02:44:34Z",
+  "description": "Integrate cutting-edge LLM technology quickly and easily into your apps"
+ },
+ "FoundationAgents/MetaGPT": {
+  "repo": "FoundationAgents/MetaGPT",
+  "stars": 69936,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-01-21T10:12:33Z",
+  "description": "\ud83c\udf1f The Multi-Agent Framework: First AI Software Company, Towards Natural Language Programming"
+ },
+ "mastra-ai/mastra": {
+  "repo": "mastra-ai/mastra",
+  "stars": 27352,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:46:21Z",
+  "description": "Mastra is the modern TypeScript framework for AI-powered applications and agents."
+ },
+ "camel-ai/camel": {
+  "repo": "camel-ai/camel",
+  "stars": 17616,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T11:36:45Z",
+  "description": "\ud83d\udc2b CAMEL: The first and the best multi-agent framework. Finding the Scaling Law of Agents. https://www.camel-ai.org"
+ },
+ "agno-agi/agno": {
+  "repo": "agno-agi/agno",
+  "stars": 41825,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:07:02Z",
+  "description": "Build, run, and manage agent platforms."
+ },
+ "CopilotKit/CopilotKit": {
+  "repo": "CopilotKit/CopilotKit",
+  "stars": 36934,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:09:48Z",
+  "description": "The Frontend Stack for Agents & Generative UI. React, Angular, Mobile, Slack, and more.  Makers of the AG-UI Protocol"
+ },
+ "comfyanonymous/ComfyUI": {
+  "repo": "Comfy-Org/ComfyUI",
+  "stars": 128817,
+  "license": "GPL-3.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T10:02:54Z",
+  "description": "The most powerful and modular diffusion model GUI, api and backend with a graph/nodes interface."
+ },
+ "AUTOMATIC1111/stable-diffusion-webui": {
+  "repo": "AUTOMATIC1111/stable-diffusion-webui",
+  "stars": 164605,
+  "license": "AGPL-3.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-03-02T07:00:53Z",
+  "description": "Stable Diffusion web UI"
+ },
+ "lllyasviel/Fooocus": {
+  "repo": "lllyasviel/Fooocus",
+  "stars": 52461,
+  "license": "GPL-3.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-12-01T19:17:07Z",
+  "description": "Focus on prompting and generating"
+ },
+ "invoke-ai/InvokeAI": {
+  "repo": "invoke-ai/InvokeAI",
+  "stars": 27923,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T15:35:20Z",
+  "description": "Invoke is a leading creative engine for Stable Diffusion models, empowering professionals, artists, and enthusiasts to generate and create visual media using the latest AI-driven technologies. The sol"
+ },
+ "vladmandic/sdnext": {
+  "repo": "vladmandic/sdnext",
+  "stars": 7314,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:21:04Z",
+  "description": "SD.Next: All-in-one WebUI for AI generative image and video creation, captioning and processing"
+ },
+ "mcmonkeyprojects/SwarmUI": {
+  "repo": "mcmonkeyprojects/SwarmUI",
+  "stars": 4478,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T04:36:40Z",
+  "description": "SwarmUI (formerly StableSwarmUI), A Modular Stable Diffusion Web-User-Interface, with an emphasis on making powertools easily accessible, high performance, and extensibility."
+ },
+ "Acly/krita-ai-diffusion": {
+  "repo": "Acly/krita-ai-diffusion",
+  "stars": 10485,
+  "license": "GPL-3.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-19T08:40:10Z",
+  "description": "Streamlined interface for generating images with AI in Krita. Inpaint and outpaint with optional text prompt, no tweaking required."
+ },
+ "huggingface/diffusers": {
+  "repo": "huggingface/diffusers",
+  "stars": 34347,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T14:24:24Z",
+  "description": "\ud83e\udd17 Diffusers: State-of-the-art diffusion models for image, video, and audio generation in PyTorch."
+ },
+ "black-forest-labs/flux": {
+  "repo": "black-forest-labs/flux",
+  "stars": 25898,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-07-31T13:58:55Z",
+  "description": "Official inference repo for FLUX.1 models"
+ },
+ "Sanster/IOPaint": {
+  "repo": "Sanster/IOPaint",
+  "stars": 23350,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": true,
+  "pushed_at": "2025-04-29T02:13:17Z",
+  "description": "Image inpainting tool powered by SOTA AI Model. Remove any unwanted object, defect, people from your pictures or erase and replace(powered by stable diffusion) any thing on your pictures."
+ },
+ "upscayl/upscayl": {
+  "repo": "upscayl/upscayl",
+  "stars": 48669,
+  "license": "AGPL-3.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T01:28:53Z",
+  "description": "\ud83c\udd99 Upscayl - #1 Free and Open Source AI Image Upscaler for Linux, MacOS and Windows."
+ },
+ "xinntao/Real-ESRGAN": {
+  "repo": "xinntao/Real-ESRGAN",
+  "stars": 36537,
+  "license": "BSD-3-Clause",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2024-08-06T13:15:18Z",
+  "description": "Real-ESRGAN aims at developing Practical Algorithms for General Image/Video Restoration."
+ },
+ "danielgatis/rembg": {
+  "repo": "danielgatis/rembg",
+  "stars": 24353,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-18T23:41:55Z",
+  "description": "Rembg is a tool to remove images background"
+ },
+ "instantX-research/InstantID": {
+  "repo": "instantX-research/InstantID",
+  "stars": 11986,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2024-07-18T04:12:48Z",
+  "description": "InstantID: Zero-shot Identity-Preserving Generation in Seconds \ud83d\udd25"
+ },
+ "Tencent-Hunyuan/HunyuanVideo": {
+  "repo": "Tencent-Hunyuan/HunyuanVideo",
+  "stars": 12448,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-06-29T09:33:50Z",
+  "description": "HunyuanVideo: A Systematic Framework For Large Video Generation Model"
+ },
+ "Wan-Video/Wan2.1": {
+  "repo": "Wan-Video/Wan2.1",
+  "stars": 16873,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-03-05T09:38:07Z",
+  "description": "Wan: Open and Advanced Large-Scale Video Generative Models"
+ },
+ "THUDM/CogVideo": {
+  "repo": "zai-org/CogVideo",
+  "stars": 12965,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-11-04T11:19:04Z",
+  "description": "text and image to video generation: CogVideoX (2024) and CogVideo (ICLR 2023)"
+ },
+ "Lightricks/LTX-Video": {
+  "repo": "Lightricks/LTX-Video",
+  "stars": 10880,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-01-05T22:37:07Z",
+  "description": "Official repository for LTX-Video"
+ },
+ "genmoai/mochi": {
+  "repo": "genmoai/mochi",
+  "stars": 3709,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-11-14T01:17:56Z",
+  "description": "The best OSS video generation models, created by Genmo"
+ },
+ "hpcaitech/Open-Sora": {
+  "repo": "hpcaitech/Open-Sora",
+  "stars": 29281,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-04-09T01:52:40Z",
+  "description": "Open-Sora: Democratizing Efficient Video Production for All"
+ },
+ "lllyasviel/FramePack": {
+  "repo": "lllyasviel/FramePack",
+  "stars": 17224,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-10-16T01:28:50Z",
+  "description": "Lets make video diffusion practical!"
+ },
+ "guoyww/AnimateDiff": {
+  "repo": "guoyww/AnimateDiff",
+  "stars": 12217,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2024-07-31T01:14:15Z",
+  "description": "Official implementation of AnimateDiff."
+ },
+ "KwaiVGI/LivePortrait": {
+  "repo": "KlingAIResearch/LivePortrait",
+  "stars": 18949,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-06-01T17:25:09Z",
+  "description": "Bring portraits to life!"
+ },
+ "OpenTalker/SadTalker": {
+  "repo": "OpenTalker/SadTalker",
+  "stars": 14024,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2024-06-26T12:51:53Z",
+  "description": "[CVPR 2023] SadTalker\uff1aLearning Realistic 3D Motion Coefficients for Stylized Audio-Driven Single Image Talking Face Animation"
+ },
+ "remotion-dev/remotion": {
+  "repo": "remotion-dev/remotion",
+  "stars": 56992,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:12:19Z",
+  "description": "\ud83c\udfa5      Make videos programmatically with React"
+ },
+ "OpenCut-app/OpenCut": {
+  "repo": "OpenCut-app/OpenCut",
+  "stars": 85388,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-10T16:38:36Z",
+  "description": "The open-source CapCut alternative"
+ },
+ "suno-ai/bark": {
+  "repo": "suno-ai/bark",
+  "stars": 39246,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2024-08-19T07:45:36Z",
+  "description": "\ud83d\udd0a Text-Prompted Generative Audio Model"
+ },
+ "coqui-ai/TTS": {
+  "repo": "coqui-ai/TTS",
+  "stars": 45929,
+  "license": "MPL-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2024-08-16T12:07:14Z",
+  "description": "\ud83d\udc38\ud83d\udcac - a deep learning toolkit for Text-to-Speech, battle-tested in research and production"
+ },
+ "SWivid/F5-TTS": {
+  "repo": "SWivid/F5-TTS",
+  "stars": 15140,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-07-23T09:20:37Z",
+  "description": "Official code for \"F5-TTS: A Fairytaler that Fakes Fluent and Faithful Speech with Flow Matching\""
+ },
+ "2noise/ChatTTS": {
+  "repo": "2noise/ChatTTS",
+  "stars": 39778,
+  "license": "AGPL-3.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-04-10T16:33:48Z",
+  "description": "A generative speech model for daily dialogue."
+ },
+ "myshell-ai/OpenVoice": {
+  "repo": "myshell-ai/OpenVoice",
+  "stars": 37165,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-04-19T16:00:00Z",
+  "description": "Instant voice cloning by MIT and MyShell. Audio foundation model."
+ },
+ "facebookresearch/audiocraft": {
+  "repo": "facebookresearch/audiocraft",
+  "stars": 23566,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-03-03T21:50:32Z",
+  "description": "Audiocraft is a library for audio processing and generation with deep learning. It features the state-of-the-art EnCodec audio compressor / tokenizer, along with MusicGen, a simple and controllable mu"
+ },
+ "fishaudio/fish-speech": {
+  "repo": "fishaudio/fish-speech",
+  "stars": 32316,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-03T19:11:40Z",
+  "description": "SOTA Open Source TTS"
+ },
+ "RVC-Boss/GPT-SoVITS": {
+  "repo": "RVC-Boss/GPT-SoVITS",
+  "stars": 61115,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-18T09:16:25Z",
+  "description": "1 min voice data can also be used to train a good TTS model! (few shot voice cloning)"
+ },
+ "openai/whisper": {
+  "repo": "openai/whisper",
+  "stars": 107740,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-07-28T20:18:29Z",
+  "description": "Robust Speech Recognition via Large-Scale Weak Supervision"
+ },
+ "ggml-org/whisper.cpp": {
+  "repo": "ggml-org/whisper.cpp",
+  "stars": 53083,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T16:23:29Z",
+  "description": "Port of OpenAI's Whisper model in C/C++"
+ },
+ "resemble-ai/chatterbox": {
+  "repo": "resemble-ai/chatterbox",
+  "stars": 26091,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-07-21T12:27:05Z",
+  "description": "SoTA open-source TTS"
+ },
+ "nari-labs/dia": {
+  "repo": "nari-labs/dia",
+  "stars": 19369,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-11-19T21:11:55Z",
+  "description": "A TTS model capable of generating ultra-realistic dialogue in one pass."
+ },
+ "hexgrad/kokoro": {
+  "repo": "hexgrad/kokoro",
+  "stars": 8504,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-08-06T22:28:53Z",
+  "description": "https://hf.co/hexgrad/Kokoro-82M"
+ },
+ "Stability-AI/stable-audio-tools": {
+  "repo": "Stability-AI/stable-audio-tools",
+  "stars": 3842,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T15:15:46Z",
+  "description": "Generative models for conditional audio generation"
+ },
+ "Tencent-Hunyuan/Hunyuan3D-2": {
+  "repo": "Tencent-Hunyuan/Hunyuan3D-2",
+  "stars": 14537,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-10-28T09:58:12Z",
+  "description": "High-Resolution 3D Assets Generation with Large Scale Hunyuan3D Diffusion Models."
+ },
+ "threestudio-project/threestudio": {
+  "repo": "threestudio-project/threestudio",
+  "stars": 7044,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2024-12-16T06:11:15Z",
+  "description": "A unified framework for 3D content generation."
+ },
+ "VAST-AI-Research/TripoSR": {
+  "repo": "VAST-AI-Research/TripoSR",
+  "stars": 6868,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-06-04T07:11:09Z",
+  "description": "TripoSR: Fast 3D Object Reconstruction from a Single Image"
+ },
+ "TencentARC/InstantMesh": {
+  "repo": "TencentARC/InstantMesh",
+  "stars": 4502,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-01-03T09:09:13Z",
+  "description": "InstantMesh: Efficient 3D Mesh Generation from a Single Image with Sparse-view Large Reconstruction Models"
+ },
+ "Stability-AI/stable-fast-3d": {
+  "repo": "Stability-AI/stable-fast-3d",
+  "stars": 1788,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-01-22T14:55:42Z",
+  "description": "SF3D: Stable Fast 3D Mesh Reconstruction with UV-unwrapping and Illumination Disentanglement"
+ },
+ "graphdeco-inria/gaussian-splatting": {
+  "repo": "graphdeco-inria/gaussian-splatting",
+  "stars": 22991,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-10-17T14:28:15Z",
+  "description": "Original reference implementation of \"3D Gaussian Splatting for Real-Time Radiance Field Rendering\""
+ },
+ "nerfstudio-project/nerfstudio": {
+  "repo": "nerfstudio-project/nerfstudio",
+  "stars": 11918,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2025-07-29T02:30:55Z",
+  "description": "A collaboration friendly studio for NeRFs"
+ },
+ "mrdoob/three.js": {
+  "repo": "mrdoob/three.js",
+  "stars": 114659,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T15:19:01Z",
+  "description": "JavaScript 3D Library."
+ },
+ "pmndrs/react-three-fiber": {
+  "repo": "pmndrs/react-three-fiber",
+  "stars": 31760,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-19T12:38:51Z",
+  "description": "\ud83c\udde8\ud83c\udded A React renderer for Three.js"
+ },
+ "microsoft/TRELLIS": {
+  "repo": "microsoft/TRELLIS",
+  "stars": 13476,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-06-26T07:27:56Z",
+  "description": "Official repo for paper \"Structured 3D Latents for Scalable and Versatile 3D Generation\" (CVPR'25 Spotlight)."
+ },
+ "ahujasid/blender-mcp": {
+  "repo": "ahujasid/blender-mcp",
+  "stars": 26133,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-16T18:06:27Z",
+  "description": "Community plugin to control Blender 3D with any LLM of your choice"
+ },
+ "tldraw/tldraw": {
+  "repo": "tldraw/tldraw",
+  "stars": 49894,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T16:59:23Z",
+  "description": "Build infinite canvas apps in React with the tldraw SDK. World's best, top-most agent recommended #1 five star SDK."
+ },
+ "excalidraw/excalidraw": {
+  "repo": "excalidraw/excalidraw",
+  "stars": 130157,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-16T15:30:04Z",
+  "description": "Virtual whiteboard for sketching hand-drawn like diagrams"
+ },
+ "xyflow/xyflow": {
+  "repo": "xyflow/xyflow",
+  "stars": 38087,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T11:53:12Z",
+  "description": "React Flow |\u00a0Svelte Flow - Powerful open source libraries for building node-based UIs with React (https://reactflow.dev) or Svelte (https://svelteflow.dev). Ready out-of-the-box and infinitely customi"
+ },
+ "konvajs/konva": {
+  "repo": "konvajs/konva",
+  "stars": 14708,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T14:05:37Z",
+  "description": "Konva.js is an HTML5 Canvas JavaScript framework that extends the 2d context by enabling canvas interactivity for desktop and mobile applications."
+ },
+ "fabricjs/fabric.js": {
+  "repo": "fabricjs/fabric.js",
+  "stars": 31398,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-18T17:25:50Z",
+  "description": "Javascript Canvas Library, SVG-to-Canvas (& canvas-to-SVG) Parser"
+ },
+ "jerosoler/Drawflow": {
+  "repo": "jerosoler/Drawflow",
+  "stars": 6105,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2024-10-19T21:55:00Z",
+  "description": "Simple flow library \ud83d\udda5\ufe0f\ud83d\uddb1\ufe0f"
+ },
+ "jagenjo/litegraph.js": {
+  "repo": "jagenjo/litegraph.js",
+  "stars": 8107,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2024-08-01T08:49:24Z",
+  "description": "A graph node engine and editor written in Javascript similar to PD or UDK Blueprints, comes with its own editor in HTML5 Canvas2D. The engine can run client side or server side using Node. It allows t"
+ },
+ "pixijs/pixijs": {
+  "repo": "pixijs/pixijs",
+  "stars": 48042,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T18:16:47Z",
+  "description": "The HTML5 Creation Engine: Create beautiful digital content with the fastest, most flexible 2D WebGL renderer."
+ },
+ "toeverything/AFFiNE": {
+  "repo": "toeverything/AFFiNE",
+  "stars": 71732,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T05:55:14Z",
+  "description": "There can be more than Notion and Miro. AFFiNE(pronounced [\u0259\u2018fain]) is a next-gen knowledge base that brings planning, sorting and creating all together. Privacy first, open-source, customizable and r"
+ },
+ "shadcn-ui/ui": {
+  "repo": "shadcn-ui/ui",
+  "stars": 121782,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:28:23Z",
+  "description": "A set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks. Open Source. Open Code."
+ },
+ "radix-ui/primitives": {
+  "repo": "radix-ui/primitives",
+  "stars": 19197,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-08T16:39:51Z",
+  "description": "Radix Primitives is an open-source UI component library for building high-quality, accessible design systems and web apps. Maintained by @workos."
+ },
+ "storybookjs/storybook": {
+  "repo": "storybookjs/storybook",
+  "stars": 90889,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:05:16Z",
+  "description": "Storybook is the industry standard workshop for building, documenting, and testing UI components in isolation"
+ },
+ "mui/material-ui": {
+  "repo": "mui/material-ui",
+  "stars": 98886,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T14:20:37Z",
+  "description": "Material UI: Comprehensive React component library that implements Google's Material Design. Free forever."
+ },
+ "chakra-ui/chakra-ui": {
+  "repo": "chakra-ui/chakra-ui",
+  "stars": 40582,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T19:13:33Z",
+  "description": "Chakra UI is a component system for building SaaS products with speed \u26a1\ufe0f"
+ },
+ "mantinedev/mantine": {
+  "repo": "mantinedev/mantine",
+  "stars": 31590,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-11T07:00:21Z",
+  "description": "A fully featured React components library"
+ },
+ "tailwindlabs/tailwindcss": {
+  "repo": "tailwindlabs/tailwindcss",
+  "stars": 97296,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-14T19:43:34Z",
+  "description": "A utility-first CSS framework for rapid UI development."
+ },
+ "penpot/penpot": {
+  "repo": "penpot/penpot",
+  "stars": 58984,
+  "license": "MPL-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T16:30:05Z",
+  "description": "Penpot: The open-source design platform for Product teams that need scalable collaboration."
+ },
+ "ant-design/ant-design": {
+  "repo": "ant-design/ant-design",
+  "stars": 99137,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T08:46:00Z",
+  "description": "An enterprise-class UI design language and React UI library"
+ },
+ "simple-icons/simple-icons": {
+  "repo": "simple-icons/simple-icons",
+  "stars": 25672,
+  "license": "CC0-1.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-02T01:27:31Z",
+  "description": "SVG icons for popular brands"
+ },
+ "lucide-icons/lucide": {
+  "repo": "lucide-icons/lucide",
+  "stars": 24072,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T12:49:34Z",
+  "description": "Beautiful & consistent icon toolkit made by the community. Open-source project and a fork of Feather Icons."
+ },
+ "iconify/iconify": {
+  "repo": "iconify/iconify",
+  "stars": 6274,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T16:52:21Z",
+  "description": "Universal icon framework. One syntax for FontAwesome, Material Design Icons, DashIcons, Feather Icons, EmojiOne, Noto Emoji and many other open source icon sets (over 200 icon sets and ~300k icons). S"
+ },
+ "fontsource/fontsource": {
+  "repo": "fontsource/fontsource",
+  "stars": 6075,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-17T04:00:00Z",
+  "description": "Self-host Open Source fonts in neatly bundled NPM packages."
+ },
+ "pheralb/svgl": {
+  "repo": "pheralb/svgl",
+  "stars": 6253,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-07-19T10:48:20Z",
+  "description": "\ud83e\udde9 A beautiful library with SVG logos. Built with Sveltekit & Tailwind CSS."
+ },
+ "lokesh/color-thief": {
+  "repo": "lokesh/color-thief",
+  "stars": 13613,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-03T06:06:03Z",
+  "description": "Grab the color palette from an image using just Javascript.  Works in the browser and in Node."
+ },
+ "vercel/satori": {
+  "repo": "vercel/satori",
+  "stars": 13829,
+  "license": "MPL-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T15:01:53Z",
+  "description": "Enlightened library to convert HTML and CSS to SVG"
+ },
+ "yeun/open-color": {
+  "repo": "yeun/open-color",
+  "stars": 5557,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2023-12-10T16:29:40Z",
+  "description": "Color scheme for UI design."
+ },
+ "google/fonts": {
+  "repo": "google/fonts",
+  "stars": 20389,
+  "license": "NONE",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T15:44:50Z",
+  "description": "Font files available from Google Fonts, and a public issue tracker for all things Google Fonts"
+ },
+ "open-webui/open-webui": {
+  "repo": "open-webui/open-webui",
+  "stars": 149489,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T20:37:53Z",
+  "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)"
+ },
+ "lobehub/lobe-chat": {
+  "repo": "lobehub/lobehub",
+  "stars": 81908,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:30:53Z",
+  "description": "\ud83e\udd2f LobeHub is your Chief Agent Operator, organizing your agents into 7\u00d724 operations by hiring, scheduling, and reporting on your entire AI team."
+ },
+ "danny-avila/LibreChat": {
+  "repo": "danny-avila/LibreChat",
+  "stars": 42311,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:12:24Z",
+  "description": "Enhanced ChatGPT Clone: Features Agents, MCP, Skills, DeepSeek, Anthropic, AWS, OpenAI, Responses API, Azure, Groq, o1, GPT-5, Mistral, OpenRouter, Vertex AI, Gemini, Artifacts, AI model switching, me"
+ },
+ "Mintplex-Labs/anything-llm": {
+  "repo": "Mintplex-Labs/anything-llm",
+  "stars": 65017,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T16:45:34Z",
+  "description": "Stop renting your intelligence. Own it with AnythingLLM. Everything you need for a powerful local-first agent experience "
+ },
+ "janhq/jan": {
+  "repo": "janhq/jan",
+  "stars": 44088,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T10:41:14Z",
+  "description": "Jan is an open source alternative to ChatGPT that runs 100% offline on your computer."
+ },
+ "CherryHQ/cherry-studio": {
+  "repo": "CherryHQ/cherry-studio",
+  "stars": 50885,
+  "license": "AGPL-3.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:07:31Z",
+  "description": "AI productivity studio with smart chat, autonomous agents, and 300+ assistants. Unified access to frontier LLMs"
+ },
+ "enricoros/big-AGI": {
+  "repo": "enricoros/big-AGI",
+  "stars": 7096,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:55:59Z",
+  "description": "AI suite powered by state-of-the-art models and providing advanced AI/AGI functions. Includes AI personas, AGI functions, world-class Beam multi-model chats, text-to-image, voice, response streaming, "
+ },
+ "chatboxai/chatbox": {
+  "repo": "chatboxai/chatbox",
+  "stars": 41510,
+  "license": "GPL-3.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-14T14:13:27Z",
+  "description": "Powerful AI Client"
+ },
+ "ollama/ollama": {
+  "repo": "ollama/ollama",
+  "stars": 179116,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T16:58:35Z",
+  "description": "Get up and running with Kimi-K2.6, GLM-5.2, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models."
+ },
+ "ggml-org/llama.cpp": {
+  "repo": "ggml-org/llama.cpp",
+  "stars": 125013,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:12:29Z",
+  "description": "LLM inference in C/C++"
+ },
+ "langgenius/dify": {
+  "repo": "langgenius/dify",
+  "stars": 153133,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:57:39Z",
+  "description": "Build Agentic workflows, RAG pipelines, with rich AI model and tool support on one collaborative workspace. Deploy on cloud, VPC, or self-hosted, so teams move from prototype to production without reb"
+ },
+ "FlowiseAI/Flowise": {
+  "repo": "FlowiseAI/Flowise",
+  "stars": 55382,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": true,
+  "pushed_at": "2026-08-13T12:38:19Z",
+  "description": "Build AI Agents, Visually"
+ },
+ "n8n-io/n8n": {
+  "repo": "n8n-io/n8n",
+  "stars": 201517,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:47:07Z",
+  "description": "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations."
+ },
+ "sigoden/aichat": {
+  "repo": "sigoden/aichat",
+  "stars": 10375,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-02-23T11:16:42Z",
+  "description": "All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI Tools & Agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more."
+ },
+ "langfuse/langfuse": {
+  "repo": "langfuse/langfuse",
+  "stars": 33525,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:48:06Z",
+  "description": "\ud83e\udea2 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. \ud83c\udf4aYC W23 "
+ },
+ "Helicone/helicone": {
+  "repo": "Helicone/helicone",
+  "stars": 6092,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-16T20:26:29Z",
+  "description": "\ud83e\uddca Open source LLM observability platform. One line of code to monitor, evaluate, and experiment. YC W23 \ud83c\udf53"
+ },
+ "Arize-ai/phoenix": {
+  "repo": "Arize-ai/phoenix",
+  "stars": 11137,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:08:59Z",
+  "description": "AI Observability & Evaluation"
+ },
+ "traceloop/openllmetry": {
+  "repo": "traceloop/openllmetry",
+  "stars": 7387,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-10T08:49:01Z",
+  "description": "Open-source observability for your GenAI or LLM application, based on OpenTelemetry"
+ },
+ "openlit/openlit": {
+  "repo": "openlit/openlit",
+  "stars": 2712,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T05:10:26Z",
+  "description": "Open source platform for AI Engineering: OpenTelemetry-native LLM Observability, GPU Monitoring, Guardrails, Evaluations, Prompt Management, Vault, Playground. \ud83d\ude80\ud83d\udcbb Integrates with 50+ LLM Providers, Ve"
+ },
+ "promptfoo/promptfoo": {
+  "repo": "promptfoo/promptfoo",
+  "stars": 24441,
+  "license": "MIT",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T15:13:06Z",
+  "description": "Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, DeepSeek, and more. Simple declarative configs with command line "
+ },
+ "comet-ml/opik": {
+  "repo": "comet-ml/opik",
+  "stars": 21521,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T17:21:34Z",
+  "description": "Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards."
+ },
+ "agenta-ai/agenta": {
+  "repo": "Agenta-AI/agenta",
+  "stars": 4509,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:08:08Z",
+  "description": "Agenta is a workspace where you and your team build agents and automations."
+ },
+ "modelcontextprotocol/servers": {
+  "repo": "modelcontextprotocol/servers",
+  "stars": 89747,
+  "license": "NOASSERTION",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-20T01:12:36Z",
+  "description": "Model Context Protocol Servers"
+ },
+ "e2b-dev/E2B": {
+  "repo": "e2b-dev/E2B",
+  "stars": 13507,
+  "license": "Apache-2.0",
+  "is_fork": false,
+  "archived": false,
+  "pushed_at": "2026-08-21T18:06:03Z",
+  "description": "Open-source, secure environment with real-world tools for enterprise-grade agents."
+ }
+}
