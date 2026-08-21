@@ -4,7 +4,7 @@
 
 | # | 切片 | 报告 | 20 轮之后 |
 |---|---|---|---|
-| 01 | 产品对位 | （未交稿） | 计划卡 / 4 宫格 / 下载导出已上 |
+| 01 | 产品对位 | [01-product.md](01-product.md) | 快照 @ `1bfa56d`；R4–R7 后又关了下载/上传父级/镜头/计划卡 |
 | 02 | BYOK / 安全 / 额度 | [02-security.md](02-security.md) | 无跳转 + 估费 402；**本轮补** 路径穿越 / `file://` / keyring 0600 / Host |
 | 03 | API 三方错位 | [03-api.md](03-api.md) | 见 `evolve/CONTRACT.md` |
 | 04 | Conductor | [04-conductor.md](04-conductor.md) | fail-closed；研究 Conductor 仍未整包移植 |
