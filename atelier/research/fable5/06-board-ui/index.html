@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0c10">
+  <title>Atelier — Board</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <noscript><div class="noscript">Atelier requires JavaScript.</div></noscript>
+
+  <div id="app">
+
+    <!-- ============ Top bar ============ -->
+    <header id="topbar">
+      <div class="tb-group tb-left">
+        <div class="logo" title="Atelier">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M12 3 4 21M12 3l8 18M7.5 14h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Atelier</span>
+        </div>
+        <span class="tb-sep"></span>
+        <button id="projectBtn" class="btn ghost" aria-haspopup="menu" aria-expanded="false" title="Switch project">
+          <span id="projName">Loading…</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="tb-group tb-right">
+        <button id="connPill" class="pill" title="Backend connection">
+          <span class="pill-dot"></span><span id="connLabel">…</span>
+        </button>
+        <button id="brandKitBtn" class="btn ghost" title="Brand kit (StyleLock)">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path d="M12 21a9 9 0 1 1 9-9c0 2-1.5 3-3 3h-2a2 2 0 0 0-2 2c0 1 .8 1.5.8 2.5S13.6 21 12 21Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <circle cx="8" cy="10" r="1.2" fill="currentColor"/><circle cx="12" cy="7.5" r="1.2" fill="currentColor"/><circle cx="16" cy="10" r="1.2" fill="currentColor"/>
+          </svg>
+          <span>Brand kit</span>
+        </button>
+        <button id="settingsBtn" class="btn ghost" title="Settings & API keys">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M19 12c0-.6.5-1.3.3-1.9s-1-.8-1.4-1.3-.3-1.4-.8-1.8-1.3 0-1.9-.2S14 5.6 13.4 5.4 12.2 5 11.6 5s-1 .7-1.6.9-1.4-.2-1.9.2-.4 1.3-.8 1.8-1.2.7-1.4 1.3S6.2 10.4 6 11c0 .3-.1.6-.1 1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M5 12c0 .6-.5 1.3-.3 1.9s1 .8 1.4 1.3.3 1.4.8 1.8 1.3 0 1.9.2.6 1.2 1.2 1.4 1.2.4 1.8.4 1-.7 1.6-.9 1.4.2 1.9-.2.4-1.3.8-1.8 1.2-.7 1.4-1.3.1-1.2.3-1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span>Settings</span>
+        </button>
+        <button id="chatToggleBtn" class="btn ghost active" title="Toggle chat dock (C)">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+          <span>Chat</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ============ Stage: canvas + chat dock ============ -->
+    <main id="stage">
+
+      <div id="canvasWrap">
+        <div id="viewport" tabindex="0" aria-label="Infinite canvas">
+          <div id="world"></div>
+
+          <div id="dropOverlay" aria-hidden="true">
+            <div class="drop-card">
+              <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                <path d="M12 16V4m0 0 4 4m-4-4L8 8M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p>Drop to add to the board</p>
+              <small>Images become image nodes · videos become placeholders</small>
+            </div>
+          </div>
+
+          <div id="emptyHint" hidden>
+            <p>The board is empty.</p>
+            <small>Press <kbd>N</kbd> for a note, <kbd>U</kbd> to upload, or drop files anywhere.</small>
+          </div>
+        </div>
+
+        <!-- Floating creation / zoom toolbar -->
+        <nav id="toolbar" aria-label="Board tools">
+          <button data-act="add-note" title="Add note — N">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M5 4h14a1 1 0 0 1 1 1v9l-6 6H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M14 20v-5a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button data-act="upload" title="Upload image or video — U">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+              <circle cx="9" cy="9.5" r="1.6" fill="currentColor"/>
+              <path d="m4.5 17 4.5-4 3.5 3 3-2.5 4 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button data-act="add-video" title="Add video placeholder — V">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+              <path d="m10 9 5 3-5 3V9Z" fill="currentColor"/>
+            </svg>
+          </button>
+          <span class="tool-sep"></span>
+          <button data-act="zoom-in" title="Zoom in — +">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+          <button data-act="zoom-out" title="Zoom out — −">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+          <button data-act="zoom-fit" title="Fit board — F">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </nav>
+
+        <div id="zoomHud" title="Click to reset zoom — 0">100%</div>
+      </div>
+
+      <!-- ============ Chat dock ============ -->
+      <aside id="chatDock" aria-label="Thread chat">
+        <header class="dock-head">
+          <div class="dock-threads">
+            <select id="threadSel" class="select" aria-label="Thread"></select>
+            <button id="newThreadBtn" class="icon-btn" title="New thread">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <button id="dockCollapse" class="icon-btn" title="Collapse chat — C">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </header>
+
+        <div id="msgList" aria-live="polite">
+          <div id="chatEmpty" hidden>
+            <p>Talk to Helix about this board.</p>
+            <small>Try “Draft three headline options that match the brand voice.”</small>
+          </div>
+        </div>
+
+        <footer class="composer">
+          <div class="composer-meta">
+            <div class="seg" id="modeSeg" role="radiogroup" aria-label="Response mode">
+              <button data-mode="fast" class="active" role="radio" aria-checked="true" title="Fast — low latency, single pass">
+                <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="currentColor"/></svg>
+                Fast
+              </button>
+              <button data-mode="thinking" role="radio" aria-checked="false" title="Thinking — Helix plans before answering">
+                <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+                  <path d="M9 21h6M10 17h4M12 3a6 6 0 0 0-3.5 10.9c.7.5 1 1.3 1 2.1h5c0-.8.3-1.6 1-2.1A6 6 0 0 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Thinking
+              </button>
+            </div>
+            <div class="model-pick">
+              <select id="providerSel" class="select sm" aria-label="Provider"></select>
+              <select id="modelSel" class="select sm" aria-label="Model"></select>
+            </div>
+          </div>
+          <div class="composer-input">
+            <textarea id="chatInput" rows="1" placeholder="Message this thread… (Enter to send)"></textarea>
+            <button id="sendBtn" class="send-btn" title="Send — Enter">
+              <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+                <path d="M4 12 20 4l-4 8 4 8-16-8Zm0 0h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </footer>
+      </aside>
+
+      <!-- Re-open handle when the dock is collapsed -->
+      <button id="dockExpand" class="icon-btn" hidden title="Open chat — C">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </main>
+
+    <!-- ============ Settings panel (BYOK) ============ -->
+    <aside id="settingsPanel" class="panel" aria-hidden="true" aria-label="Settings">
+      <header class="panel-head">
+        <h2>Settings</h2>
+        <button class="icon-btn panel-close" data-close title="Close — Esc">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </header>
+      <div class="panel-body">
+        <section>
+          <h3>API keys <span class="tag">BYOK</span></h3>
+          <p class="muted">Bring your own keys. They are stored by the Atelier server (<code>PUT /api/keys</code>) and never echoed back — only a masked hint is returned.</p>
+          <div id="keysList"></div>
+          <button id="saveKeysBtn" class="btn primary wide">Save keys</button>
+        </section>
+        <section>
+          <h3>Connection</h3>
+          <p class="muted">Backend: <strong id="connDetail">detecting…</strong></p>
+          <button id="retryConnBtn" class="btn wide">Retry /api connection</button>
+        </section>
+      </div>
+    </aside>
+
+    <!-- ============ Brand kit panel (StyleLock) ============ -->
+    <aside id="brandPanel" class="panel" aria-hidden="true" aria-label="Brand kit">
+      <header class="panel-head">
+        <h2>Brand kit <span class="tag">StyleLock</span></h2>
+        <button class="icon-btn panel-close" data-close title="Close — Esc">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </header>
+      <div class="panel-body">
+        <section>
+          <h3>Palette</h3>
+          <div id="bkColors"></div>
+          <button id="bkAddColor" class="btn wide">+ Add color</button>
+        </section>
+        <section>
+          <h3>Typography</h3>
+          <label class="field"><span>Heading font</span><input id="bkHeadingFont" type="text" placeholder="e.g. Fraunces"></label>
+          <label class="field"><span>Body font</span><input id="bkBodyFont" type="text" placeholder="e.g. Inter"></label>
+        </section>
+        <section>
+          <h3>Logo</h3>
+          <div id="bkLogoDrop" class="logo-drop" title="Click or drop an image">
+            <img id="bkLogoImg" alt="" hidden>
+            <span id="bkLogoHint">Click or drop a logo (SVG / PNG)</span>
+          </div>
+        </section>
+        <section>
+          <h3>Voice &amp; tone</h3>
+          <textarea id="bkVoice" rows="4" placeholder="e.g. Confident, warm, no exclamation marks. Short sentences."></textarea>
+        </section>
+        <button id="saveBrandBtn" class="btn primary wide">Save brand kit</button>
+        <p class="muted small">The kit is injected into every Helix generation for this project and enforced by the critic pass.</p>
+      </div>
+    </aside>
+
+    <div id="scrim" hidden></div>
+    <div id="toasts" aria-live="polite"></div>
+  </div>
+
+  <input type="file" id="filePicker" hidden multiple accept="image/*,video/*">
+  <input type="file" id="logoPicker" hidden accept="image/*">
+
+  <script src="app.js"></script>
+</body>
+</html>

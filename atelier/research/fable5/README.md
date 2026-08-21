@@ -9,6 +9,7 @@ Completed and copied:
 - `04-helix-arch/` — Memory invariants, OpenAPI hub, content-addressed store prototype
 - `08-security-quota/` — threat model, keyring notes, 2026-08-21 cost table
 - `05-conductor/` — plan/critique/manifest protocol, three-lane routing, 36 offline tests
+- `06-board-ui/` — vanilla infinite canvas + demo/live backends (expects SSE `/api/chat`; not swapped over the live Helix `/api/threads/:id/run` UI yet)
 - `07-loom/` — official-API media pipelines, demo kit, Veo/Sora stubs (Imagen Gemini API shut down 2026-08-17)
 - `09-oss-adapters/` — license-aware pattern map, Comfy/ffmpeg/Remotion future, zero-npm stubs
 
