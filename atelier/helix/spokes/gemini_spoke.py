@@ -76,7 +76,7 @@ class GeminiSpoke(Spoke):
             raw={},
         )
 
-    def image(self, prompt: str, model: str = "gemini-2.0-flash-preview-image-generation", **kwargs) -> ImageResult:
+    def image(self, prompt: str, model: str = "gemini-2.5-flash-image", **kwargs) -> ImageResult:
         body = {
             "contents": [{"role": "user", "parts": [{"text": prompt}]}],
             "generationConfig": {"responseModalities": ["IMAGE", "TEXT"]},

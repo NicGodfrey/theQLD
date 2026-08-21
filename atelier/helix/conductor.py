@@ -246,9 +246,9 @@ def _default_model(provider: str, mode: str) -> str:
 
 def _image_model(provider: str) -> str:
     if provider == "openai":
-        return "dall-e-3"
+        return "gpt-image-1"
     if provider == "gemini":
-        return "gemini-2.0-flash-preview-image-generation"
+        return "gemini-2.5-flash-image"
     return "demo-svg"
 
 

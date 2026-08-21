@@ -6,6 +6,7 @@ Completed and copied:
 
 - `01-product-spec/` — Lovart public feature matrix, UX flows, acceptance
 - `08-security-quota/` — threat model, keyring notes, 2026-08-21 cost table
+- `07-loom/` — official-API media pipelines, demo kit, Veo/Sora stubs (Imagen Gemini API shut down 2026-08-17)
 - `09-oss-adapters/` — license-aware pattern map, Comfy/ffmpeg/Remotion future, zero-npm stubs
 
 Other workstreams are still landing under `/tmp/atelier-fable/`.
