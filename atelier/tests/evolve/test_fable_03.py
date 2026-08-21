@@ -51,10 +51,12 @@ class UploadWiring(unittest.TestCase):
         self.assertGreaterEqual(app_js.count("state.lastUploadId = null"), 2)
 
     def test_spot_prompt_prefers_last_artifact(self):
-        # Claim 4: /spot|局部|edit this/i routes to lastArtifactId, else lastUploadId.
+        # Claim 4: spot words still fall back to lastArtifactId; a selected
+        # card or last upload can also become the parent.
         app_js = (WEB / "app.js").read_text(encoding="utf-8")
-        self.assertIn("/spot|局部|edit this/i", app_js)
-        self.assertIn("spot ? state.lastArtifactId : (state.lastUploadId || undefined)", app_js)
+        self.assertIn("/spot|局部|edit this|refine|larger type|bigger type/i", app_js)
+        self.assertIn("state.lastUploadId", app_js)
+        self.assertIn("state.selectedArtifactId", app_js)
 
 
 class UploadRoute(unittest.TestCase):

@@ -1,7 +1,11 @@
-# Fable-06 · R11 spot-edit (conductor fill — agent slot full)
+# Fable-06 · R11 spot-edit — awaiting live agent
 
-**Pass.** `parent_artifact_id` stored on the new artifact; plan.spot_edit set. UI heuristic: prompt matching `/spot|局部|edit this/i` plus `state.lastArtifactId`.
+Live leftovers now in the tree:
 
-## Remaining
-- No box/mask region, no inpainting API fields.
-- Heuristic can miss “make the type larger” without the words spot/edit.
+- Click a board card (or "Use as reference") sets `state.selectedArtifactId`.
+- The next weave sends that id as `parent_artifact_id` with no magic words.
+- Prompt words `refine` / `larger type` / `bigger type` still fall back to
+  `lastArtifactId` when nothing is selected.
+
+Verifier: one blocking `claude-fable-5-thinking-high` agent. Do not start R12
+until this note is replaced with the agent's own evidence.

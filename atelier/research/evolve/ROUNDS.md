@@ -14,7 +14,7 @@ Odd rounds are Fable-shaped (expose a gap with a test). Even rounds are Opus-sha
 | 8 | 4-up | `variants=4` / “four variants” → 2×2 |
 | 9 | Undo | `undo_log` + `POST .../undo` |
 | 10 | Brand kit | Demo tint + StyleLock prefix on paid image prompts |
-| 11 | Spot-edit | `parent_artifact_id` on the next weave |
+| 11 | Spot-edit | Click a card as reference; no magic words required |
 | 12 | Text layer | `type=text` nodes, not baked into raster |
 | 13 | Export | `GET .../export` zip |
 | 14 | Launcher | `atelier/__main__.py` bootstraps repo root |

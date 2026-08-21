@@ -6,6 +6,7 @@ const state = {
   camera: { x: 0, y: 0, zoom: 1 },
   lastArtifactId: null,
   lastUploadId: null,
+  selectedArtifactId: null,
 };
 
 async function api(path, opts = {}) {
@@ -206,7 +207,8 @@ async function refreshBoard() {
   const board = document.getElementById("board");
   board.innerHTML = "";
   (data.nodes || []).forEach((node) => {
-    const card = el("div", { class: "node" + (node.type === "note" || node.type === "text" ? " note" : "") + (node.type === "text" ? " text-layer" : "") });
+    const selected = node.artifact_id && node.artifact_id === state.selectedArtifactId;
+    const card = el("div", { class: "node" + (node.type === "note" || node.type === "text" ? " note" : "") + (node.type === "text" ? " text-layer" : "") + (selected ? " selected" : "") });
     card.style.left = node.x + "px";
     card.style.top = node.y + "px";
     card.style.width = node.w + "px";
@@ -216,10 +218,29 @@ async function refreshBoard() {
       const img = el("img", { src: `/api/artifacts/${node.artifact_id}`, alt: node.text || "" });
       const tools = el("div", { class: "node-tools" }, [
         el("a", { href: `/api/artifacts/${node.artifact_id}?download=1`, text: "Download", class: "dl" }),
+        el("button", {
+          type: "button",
+          class: "ref-btn",
+          text: selected ? "Reference" : "Use as reference",
+          onclick: (ev) => {
+            ev.stopPropagation();
+            state.selectedArtifactId = node.artifact_id;
+            state.lastArtifactId = node.artifact_id;
+            refreshBoard();
+          },
+        }),
       ]);
       card.append(img, el("div", { class: "cap", text: node.text || "artifact" }), tools);
     } else {
       card.append(el("div", { class: "text-body", text: node.text || "note" }));
+    }
+    if (node.artifact_id) {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest(".dl") || e.target.closest(".ref-btn")) return;
+        state.selectedArtifactId = node.artifact_id;
+        state.lastArtifactId = node.artifact_id;
+        refreshBoard();
+      });
     }
     enableDrag(card, node);
     board.append(card);
@@ -416,14 +437,18 @@ document.getElementById("saveBrand").onclick = async () => {
 
 function runBody() {
   const prompt = document.getElementById("prompt").value;
-  const spot = state.lastArtifactId && /spot|局部|edit this/i.test(prompt);
+  const spotWords = /spot|局部|edit this|refine|larger type|bigger type/i.test(prompt);
+  const parent = state.selectedArtifactId
+    || (spotWords ? state.lastArtifactId : undefined)
+    || state.lastUploadId
+    || undefined;
   return {
     prompt,
     mode: document.getElementById("mode").value,
     provider: document.getElementById("provider").value,
     model: document.getElementById("model").value,
     variants: document.getElementById("variants").checked ? 4 : 0,
-    parent_artifact_id: spot ? state.lastArtifactId : (state.lastUploadId || undefined),
+    parent_artifact_id: parent,
   };
 }
 

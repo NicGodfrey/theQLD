@@ -81,6 +81,16 @@ h2, h3 { margin: 0 0 10px; font-weight: 500; font-size: 13px; letter-spacing: 0.
   box-shadow: var(--shadow);
   overflow: hidden;
 }
+.node.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.node-tools .ref-btn {
+  margin-left: 8px;
+  background: transparent;
+  border: 0;
+  color: var(--accent);
+  font-size: 12px;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  padding: 0;
+}
 .node img, .node object { width: 100%; height: calc(100% - 36px); object-fit: cover; display: block; background: #000; }
 .node .cap { padding: 8px 10px; font-size: 12px; color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .node.note { padding: 14px; font-size: 15px; line-height: 1.45; }
