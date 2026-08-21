@@ -111,23 +111,14 @@ Ran 51 tests — OK
 
 Full tree (`unittest discover -s atelier/tests`): 195 tests, OK.
 
-## Remaining holes to fold before R10 closes
+## Folded after this note (conductor close)
 
-- **The lock is advice, not enforcement.** Nothing checks that the returned
-  image actually used the palette. A real check needs colour distance over the
-  decoded bytes; deliberately not invented here.
-- **Gradient stop 2 stays off-brand.** `c2` is still sha1-derived unless the kit
-  carries four or more swatches, so a one-to-three colour kit renders one
-  hash colour on the board. Picking a substitute is a design call, not a bug
-  fix, so it is left open.
-- **The kit is unvalidated on the way in.** `POST /api/projects/<id>/brand`
-  stores whatever JSON the textarea holds. Swatches shaped `{"hex": "#112233"}`
-  — the shape `research/fable5/04-helix-arch/store.py` used — are silently
-  ignored, and a mistyped palette yields no lock with no feedback in the UI.
-  Validating on save and echoing the parsed swatches back is the fix.
-- **Long briefs are not capped after prefixing.** StyleLock adds roughly 120
-  characters; `dall-e-3` rejects prompts over 4000. Nothing measures the
-  prefixed length before the call.
-- **`openai_compat` is covered by construction, not by a test.** It reaches the
-  lock through `OpenAISpoke.image`, but no test pins that route.
-- **Brand names are truncated at 48 characters** with no note to the user.
+Save normalizes `{hex:"#…"}` swatches and drops junk. Small kits reuse the
+ground swatch for gradient stop 2. `openai_compat` is pinned through the
+conductor. Missing-project brand POST is 404.
+
+## Remaining holes
+
+- The lock is advice, not enforcement (no ΔE on returned pixels).
+- Long briefs are not re-capped after the StyleLock prefix.
+- Brand names still truncate at 48 characters without a UI note.
