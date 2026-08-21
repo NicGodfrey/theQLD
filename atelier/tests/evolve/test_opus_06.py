@@ -422,6 +422,20 @@ class TextNodeStore(unittest.TestCase):
         good = self.add(type="text", text="c", x="120", y=44.5, w=300, h=160, z=2)
         self.assertEqual((good["x"], good["y"], good["w"], good["h"], good["z"]), (120.0, 44.5, 300.0, 160.0, 2))
 
+    def test_a_card_cannot_be_wider_than_the_board_span(self):
+        # 1e308 is finite, so the Infinity guard was not enough.
+        huge = self.add(type="image", w=1e308, h=1e308)
+        self.assertEqual((huge["w"], huge["h"]), (2400.0, 2400.0))
+        tiny = self.add(type="image", w=1, h=1)
+        self.assertEqual((tiny["w"], tiny["h"]), (40.0, 40.0))
+        moved = self.mem.update_node(huge["id"], w=1e308, h=8)
+        self.assertEqual((moved["w"], moved["h"]), (2400.0, 40.0))
+
+    def test_a_96px_headline_gets_a_taller_card(self):
+        node = self.add(type="text", text="Huge", h=120, meta={"layer": "text", "font_size": 96})
+        self.assertGreaterEqual(node["h"], 96 * 1.6 + 24)
+        self.assertLessEqual(node["h"], 2400.0)
+
     def test_a_junk_coordinate_update_is_a_no_op_not_a_jump_home(self):
         node = self.add(type="text", text="c", x=500, y=400)
         moved = self.mem.update_node(node["id"], x="nope", y=float("inf"))
@@ -544,6 +558,19 @@ class TextNodeRoute(unittest.TestCase):
         self.assertEqual(
             self.live.memory.conn.execute(
                 "SELECT COUNT(*) FROM undo_log WHERE project_id=?", ("deadbeef",)
+            ).fetchone()[0],
+            0,
+        )
+
+    def test_threads_on_a_missing_project_are_404(self):
+        status, body = self.live.json(
+            "POST", "/api/projects/deadbeef/threads", {"topic": "orphan"}
+        )
+        self.assertEqual(status, 404)
+        self.assertEqual(body["error"], "missing project")
+        self.assertEqual(
+            self.live.memory.conn.execute(
+                "SELECT COUNT(*) FROM threads WHERE project_id=?", ("deadbeef",)
             ).fetchone()[0],
             0,
         )

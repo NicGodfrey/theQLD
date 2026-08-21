@@ -356,6 +356,9 @@ class Handler(BaseHTTPRequestHandler):
             _json(self, 201, project)
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "threads":
+            if not app.memory.get_project(parts[2]):
+                _json(self, 404, {"error": "missing project"})
+                return
             thread = app.memory.create_thread(
                 parts[2],
                 topic=body.get("topic") or "",

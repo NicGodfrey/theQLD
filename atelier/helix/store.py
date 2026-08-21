@@ -107,6 +107,31 @@ def _finite(value: Any, default: Optional[float]) -> Optional[float]:
     return out if math.isfinite(out) else default
 
 
+# 1e308 is finite, so _finite alone still lets a card be wider than the
+# universe. The board paints `style.width = node.w + "px"`; anything past a
+# couple of thousand pixels is just a way to lock the tab.
+NODE_SPAN_MIN = 40.0
+NODE_SPAN_MAX = 2400.0
+
+
+def _span(value: Any, default: Optional[float]) -> Optional[float]:
+    number = _finite(value, default)
+    if number is None:
+        return None
+    return min(NODE_SPAN_MAX, max(NODE_SPAN_MIN, number))
+
+
+def _fit_text_h(h: float, meta: Any) -> float:
+    """Grow a text card so a clamped headline is not clipped on arrival."""
+    size = 22.0
+    if isinstance(meta, dict):
+        parsed = _finite(meta.get("font_size"), None)
+        if parsed is not None:
+            size = parsed
+    needed = size * 1.6 + 24.0
+    return min(NODE_SPAN_MAX, max(h, needed))
+
+
 class Memory:
     def __init__(self, db_path: str | Path):
         self.path = Path(db_path)
@@ -218,6 +243,8 @@ class Memory:
         return self.get_project(project_id)
 
     def create_thread(self, project_id: str, topic: str = "", mode: str = "fast") -> dict:
+        if not self.get_project(project_id):
+            raise ValueError("missing project")
         tid = _id()
         self.conn.execute(
             "INSERT INTO threads (id, project_id, topic, mode, created_at) VALUES (?,?,?,?,?)",
@@ -307,21 +334,27 @@ class Memory:
         if not text and kwargs.get("data") is not None:
             data = kwargs["data"]
             text = data if isinstance(data, str) else json.dumps(data, ensure_ascii=False)
+        kind = str(kwargs.get("type") or "image")
+        meta = text_meta(kwargs.get("meta"))
+        width = _span(kwargs.get("w", 320), 320.0)
+        height = _span(kwargs.get("h", 240), 240.0)
+        if kind in {"text", "note"}:
+            height = _fit_text_h(height, meta)
         self.conn.execute(
             """INSERT INTO nodes (id, project_id, type, x, y, w, h, z, artifact_id, text, meta)
                VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
             (
                 nid,
                 kwargs["project_id"],
-                str(kwargs.get("type") or "image"),
+                kind,
                 _finite(kwargs.get("x", 80), 80.0),
                 _finite(kwargs.get("y", 80), 80.0),
-                _finite(kwargs.get("w", 320), 320.0),
-                _finite(kwargs.get("h", 240), 240.0),
+                width,
+                height,
                 int(_finite(kwargs.get("z", 0), 0.0)),
                 kwargs.get("artifact_id"),
                 str(text) if text else "",
-                json.dumps(text_meta(kwargs.get("meta")), ensure_ascii=False),
+                json.dumps(meta, ensure_ascii=False),
             ),
         )
         self.conn.commit()
@@ -385,7 +418,10 @@ class Memory:
             if key == "meta":
                 value = json.dumps(text_meta(self._node_meta(value)), ensure_ascii=False)
             elif key in {"x", "y", "w", "h", "z"}:
-                number = _finite(value, None)
+                if key in {"w", "h"}:
+                    number = _span(value, None)
+                else:
+                    number = _finite(value, None)
                 if number is None:
                     continue  # a junk coordinate is a no-op, not a jump to the origin
                 value = int(number) if key == "z" else number

@@ -191,18 +191,17 @@ Ran 68 tests — OK
 Full tree (`unittest discover -s atelier/tests`): 239 tests, OK
 (1 expected failure, pre-existing).
 
+## Folded after this note (conductor close)
+
+`w` / `h` clamp to 40–2400 (`1e308` is finite, so the Infinity guard was not
+enough). A text card grows on insert so a 96px headline is not clipped by the
+default 120px box. `POST /api/projects/:id/threads` on a missing project is
+404 — same class as hole 4.
+
 ## Remaining holes
 
 - Editing is still a `window.prompt` dialog, not a caret on the card. Nothing
   wraps, kerns or aligns interactively, and there is no font picker — the
   family is whatever string you type.
-- `POST /api/projects/:id/threads` still mints an orphan thread on a missing
-  project. Same class as hole 4, different slice.
-- `w` / `h` take any finite value, so a card can be `1e308` wide. Only the
-  browser's own clipping stops it; the camera has the same unbounded-pan
-  behaviour by design.
-- `font_size` is clamped but the card box is not resized to fit, so a 96px
-  headline in the default 280×120 card clips. `.text-body` now wraps and hides
-  the overflow instead of spilling across the board, but nothing auto-fits.
 - The export zip carries text nodes in `board.json` only — no rendered
   PNG/PDF. That is R13, deliberately not started here.
