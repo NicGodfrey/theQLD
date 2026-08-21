@@ -1,0 +1,11 @@
+{
+  "status": "awaiting_lovart_credentials",
+  "title": "The Queensland Legal Directory",
+  "entryCount": 18,
+  "directoryJson": "lovart/directory.json",
+  "directoryBrief": "lovart/directory.brief.md",
+  "sourceSite": "https://theqld.com/legalDirectory.html",
+  "exportedAt": "2026-08-21T17:58:37.725Z",
+  "updatedAt": "2026-08-21T17:58:37.742004+00:00",
+  "remoteError": "Missing LOVART_ACCESS_KEY / LOVART_SECRET_KEY. Get them from Lovart Avatar menu -> AK/SK Management."
+}
