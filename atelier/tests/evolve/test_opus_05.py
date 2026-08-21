@@ -69,6 +69,9 @@ class StyleLockText(unittest.TestCase):
         self.assertEqual(brand_colors("navy"), [])
         self.assertNotIn("ground=n", style_lock("poster", palette="navy", title="QLD"))
 
+    def test_research_shaped_swatches_are_accepted(self):
+        self.assertEqual(brand_colors([{"hex": "#112233"}, {"value": "#f5c211"}]), ["#112233", "#f5c211"])
+
 
 class DemoTint(unittest.TestCase):
     def test_demo_svg_still_paints_the_hex(self):
@@ -257,6 +260,30 @@ class ConductorCarriesTheKit(unittest.TestCase):
         system = seen[0][0]["content"]
         self.assertIn("Brand kit JSON", system)
         self.assertIn("#112233", system)
+
+    def test_openai_compat_uses_the_same_lock(self):
+        _, bodies = self._run(
+            {"name": "QLD", "palette": ["#112233"]}, provider="openai_compat"
+        )
+        self.assertEqual(len(bodies), 1)
+        self.assertIn("[StyleLock", bodies[0]["prompt"])
+        self.assertIn("#112233", bodies[0]["prompt"])
+
+    def test_save_normalizes_research_shaped_swatches(self):
+        project = self.mem.create_project("Kit", {})
+        saved = self.mem.update_brand_kit(
+            project["id"],
+            {
+                "name": "QLD]",
+                "palette": [{"hex": "#112233"}, "not-a-colour", "#f5c211"],
+                "voice": "quiet",
+                "junk": True,
+            },
+        )
+        self.assertEqual(saved["brand_kit"]["name"], "QLD")
+        self.assertEqual(saved["brand_kit"]["palette"], ["#112233", "#f5c211"])
+        self.assertEqual(saved["brand_kit"]["voice"], "quiet")
+        self.assertNotIn("junk", saved["brand_kit"])
 
 
 if __name__ == "__main__":

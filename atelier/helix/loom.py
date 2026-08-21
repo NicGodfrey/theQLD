@@ -56,9 +56,11 @@ def brand_colors(palette, limit: int = MAX_BRAND_COLORS) -> list[str]:
         return []
     colors: list[str] = []
     for item in palette:
-        if not isinstance(item, str):
-            continue
-        raw = item.strip()
+        raw = ""
+        if isinstance(item, str):
+            raw = item.strip()
+        elif isinstance(item, dict):
+            raw = str(item.get("hex") or item.get("value") or item.get("color") or "").strip()
         if HEX_COLOR.match(raw):
             colors.append(raw)
             if len(colors) >= limit:
@@ -111,6 +113,8 @@ def demo_svg(prompt: str, title: str = "Atelier", palette: list | None = None) -
             c1 = colors[1]
         if len(colors) >= 4:
             c2 = colors[3]
+        elif colors:
+            c2 = colors[0]
     safe = html.escape((prompt or "untitled brief")[:180])
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <defs>

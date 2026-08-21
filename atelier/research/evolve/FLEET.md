@@ -3,7 +3,7 @@
 Done with live agents: R1, R2, R3, R8, R9, R16.
 Remaining run **one round at a time** (implement → test → commit → one blocking verifier → next):
 
-R10 brand → R11 spot-edit → R12 text → R13 export → R14 launcher → R15 host-pin → R17 CI → R18 contract → R19 eval → R20 scorecard.
+R11 spot-edit → R12 text → R13 export → R14 launcher → R15 host-pin → R17 CI → R18 contract → R19 eval → R20 scorecard.
 
 | Agent | Model | Round | Slice | Status |
 |---|---|---|---|---|
@@ -16,8 +16,8 @@ R10 brand → R11 spot-edit → R12 text → R13 export → R14 launcher → R15
 | fable-04 | claude-fable-5-thinking-high | 7 | plan visible | done `bc-520ceeaa-f397-5a49-babb-1e07c2e60083` |
 | opus-04 | claude-opus-5-thinking-high-fast | 8 | 4-up variants | done `bc-59bb5fa8-982e-506a-83b3-4ba25bb29d26` |
 | fable-05 | claude-fable-5-thinking-high | 9 | undo | done `bc-8275a8f7-781f-5d18-bca1-feba9f3df131` |
-| opus-05 | claude-opus-5-thinking-high-fast | 10 | brand kit | awaiting live agent |
-| fable-06 | claude-fable-5-thinking-high | 11 | spot-edit | conductor fill |
+| opus-05 | claude-opus-5-thinking-high-fast | 10 | brand kit | done `bc-a3da2941-bceb-5248-8900-c03ff9598864` |
+| fable-06 | claude-fable-5-thinking-high | 11 | spot-edit | awaiting live agent |
 | opus-06 | claude-opus-5-thinking-high-fast | 12 | text layer | conductor fill |
 | fable-07 | claude-fable-5-thinking-high | 13 | export zip | conductor fill |
 | opus-07 | claude-opus-5-thinking-high-fast | 14 | launcher | conductor fill |

@@ -183,9 +183,19 @@ class Memory:
         return self.get_project(project_id)
 
     def update_brand_kit(self, project_id: str, brand_kit: dict) -> Optional[dict]:
+        from atelier.helix.loom import brand_colors, brand_name
+
+        if not self.get_project(project_id):
+            return None
+        kit = brand_kit if isinstance(brand_kit, dict) else {}
+        cleaned = {
+            "name": brand_name(kit.get("name")),
+            "palette": brand_colors(kit.get("palette")),
+            "voice": kit.get("voice") if isinstance(kit.get("voice"), str) else "",
+        }
         self.conn.execute(
             "UPDATE projects SET brand_kit=? WHERE id=?",
-            (json.dumps(brand_kit, ensure_ascii=False), project_id),
+            (json.dumps(cleaned, ensure_ascii=False), project_id),
         )
         self.conn.commit()
         return self.get_project(project_id)

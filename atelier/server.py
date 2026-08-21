@@ -364,7 +364,8 @@ class Handler(BaseHTTPRequestHandler):
             _json(self, 201, thread)
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "brand":
-            _json(self, 200, app.memory.update_brand_kit(parts[2], body.get("brand_kit") or body))
+            project = app.memory.update_brand_kit(parts[2], body.get("brand_kit") or body)
+            _json(self, 200 if project else 404, project or {"error": "missing project"})
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "camera":
             project = app.memory.set_camera(parts[2], body.get("camera") or body)
