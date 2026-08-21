@@ -8,6 +8,7 @@ import json
 import mimetypes
 import os
 import sys
+import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
@@ -24,6 +25,7 @@ from atelier.helix.conductor import Conductor, ConductorError
 from atelier.helix.exportzip import export_project_zip
 from atelier.helix.keyring import Keyring
 from atelier.helix.loom import ext_for_mime, write_bytes
+from atelier.helix.paths import safe_under
 from atelier.helix.quote import quote_run
 from atelier.helix.store import Memory
 from atelier.helix.usage import BudgetExceeded
@@ -40,9 +42,11 @@ def runtime_dir() -> Path:
 class App:
     def __init__(self):
         rt = runtime_dir()
+        self.lock = threading.RLock()
         self.memory = Memory(rt / "helix.sqlite")
         self.keyring = Keyring()
         self.artifacts = rt / "artifacts"
+        self.artifacts.mkdir(parents=True, exist_ok=True)
         self.conductor = Conductor(self.memory, self.keyring, self.artifacts)
         if not self.memory.list_projects():
             project = self.memory.create_project(
@@ -100,6 +104,25 @@ def _read_json(handler: BaseHTTPRequestHandler) -> dict:
     return json.loads(raw.decode("utf-8"))
 
 
+def _check_host(handler: BaseHTTPRequestHandler) -> bool:
+    bind = os.environ.get("ATELIER_HOST", "127.0.0.1")
+    if bind not in {"127.0.0.1", "localhost", "::1"}:
+        return True
+    host = (handler.headers.get("Host") or "").split(":")[0].lower()
+    if host in {"127.0.0.1", "localhost", "localhost.", "::1", ""}:
+        return True
+    _json(handler, 403, {"error": "refusing non-local Host", "code": "bad_host"})
+    return False
+
+
+def _send_web(handler: BaseHTTPRequestHandler, rel: str) -> None:
+    safe = safe_under(WEB, WEB / rel)
+    if not safe:
+        _json(handler, 404, {"error": "not found"})
+        return
+    _send_file(handler, safe)
+
+
 def _send_file(handler: BaseHTTPRequestHandler, path: Path, download_name: str | None = None) -> None:
     if not path.exists() or not path.is_file():
         _json(handler, 404, {"error": "not found"})
@@ -111,6 +134,7 @@ def _send_file(handler: BaseHTTPRequestHandler, path: Path, download_name: str |
     handler.send_response(200)
     handler.send_header("Content-Type", mime)
     handler.send_header("Content-Length", str(len(data)))
+    handler.send_header("X-Content-Type-Options", "nosniff")
     if download_name:
         handler.send_header("Content-Disposition", f'attachment; filename="{download_name}"')
     handler.end_headers()
@@ -144,21 +168,27 @@ class Handler(BaseHTTPRequestHandler):
         sys.stderr.write("atelier %s - %s\n" % (self.address_string(), fmt % args))
 
     def do_GET(self) -> None:
+        if not _check_host(self):
+            return
+        with get_app().lock:
+            self._do_GET()
+
+    def _do_GET(self) -> None:
         app = get_app()
         parsed = urlparse(self.path)
         path = parsed.path
         query = parse_qs(parsed.query)
         if path in {"/", "/index.html"}:
-            _send_file(self, WEB / "index.html")
+            _send_web(self, "index.html")
             return
         if path.startswith("/web/"):
-            _send_file(self, WEB / path[len("/web/") :])
+            _send_web(self, path[len("/web/") :])
             return
         if path.startswith("/assets/"):
-            _send_file(self, WEB / path[len("/assets/") :])
+            _send_web(self, path[len("/assets/") :])
             return
         if path in {"/app.js", "/styles.css"}:
-            _send_file(self, WEB / path.lstrip("/"))
+            _send_web(self, path.lstrip("/"))
             return
         if path == "/api/health":
             _json(
@@ -222,18 +252,24 @@ class Handler(BaseHTTPRequestHandler):
                 return
             name = f"{art['id']}{ext_for_mime(art.get('mime') or '')}"
             force = query.get("download", ["0"])[0] in {"1", "true", "yes"}
-            _send_file(self, Path(art["path"]), download_name=name if force else None)
+            safe = safe_under(app.artifacts, Path(art["path"]))
+            if not safe:
+                _json(self, 404, {"error": "not found"})
+                return
+            _send_file(self, safe, download_name=name if force else None)
             return
         if path.startswith("/api/"):
             _json(self, 404, {"error": "unknown GET"})
             return
-        candidate = WEB / path.lstrip("/")
-        if candidate.exists():
-            _send_file(self, candidate)
-            return
-        _json(self, 404, {"error": "not found"})
+        _send_web(self, path.lstrip("/"))
 
     def do_POST(self) -> None:
+        if not _check_host(self):
+            return
+        with get_app().lock:
+            self._do_POST()
+
+    def _do_POST(self) -> None:
         app = get_app()
         parsed = urlparse(self.path)
         path = parsed.path
@@ -387,6 +423,12 @@ class Handler(BaseHTTPRequestHandler):
         _json(self, 404, {"error": "unknown POST"})
 
     def do_DELETE(self) -> None:
+        if not _check_host(self):
+            return
+        with get_app().lock:
+            self._do_DELETE()
+
+    def _do_DELETE(self) -> None:
         app = get_app()
         parts = [p for p in urlparse(self.path).path.split("/") if p]
         if parts[:2] == ["api", "nodes"] and len(parts) == 3:

@@ -6,6 +6,7 @@ from __future__ import annotations
 import base64
 import json
 import os
+import stat
 import sys
 import tempfile
 import threading
@@ -25,8 +26,10 @@ from atelier.helix.exportzip import export_project_zip
 from atelier.helix.http import NoRedirectHandler
 from atelier.helix.keyring import Keyring
 from atelier.helix.loom import demo_svg
+from atelier.helix.paths import safe_under
 from atelier.helix.quote import quote_run
 from atelier.helix.spokes.base import DemoSpoke, SpokeError
+from atelier.helix.spokes.openai_spoke import _download as openai_download
 from atelier.helix.store import Memory
 from atelier.helix.usage import is_priced
 from atelier.launch import ensure_sys_path, repo_root as launch_root
@@ -269,6 +272,32 @@ class Round16Budget(unittest.TestCase):
         tmp.cleanup()
 
 
+class SecurityHarden(unittest.TestCase):
+    def test_safe_under_rejects_escape(self):
+        tmp = tempfile.TemporaryDirectory()
+        root = Path(tmp.name) / "web"
+        root.mkdir()
+        (root / "ok.txt").write_text("ok")
+        self.assertIsNotNone(safe_under(root, root / "ok.txt"))
+        self.assertIsNone(safe_under(root, root / ".." / "ok.txt"))
+        self.assertIsNone(safe_under(root, Path("/etc/passwd")))
+        tmp.cleanup()
+
+    def test_openai_download_rejects_file_url(self):
+        with self.assertRaises(SpokeError):
+            openai_download("file:///etc/passwd")
+        with self.assertRaises(SpokeError):
+            openai_download("http://example.com/x.png")
+
+    def test_keyring_mode_0600_not_symlink(self):
+        tmp = tempfile.TemporaryDirectory()
+        path = Path(tmp.name) / "keyring.json"
+        ring = Keyring(path)
+        ring.put("openai", key="sk-testkey-abcdefghijk")
+        self.assertEqual(stat.S_IMODE(path.stat().st_mode), 0o600)
+        tmp.cleanup()
+
+
 class Round19EvalFixtures(unittest.TestCase):
     def test_eval_briefs_load(self):
         folder = ROOT / "atelier" / "data" / "eval"
@@ -420,6 +449,13 @@ class HttpRounds(unittest.TestCase):
         self.assertEqual(code, 402)
         self.assertEqual(payload.get("code"), "budget_exceeded")
         self.assertFalse(payload.get("ok"))
+
+        req = urllib.request.Request(f"http://127.0.0.1:{self.port}/web/../../helix/keyring.py")
+        try:
+            urllib.request.urlopen(req, timeout=5)
+            self.fail("traversal should not succeed")
+        except urllib.error.HTTPError as exc:
+            self.assertIn(exc.code, {403, 404})
 
 
 if __name__ == "__main__":

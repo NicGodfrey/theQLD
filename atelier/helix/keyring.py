@@ -48,11 +48,25 @@ class Keyring:
         return json.loads(self.path.read_text())
 
     def _save(self, data: dict) -> None:
-        self.path.write_text(json.dumps(data, indent=2) + "\n")
+        import tempfile
+
+        if self.path.exists() and self.path.is_symlink():
+            raise OSError("refusing to write keyring through a symlink")
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        payload = json.dumps(data, indent=2) + "\n"
+        fd, tmp = tempfile.mkstemp(prefix=".keyring.", dir=str(self.path.parent))
         try:
+            os.fchmod(fd, 0o600)
+            with os.fdopen(fd, "w") as fh:
+                fh.write(payload)
+            os.replace(tmp, self.path)
             os.chmod(self.path, 0o600)
-        except OSError:
-            pass
+        except Exception:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            raise
 
     def get_secret(self, provider: str) -> str:
         env_name = ENV_MAP.get(provider)

@@ -86,7 +86,14 @@ class OpenAISpoke(Spoke):
 
 
 def _download(url: str) -> tuple[bytes, str]:
+    from urllib.parse import urlparse
+
+    from atelier.helix.http import urlopen_no_redirect
+
+    scheme = (urlparse(url).scheme or "").lower()
+    if scheme != "https":
+        raise SpokeError(f"Refusing non-https image URL ({scheme or 'missing'})")
     req = urllib.request.Request(url, headers={"User-Agent": "AtelierHelix/1.0"})
-    with urllib.request.urlopen(req, timeout=120) as resp:
+    with urlopen_no_redirect(req, timeout=120) as resp:
         mime = resp.headers.get("Content-Type", "image/png").split(";")[0]
         return resp.read(), mime
