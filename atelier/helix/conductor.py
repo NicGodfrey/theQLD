@@ -225,8 +225,10 @@ class Conductor:
         parent = None
         if parent_artifact_id:
             parent = self.memory.get_artifact(parent_artifact_id)
+            if parent and parent.get("project_id") != project_id:
+                parent = None
             if parent:
-                plan["spot_edit"] = {"parent_id": parent_artifact_id}
+                plan["spot_edit"] = {"parent_id": parent["id"]}
         artifacts = []
         nodes = []
         errors = []

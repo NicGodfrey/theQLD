@@ -204,6 +204,10 @@ function renderPlan(plan) {
 async function refreshBoard() {
   if (!state.projectId) return;
   const data = await api(`/api/projects/${state.projectId}/board`);
+  const present = new Set((data.nodes || []).map((n) => n.artifact_id).filter(Boolean));
+  if (state.selectedArtifactId && !present.has(state.selectedArtifactId)) {
+    state.selectedArtifactId = null;
+  }
   if (data.camera) state.camera = clampCamera(data.camera);
   applyCamera();
   const board = document.getElementById("board");
@@ -234,7 +238,13 @@ async function refreshBoard() {
       ]);
       card.append(img, el("div", { class: "cap", text: node.text || "artifact" }), tools);
     } else {
-      card.append(el("div", { class: "text-body", text: node.text || "note" }));
+      const meta = node.meta || {};
+      const size = Math.min(96, Math.max(12, Number(meta.font_size) || 22));
+      const body = el("div", { class: "text-body", text: node.text || "note" });
+      body.style.fontSize = size + "px";
+      if (meta.font_family) body.style.fontFamily = String(meta.font_family);
+      if (meta.letter_spacing) body.style.letterSpacing = String(meta.letter_spacing);
+      card.append(body);
     }
     if (node.artifact_id) {
       card.addEventListener("click", (e) => {
@@ -500,10 +510,13 @@ document.getElementById("undoBtn").onclick = async () => {
 
 document.getElementById("textLayer").onclick = async () => {
   if (!state.projectId) return;
-  const text = prompt("Text layer", "Headline") || "Headline";
+  const raw = prompt("Text layer · size", "Headline · 32") || "Headline · 32";
+  const bits = raw.split("·");
+  const text = (bits[0] || "Headline").trim();
+  const font_size = Math.min(96, Math.max(12, Number((bits[1] || "32").trim()) || 32));
   await api(`/api/projects/${state.projectId}/nodes`, {
     method: "POST",
-    body: { type: "text", text, x: 120, y: 120 },
+    body: { type: "text", text, x: 120, y: 120, meta: { layer: "text", font_size } },
   });
   await refreshBoard();
 };

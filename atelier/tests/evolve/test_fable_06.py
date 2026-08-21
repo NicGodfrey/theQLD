@@ -36,6 +36,7 @@ class SpotWiring(unittest.TestCase):
         self.assertIn(".node.selected", css)
         self.assertIn("larger type", app_js)
         self.assertIn("parent_artifact_id: parent", app_js)
+        self.assertIn("!present.has(state.selectedArtifactId)", app_js)
 
     def test_run_body_parent_priority_order(self):
         app_js = (WEB / "app.js").read_text(encoding="utf-8")
@@ -158,6 +159,24 @@ class SpotRoute(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertEqual(second["artifacts"][0]["parent_id"], parent_id)
         self.assertEqual(second["plan"]["spot_edit"]["parent_id"], parent_id)
+
+    def test_parent_from_another_project_is_ignored(self):
+        _, a = self._post("/api/projects", {"name": "R11-A"})
+        _, ta = self._post(f"/api/projects/{a['id']}/threads", {"topic": "a"})
+        _, first = self._post(
+            f"/api/threads/{ta['id']}/run",
+            {"prompt": "base mark", "provider": "demo"},
+        )
+        foreign = first["artifacts"][0]["id"]
+        _, b = self._post("/api/projects", {"name": "R11-B"})
+        _, tb = self._post(f"/api/projects/{b['id']}/threads", {"topic": "b"})
+        status, result = self._post(
+            f"/api/threads/{tb['id']}/run",
+            {"prompt": "steal", "provider": "demo", "parent_artifact_id": foreign},
+        )
+        self.assertEqual(status, 200)
+        self.assertIsNone(result["artifacts"][0].get("parent_id"))
+        self.assertNotIn("spot_edit", result["plan"])
 
 
 if __name__ == "__main__":
