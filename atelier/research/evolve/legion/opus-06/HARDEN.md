@@ -1,7 +1,11 @@
-# Opus-06 · R12 text layer (conductor fill — agent slot full)
+# Opus-06 · R12 text layer — awaiting live agent
 
-**Pass.** `POST /api/projects/:id/nodes` with `type=text` creates a node with `meta.layer=text` and no artifact_id. Weave `kind=text` also pins a text node. CSS `.text-layer` is dashed, not a raster.
+Live leftovers now in the tree:
 
-## Remaining
-- No font/size/tracking controls.
-- Text is not exported as a separate SVG/PDF layer beyond `board.json`.
+- `POST /api/projects/:id/nodes` `type=text` still has no artifact_id.
+- `#textLayer` accepts `Headline · 32` and stores `meta.font_size`.
+- The board applies `font_size` / `font_family` / `letter_spacing` as CSS,
+  not as pixels in an image.
+
+Verifier: one blocking `claude-opus-5-thinking-high-fast` agent. Do not start
+R13 until this note is replaced with the agent's own evidence.
