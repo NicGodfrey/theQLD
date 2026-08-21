@@ -32,3 +32,4 @@ python3 -m unittest atelier.tests.test_helix
 - `data/top100.json` — 100 related GitHub projects
 - `ARCHITECTURE.md` — original Helix design
 - `integrations/` — how patterns are taken, not vendored
+- `research/fable5/` — completed Fable 5 reports (richer board UI lives in `06-board-ui/`, not wired to the live `/api` yet)
