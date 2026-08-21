@@ -26,7 +26,7 @@ from atelier.helix.exportzip import export_project_zip
 from atelier.helix.keyring import Keyring
 from atelier.helix.loom import ext_for_mime, write_bytes
 from atelier.helix.paths import safe_under
-from atelier.helix.quote import quote_run
+from atelier.helix.quote import as_int, quote_run
 from atelier.helix.store import Memory
 from atelier.helix.usage import BudgetExceeded
 
@@ -303,7 +303,7 @@ class Handler(BaseHTTPRequestHandler):
                     provider=body.get("provider") or "demo",
                     model=body.get("model") or "",
                     prompt=body.get("prompt") or "",
-                    count=int(body.get("count") or body.get("variants") or 1),
+                    count=as_int(body.get("count") or body.get("variants") or 1, default=1, lo=1, hi=4),
                     capability=body.get("capability") or "image",
                     memory=app.memory,
                     thread_id=body.get("thread_id"),
@@ -399,7 +399,7 @@ class Handler(BaseHTTPRequestHandler):
                     mode=body.get("mode") or thread.get("mode") or "fast",
                     provider=body.get("provider") or "demo",
                     model=body.get("model") or "",
-                    variants=int(body.get("variants") or 0),
+                    variants=as_int(body.get("variants") or 0, default=0, lo=0, hi=4),
                     parent_artifact_id=body.get("parent_artifact_id") or body.get("spot_artifact_id"),
                 )
             except BudgetExceeded as exc:

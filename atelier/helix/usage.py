@@ -44,6 +44,7 @@ COST_TABLE = {
     ("gemini", "gemini-3.1-flash-lite", "tokens_out"): 1.50 / 1_000_000,
     ("gemini", "gemini-3-pro-image", "images"): 0.134,
     ("gemini", "gemini-3.1-flash-image", "images"): 0.067,
+    ("gemini", "gemini-2.5-flash-image", "images"): 0.039,
     ("gemini", "imagen-3.0-generate-002", "images"): 0.030,
     ("gemini", "imagen-4.0-generate", "images"): 0.040,
     ("ollama", "*", "tokens_in"): 0.0,

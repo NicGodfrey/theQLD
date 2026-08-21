@@ -7,6 +7,18 @@ from typing import Optional
 from . import usage
 
 
+def as_int(value, default: int = 0, lo: int | None = None, hi: int | None = None) -> int:
+    try:
+        n = int(value)
+    except (TypeError, ValueError):
+        n = default
+    if lo is not None:
+        n = max(lo, n)
+    if hi is not None:
+        n = min(hi, n)
+    return n
+
+
 def image_model_for(provider: str) -> str:
     provider = (provider or "demo").lower()
     if provider == "openai":
@@ -41,8 +53,8 @@ def quote_run(
     memory=None,
     thread_id: Optional[str] = None,
 ) -> dict:
-    provider = (provider or "demo").lower()
-    count = max(1, min(int(count or 1), 4))
+    provider = (provider or "demo").strip().lower()
+    count = as_int(count, default=1, lo=1, hi=8)
     chat_model = chat_model_for(provider, model)
     image_model = image_model_for(provider)
 

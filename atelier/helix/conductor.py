@@ -18,8 +18,8 @@ from typing import Any, Callable, Optional
 
 from . import usage
 from .loom import write_bytes
-from .quote import quote_run
-from .spokes import build_spoke
+from .quote import as_int, quote_run
+from .spokes import KNOWN_PROVIDERS, build_spoke
 from .spokes.base import SpokeError
 
 PLANNER_SYSTEM = """You are Helix Conductor, Atelier's design director.
@@ -114,7 +114,7 @@ class Conductor:
         on_event: Optional[Callable[[dict], None]] = None,
     ) -> dict:
         mode = "thinking" if mode == "thinking" else "fast"
-        provider = (provider or "demo").lower()
+        provider = (provider or "demo").strip().lower()
         model = model or _default_model(provider, mode)
         brand = (self.memory.get_project(project_id) or {}).get("brand_kit") or {}
         palette = brand.get("palette") if isinstance(brand, dict) else None
@@ -128,7 +128,9 @@ class Conductor:
             return ev
 
         emit("phase", phase="brief")
-        self.memory.add_message(thread_id, "user", prompt)
+
+        if provider not in KNOWN_PROVIDERS:
+            raise ConductorError(f"Unknown provider {provider!r}", code="unknown_provider")
 
         q = quote_run(
             provider=provider,
@@ -142,6 +144,7 @@ class Conductor:
         if q.get("would_exceed"):
             raise usage.BudgetExceeded(q.get("reason") or "budget exceeded")
 
+        self.memory.add_message(thread_id, "user", prompt)
         spoke = build_spoke(provider, self.keyring)
         plan = fallback_plan(prompt, mode, provider, model)
         planner_messages = [
@@ -179,11 +182,7 @@ class Conductor:
 
         plan["mode"] = mode
         plan.setdefault("route", {})
-        if provider != "demo":
-            # User-selected paid lane stays pinned — planner cannot downgrade to demo.
-            plan["route"]["provider"] = provider
-        else:
-            plan["route"].setdefault("provider", provider)
+        plan["route"]["provider"] = provider
         plan["quote"] = {k: q[k] for k in ("estimated_usd", "priced", "provider", "image_model", "count") if k in q}
         emit("phase", phase="route", route=plan.get("route"))
 
@@ -200,6 +199,27 @@ class Conductor:
                 for i in range(n_variants)
             ]
             plan["variants"] = n_variants
+
+        image_count = 0
+        for item in weave_items[:4]:
+            kind = item.get("kind") or "image"
+            if kind not in {"note", "text"}:
+                image_count += as_int(item.get("count"), default=1, lo=1, hi=2)
+        if image_count and image_count != q.get("count"):
+            q = quote_run(
+                provider=provider,
+                model=model,
+                prompt=prompt,
+                count=image_count,
+                memory=self.memory,
+                thread_id=thread_id,
+            )
+            emit("quote", quote=q)
+            if q.get("would_exceed"):
+                raise usage.BudgetExceeded(q.get("reason") or "budget exceeded")
+            plan["quote"] = {
+                k: q[k] for k in ("estimated_usd", "priced", "provider", "image_model", "count") if k in q
+            }
         parent = None
         if parent_artifact_id:
             parent = self.memory.get_artifact(parent_artifact_id)

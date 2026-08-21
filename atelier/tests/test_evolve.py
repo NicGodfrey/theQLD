@@ -28,6 +28,7 @@ from atelier.helix.keyring import Keyring
 from atelier.helix.loom import demo_svg
 from atelier.helix.paths import safe_under
 from atelier.helix.quote import quote_run
+from atelier.helix.spokes import build_spoke
 from atelier.helix.spokes.base import DemoSpoke, SpokeError
 from atelier.helix.spokes.openai_spoke import _download as openai_download
 from atelier.helix.store import Memory
@@ -74,6 +75,26 @@ class Round01FailClosed(unittest.TestCase):
                 )
         arts_rows = mem.conn.execute("SELECT provider FROM artifacts").fetchall()
         self.assertEqual(len(arts_rows), 0)
+        mem.close()
+        tmp.cleanup()
+
+    def test_unknown_provider_does_not_fall_through_to_demo(self):
+        tmp = tempfile.TemporaryDirectory()
+        mem, ring, arts = _mem(Path(tmp.name))
+        project = mem.create_project("Fail")
+        thread = mem.create_thread(project["id"])
+        cond = Conductor(mem, ring, arts)
+        with self.assertRaises(ConductorError) as ctx:
+            cond.run(
+                project_id=project["id"],
+                thread_id=thread["id"],
+                prompt="navy logo",
+                provider="open-ai",
+            )
+        self.assertEqual(ctx.exception.code, "unknown_provider")
+        self.assertEqual(mem.conn.execute("SELECT COUNT(*) FROM artifacts").fetchone()[0], 0)
+        with self.assertRaises(SpokeError):
+            build_spoke("not-a-vendor", ring)
         mem.close()
         tmp.cleanup()
 
