@@ -306,6 +306,21 @@ class TextMetaNormaliser(unittest.TestCase):
         self.assertEqual(self.meta({"font_size": "48"})["font_size"], 48)
         self.assertEqual(self.meta({"font_size": 33.5})["font_size"], 33.5)
 
+    def test_the_clamp_never_calls_a_312_only_builtin(self):
+        """Clamping to a bound hands back the int bound, and `int.is_integer()`
+        only exists on 3.12+. The local gate runs 3.12 and saw nothing; the
+        workflow pins 3.11, where six of these tests died with
+        `AttributeError: 'int' object has no attribute 'is_integer'`."""
+        from atelier.helix.loom import FONT_SIZE_MAX, FONT_SIZE_MIN
+
+        self.assertIsInstance(min(FONT_SIZE_MAX, max(FONT_SIZE_MIN, 99999.0)), int)
+        src = (ROOT / "atelier" / "helix" / "loom.py").read_text(encoding="utf-8")
+        for line in src.splitlines():
+            code = line.split("#", 1)[0]
+            if ".is_integer()" in code:
+                receiver = code.split(".is_integer()")[0]
+                self.assertTrue(receiver.rstrip().endswith("float(size)"), line.strip())
+
     def test_a_font_size_that_is_not_a_number_is_dropped(self):
         for bad in ("48px; background: red", "", None, [40], {"px": 40}, True, float("nan"), float("inf")):
             self.assertNotIn("font_size", self.meta({"font_size": bad}), repr(bad))

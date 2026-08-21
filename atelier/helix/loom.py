@@ -116,7 +116,9 @@ def text_meta(meta) -> dict:
             out.pop("font_size")
         else:
             size = min(FONT_SIZE_MAX, max(FONT_SIZE_MIN, size))
-            out["font_size"] = int(size) if size.is_integer() else size
+            # float(): clamping to a bound hands back the int bound, and
+            # int.is_integer() is 3.12+. The workflow pins 3.11.
+            out["font_size"] = int(size) if float(size).is_integer() else size
     for key, pattern in (("font_family", FONT_FAMILY), ("letter_spacing", LETTER_SPACING)):
         if key not in out:
             continue
