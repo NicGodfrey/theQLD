@@ -179,12 +179,11 @@ function renderPlan(plan) {
     return el("li", {
       class: "plan-step",
       text: label,
-      title: "Click to skip / load this step into the composer",
+      title: "Click to load this step into the composer",
       onclick: (ev) => {
         ev.currentTarget.classList.toggle("done");
         const box = document.getElementById("prompt");
-        if (box && !ev.currentTarget.classList.contains("done")) box.value = w.prompt || "";
-        else if (box && ev.currentTarget.classList.contains("done") && box.value === (w.prompt || "")) box.value = "";
+        if (box) box.value = w.prompt || "";
       },
     });
   }));

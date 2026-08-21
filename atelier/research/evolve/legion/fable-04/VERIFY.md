@@ -50,13 +50,12 @@ atelier.tests.test_evolve` → **all pass** (37 tests), including
 composer binding, critique persistence across the message round-trip, and a
 new fast-mode test asserting the plan is stored without a forced critique.
 
-## Remaining holes (fold before closing R7, none blocking)
+## Folded after this note (conductor close)
 
-- Step "done" state is client-side only; a refresh re-renders the card from
-  the stored plan and drops any checked-off steps. Persisting per-step state
-  would need a message-plan PATCH route.
-- A step's first click marks it done (skip); loading the prompt into the
-  composer happens on the un-skip click. Works as the commit describes, but a
-  one-click "load" affordance may read better in usability passes.
-- `renderPlan` shows only the latest assistant plan in the thread; older plans
-  are reachable only through the raw messages list.
+A step click always loads `w.prompt` into `#prompt` (one-click load). Toggle
+`.done` is still a local visual only.
+
+## Remaining holes
+
+- Step "done" state is client-side only; a refresh drops checked-off steps.
+- `renderPlan` shows only the latest assistant plan in the thread.
