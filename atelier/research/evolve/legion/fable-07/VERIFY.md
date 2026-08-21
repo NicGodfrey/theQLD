@@ -192,10 +192,18 @@ Full tree (`unittest discover -s atelier/tests`): 264 tests, OK
   (5×7 ASCII font); `board.svg` is the UTF-8 deliverable and carries them
   intact. CJK project names also slug to the id in filenames (R4 hole,
   now pinned).
-- An uploaded SVG's markup is inlined into `board.svg` verbatim (positioned,
-  prolog stripped, but not sanitised). Served over `fmt=svg` it is defused by
-  the CSP sandbox; opened from the zip it is whatever the artifact already
-  was. Same trust boundary as the artifact file itself.
+## Folded after this note (conductor close)
+
+Inlined SVG now drops `<script>` / `foreignObject` / `on*` / `javascript:`
+hrefs before it is nested into `board.svg`, so the zip copy is not a
+second, unsandboxed copy of an uploaded script.
+
+## Remaining holes (none blocking)
+
+- `sheet.png` / `sheet.pdf` are a painted contact sheet, and SVG→PNG per
+  artifact is a labeled card — neither is a browser raster of the live board.
+- Native PNG artifacts ignore `scale` on `fmt=png` (no decoder to resample).
+- CJK captions on the bitmap sheet degrade to `·`; `board.svg` is the UTF-8
+  deliverable. CJK project names slug to the id in filenames (R4, pinned).
 - A board of many large data-URI rasters makes `board.svg` (and the zip)
-  big — base64 is ~4/3 of the bytes already on disk, bounded by the 5 MB
-  upload cap per artifact. Not obviously broken; no size cap added.
+  big — bounded by the 5 MB upload cap per artifact.

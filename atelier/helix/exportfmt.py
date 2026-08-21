@@ -269,6 +269,29 @@ def sheet_pdf(project: dict, nodes: list[dict], scale: int = 1) -> bytes:
 # --------------------------------------------------------------------------
 
 _SVG_OPEN = re.compile(r"<svg\b[^>]*>", re.I)
+_SVG_BLOCK = re.compile(
+    r"<(?:script|foreignObject|iframe|object|embed)\b[^>]*>.*?</(?:script|foreignObject|iframe|object|embed)\s*>",
+    re.I | re.S,
+)
+_SVG_VOID = re.compile(r"<(?:script|foreignObject|iframe|object|embed)\b[^/]*/>", re.I)
+_SVG_ON = re.compile(r"\son[a-z]+\s*=\s*(?:\"[^\"]*\"|'[^']*'|[^\s>]+)", re.I)
+_SVG_JS_HREF = re.compile(
+    r"""\s(?:href|xlink:href)\s*=\s*(?:\"\s*javascript:[^\"]*\"|'\s*javascript:[^']*'|javascript:[^\s>]+)""",
+    re.I,
+)
+
+
+def sanitize_inlined_svg(raw: str) -> str:
+    """Drop script-shaped markup before an SVG is nested into board.svg.
+
+    The HTTP download is already CSP-sandboxed. The zip copy is not, so an
+    uploaded <script> used to ride out as whatever the artifact already was.
+    """
+    out = _SVG_BLOCK.sub("", raw or "")
+    out = _SVG_VOID.sub("", out)
+    out = _SVG_ON.sub("", out)
+    out = _SVG_JS_HREF.sub("", out)
+    return out
 
 
 def _board_box(nodes: list[dict]) -> tuple[float, float, float, float]:
@@ -283,7 +306,8 @@ def _board_box(nodes: list[dict]) -> tuple[float, float, float, float]:
 
 
 def _place_svg(raw: str, x: float, y: float, w: float, h: float) -> str:
-    cleaned = re.sub(r"<\?xml[^>]*\?>", "", raw)
+    cleaned = sanitize_inlined_svg(raw)
+    cleaned = re.sub(r"<\?xml[^>]*\?>", "", cleaned)
     cleaned = re.sub(r"<!DOCTYPE[^>]*>", "", cleaned, flags=re.I)
 
     def inject(match: re.Match) -> str:

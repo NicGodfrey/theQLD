@@ -34,6 +34,7 @@ from atelier.helix.exportfmt import (  # noqa: E402
     export_scale,
     png_dimensions,
     render_sheet_rgb,
+    sanitize_inlined_svg,
     scale_svg,
     wrap_raster_svg,
 )
@@ -105,6 +106,14 @@ class ClosedHoles(unittest.TestCase):
         # non-PNG bytes still get the 1024 frame, not a crash
         out = wrap_raster_svg(b"not a png", "image/webp", 1).decode()
         self.assertIn('viewBox="0 0 1024 1024"', out)
+
+    def test_inlined_svg_drops_script(self):
+        raw = '<svg xmlns="x"><script>alert(1)</script><rect width="10" height="10" onclick="pwn()"/></svg>'
+        clean = sanitize_inlined_svg(raw)
+        self.assertNotIn("script", clean.lower())
+        self.assertNotIn("alert", clean)
+        self.assertNotIn("onclick", clean.lower())
+        self.assertIn("<rect", clean)
 
 
 class ExportFormats(unittest.TestCase):

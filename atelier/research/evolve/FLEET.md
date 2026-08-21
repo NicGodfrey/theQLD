@@ -1,9 +1,9 @@
 # 20-round legion — sequential from here
 
-Done with live agents: R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R16.
+Done with live agents: R1–R13, R16.
 Remaining run **one round at a time** (implement → test → commit → one blocking verifier → next):
 
-R13 export → R14 launcher → R15 host-pin → R17 CI → R18 contract → R19 eval → R20 scorecard.
+R14 launcher → R15 host-pin → R17 CI → R18 contract → R19 eval → R20 scorecard.
 
 | Agent | Model | Round | Slice | Status |
 |---|---|---|---|---|
@@ -19,7 +19,7 @@ R13 export → R14 launcher → R15 host-pin → R17 CI → R18 contract → R19
 | opus-05 | claude-opus-5-thinking-high-fast | 10 | brand kit | done `bc-a3da2941-bceb-5248-8900-c03ff9598864` |
 | fable-06 | claude-fable-5-thinking-high | 11 | spot-edit | done `bc-218c832a-ac0d-5cf7-9b4e-f097beaead07` |
 | opus-06 | claude-opus-5-thinking-high-fast | 12 | text layer | done `bc-8a0798e1-f1c8-5be7-acef-6143bc5bcfb1` |
-| fable-07 | claude-fable-5-thinking-high | 13 | export zip | awaiting live agent |
+| fable-07 | claude-fable-5-thinking-high | 13 | export zip | done `bc-4b7db339-3319-5f0b-9c98-d2194a4820a9` |
 | opus-07 | claude-opus-5-thinking-high-fast | 14 | launcher | conductor fill |
 | fable-08 | claude-fable-5-thinking-high | 15 | host-pin | conductor fill |
 | opus-08 | claude-opus-5-thinking-high-fast | 16 | budget 402 | done `bc-127658e9-1325-5838-be73-fee8d341a8ec` |
