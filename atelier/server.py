@@ -31,6 +31,9 @@ from atelier.helix.store import Memory
 from atelier.helix.usage import BudgetExceeded
 
 
+LOCAL_BINDS = frozenset({"127.0.0.1", "localhost", "::1"})
+
+
 def runtime_dir() -> Path:
     raw = os.environ.get("ATELIER_RUNTIME")
     path = Path(raw) if raw else ROOT / ".runtime"
@@ -127,8 +130,8 @@ def _read_json(handler: BaseHTTPRequestHandler) -> dict:
 
 
 def _check_host(handler: BaseHTTPRequestHandler) -> bool:
-    bind = os.environ.get("ATELIER_HOST", "127.0.0.1")
-    if bind not in {"127.0.0.1", "localhost", "::1"}:
+    bind = os.environ.get("ATELIER_HOST", "127.0.0.1").strip() or "127.0.0.1"
+    if bind not in LOCAL_BINDS:
         return True
     host = (handler.headers.get("Host") or "").split(":")[0].lower()
     if host in {"127.0.0.1", "localhost", "localhost.", "::1", ""}:
@@ -532,15 +535,36 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main(host: str | None = None, port: int | None = None) -> None:
-    host = host or os.environ.get("ATELIER_HOST", "127.0.0.1")
-    port = int(port if port is not None else os.environ.get("ATELIER_PORT", "8765"))
-    server = ThreadingHTTPServer((host, port), Handler)
-    print(f"Atelier Helix on http://{host}:{port}", flush=True)
+    from atelier.launch import DEFAULT_HOST, DEFAULT_PORT, env_host, env_port
+
+    host = (host or "").strip() or env_host() or DEFAULT_HOST
+    port = int(port) if port is not None else (env_port() or DEFAULT_PORT)
+    # _check_host reads ATELIER_HOST; keep it honest about what --host bound,
+    # or `--host 0.0.0.0` binds the LAN and then 403s every LAN client.
+    os.environ["ATELIER_HOST"] = host
+    try:
+        server = ThreadingHTTPServer((host, port), Handler)
+    except (OSError, OverflowError) as exc:
+        detail = getattr(exc, "strerror", None) or exc
+        print(f"atelier: cannot bind {host}:{port} — {detail}", file=sys.stderr, flush=True)
+        raise SystemExit(1) from None
+    bound = server.server_address
+    host, port = bound[0], bound[1]
+    shown = f"[{host}]" if ":" in str(host) else host
+    print(f"Atelier Helix on http://{shown}:{port}", flush=True)
     print("BYOK: OPENAI_API_KEY / GEMINI_API_KEY or Settings panel", flush=True)
+    if host not in LOCAL_BINDS:
+        print(
+            f"atelier: {host} is reachable off this machine — the Host guard is off",
+            file=sys.stderr,
+            flush=True,
+        )
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         print("\nstop", flush=True)
+    finally:
+        server.server_close()
 
 
 if __name__ == "__main__":

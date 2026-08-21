@@ -18,4 +18,4 @@ include = ["atelier", "atelier.helix", "atelier.helix.*"]
 exclude = ["atelier.tests*", "atelier.research*"]
 
 [tool.setuptools.package-data]
-atelier = ["web/*", "data/*.json", "OUTPUT_RIGHTS.md"]
+atelier = ["web/*", "data/*.json", "OUTPUT_RIGHTS.md", "LICENSE"]
