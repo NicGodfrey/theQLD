@@ -41,36 +41,57 @@ def download_filename(artifact: dict) -> str:
     return f"{slug}{ext}"
 
 
+HEX_COLOR = re.compile(r"#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\Z")
+MAX_BRAND_COLORS = 6
+
+
+def brand_colors(palette, limit: int = MAX_BRAND_COLORS) -> list[str]:
+    """Validated hex swatches from a free-form brand kit palette.
+
+    The kit is a JSON textarea, so entries arrive in any shape. Demo SVG and
+    the paid StyleLock must read the same list, or "ground" means one colour
+    on the board and a different one in the prompt.
+    """
+    if not isinstance(palette, (list, tuple)):
+        return []
+    colors: list[str] = []
+    for item in palette:
+        if not isinstance(item, str):
+            continue
+        raw = item.strip()
+        if HEX_COLOR.match(raw):
+            colors.append(raw)
+            if len(colors) >= limit:
+                break
+    return colors
+
+
+def brand_name(title) -> str:
+    """Brand name safe to sit inside the [StyleLock …] frame."""
+    if not isinstance(title, str):
+        return ""
+    return " ".join(re.sub(r"[\[\]]+", " ", title).split())[:48]
+
+
 def style_lock(prompt: str, palette=None, title: str | None = None) -> str:
     """Prefix a paid image prompt with brand name + hex palette.
 
     Official image APIs have no structured style token, so the lock has to
     ride in the prompt text. Demo SVG still tints fills directly.
     """
-    colors = []
-    for item in palette or []:
-        if isinstance(item, str) and item.strip():
-            colors.append(item.strip())
-        if len(colors) >= 6:
-            break
+    colors = brand_colors(palette)
     bits = []
-    name = (title or "").strip()
+    name = brand_name(title)
     if name:
         bits.append(f"brand={name}")
     if colors:
         bits.append("palette=" + ",".join(colors))
+        bits.append(f"ground={colors[0]}")
         if len(colors) >= 2:
-            bits.append(f"ground={colors[0]} ink={colors[1]}")
+            bits.append(f"ink={colors[1]}")
     if not bits:
         return prompt
     return f"[StyleLock {' '.join(bits)}]\n{prompt}"
-
-
-def _hex_color(value: str, fallback: str) -> str:
-    raw = (value or "").strip()
-    if raw.startswith("#") and len(raw) in {4, 7}:
-        return raw
-    return fallback
 
 
 def demo_svg(prompt: str, title: str = "Atelier", palette: list | None = None) -> str:
@@ -79,18 +100,17 @@ def demo_svg(prompt: str, title: str = "Atelier", palette: list | None = None) -
     c2 = f"#{digest[6:12]}"
     bg = "#0c0d10"
     ink = "#f4f1ea"
-    if palette:
-        colors = [c for c in palette if isinstance(c, str)]
-        if len(colors) >= 1:
-            bg = _hex_color(colors[0], bg)
+    colors = brand_colors(palette)
+    if colors:
+        bg = colors[0]
         if len(colors) >= 2:
-            ink = _hex_color(colors[1], ink)
+            ink = colors[1]
         if len(colors) >= 3:
-            c1 = _hex_color(colors[2], c1)
-        if len(colors) >= 4:
-            c2 = _hex_color(colors[3], c2)
+            c1 = colors[2]
         elif len(colors) >= 2:
-            c1 = _hex_color(colors[1], c1)
+            c1 = colors[1]
+        if len(colors) >= 4:
+            c2 = colors[3]
     safe = html.escape((prompt or "untitled brief")[:180])
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <defs>

@@ -118,6 +118,8 @@ class Conductor:
         model = model or _default_model(provider, mode)
         brand = (self.memory.get_project(project_id) or {}).get("brand_kit") or {}
         palette = brand.get("palette") if isinstance(brand, dict) else None
+        # No kit means no lock: never invent a brand name into a paid prompt.
+        brand_title = brand.get("name") if isinstance(brand, dict) else None
         events: list[dict] = []
 
         def emit(kind: str, **payload: Any) -> dict:
@@ -267,7 +269,7 @@ class Conductor:
                         item_prompt,
                         model=image_model,
                         palette=palette,
-                        title=(brand.get("name") if isinstance(brand, dict) else None) or "Atelier",
+                        title=brand_title,
                     )
                 except SpokeError as exc:
                     errors.append(str(exc))
@@ -280,7 +282,7 @@ class Conductor:
                         item_prompt,
                         model="demo-svg",
                         palette=palette,
-                        title=(brand.get("name") if isinstance(brand, dict) else None) or "Atelier",
+                        title=brand_title,
                     )
                 art = self.memory.add_artifact(
                     project_id=project_id,
