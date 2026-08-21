@@ -22,7 +22,7 @@ Odd rounds are Fable-shaped (expose a gap with a test). Even rounds are Opus-sha
 | 16 | Budget 402 | Pre-call quote + HTTP 402 |
 | 17 | CI | Gate + evolve legion on 3.11; pyproject is a trigger |
 | 18 | Contract | Live routes including catalog, brand, DELETE, export fmts |
-| 19 | Eval | `atelier/data/eval/*.json` |
+| 19 | Eval | Fixtures + demo `evalrun` scorer (must_mention / palette) |
 | 20 | Scorecard | `SCORECARD.json` gate ≥ 16/20 |
 
 Release gate:

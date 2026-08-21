@@ -19,5 +19,6 @@ __all__ = [
     "http",
     "exportzip",
     "exportfmt",
+    "evalrun",
     "paths",
 ]

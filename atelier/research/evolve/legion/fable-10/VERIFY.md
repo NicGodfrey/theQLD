@@ -1,7 +1,11 @@
-# Fable-10 · R19 eval fixtures (conductor fill — agent slot full)
+# Fable-10 · R19 eval fixtures — awaiting live agent
 
-**Pass.** `atelier/data/eval/` holds logo, poster, legal-directory factsheet, brand-kit-apply briefs copied from `research/fable5/10-eval/fixtures`. Tests assert `request` + `expected`.
+Live leftovers now in the tree:
 
-## Remaining
-- No scorer that runs a demo weave and checks `expected.must_mention` / palette.
-- Fixtures describe a richer craft graph than live Helix implements.
+- `atelier/data/eval/brief_*.json` still load with `request` + `expected`
+- `atelier/helix/evalrun.py` runs a fixture through the demo conductor
+  and scores `must_mention` + palette hexes in the SVG
+- `crafts_required` / `lanes_required` stay documentary (research graph)
+
+Verifier: one blocking `claude-fable-5-thinking-high` agent. Do not start
+R20 until this note is replaced with the agent's own evidence.
