@@ -108,6 +108,10 @@ The honesty probes, run against live modules:
 - **No paid path**: `provider="demo"` is hardwired in `run_fixture`; the
   demo spoke never touches the keyring or the network.
 
+## Folded after this note (conductor close)
+
+No further scorer. Echo-vs-kit honesty stays pinned in the tests.
+
 ## Remaining holes (none blocking, all pinned as current behaviour)
 
 1. **`brief_factsheet_legal_directory.json` cannot pass the demo lane.** It

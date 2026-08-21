@@ -296,6 +296,11 @@ Ran 391 tests — OK (expected failures=1)
 Local Python 3.12.3; CI 3.11, green on both jobs at `f6e8112`. The whole R20
 suite runs in 0.44 s — the conductor calls are demo-lane and offline.
 
+## Folded after this note (conductor close)
+
+Fleet closed. No 21st round. Remaining items are product holes on the
+scorecard, not unverified slices.
+
 ## Remaining holes
 
 - **The card is a claim about a tree, and this suite only checks the claims the

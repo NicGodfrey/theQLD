@@ -1,9 +1,7 @@
-# 20-round legion — sequential from here
+# 20-round legion — closed
 
-Done with live agents: R1–R19.
-Remaining run **one round at a time** (implement → test → commit → one blocking verifier → next):
-
-R20 scorecard.
+Done with live agents: **R1–R20**. Sequential rule held: implement → test →
+commit → one blocking verifier → fold → next. No remaining verifier slots.
 
 | Agent | Model | Round | Slice | Status |
 |---|---|---|---|---|
@@ -26,6 +24,7 @@ R20 scorecard.
 | fable-09 | claude-fable-5-thinking-high | 17 | CI | done `bc-8e733077-73e6-56a9-9e5f-eaacd80dcf12` |
 | opus-09 | claude-opus-5-thinking-high-fast | 18 | live contract | done `bc-4f37d954-4a0b-5093-b44a-0e09cb824f7b` |
 | fable-10 | claude-fable-5-thinking-high | 19 | eval fixtures | done `bc-0556ad0e-6b84-5fe6-b170-a36e89e0295f` |
-| opus-10 | claude-opus-5-thinking-high-fast | 20 | scorecard | awaiting live agent |
+| opus-10 | claude-opus-5-thinking-high-fast | 20 | scorecard | done `bc-30de5c2a-8e49-5f75-a7e6-7d97ef68c65a` |
 
-Folded from Wave A into live Helix: unknown provider no longer falls through to demo; Gemini `gemini-2.5-flash-image` is priced; quote recounts after the plan; `count`/`variants` parse safely; 402 does not persist the blocked prompt.
+Scorecard: technical 20/20, gate 16 met, `lovart_complete: false`,
+`paid_loop_proven: false`. See `SCORECARD.json`.
