@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import html
 import hashlib
+import math
 import re
 from pathlib import Path
 
@@ -73,6 +74,58 @@ def brand_name(title) -> str:
     if not isinstance(title, str):
         return ""
     return " ".join(re.sub(r"[\[\]]+", " ", title).split())[:48]
+
+
+FONT_SIZE_MIN = 12
+FONT_SIZE_MAX = 96
+# Family names only. A ';' '{' '}' '(' ')' '<' '>' or newline would let a
+# stored value close the declaration it is pasted into, so those are refused
+# rather than mangled — the board, an export renderer and an SVG caption all
+# read this same string.
+FONT_FAMILY = re.compile(r"[A-Za-z0-9 ,.'\"_-]{1,120}\Z")
+# What CSS letter-spacing actually accepts; a unitless number is ignored by
+# the browser, so keeping it would only pretend the tracking was applied.
+LETTER_SPACING = re.compile(r"(?:normal|-?\d{1,4}(?:\.\d{1,4})?(?:px|em|rem|ch|pt))\Z")
+
+
+def _number(value):
+    if isinstance(value, bool) or not isinstance(value, (int, float, str)):
+        return None
+    try:
+        out = float(value)
+    except (TypeError, ValueError):
+        return None
+    return out if math.isfinite(out) else None
+
+
+def text_meta(meta) -> dict:
+    """Node meta with the typography keys clamped to what a board can render.
+
+    Only the browser clamped these, so anything that reached `add_node` by
+    another door — the HTTP route, the conductor, a future export renderer —
+    could carry a 99999px headline or a font-family with a stray ';'. Keys the
+    board does not read pass through untouched.
+    """
+    if not isinstance(meta, dict):
+        return {}
+    out = dict(meta)
+    if "font_size" in out:
+        size = _number(out.get("font_size"))
+        if size is None:
+            out.pop("font_size")
+        else:
+            size = min(FONT_SIZE_MAX, max(FONT_SIZE_MIN, size))
+            out["font_size"] = int(size) if size.is_integer() else size
+    for key, pattern in (("font_family", FONT_FAMILY), ("letter_spacing", LETTER_SPACING)):
+        if key not in out:
+            continue
+        raw = out[key]
+        raw = raw.strip() if isinstance(raw, str) else ""
+        if pattern.match(raw):
+            out[key] = raw
+        else:
+            out.pop(key)
+    return out
 
 
 def style_lock(prompt: str, palette=None, title: str | None = None) -> str:

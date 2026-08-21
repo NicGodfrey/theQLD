@@ -375,6 +375,11 @@ class Handler(BaseHTTPRequestHandler):
             _json(self, 200, app.memory.undo(parts[2]))
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "nodes":
+            if not app.memory.get_project(parts[2]):
+                # Nodes carry no foreign key, so a typo'd id used to mint a card
+                # onto a board that can never be opened again.
+                _json(self, 404, {"error": "missing project"})
+                return
             node = app.memory.add_node(
                 project_id=parts[2],
                 type=body.get("type") or "text",
@@ -471,7 +476,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         if parts[:2] == ["api", "nodes"] and len(parts) == 3:
             node = app.memory.update_node(parts[2], **{k: body[k] for k in body})
-            _json(self, 200, node)
+            _json(self, 200 if node else 404, node or {"error": "missing node"})
             return
         _json(self, 404, {"error": "unknown POST"})
 

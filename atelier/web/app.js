@@ -201,6 +201,40 @@ function renderPlan(plan) {
   }
 }
 
+const TEXT_SPEC_LABEL = "Text layer · size · family · tracking";
+
+// "Headline · 32" is the whole contract; family and tracking are optional
+// tails. Size is clamped here and again in the store, so neither door can
+// leave a 99999px headline on the board.
+function parseTextSpec(raw, current) {
+  const bits = String(raw == null ? "" : raw).split("·");
+  const fallback = current || {};
+  const text = (bits[0] || "").trim() || fallback.text || "Headline";
+  const asked = Number((bits[1] || "").trim());
+  const size = Number.isFinite(asked) && asked !== 0 ? asked : (Number(fallback.font_size) || 32);
+  const meta = { layer: "text", font_size: Math.min(96, Math.max(12, size)) };
+  const family = (bits[2] || "").trim() || fallback.font_family || "";
+  const tracking = (bits[3] || "").trim() || fallback.letter_spacing || "";
+  if (family) meta.font_family = family;
+  if (tracking) meta.letter_spacing = tracking;
+  return { text, meta };
+}
+
+function textSpecOf(node) {
+  const meta = node.meta || {};
+  return [node.text || "", meta.font_size || 22, meta.font_family || "", meta.letter_spacing || ""]
+    .join(" · ")
+    .replace(/(?: · )+$/, "");
+}
+
+async function editTextNode(node) {
+  const raw = prompt(TEXT_SPEC_LABEL, textSpecOf(node));
+  if (raw === null) return;
+  const spec = parseTextSpec(raw, { text: node.text, ...(node.meta || {}) });
+  await api(`/api/nodes/${node.id}`, { method: "POST", body: { text: spec.text, meta: spec.meta } });
+  await refreshBoard();
+}
+
 async function refreshBoard() {
   if (!state.projectId) return;
   const data = await api(`/api/projects/${state.projectId}/board`);
@@ -245,6 +279,15 @@ async function refreshBoard() {
       if (meta.font_family) body.style.fontFamily = String(meta.font_family);
       if (meta.letter_spacing) body.style.letterSpacing = String(meta.letter_spacing);
       card.append(body);
+      if (node.type === "text") {
+        card.title = "Double-click to edit";
+        card.addEventListener("dblclick", (e) => {
+          e.stopPropagation();
+          editTextNode(node).catch((err) => {
+            document.getElementById("runStatus").textContent = err.message;
+          });
+        });
+      }
     }
     if (node.artifact_id) {
       card.addEventListener("click", (e) => {
@@ -510,13 +553,12 @@ document.getElementById("undoBtn").onclick = async () => {
 
 document.getElementById("textLayer").onclick = async () => {
   if (!state.projectId) return;
-  const raw = prompt("Text layer · size", "Headline · 32") || "Headline · 32";
-  const bits = raw.split("·");
-  const text = (bits[0] || "Headline").trim();
-  const font_size = Math.min(96, Math.max(12, Number((bits[1] || "32").trim()) || 32));
+  const raw = prompt(TEXT_SPEC_LABEL, "Headline · 32");
+  if (raw === null) return;
+  const spec = parseTextSpec(raw, {});
   await api(`/api/projects/${state.projectId}/nodes`, {
     method: "POST",
-    body: { type: "text", text, x: 120, y: 120, meta: { layer: "text", font_size } },
+    body: { type: "text", text: spec.text, x: 120, y: 120, meta: spec.meta },
   });
   await refreshBoard();
 };

@@ -90,6 +90,23 @@ def _id() -> str:
     return uuid.uuid4().hex
 
 
+def _finite(value: Any, default: Optional[float]) -> Optional[float]:
+    """A real number for a NOT NULL REAL column, or `default`.
+
+    A JSON `null` or a NaN both land as NULL and raise IntegrityError mid-write;
+    an Infinity survives the insert and then serialises as a bare `Infinity`
+    token, which is not JSON — one such node makes every later /board response
+    unparseable in the browser.
+    """
+    if isinstance(value, bool) or not isinstance(value, (int, float, str)):
+        return default
+    try:
+        out = float(value)
+    except (TypeError, ValueError):
+        return default
+    return out if math.isfinite(out) else default
+
+
 class Memory:
     def __init__(self, db_path: str | Path):
         self.path = Path(db_path)
@@ -283,6 +300,8 @@ class Memory:
         )
 
     def add_node(self, **kwargs: Any) -> dict:
+        from atelier.helix.loom import text_meta
+
         nid = kwargs.get("id") or _id()
         text = kwargs.get("text")
         if not text and kwargs.get("data") is not None:
@@ -294,15 +313,15 @@ class Memory:
             (
                 nid,
                 kwargs["project_id"],
-                kwargs.get("type", "image"),
-                kwargs.get("x", 80),
-                kwargs.get("y", 80),
-                kwargs.get("w", 320),
-                kwargs.get("h", 240),
-                kwargs.get("z", 0),
+                str(kwargs.get("type") or "image"),
+                _finite(kwargs.get("x", 80), 80.0),
+                _finite(kwargs.get("y", 80), 80.0),
+                _finite(kwargs.get("w", 320), 320.0),
+                _finite(kwargs.get("h", 240), 240.0),
+                int(_finite(kwargs.get("z", 0), 0.0)),
                 kwargs.get("artifact_id"),
-                text or "",
-                json.dumps(kwargs.get("meta") or {}, ensure_ascii=False),
+                str(text) if text else "",
+                json.dumps(text_meta(kwargs.get("meta")), ensure_ascii=False),
             ),
         )
         self.conn.commit()
@@ -314,9 +333,26 @@ class Memory:
         )
         return node
 
-    def get_node(self, node_id: str) -> dict:
-        row = dict(self.conn.execute("SELECT * FROM nodes WHERE id=?", (node_id,)).fetchone())
-        row["meta"] = json.loads(row.get("meta") or "{}")
+    @staticmethod
+    def _node_meta(raw: Any) -> dict:
+        """Meta as a dict, whatever a row already on disk happens to hold.
+
+        Rows written before meta was normalised can hold any string; a bare
+        json.loads there raises inside list_nodes and 500s the whole board.
+        """
+        if isinstance(raw, dict):
+            return raw
+        try:
+            parsed = json.loads(raw or "{}")
+        except (TypeError, ValueError):
+            return {}
+        return parsed if isinstance(parsed, dict) else {}
+
+    def get_node(self, node_id: str) -> Optional[dict]:
+        row = self._row(self.conn.execute("SELECT * FROM nodes WHERE id=?", (node_id,)).fetchone())
+        if not row:
+            return None
+        row["meta"] = self._node_meta(row.get("meta"))
         return row
 
     def list_nodes(self, project_id: str) -> list[dict]:
@@ -327,23 +363,36 @@ class Memory:
             ).fetchall()
         )
         for row in rows:
-            row["meta"] = json.loads(row.get("meta") or "{}")
+            row["meta"] = self._node_meta(row.get("meta"))
         return rows
 
-    def update_node(self, node_id: str, **fields: Any) -> dict:
+    def update_node(self, node_id: str, **fields: Any) -> Optional[dict]:
+        from atelier.helix.loom import text_meta
+
         if "data" in fields and "text" not in fields:
             data = fields.pop("data")
             fields["text"] = data if isinstance(data, str) else json.dumps(data, ensure_ascii=False)
         else:
             fields.pop("data", None)
+        if not self.get_node(node_id):
+            return None
         allowed = {"x", "y", "w", "h", "z", "text", "meta"}
         sets = []
         values = []
         for key, value in fields.items():
             if key not in allowed:
                 continue
-            if key == "meta" and not isinstance(value, str):
-                value = json.dumps(value, ensure_ascii=False)
+            if key == "meta":
+                value = json.dumps(text_meta(self._node_meta(value)), ensure_ascii=False)
+            elif key in {"x", "y", "w", "h", "z"}:
+                number = _finite(value, None)
+                if number is None:
+                    continue  # a junk coordinate is a no-op, not a jump to the origin
+                value = int(number) if key == "z" else number
+            elif key == "text":
+                if value is None:
+                    continue
+                value = str(value)
             sets.append(f"{key}=?")
             values.append(value)
         if sets:
