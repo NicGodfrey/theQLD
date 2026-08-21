@@ -41,12 +41,39 @@ class Spoke:
         raise NotImplementedError
 
 
-def assert_official_host(url: str, allowed_suffixes: tuple[str, ...]) -> None:
-    host = (urlparse(url).hostname or "").lower()
+def assert_official_host(
+    url: str,
+    allowed_suffixes: tuple[str, ...],
+    *,
+    require_https: bool = False,
+) -> None:
+    parsed = urlparse(url)
+    if require_https and (parsed.scheme or "").lower() != "https":
+        raise SpokeError(f"Refusing non-https official host ({parsed.scheme or 'missing'})")
+    host = (parsed.hostname or "").lower()
     if not host:
         raise SpokeError(f"Refusing empty host for {url}")
     if not any(host == s or host.endswith("." + s) for s in allowed_suffixes):
         raise SpokeError(f"Refusing unofficial host {host}")
+
+
+def is_blocked_fetch_host(host: str) -> bool:
+    """Loopback / link-local / RFC1918 — never fetch an image URL here."""
+    host = (host or "").lower().rstrip(".")
+    if host in {"localhost", "127.0.0.1", "0.0.0.0", "::1"} or host.endswith(".localhost"):
+        return True
+    parts = host.split(".")
+    if len(parts) == 4 and all(p.isdigit() and 0 <= int(p) <= 255 for p in parts):
+        a, b = int(parts[0]), int(parts[1])
+        if a in {0, 10, 127}:
+            return True
+        if a == 169 and b == 254:
+            return True
+        if a == 172 and 16 <= b <= 31:
+            return True
+        if a == 192 and b == 168:
+            return True
+    return False
 
 
 class DemoSpoke(Spoke):

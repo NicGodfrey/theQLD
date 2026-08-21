@@ -5,8 +5,6 @@ from __future__ import annotations
 import urllib.error
 import urllib.request
 
-from .spokes.base import SpokeError
-
 
 class NoRedirectHandler(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
@@ -29,5 +27,7 @@ def urlopen_no_redirect(req: urllib.request.Request, timeout: float = 120):
                 location = exc.headers.get("Location", "") if exc.headers else ""
             except Exception:
                 location = ""
+            from .spokes.base import SpokeError
+
             raise SpokeError(f"Refusing HTTP redirect {exc.code} to {location}") from exc
         raise

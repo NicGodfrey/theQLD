@@ -335,6 +335,8 @@ class Round15HostPin(unittest.TestCase):
         with self.assertRaises(ValueError):
             ring.put("gemini", key="AIza-test", base_url="https://evil.example")
         ring.put("openai", key="sk-testkey-abcdefghijk", base_url="https://api.openai.com")
+        with self.assertRaises(ValueError):
+            ring.put("openai", key="sk-testkey-abcdefghijk", base_url="http://api.openai.com")
         tmp.cleanup()
 
     def test_no_redirect_handler_refuses(self):
@@ -386,6 +388,10 @@ class SecurityHarden(unittest.TestCase):
             openai_download("file:///etc/passwd")
         with self.assertRaises(SpokeError):
             openai_download("http://example.com/x.png")
+        with self.assertRaises(SpokeError):
+            openai_download("https://127.0.0.1/x.png")
+        with self.assertRaises(SpokeError):
+            openai_download("https://evil.example/x.png")
 
     def test_keyring_mode_0600_not_symlink(self):
         tmp = tempfile.TemporaryDirectory()

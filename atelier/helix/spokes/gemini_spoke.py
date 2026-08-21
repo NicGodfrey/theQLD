@@ -30,7 +30,7 @@ class GeminiSpoke(Spoke):
 
     def _url(self, path: str) -> str:
         base = self.keyring.get_base_url("gemini") or "https://generativelanguage.googleapis.com"
-        assert_official_host(base, ("generativelanguage.googleapis.com",))
+        assert_official_host(base, ("generativelanguage.googleapis.com",), require_https=True)
         return f"{base}{path}"
 
     def _post(self, path: str, body: dict) -> dict:

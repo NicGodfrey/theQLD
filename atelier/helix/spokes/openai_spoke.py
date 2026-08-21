@@ -32,7 +32,7 @@ class OpenAISpoke(Spoke):
     def _url(self, path: str) -> str:
         base = self.keyring.get_base_url(self.name) or "https://api.openai.com"
         if self.name == "openai":
-            assert_official_host(base, ("api.openai.com",))
+            assert_official_host(base, ("api.openai.com",), require_https=True)
         return f"{base}{path}"
 
     def _post(self, path: str, body: dict) -> dict:
@@ -88,14 +88,33 @@ class OpenAISpoke(Spoke):
         return ImageResult(data=raw, mime=mime, provider=self.name, model=model, prompt=prompt)
 
 
+# Official image bytes leave api.openai.com as a URL. No Authorization
+# header rides this GET, but it is still our process fetching whatever
+# the API returned — so the host is pinned to known OpenAI/Azure CDNs
+# and loopback / RFC1918 are refused.
+IMAGE_FETCH_SUFFIXES = (
+    "api.openai.com",
+    "openai.com",
+    "oaiusercontent.com",
+    "blob.core.windows.net",
+)
+
+
 def _download(url: str) -> tuple[bytes, str]:
     from urllib.parse import urlparse
 
     from atelier.helix.http import urlopen_no_redirect
+    from atelier.helix.spokes.base import is_blocked_fetch_host
 
-    scheme = (urlparse(url).scheme or "").lower()
+    parsed = urlparse(url)
+    scheme = (parsed.scheme or "").lower()
     if scheme != "https":
         raise SpokeError(f"Refusing non-https image URL ({scheme or 'missing'})")
+    host = (parsed.hostname or "").lower()
+    if is_blocked_fetch_host(host):
+        raise SpokeError(f"Refusing private image host {host}")
+    if not any(host == s or host.endswith("." + s) for s in IMAGE_FETCH_SUFFIXES):
+        raise SpokeError(f"Refusing unofficial image host {host}")
     req = urllib.request.Request(url, headers={"User-Agent": "AtelierHelix/1.0"})
     with urlopen_no_redirect(req, timeout=120) as resp:
         mime = resp.headers.get("Content-Type", "image/png").split(";")[0]

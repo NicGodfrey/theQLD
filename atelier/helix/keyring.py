@@ -85,7 +85,11 @@ class Keyring:
             from .spokes.base import SpokeError, assert_official_host
 
             try:
-                assert_official_host(base_url, ALLOWED_HOST_SUFFIXES[provider])
+                assert_official_host(
+                    base_url,
+                    ALLOWED_HOST_SUFFIXES[provider],
+                    require_https=provider != "ollama",
+                )
             except SpokeError as exc:
                 raise ValueError(str(exc)) from exc
         data = self._load()

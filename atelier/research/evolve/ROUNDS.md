@@ -18,7 +18,7 @@ Odd rounds are Fable-shaped (expose a gap with a test). Even rounds are Opus-sha
 | 12 | Text layer | Text nodes + font_size / family / tracking on the board |
 | 13 | Export | Zip + board.svg + sheet PNG/PDF + per-artifact `?fmt=` |
 | 14 | Launcher | `pyproject.toml` console script + `--host`/`--port` |
-| 15 | Host pin | Keyring rejects unofficial hosts; spokes refuse redirects |
+| 15 | Host pin | Official hosts + no-redirect + pinned image CDN fetch |
 | 16 | Budget 402 | Pre-call quote + HTTP 402 |
 | 17 | CI | `.github/workflows/atelier.yml` |
 | 18 | Contract | This tree’s `CONTRACT.md` (live ≠ research `/api/chat`) |
