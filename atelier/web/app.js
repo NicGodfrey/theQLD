@@ -5,6 +5,7 @@ const state = {
   threadId: null,
   camera: { x: 0, y: 0, zoom: 1 },
   lastArtifactId: null,
+  lastUploadId: null,
 };
 
 async function api(path, opts = {}) {
@@ -69,6 +70,7 @@ async function refreshProjects() {
       onclick: async () => {
         state.projectId = p.id;
         state.threadId = null;
+        state.lastUploadId = null;
         await bootProject();
       },
     }));
@@ -203,18 +205,31 @@ function enableBoardCamera() {
   });
 }
 
-async function uploadFile(file) {
-  const buf = await file.arrayBuffer();
-  const bytes = new Uint8Array(buf);
+function bytesToBase64(bytes) {
   let bin = "";
-  bytes.forEach((b) => { bin += String.fromCharCode(b); });
-  const data = btoa(bin);
-  await api(`/api/projects/${state.projectId}/upload`, {
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+  }
+  return btoa(bin);
+}
+
+async function uploadFile(file) {
+  if (!state.projectId) throw new Error("create a project first");
+  const buf = await file.arrayBuffer();
+  const data = bytesToBase64(new Uint8Array(buf));
+  const result = await api(`/api/projects/${state.projectId}/upload`, {
     method: "POST",
     body: { filename: file.name, mime: file.type || "application/octet-stream", data },
   });
+  const id = result.artifact && result.artifact.id;
+  if (id) {
+    state.lastUploadId = id;
+    state.lastArtifactId = id;
+  }
   await refreshBoard();
-  document.getElementById("runStatus").textContent = "Uploaded " + file.name;
+  document.getElementById("runStatus").textContent =
+    "Uploaded " + file.name + " · next weave uses it as reference";
 }
 
 async function refreshMessages() {
@@ -264,6 +279,7 @@ document.getElementById("newProject").onclick = async () => {
   const project = await api("/api/projects", { method: "POST", body: { name } });
   state.projectId = project.id;
   state.threadId = null;
+  state.lastUploadId = null;
   await bootProject();
 };
 
@@ -300,15 +316,15 @@ document.getElementById("saveBrand").onclick = async () => {
 };
 
 function runBody() {
+  const prompt = document.getElementById("prompt").value;
+  const spot = state.lastArtifactId && /spot|局部|edit this/i.test(prompt);
   return {
-    prompt: document.getElementById("prompt").value,
+    prompt,
     mode: document.getElementById("mode").value,
     provider: document.getElementById("provider").value,
     model: document.getElementById("model").value,
     variants: document.getElementById("variants").checked ? 4 : 0,
-    parent_artifact_id: state.lastArtifactId && /spot|局部|edit this/i.test(document.getElementById("prompt").value)
-      ? state.lastArtifactId
-      : undefined,
+    parent_artifact_id: spot ? state.lastArtifactId : (state.lastUploadId || undefined),
   };
 }
 
@@ -373,6 +389,27 @@ document.getElementById("openCatalog").onclick = async () => {
   const names = (data.mvp_wire || []).join(", ");
   alert(`Helix catalog: ${data.count} repos. MVP wire: ${names}`);
 };
+
+document.getElementById("uploadBtn").onclick = () => {
+  document.getElementById("filePick").click();
+};
+document.getElementById("filePick").addEventListener("change", async (e) => {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = "";
+  if (!file) return;
+  try {
+    await uploadFile(file);
+  } catch (err) {
+    document.getElementById("runStatus").textContent = err.message;
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.target.closest("input, textarea, select, [contenteditable]")) return;
+  if (e.key === "u" || e.key === "U") {
+    e.preventDefault();
+    document.getElementById("filePick").click();
+  }
+});
 
 enableBoardCamera();
 bootProject().catch((err) => {

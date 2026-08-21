@@ -11,7 +11,7 @@ R4 download → R5 upload → R6 camera → R7 plan → R10 brand → R11 spot-e
 | opus-01 | claude-opus-5-thinking-high-fast | 2 | quote | done `bc-c218619b-4eeb-54b5-958e-9ce31c6b776c` |
 | fable-02 | claude-fable-5-thinking-high | 3 | progress/SSE | done `bc-72e1141d-8dfb-5c2c-80a3-ccc9cfc130cd` |
 | opus-02 | claude-opus-5-thinking-high-fast | 4 | download | done `bc-824042df-b2ae-521f-9de9-294a0d45e785` |
-| fable-03 | claude-fable-5-thinking-high | 5 | upload | conductor fill |
+| fable-03 | claude-fable-5-thinking-high | 5 | upload | awaiting live agent |
 | opus-03 | claude-opus-5-thinking-high-fast | 6 | camera | conductor fill |
 | fable-04 | claude-fable-5-thinking-high | 7 | plan visible | conductor fill |
 | opus-04 | claude-opus-5-thinking-high-fast | 8 | 4-up variants | done `bc-59bb5fa8-982e-506a-83b3-4ba25bb29d26` |

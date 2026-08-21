@@ -50,6 +50,7 @@
     <main class="board-wrap" id="boardWrap">
       <div class="board-tools">
         <button class="btn ghost" id="undoBtn" type="button">Undo</button>
+        <button class="btn ghost" id="uploadBtn" type="button">Upload</button>
         <button class="btn ghost" id="textLayer" type="button">Text layer</button>
         <button class="btn ghost" id="exportZip" type="button">Export zip</button>
         <span class="cam-readout" id="camReadout">100%</span>
@@ -84,7 +85,7 @@
       </div>
       <div class="status" id="runStatus"></div>
       <input id="filePick" type="file" accept="image/*,.svg,.png,.jpg,.webp" hidden>
-      <div class="hint">Drop a reference image onto the board, or wheel to zoom / drag empty space to pan.</div>
+      <div class="hint">Upload a reference (button, drop, or U), then Weave uses it as parent_artifact_id.</div>
     </section>
   </div>
   <script src="/app.js"></script>

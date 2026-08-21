@@ -1,8 +1,11 @@
-# Fable-03 · R5 upload (conductor fill — agent slot full)
+# Fable-03 · R5 upload — awaiting live agent
 
-**Pass.** `POST /api/projects/:id/upload` accepts JSON `{filename, mime, data}` base64, 5 MB cap, writes artifact `kind=upload` + board node. Dock drop handler in `web/app.js` calls the same route.
+Live leftovers now in the tree:
 
-## Remaining
-- No multipart/form-data.
-- Uploaded image is not automatically attached as vision context on the next weave (spot-edit uses `parent_artifact_id` of generated arts).
-- `filePick` input exists hidden but has no click binding.
+- `#uploadBtn` clicks hidden `#filePick`; `change` uploads JSON base64.
+- Board drop and keyboard `U` also upload.
+- `state.lastUploadId` is sent as `parent_artifact_id` on the next weave
+  (spot-edit keywords still prefer `lastArtifactId`).
+
+Verifier: one blocking `claude-fable-5-thinking-high` agent. Do not start R6
+until this note is replaced with the agent's own evidence.

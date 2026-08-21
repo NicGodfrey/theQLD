@@ -222,6 +222,25 @@ class Round06to12Board(unittest.TestCase):
         self.assertEqual(second["artifacts"][0].get("parent_id"), parent_id)
         self.assertTrue(second["plan"].get("spot_edit"))
 
+    def test_uploaded_reference_is_usable_as_parent(self):
+        parent = self.mem.add_artifact(
+            project_id=self.project["id"],
+            kind="upload",
+            mime="image/svg+xml",
+            prompt="ref.svg",
+            provider="local",
+            model="upload",
+        )
+        result = self.cond.run(
+            project_id=self.project["id"],
+            thread_id=self.thread["id"],
+            prompt="match this reference",
+            provider="demo",
+            parent_artifact_id=parent["id"],
+        )
+        self.assertEqual(result["artifacts"][0].get("parent_id"), parent["id"])
+        self.assertEqual(result["plan"]["spot_edit"]["parent_id"], parent["id"])
+
     def test_text_layer_not_raster(self):
         node = self.mem.add_node(
             project_id=self.project["id"],
