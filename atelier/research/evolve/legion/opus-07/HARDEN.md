@@ -245,6 +245,11 @@ Ran 67 tests — OK
 Full tree (`unittest discover -s atelier/tests`): 298 tests, OK
 (1 expected failure, pre-existing).
 
+## Folded after this note (conductor close)
+
+No further launcher code. Remaining items are install-path / process-model,
+not bind bugs.
+
 ## Remaining holes
 
 - `python3 -m atelier` still needs the repo root on `sys.path` — cwd at the
