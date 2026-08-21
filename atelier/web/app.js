@@ -258,6 +258,7 @@ async function refreshBoard() {
       const img = el("img", { src: `/api/artifacts/${node.artifact_id}`, alt: node.text || "" });
       const tools = el("div", { class: "node-tools" }, [
         el("a", { href: `/api/artifacts/${node.artifact_id}?download=1`, text: "Download", class: "dl" }),
+        el("a", { href: `/api/artifacts/${node.artifact_id}/export?fmt=png`, text: "Export", class: "dl" }),
         el("button", {
           type: "button",
           class: "ref-btn",
@@ -565,8 +566,27 @@ document.getElementById("textLayer").onclick = async () => {
 
 document.getElementById("exportZip").onclick = () => {
   if (!state.projectId) return;
+  const dlg = document.getElementById("exportDialog");
+  if (dlg && typeof dlg.showModal === "function") {
+    dlg.showModal();
+    return;
+  }
   window.location = `/api/projects/${state.projectId}/export`;
 };
+
+const exportGo = document.getElementById("exportGo");
+if (exportGo) {
+  exportGo.onclick = (ev) => {
+    ev.preventDefault();
+    if (!state.projectId) return;
+    const picked = document.querySelector("#exportDialog input[name=exportFmt]:checked");
+    const fmt = (picked && picked.value) || "zip";
+    const scale = (document.getElementById("exportScale") || {}).value || "1";
+    const dlg = document.getElementById("exportDialog");
+    if (dlg && typeof dlg.close === "function") dlg.close();
+    window.location = `/api/projects/${state.projectId}/export?fmt=${encodeURIComponent(fmt)}&scale=${encodeURIComponent(scale)}`;
+  };
+}
 
 document.getElementById("openCatalog").onclick = async () => {
   const data = await api("/api/catalog");

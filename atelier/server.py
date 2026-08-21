@@ -22,7 +22,7 @@ if str(REPO) not in sys.path:
 
 from atelier.helix.catalog import public as catalog_public
 from atelier.helix.conductor import Conductor, ConductorError
-from atelier.helix.exportzip import export_project_zip
+from atelier.helix.exportfmt import FormatError, export_artifact_bytes, export_project_bytes, export_scale
 from atelier.helix.keyring import Keyring
 from atelier.helix.loom import download_filename, ext_for_mime, write_bytes
 from atelier.helix.paths import safe_under
@@ -180,6 +180,11 @@ def _send_bytes(handler: BaseHTTPRequestHandler, data: bytes, mime: str, downloa
     handler.send_header("Content-Length", str(len(data)))
     handler.send_header("Content-Disposition", f'attachment; filename="{download_name}"')
     handler.send_header("X-Content-Type-Options", "nosniff")
+    if (mime or "").startswith("image/svg"):
+        handler.send_header(
+            "Content-Security-Policy",
+            "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        )
     handler.end_headers()
     handler.wfile.write(data)
 
@@ -272,15 +277,39 @@ class Handler(BaseHTTPRequestHandler):
             _json(self, 200, {"camera": project.get("camera")})
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "export":
+            fmt = (query.get("fmt") or query.get("format") or ["zip"])[0].strip().lower()
+            scale = export_scale((query.get("scale") or ["1"])[0])
             try:
-                data = export_project_zip(app.memory, app.artifacts, parts[2])
+                data, mime, name = export_project_bytes(
+                    app.memory, app.artifacts, parts[2], fmt=fmt, scale=scale
+                )
+            except FormatError as exc:
+                _json(self, 415, {"error": str(exc), "code": exc.code})
+                return
             except ValueError as exc:
                 _json(self, 404, {"error": str(exc)})
                 return
-            _send_bytes(self, data, "application/zip", f"atelier-{parts[2][:8]}.zip")
+            _send_bytes(self, data, mime, name)
             return
         if parts[:2] == ["api", "threads"] and len(parts) == 4 and parts[3] == "messages":
             _json(self, 200, {"messages": app.memory.list_messages(parts[2])})
+            return
+        if parts[:2] == ["api", "artifacts"] and len(parts) == 4 and parts[3] == "export":
+            art = app.memory.get_artifact(parts[2])
+            if not art:
+                _json(self, 404, {"error": "missing artifact"})
+                return
+            fmt = (query.get("fmt") or query.get("format") or ["native"])[0].strip().lower()
+            scale = export_scale((query.get("scale") or ["1"])[0])
+            try:
+                data, mime, name = export_artifact_bytes(art, app.artifacts, fmt=fmt, scale=scale)
+            except FormatError as exc:
+                _json(self, 415, {"error": str(exc), "code": exc.code})
+                return
+            except FileNotFoundError:
+                _json(self, 404, {"error": "not found"})
+                return
+            _send_bytes(self, data, mime, name)
             return
         if parts[:2] == ["api", "artifacts"] and len(parts) == 3:
             art = app.memory.get_artifact(parts[2])

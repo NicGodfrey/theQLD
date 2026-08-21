@@ -14,11 +14,12 @@ Research Board UI (`research/fable5/06-board-ui`) speaks SSE `/api/chat`.
 | GET | `/api/projects/:id/board` | `{nodes, camera}` |
 | POST | `/api/projects/:id/camera` | Persist pan/zoom |
 | POST | `/api/projects/:id/upload` | JSON `{filename, mime, data}` base64 |
-| GET | `/api/projects/:id/export` | Zip of board + artifacts |
+| GET | `/api/projects/:id/export` | `?fmt=zip\|svg\|png\|pdf&scale=1\|2\|4`. Default zip (archive + board.svg + sheet). JPEG → 415 |
 | POST | `/api/projects/:id/undo` | Pop last add_node |
 | POST | `/api/projects/:id/nodes` | Text layer (`type=text`) |
 | POST | `/api/threads/:id/run` | Conductor. `?stream=1` → SSE of `events` then `result` |
 | GET | `/api/artifacts/:id?download=1` | Attachment filename uses mime ext |
+| GET | `/api/artifacts/:id/export` | `?fmt=native\|svg\|png\|pdf&scale=`. JPEG → 415 |
 | GET | `/api/usage` | Ledger + totals |
 
 ## Status codes

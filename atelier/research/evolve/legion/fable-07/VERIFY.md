@@ -1,7 +1,11 @@
-# Fable-07 · R13 export zip (conductor fill — agent slot full)
+# Fable-07 · R13 designer export — awaiting live agent
 
-**Pass.** `GET /api/projects/:id/export` returns `application/zip` (`PK`) with `project.json`, `board.json`, `artifacts.json`, and artifact bytes.
+Live leftovers now in the tree:
 
-## Remaining
-- No PDF / print sheet.
-- No incremental / selected-node export.
+- `GET /api/projects/:id/export?fmt=zip|svg|png|pdf&scale=1|2|4`
+- Zip includes `board.svg` (text stays `<text>`), `sheet.png`, `sheet.pdf`, `RIGHTS.txt`
+- `GET /api/artifacts/:id/export?fmt=native|svg|png|pdf`
+- JPEG is 415. Export dialog + per-card Export link. Rights line in the UI.
+
+Verifier: one blocking `claude-fable-5-thinking-high` agent. Do not start
+R14 until this note is replaced with the agent's own evidence.

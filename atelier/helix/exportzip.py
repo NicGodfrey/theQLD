@@ -1,4 +1,4 @@
-"""Project export — board JSON + artifact bytes as a zip (stdlib)."""
+"""Project export — board JSON + designer sheet + artifact bytes as a zip."""
 
 from __future__ import annotations
 
@@ -7,11 +7,15 @@ import json
 import zipfile
 from pathlib import Path
 
+from atelier.helix.exportfmt import RIGHTS_TEXT, board_svg, export_scale, sheet_pdf, sheet_png
 
-def export_project_zip(memory, artifacts_dir, project_id: str) -> bytes:
+
+def export_project_zip(memory, artifacts_dir, project_id: str, scale: int = 1) -> bytes:
     project = memory.get_project(project_id)
     if not project:
         raise ValueError("missing project")
+    scale = export_scale(scale)
+    nodes = memory.list_nodes(project_id)
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
         zf.writestr(
@@ -21,12 +25,16 @@ def export_project_zip(memory, artifacts_dir, project_id: str) -> bytes:
         zf.writestr(
             "board.json",
             json.dumps(
-                {"nodes": memory.list_nodes(project_id), "camera": project.get("camera")},
+                {"nodes": nodes, "camera": project.get("camera")},
                 ensure_ascii=False,
                 default=str,
                 indent=2,
             ),
         )
+        zf.writestr("board.svg", board_svg(memory, artifacts_dir, project_id, scale))
+        zf.writestr("sheet.png", sheet_png(project, nodes, scale))
+        zf.writestr("sheet.pdf", sheet_pdf(project, nodes, scale))
+        zf.writestr("RIGHTS.txt", RIGHTS_TEXT)
         threads = []
         for thread in memory.list_threads(project_id):
             item = dict(thread)

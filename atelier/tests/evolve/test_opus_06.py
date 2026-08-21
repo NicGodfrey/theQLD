@@ -728,7 +728,9 @@ class TextLayerWiring(unittest.TestCase):
         self.in_js("body.style.letterSpacing = String(meta.letter_spacing)")
         self.in_js("Math.min(96, Math.max(12, Number(meta.font_size) || 22))")
         # the image branch is the only one that ever asks for an artifact
-        self.assertEqual(self.app_js.count("/api/artifacts/${node.artifact_id}"), 2)
+        # (inline src, download, designer export). Text stays off that path.
+        self.assertEqual(self.app_js.count("/api/artifacts/${node.artifact_id}"), 3)
+        self.assertIn("/export?fmt=png", self.app_js)
 
     def test_a_text_card_can_be_edited_after_it_is_placed(self):
         self.in_js("async function editTextNode(node)")

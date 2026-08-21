@@ -147,3 +147,15 @@ h2, h3 { margin: 0 0 10px; font-weight: 500; font-size: 13px; letter-spacing: 0.
 }
 .check { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); margin-bottom: 10px; }
 .hint { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+.export-dialog {
+  background: var(--bg-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px;
+  max-width: 420px;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+.export-dialog::backdrop { background: rgba(0, 0, 0, 0.55); }
+.export-dialog .field { margin: 8px 0 4px; }
+.export-dialog select { margin-left: 8px; }

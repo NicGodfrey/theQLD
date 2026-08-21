@@ -17,6 +17,7 @@ MIME_EXT = {
     "audio/mpeg": ".mp3",
     "application/zip": ".zip",
     "application/json": ".json",
+    "application/pdf": ".pdf",
 }
 
 

@@ -18,5 +18,6 @@ __all__ = [
     "quote",
     "http",
     "exportzip",
+    "exportfmt",
     "paths",
 ]

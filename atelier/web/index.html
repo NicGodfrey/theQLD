@@ -52,7 +52,7 @@
         <button class="btn ghost" id="undoBtn" type="button">Undo</button>
         <button class="btn ghost" id="uploadBtn" type="button">Upload</button>
         <button class="btn ghost" id="textLayer" type="button">Text layer</button>
-        <button class="btn ghost" id="exportZip" type="button">Export zip</button>
+        <button class="btn ghost" id="exportZip" type="button">Export</button>
         <button class="btn ghost" id="camHome" type="button">Home</button>
         <button class="btn ghost" id="camFit" type="button">Fit</button>
         <span class="cam-readout" id="camReadout" title="Click to reset">100%</span>
@@ -90,6 +90,27 @@
       <div class="hint">Upload a reference (button, drop, or U), then Weave uses it as parent_artifact_id.</div>
     </section>
   </div>
+  <dialog id="exportDialog" class="export-dialog">
+    <form id="exportForm" method="dialog">
+      <h2>Export</h2>
+      <label class="check"><input type="radio" name="exportFmt" value="zip" checked> Project zip (archive + board.svg + sheet)</label>
+      <label class="check"><input type="radio" name="exportFmt" value="svg"> Board SVG — text stays type</label>
+      <label class="check"><input type="radio" name="exportFmt" value="pdf"> Sheet PDF</label>
+      <label class="check"><input type="radio" name="exportFmt" value="png"> Sheet PNG</label>
+      <label class="field">Scale
+        <select id="exportScale">
+          <option value="1">1×</option>
+          <option value="2">2×</option>
+          <option value="4">4×</option>
+        </select>
+      </label>
+      <p class="hint" id="exportRights">Output rights follow the image provider’s terms (OpenAI / Google). Atelier grants none. Demo SVG is local.</p>
+      <div class="row">
+        <button class="btn" id="exportCancel" value="cancel" type="submit">Cancel</button>
+        <button class="btn primary" id="exportGo" type="button">Download</button>
+      </div>
+    </form>
+  </dialog>
   <script src="/app.js"></script>
 </body>
 </html>

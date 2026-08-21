@@ -16,7 +16,7 @@ Odd rounds are Fable-shaped (expose a gap with a test). Even rounds are Opus-sha
 | 10 | Brand kit | Demo tint + StyleLock prefix on paid image prompts |
 | 11 | Spot-edit | Click a card as reference; no magic words required |
 | 12 | Text layer | Text nodes + font_size / family / tracking on the board |
-| 13 | Export | `GET .../export` zip |
+| 13 | Export | Zip + board.svg + sheet PNG/PDF + per-artifact `?fmt=` |
 | 14 | Launcher | `atelier/__main__.py` bootstraps repo root |
 | 15 | Host pin | Keyring rejects unofficial hosts; spokes refuse redirects |
 | 16 | Budget 402 | Pre-call quote + HTTP 402 |
