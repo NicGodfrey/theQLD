@@ -256,6 +256,10 @@ class Memory:
 
     def add_node(self, **kwargs: Any) -> dict:
         nid = kwargs.get("id") or _id()
+        text = kwargs.get("text")
+        if not text and kwargs.get("data") is not None:
+            data = kwargs["data"]
+            text = data if isinstance(data, str) else json.dumps(data, ensure_ascii=False)
         self.conn.execute(
             """INSERT INTO nodes (id, project_id, type, x, y, w, h, z, artifact_id, text, meta)
                VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
@@ -269,7 +273,7 @@ class Memory:
                 kwargs.get("h", 240),
                 kwargs.get("z", 0),
                 kwargs.get("artifact_id"),
-                kwargs.get("text", ""),
+                text or "",
                 json.dumps(kwargs.get("meta") or {}, ensure_ascii=False),
             ),
         )
@@ -299,6 +303,11 @@ class Memory:
         return rows
 
     def update_node(self, node_id: str, **fields: Any) -> dict:
+        if "data" in fields and "text" not in fields:
+            data = fields.pop("data")
+            fields["text"] = data if isinstance(data, str) else json.dumps(data, ensure_ascii=False)
+        else:
+            fields.pop("data", None)
         allowed = {"x", "y", "w", "h", "z", "text", "meta"}
         sets = []
         values = []

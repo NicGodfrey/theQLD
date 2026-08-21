@@ -27,6 +27,15 @@ def export_project_zip(memory, artifacts_dir, project_id: str) -> bytes:
                 indent=2,
             ),
         )
+        threads = []
+        for thread in memory.list_threads(project_id):
+            item = dict(thread)
+            item["messages"] = memory.list_messages(thread["id"])
+            threads.append(item)
+        zf.writestr(
+            "threads.json",
+            json.dumps(threads, ensure_ascii=False, default=str, indent=2),
+        )
         rows = memory.conn.execute(
             "SELECT * FROM artifacts WHERE project_id=?",
             (project_id,),

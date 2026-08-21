@@ -225,6 +225,10 @@ class Round06to12Board(unittest.TestCase):
         self.assertEqual(node["type"], "text")
         self.assertEqual(node["meta"]["layer"], "text")
         self.assertIsNone(node.get("artifact_id"))
+        via_data = self.mem.add_node(project_id=self.project["id"], type="text", data="From data")
+        self.assertEqual(via_data["text"], "From data")
+        moved = self.mem.update_node(via_data["id"], data="Edited")
+        self.assertEqual(moved["text"], "Edited")
 
 
 class Round13Export(unittest.TestCase):
@@ -238,6 +242,16 @@ class Round13Export(unittest.TestCase):
         blob = export_project_zip(mem, arts, project["id"])
         self.assertGreater(len(blob), 40)
         self.assertEqual(blob[:2], b"PK")
+        import zipfile
+        import io
+
+        with zipfile.ZipFile(io.BytesIO(blob)) as zf:
+            names = set(zf.namelist())
+            self.assertIn("threads.json", names)
+            self.assertIn("board.json", names)
+            threads = json.loads(zf.read("threads.json"))
+            self.assertTrue(threads)
+            self.assertTrue(threads[0].get("messages"))
         mem.close()
         tmp.cleanup()
 

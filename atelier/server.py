@@ -337,7 +337,7 @@ class Handler(BaseHTTPRequestHandler):
             node = app.memory.add_node(
                 project_id=parts[2],
                 type=body.get("type") or "text",
-                text=body.get("text") or "",
+                text=body.get("text") or body.get("data") or "",
                 x=body.get("x", 80),
                 y=body.get("y", 80),
                 w=body.get("w", 280),
