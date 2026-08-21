@@ -143,6 +143,11 @@ case-insensitive key/env scan, meta-test cross-pin).
 `Round17to20Meta.test_ci_workflow_exists` in `atelier/tests/test_evolve.py`
 gains five assertions. Everything else untouched.
 
+## Folded after this note (conductor close)
+
+No further CI yaml. Remote Actions execution is still unproven from this
+pod; the commands are green locally.
+
 ## Remaining holes (none blocking)
 
 - **CI has never run remotely.** Everything here proves the workflow

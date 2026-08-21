@@ -1,9 +1,9 @@
 # 20-round legion — sequential from here
 
-Done with live agents: R1–R18.
+Done with live agents: R1–R19.
 Remaining run **one round at a time** (implement → test → commit → one blocking verifier → next):
 
-R19 eval → R20 scorecard.
+R20 scorecard.
 
 | Agent | Model | Round | Slice | Status |
 |---|---|---|---|---|
@@ -25,7 +25,7 @@ R19 eval → R20 scorecard.
 | opus-08 | claude-opus-5-thinking-high-fast | 16 | budget 402 | done `bc-127658e9-1325-5838-be73-fee8d341a8ec` |
 | fable-09 | claude-fable-5-thinking-high | 17 | CI | done `bc-8e733077-73e6-56a9-9e5f-eaacd80dcf12` |
 | opus-09 | claude-opus-5-thinking-high-fast | 18 | live contract | done `bc-4f37d954-4a0b-5093-b44a-0e09cb824f7b` |
-| fable-10 | claude-fable-5-thinking-high | 19 | eval fixtures | awaiting live agent |
-| opus-10 | claude-opus-5-thinking-high-fast | 20 | scorecard | conductor fill |
+| fable-10 | claude-fable-5-thinking-high | 19 | eval fixtures | done `bc-0556ad0e-6b84-5fe6-b170-a36e89e0295f` |
+| opus-10 | claude-opus-5-thinking-high-fast | 20 | scorecard | awaiting live agent |
 
 Folded from Wave A into live Helix: unknown provider no longer falls through to demo; Gemini `gemini-2.5-flash-image` is priced; quote recounts after the plan; `count`/`variants` parse safely; 402 does not persist the blocked prompt.
