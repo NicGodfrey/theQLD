@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atelier Helix — BYOK design studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="header-about">
+        <nav>
+            <a href="index.html"><img src="images/logo.png"></a>
+            <div class="nav-links" id="navLinks">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="legalDirectory.html">DIRECTORY</a></li>
+                    <li><a href="atelier.html">ATELIER</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="text-box">
+            <h1>Atelier Helix</h1>
+        </div>
+    </section>
+    <section class="whatWeDoBG" style="padding: 6% 8%; color: #111;">
+        <h2>Your keys. Your quota. Your canvas.</h2>
+        <p>Atelier is an original Helix design studio inspired by Lovart’s public product (chat + infinite board + thinking/fast agent). Model calls go to <b>your</b> official OpenAI and Gemini accounts — not Lovart credits.</p>
+        <p>Launch locally:</p>
+        <pre style="background:#111;color:#f4f1ea;padding:16px;border-radius:8px;">python3 -m atelier
+# open http://127.0.0.1:8765</pre>
+        <p>Set <code>OPENAI_API_KEY</code> and/or <code>GEMINI_API_KEY</code>, or paste keys in the studio rail. Demo mode weaves SVG with zero spend.</p>
+        <p>Architecture: <a href="atelier/ARCHITECTURE.md">atelier/ARCHITECTURE.md</a> · Catalog: <a href="atelier/integrations/TOP100.md">TOP100</a></p>
+    </section>
+</body>
+</html>

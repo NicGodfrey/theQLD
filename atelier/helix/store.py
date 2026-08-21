@@ -1,0 +1,304 @@
+"""Helix Memory — SQLite persistence for projects, threads, canvas, artifacts."""
+
+from __future__ import annotations
+
+import json
+import sqlite3
+import time
+import uuid
+from pathlib import Path
+from typing import Any, Optional
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS projects (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    brand_kit TEXT NOT NULL DEFAULT '{}',
+    created_at REAL NOT NULL
+);
+CREATE TABLE IF NOT EXISTS threads (
+    id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    topic TEXT NOT NULL DEFAULT '',
+    mode TEXT NOT NULL DEFAULT 'fast',
+    created_at REAL NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES projects(id)
+);
+CREATE TABLE IF NOT EXISTS messages (
+    id TEXT PRIMARY KEY,
+    thread_id TEXT NOT NULL,
+    role TEXT NOT NULL,
+    content TEXT NOT NULL,
+    plan_json TEXT,
+    created_at REAL NOT NULL,
+    FOREIGN KEY (thread_id) REFERENCES threads(id)
+);
+CREATE TABLE IF NOT EXISTS artifacts (
+    id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    thread_id TEXT,
+    kind TEXT NOT NULL,
+    path TEXT NOT NULL DEFAULT '',
+    mime TEXT NOT NULL DEFAULT 'image/svg+xml',
+    prompt TEXT NOT NULL DEFAULT '',
+    provider TEXT NOT NULL DEFAULT '',
+    model TEXT NOT NULL DEFAULT '',
+    created_at REAL NOT NULL
+);
+CREATE TABLE IF NOT EXISTS nodes (
+    id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    type TEXT NOT NULL,
+    x REAL NOT NULL DEFAULT 80,
+    y REAL NOT NULL DEFAULT 80,
+    w REAL NOT NULL DEFAULT 320,
+    h REAL NOT NULL DEFAULT 240,
+    z INTEGER NOT NULL DEFAULT 0,
+    artifact_id TEXT,
+    text TEXT NOT NULL DEFAULT '',
+    meta TEXT NOT NULL DEFAULT '{}'
+);
+CREATE TABLE IF NOT EXISTS usage_events (
+    id TEXT PRIMARY KEY,
+    provider TEXT NOT NULL,
+    model TEXT NOT NULL,
+    unit_kind TEXT NOT NULL,
+    units REAL NOT NULL,
+    estimated_usd REAL NOT NULL DEFAULT 0,
+    thread_id TEXT,
+    created_at REAL NOT NULL
+);
+"""
+
+
+def _now() -> float:
+    return time.time()
+
+
+def _id() -> str:
+    return uuid.uuid4().hex
+
+
+class Memory:
+    def __init__(self, db_path: str | Path):
+        self.path = Path(db_path)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.conn = sqlite3.connect(str(self.path), check_same_thread=False)
+        self.conn.row_factory = sqlite3.Row
+        self.conn.executescript(SCHEMA)
+        self.conn.commit()
+
+    def close(self) -> None:
+        self.conn.close()
+
+    def _row(self, row: sqlite3.Row | None) -> Optional[dict]:
+        return dict(row) if row else None
+
+    def _rows(self, rows: list[sqlite3.Row]) -> list[dict]:
+        return [dict(r) for r in rows]
+
+    def create_project(self, name: str, brand_kit: Optional[dict] = None) -> dict:
+        pid = _id()
+        kit = json.dumps(brand_kit or {}, ensure_ascii=False)
+        self.conn.execute(
+            "INSERT INTO projects (id, name, brand_kit, created_at) VALUES (?,?,?,?)",
+            (pid, name, kit, _now()),
+        )
+        self.conn.commit()
+        return self.get_project(pid)
+
+    def list_projects(self) -> list[dict]:
+        return self._rows(
+            self.conn.execute("SELECT * FROM projects ORDER BY created_at DESC").fetchall()
+        )
+
+    def get_project(self, project_id: str) -> Optional[dict]:
+        row = self._row(
+            self.conn.execute("SELECT * FROM projects WHERE id=?", (project_id,)).fetchone()
+        )
+        if not row:
+            return None
+        row["brand_kit"] = json.loads(row["brand_kit"] or "{}")
+        return row
+
+    def update_brand_kit(self, project_id: str, brand_kit: dict) -> Optional[dict]:
+        self.conn.execute(
+            "UPDATE projects SET brand_kit=? WHERE id=?",
+            (json.dumps(brand_kit, ensure_ascii=False), project_id),
+        )
+        self.conn.commit()
+        return self.get_project(project_id)
+
+    def create_thread(self, project_id: str, topic: str = "", mode: str = "fast") -> dict:
+        tid = _id()
+        self.conn.execute(
+            "INSERT INTO threads (id, project_id, topic, mode, created_at) VALUES (?,?,?,?,?)",
+            (tid, project_id, topic, mode, _now()),
+        )
+        self.conn.commit()
+        return self.get_thread(tid)
+
+    def list_threads(self, project_id: str) -> list[dict]:
+        return self._rows(
+            self.conn.execute(
+                "SELECT * FROM threads WHERE project_id=? ORDER BY created_at DESC",
+                (project_id,),
+            ).fetchall()
+        )
+
+    def get_thread(self, thread_id: str) -> Optional[dict]:
+        return self._row(self.conn.execute("SELECT * FROM threads WHERE id=?", (thread_id,)).fetchone())
+
+    def add_message(
+        self,
+        thread_id: str,
+        role: str,
+        content: str,
+        plan: Any = None,
+    ) -> dict:
+        mid = _id()
+        plan_json = json.dumps(plan, ensure_ascii=False) if plan is not None else None
+        self.conn.execute(
+            "INSERT INTO messages (id, thread_id, role, content, plan_json, created_at) VALUES (?,?,?,?,?,?)",
+            (mid, thread_id, role, content, plan_json, _now()),
+        )
+        self.conn.commit()
+        return self.get_message(mid)
+
+    def get_message(self, message_id: str) -> dict:
+        row = dict(self.conn.execute("SELECT * FROM messages WHERE id=?", (message_id,)).fetchone())
+        if row.get("plan_json"):
+            row["plan"] = json.loads(row["plan_json"])
+        return row
+
+    def list_messages(self, thread_id: str) -> list[dict]:
+        rows = self._rows(
+            self.conn.execute(
+                "SELECT * FROM messages WHERE thread_id=? ORDER BY created_at ASC",
+                (thread_id,),
+            ).fetchall()
+        )
+        for row in rows:
+            if row.get("plan_json"):
+                row["plan"] = json.loads(row["plan_json"])
+        return rows
+
+    def add_artifact(self, **kwargs: Any) -> dict:
+        aid = kwargs.get("id") or _id()
+        self.conn.execute(
+            """INSERT INTO artifacts
+               (id, project_id, thread_id, kind, path, mime, prompt, provider, model, created_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?)""",
+            (
+                aid,
+                kwargs["project_id"],
+                kwargs.get("thread_id"),
+                kwargs.get("kind", "image"),
+                kwargs.get("path", ""),
+                kwargs.get("mime", "image/svg+xml"),
+                kwargs.get("prompt", ""),
+                kwargs.get("provider", ""),
+                kwargs.get("model", ""),
+                _now(),
+            ),
+        )
+        self.conn.commit()
+        return dict(self.conn.execute("SELECT * FROM artifacts WHERE id=?", (aid,)).fetchone())
+
+    def get_artifact(self, artifact_id: str) -> Optional[dict]:
+        return self._row(
+            self.conn.execute("SELECT * FROM artifacts WHERE id=?", (artifact_id,)).fetchone()
+        )
+
+    def add_node(self, **kwargs: Any) -> dict:
+        nid = kwargs.get("id") or _id()
+        self.conn.execute(
+            """INSERT INTO nodes (id, project_id, type, x, y, w, h, z, artifact_id, text, meta)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+            (
+                nid,
+                kwargs["project_id"],
+                kwargs.get("type", "image"),
+                kwargs.get("x", 80),
+                kwargs.get("y", 80),
+                kwargs.get("w", 320),
+                kwargs.get("h", 240),
+                kwargs.get("z", 0),
+                kwargs.get("artifact_id"),
+                kwargs.get("text", ""),
+                json.dumps(kwargs.get("meta") or {}, ensure_ascii=False),
+            ),
+        )
+        self.conn.commit()
+        return self.get_node(nid)
+
+    def get_node(self, node_id: str) -> dict:
+        row = dict(self.conn.execute("SELECT * FROM nodes WHERE id=?", (node_id,)).fetchone())
+        row["meta"] = json.loads(row.get("meta") or "{}")
+        return row
+
+    def list_nodes(self, project_id: str) -> list[dict]:
+        rows = self._rows(
+            self.conn.execute(
+                "SELECT * FROM nodes WHERE project_id=? ORDER BY z ASC, id ASC",
+                (project_id,),
+            ).fetchall()
+        )
+        for row in rows:
+            row["meta"] = json.loads(row.get("meta") or "{}")
+        return rows
+
+    def update_node(self, node_id: str, **fields: Any) -> dict:
+        allowed = {"x", "y", "w", "h", "z", "text", "meta"}
+        sets = []
+        values = []
+        for key, value in fields.items():
+            if key not in allowed:
+                continue
+            if key == "meta" and not isinstance(value, str):
+                value = json.dumps(value, ensure_ascii=False)
+            sets.append(f"{key}=?")
+            values.append(value)
+        if sets:
+            values.append(node_id)
+            self.conn.execute(f"UPDATE nodes SET {', '.join(sets)} WHERE id=?", values)
+            self.conn.commit()
+        return self.get_node(node_id)
+
+    def add_usage(self, **kwargs: Any) -> dict:
+        uid = _id()
+        self.conn.execute(
+            """INSERT INTO usage_events
+               (id, provider, model, unit_kind, units, estimated_usd, thread_id, created_at)
+               VALUES (?,?,?,?,?,?,?,?)""",
+            (
+                uid,
+                kwargs["provider"],
+                kwargs.get("model", ""),
+                kwargs.get("unit_kind", "tokens"),
+                float(kwargs.get("units", 0)),
+                float(kwargs.get("estimated_usd", 0)),
+                kwargs.get("thread_id"),
+                _now(),
+            ),
+        )
+        self.conn.commit()
+        return dict(self.conn.execute("SELECT * FROM usage_events WHERE id=?", (uid,)).fetchone())
+
+    def list_usage(self, limit: int = 200) -> list[dict]:
+        return self._rows(
+            self.conn.execute(
+                "SELECT * FROM usage_events ORDER BY created_at DESC LIMIT ?",
+                (limit,),
+            ).fetchall()
+        )
+
+    def usage_totals(self) -> list[dict]:
+        return self._rows(
+            self.conn.execute(
+                """SELECT provider, model, unit_kind,
+                          SUM(units) AS units, SUM(estimated_usd) AS estimated_usd
+                   FROM usage_events
+                   GROUP BY provider, model, unit_kind"""
+            ).fetchall()
+        )

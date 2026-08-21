@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier · Helix</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="brand">Atelier <span>Helix</span></div>
+      <div class="top-meta" id="topMeta">BYOK studio · your OpenAI / Gemini quota</div>
+    </header>
+    <aside class="rail">
+      <h2>Projects</h2>
+      <div class="row">
+        <button class="btn primary" id="newProject">New project</button>
+        <button class="btn" id="newThread">New thread</button>
+      </div>
+      <div class="list" id="projectList"></div>
+      <h2>Threads</h2>
+      <div class="list" id="threadList"></div>
+      <h2>Keys</h2>
+      <div class="field">
+        <label>Provider</label>
+        <select id="keyProvider">
+          <option value="openai">OpenAI (ChatGPT API)</option>
+          <option value="gemini">Google Gemini</option>
+          <option value="ollama">Ollama (localhost)</option>
+          <option value="openai_compat">OpenAI-compatible</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Secret</label>
+        <input id="keyValue" type="password" autocomplete="off" placeholder="sk-… / AIza…">
+      </div>
+      <div class="field">
+        <label>Base URL (optional)</label>
+        <input id="keyBase" placeholder="leave blank for official host">
+      </div>
+      <button class="btn primary" id="saveKey">Save key locally</button>
+      <div class="status" id="keyStatus"></div>
+      <h2>Brand kit</h2>
+      <div class="field">
+        <textarea id="brandKit" placeholder='{"name":"","palette":[],"voice":""}'></textarea>
+      </div>
+      <button class="btn" id="saveBrand">Save brand kit</button>
+    </aside>
+    <main class="board-wrap" id="boardWrap">
+      <div class="board" id="board"></div>
+    </main>
+    <section class="dock">
+      <h2>Conductor</h2>
+      <div class="row">
+        <select id="provider">
+          <option value="demo">demo (no quota)</option>
+          <option value="openai">openai</option>
+          <option value="gemini">gemini</option>
+          <option value="ollama">ollama</option>
+        </select>
+        <input id="model" placeholder="model (optional)">
+        <select id="mode">
+          <option value="fast">fast</option>
+          <option value="thinking">thinking</option>
+        </select>
+      </div>
+      <div class="messages" id="messages"></div>
+      <div class="composer">
+        <textarea id="prompt" placeholder="Describe the cloth: poster, logo system, campaign board…"></textarea>
+        <div class="row">
+          <button class="btn primary" id="run">Weave</button>
+          <button class="btn ghost" id="openCatalog">TOP100 catalog</button>
+        </div>
+      </div>
+      <div class="status" id="runStatus"></div>
+    </section>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
