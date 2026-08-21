@@ -173,6 +173,11 @@ Ran 49 tests — OK
 Full tree (`unittest discover -s atelier/tests`): 311 tests, OK
 (1 expected failure, pre-existing).
 
+## Folded after this note (conductor close)
+
+No further host-pin code. DNS rebinding / TLS pinning stay out of this
+stdlib slice.
+
 ## Remaining holes (none blocking)
 
 - **DNS rebinding.** We pin the *name*, not the resolution: a pinned host
