@@ -1,11 +1,10 @@
-# Opus-09 · R18 live contract (conductor fill — agent slot full)
+# Opus-09 · R18 live contract — awaiting live agent
 
-**Pass.** `CONTRACT.md` documents live routes. Live server has no `/api/chat`. Research `06-board-ui` must not be swapped on.
+Live leftovers now in the tree:
 
-## Live routes worth adding to CONTRACT later
-- `DELETE /api/nodes/:id`
-- `POST /api/projects/:id/brand`
-- `GET /api/catalog`
-- `GET /api/health` already listed
+- `CONTRACT.md` lists catalog, brand, DELETE node, artifact export, 415
+- Live `server.py` / `app.js` have no `/api/chat`
+- Research `06-board-ui` must not be swapped on
 
-None of these are the research SSE chat contract.
+Verifier: one blocking `claude-opus-5-thinking-high-fast` agent. Do not start
+R19 until this note is replaced with the agent's own evidence.

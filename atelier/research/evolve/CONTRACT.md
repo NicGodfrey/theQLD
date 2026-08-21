@@ -9,18 +9,26 @@ Research Board UI (`research/fable5/06-board-ui`) speaks SSE `/api/chat`.
 |---|---|---|
 | GET | `/api/health` | `{ok, architecture: helix, evolve_rounds: 20}` |
 | GET/POST | `/api/keys` | Redacted status; unofficial hosts → 400 |
+| GET | `/api/catalog` | TOP100 public listing |
+| GET | `/api/usage` | Ledger + totals |
 | POST | `/api/quote` | Quote-before-commit. `priced: false` for unknown models |
 | GET/POST | `/api/projects` | |
+| GET | `/api/projects/:id` | One project |
+| GET | `/api/projects/:id/threads` | |
+| POST | `/api/projects/:id/threads` | 404 if project missing |
 | GET | `/api/projects/:id/board` | `{nodes, camera}` |
-| POST | `/api/projects/:id/camera` | Persist pan/zoom |
+| GET/POST | `/api/projects/:id/camera` | Persist pan/zoom |
+| POST | `/api/projects/:id/brand` | Brand kit; 404 if project missing |
 | POST | `/api/projects/:id/upload` | JSON `{filename, mime, data}` base64 |
-| GET | `/api/projects/:id/export` | `?fmt=zip\|svg\|png\|pdf&scale=1\|2\|4`. Default zip (archive + board.svg + sheet). JPEG → 415 |
+| GET | `/api/projects/:id/export` | `?fmt=zip\|svg\|png\|pdf&scale=1\|2\|4`. Default zip. JPEG → 415 |
 | POST | `/api/projects/:id/undo` | Pop last add_node |
-| POST | `/api/projects/:id/nodes` | Text layer (`type=text`) |
+| POST | `/api/projects/:id/nodes` | Text layer (`type=text`); 404 if project missing |
+| GET | `/api/threads/:id/messages` | Includes stored `plan` |
 | POST | `/api/threads/:id/run` | Conductor. `?stream=1` → SSE of `events` then `result` |
+| POST | `/api/nodes/:id` | Patch node (`data` aliases `text`) |
+| DELETE | `/api/nodes/:id` | |
 | GET | `/api/artifacts/:id?download=1` | Attachment filename uses mime ext |
 | GET | `/api/artifacts/:id/export` | `?fmt=native\|svg\|png\|pdf&scale=`. JPEG → 415 |
-| GET | `/api/usage` | Ledger + totals |
 
 ## Status codes
 
@@ -30,8 +38,9 @@ Research Board UI (`research/fable5/06-board-ui`) speaks SSE `/api/chat`.
 | 400 | Invalid JSON / unofficial host |
 | 402 | Daily or thread budget would be exceeded |
 | 413 | Upload > 5 MB |
+| 415 | Unsupported export format (JPEG) |
 | 422 | Paid weave failed (fail-closed; no demo SVG) |
-| 404 | Missing project/thread/artifact |
+| 404 | Missing project/thread/artifact/node |
 
 ## Non-goals on this contract
 
