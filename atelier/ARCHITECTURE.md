@@ -44,3 +44,7 @@ Lovart’s MCoT is proprietary. Helix uses a six-phase **cloth** metaphor (brief
 ## MVP wired OSS patterns (not vendored)
 
 LiteLLM routing + cost, Open WebUI / LibreChat key UX, Instructor-style JSON plans, Excalidraw/tldraw/fabric board ideas, ComfyUI as a *future* worker, official OpenAI + Gemini HTTP contracts. Full set: `data/top100.json`.
+
+## Next Memory invariants (research)
+
+The live `helix/store.py` stays the small runtime. A fuller single-tenant design — Intent/Matter strands, rungs, append-only messages/usage, board as a disposable projection, write-only keyring — is in `research/fable5/04-helix-arch/` (`ARCHITECTURE.md`, `schema.sql`, `openapi.yaml`).
