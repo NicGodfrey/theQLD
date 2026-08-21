@@ -4,8 +4,13 @@ Local **Helix** design studio: Lovart-class ChatCanvas + design agent, but every
 
 ```bash
 python3 -m atelier
+# or, from any working directory:
+python3 /path/to/theQLD/atelier/__main__.py
 # http://127.0.0.1:8765
 ```
+
+GitHub Pages cannot host this backend. Demo mode weaves SVG with zero spend.
+Paid-provider failures are **fail-closed** (no silent demo SVG). Quote before weave.
 
 ## BYOK
 
@@ -22,8 +27,10 @@ Without keys, **demo mode** still weaves SVG onto the board (zero quota).
 ## Tests
 
 ```bash
-python3 -m unittest atelier.tests.test_helix
+python3 -m unittest atelier.tests.test_helix atelier.tests.test_evolve
 ```
+
+Twenty-round scorecard: `research/evolve/SCORECARD.json`. Live API: `research/evolve/CONTRACT.md`.
 
 ## Layout
 

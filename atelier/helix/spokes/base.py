@@ -86,7 +86,11 @@ class DemoSpoke(Spoke):
         from atelier.helix.loom import demo_svg
 
         return ImageResult(
-            data=demo_svg(prompt).encode("utf-8"),
+            data=demo_svg(
+                prompt,
+                title=kwargs.get("title") or "Atelier",
+                palette=kwargs.get("palette"),
+            ).encode("utf-8"),
             mime="image/svg+xml",
             provider="demo",
             model=model,

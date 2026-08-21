@@ -1,0 +1,35 @@
+{
+  "name": "Atelier Helix v1 evolve",
+  "as_of": "2026-08-21",
+  "rounds_total": 20,
+  "passed": 20,
+  "gate": 16,
+  "gates": {
+    "fail_closed": true,
+    "quote_before_commit": true,
+    "no_silent_demo": true,
+    "stdlib_only": true
+  },
+  "rounds": [
+    {"n": 1, "name": "fail-closed", "owner": "fable", "pass": true},
+    {"n": 2, "name": "quote-before-commit", "owner": "opus", "pass": true},
+    {"n": 3, "name": "progress-events", "owner": "fable", "pass": true},
+    {"n": 4, "name": "artifact-download", "owner": "opus", "pass": true},
+    {"n": 5, "name": "reference-upload", "owner": "fable", "pass": true},
+    {"n": 6, "name": "canvas-camera", "owner": "opus", "pass": true},
+    {"n": 7, "name": "plan-visible", "owner": "fable", "pass": true},
+    {"n": 8, "name": "four-up-variants", "owner": "opus", "pass": true},
+    {"n": 9, "name": "undo", "owner": "fable", "pass": true},
+    {"n": 10, "name": "brand-kit-apply", "owner": "opus", "pass": true},
+    {"n": 11, "name": "spot-edit", "owner": "fable", "pass": true},
+    {"n": 12, "name": "text-layer", "owner": "opus", "pass": true},
+    {"n": 13, "name": "export-zip", "owner": "fable", "pass": true},
+    {"n": 14, "name": "cwd-launcher", "owner": "opus", "pass": true},
+    {"n": 15, "name": "host-pin-no-redirect", "owner": "fable", "pass": true},
+    {"n": 16, "name": "budget-402", "owner": "opus", "pass": true},
+    {"n": 17, "name": "ci-workflow", "owner": "fable", "pass": true},
+    {"n": 18, "name": "live-api-contract", "owner": "opus", "pass": true},
+    {"n": 19, "name": "eval-fixtures", "owner": "fable", "pass": true},
+    {"n": 20, "name": "acceptance-scorecard", "owner": "opus", "pass": true}
+  ]
+}

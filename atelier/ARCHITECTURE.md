@@ -39,7 +39,7 @@ flowchart LR
 
 ## Why original
 
-Lovart’s MCoT is proprietary. Helix uses a six-phase **cloth** metaphor (brief / score / route / weave / critique / pin) with an explicit JSON plan schema, a hard weave cap (4), and demo fallback so a missing key never blanks the board.
+Lovart’s MCoT is proprietary. Helix uses a six-phase **cloth** metaphor (brief / score / route / weave / critique / pin) with an explicit JSON plan schema and a hard weave cap (4). **Demo** is an explicit provider. Paid-provider failures are fail-closed — they never silently become demo SVG.
 
 ## MVP wired OSS patterns (not vendored)
 

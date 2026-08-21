@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS projects (
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
     brand_kit TEXT NOT NULL DEFAULT '{}',
+    camera TEXT NOT NULL DEFAULT '{"x":0,"y":0,"zoom":1}',
     created_at REAL NOT NULL
 );
 CREATE TABLE IF NOT EXISTS threads (
@@ -43,6 +44,7 @@ CREATE TABLE IF NOT EXISTS artifacts (
     prompt TEXT NOT NULL DEFAULT '',
     provider TEXT NOT NULL DEFAULT '',
     model TEXT NOT NULL DEFAULT '',
+    parent_id TEXT,
     created_at REAL NOT NULL
 );
 CREATE TABLE IF NOT EXISTS nodes (
@@ -68,6 +70,13 @@ CREATE TABLE IF NOT EXISTS usage_events (
     thread_id TEXT,
     created_at REAL NOT NULL
 );
+CREATE TABLE IF NOT EXISTS undo_log (
+    id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    action TEXT NOT NULL,
+    payload TEXT NOT NULL,
+    created_at REAL NOT NULL
+);
 """
 
 
@@ -86,7 +95,18 @@ class Memory:
         self.conn = sqlite3.connect(str(self.path), check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
+        self._migrate()
         self.conn.commit()
+
+    def _migrate(self) -> None:
+        pcols = {r[1] for r in self.conn.execute("PRAGMA table_info(projects)")}
+        if "camera" not in pcols:
+            self.conn.execute(
+                "ALTER TABLE projects ADD COLUMN camera TEXT NOT NULL DEFAULT '{\"x\":0,\"y\":0,\"zoom\":1}'"
+            )
+        acols = {r[1] for r in self.conn.execute("PRAGMA table_info(artifacts)")}
+        if "parent_id" not in acols:
+            self.conn.execute("ALTER TABLE artifacts ADD COLUMN parent_id TEXT")
 
     def close(self) -> None:
         self.conn.close()
@@ -107,19 +127,37 @@ class Memory:
         self.conn.commit()
         return self.get_project(pid)
 
+    def _hydrate_project(self, row: Optional[dict]) -> Optional[dict]:
+        if not row:
+            return None
+        row["brand_kit"] = json.loads(row["brand_kit"] or "{}") if isinstance(row.get("brand_kit"), str) else (row.get("brand_kit") or {})
+        row["camera"] = json.loads(row["camera"] or '{"x":0,"y":0,"zoom":1}') if isinstance(row.get("camera"), str) else (row.get("camera") or {"x": 0, "y": 0, "zoom": 1})
+        return row
+
     def list_projects(self) -> list[dict]:
-        return self._rows(
-            self.conn.execute("SELECT * FROM projects ORDER BY created_at DESC").fetchall()
-        )
+        return [
+            self._hydrate_project(dict(r))
+            for r in self.conn.execute("SELECT * FROM projects ORDER BY created_at DESC").fetchall()
+        ]
 
     def get_project(self, project_id: str) -> Optional[dict]:
         row = self._row(
             self.conn.execute("SELECT * FROM projects WHERE id=?", (project_id,)).fetchone()
         )
-        if not row:
-            return None
-        row["brand_kit"] = json.loads(row["brand_kit"] or "{}")
-        return row
+        return self._hydrate_project(row)
+
+    def set_camera(self, project_id: str, camera: dict) -> Optional[dict]:
+        payload = {
+            "x": float((camera or {}).get("x") or 0),
+            "y": float((camera or {}).get("y") or 0),
+            "zoom": float((camera or {}).get("zoom") or 1),
+        }
+        self.conn.execute(
+            "UPDATE projects SET camera=? WHERE id=?",
+            (json.dumps(payload), project_id),
+        )
+        self.conn.commit()
+        return self.get_project(project_id)
 
     def update_brand_kit(self, project_id: str, brand_kit: dict) -> Optional[dict]:
         self.conn.execute(
@@ -187,8 +225,8 @@ class Memory:
         aid = kwargs.get("id") or _id()
         self.conn.execute(
             """INSERT INTO artifacts
-               (id, project_id, thread_id, kind, path, mime, prompt, provider, model, created_at)
-               VALUES (?,?,?,?,?,?,?,?,?,?)""",
+               (id, project_id, thread_id, kind, path, mime, prompt, provider, model, parent_id, created_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
             (
                 aid,
                 kwargs["project_id"],
@@ -199,6 +237,7 @@ class Memory:
                 kwargs.get("prompt", ""),
                 kwargs.get("provider", ""),
                 kwargs.get("model", ""),
+                kwargs.get("parent_id"),
                 _now(),
             ),
         )
@@ -230,7 +269,13 @@ class Memory:
             ),
         )
         self.conn.commit()
-        return self.get_node(nid)
+        node = self.get_node(nid)
+        self.push_undo(
+            kwargs["project_id"],
+            "add_node",
+            {"node_id": nid, "artifact_id": kwargs.get("artifact_id")},
+        )
+        return node
 
     def get_node(self, node_id: str) -> dict:
         row = dict(self.conn.execute("SELECT * FROM nodes WHERE id=?", (node_id,)).fetchone())
@@ -264,6 +309,34 @@ class Memory:
             self.conn.execute(f"UPDATE nodes SET {', '.join(sets)} WHERE id=?", values)
             self.conn.commit()
         return self.get_node(node_id)
+
+    def delete_node(self, node_id: str) -> bool:
+        cur = self.conn.execute("DELETE FROM nodes WHERE id=?", (node_id,))
+        self.conn.commit()
+        return cur.rowcount > 0
+
+    def push_undo(self, project_id: str, action: str, payload: dict) -> dict:
+        uid = _id()
+        self.conn.execute(
+            "INSERT INTO undo_log (id, project_id, action, payload, created_at) VALUES (?,?,?,?,?)",
+            (uid, project_id, action, json.dumps(payload, ensure_ascii=False), _now()),
+        )
+        self.conn.commit()
+        return {"id": uid, "action": action, "payload": payload}
+
+    def undo(self, project_id: str) -> dict:
+        row = self.conn.execute(
+            "SELECT * FROM undo_log WHERE project_id=? ORDER BY created_at DESC, id DESC LIMIT 1",
+            (project_id,),
+        ).fetchone()
+        if not row:
+            return {"undone": False, "reason": "empty"}
+        payload = json.loads(row["payload"] or "{}")
+        if row["action"] == "add_node" and payload.get("node_id"):
+            self.conn.execute("DELETE FROM nodes WHERE id=?", (payload["node_id"],))
+        self.conn.execute("DELETE FROM undo_log WHERE id=?", (row["id"],))
+        self.conn.commit()
+        return {"undone": True, "action": row["action"], "payload": payload}
 
     def add_usage(self, **kwargs: Any) -> dict:
         uid = _id()

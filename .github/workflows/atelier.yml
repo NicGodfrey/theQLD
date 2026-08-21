@@ -1,0 +1,22 @@
+name: atelier
+
+on:
+  push:
+    paths:
+      - "atelier/**"
+      - ".github/workflows/atelier.yml"
+  pull_request:
+    paths:
+      - "atelier/**"
+      - ".github/workflows/atelier.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Helix unit tests
+        run: python3 -m unittest atelier.tests.test_helix atelier.tests.test_evolve

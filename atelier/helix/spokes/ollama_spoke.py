@@ -6,6 +6,8 @@ import json
 import urllib.error
 import urllib.request
 
+from atelier.helix.http import urlopen_no_redirect
+
 from .base import ChatResult, ImageResult, Spoke, SpokeError, assert_official_host
 
 
@@ -28,7 +30,7 @@ class OllamaSpoke(Spoke):
             method="POST",
         )
         try:
-            with urllib.request.urlopen(req, timeout=180) as resp:
+            with urlopen_no_redirect(req, timeout=180) as resp:
                 return json.loads(resp.read().decode())
         except urllib.error.HTTPError as exc:
             raise SpokeError(f"Ollama HTTP {exc.code}: {exc.read().decode()[:400]}") from exc

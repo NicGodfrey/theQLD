@@ -15,4 +15,7 @@ __all__ = [
     "conductor",
     "loom",
     "catalog",
+    "quote",
+    "http",
+    "exportzip",
 ]

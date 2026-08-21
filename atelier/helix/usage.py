@@ -47,9 +47,20 @@ COST_TABLE = {
     ("gemini", "imagen-3.0-generate-002", "images"): 0.030,
     ("gemini", "imagen-4.0-generate", "images"): 0.040,
     ("ollama", "*", "tokens_in"): 0.0,
+    ("ollama", "*", "tokens_out"): 0.0,
     ("demo", "*", "tokens_in"): 0.0,
+    ("demo", "*", "tokens_out"): 0.0,
     ("demo", "*", "images"): 0.0,
 }
+
+
+def is_priced(provider: str, model: str, unit_kind: str) -> bool:
+    """True only when the cost table has a real row. Unknown ≠ free."""
+    if (provider, model, unit_kind) in COST_TABLE:
+        return True
+    if (provider, "*", unit_kind) in COST_TABLE:
+        return True
+    return False
 
 
 def estimate_usd(provider: str, model: str, unit_kind: str, units: float) -> float:
@@ -59,6 +70,7 @@ def estimate_usd(provider: str, model: str, unit_kind: str, units: float) -> flo
     wildcard = COST_TABLE.get((provider, "*", unit_kind))
     if wildcard is not None:
         return round(wildcard * units, 6)
+    # Conservative hold for budget math only — callers must check is_priced().
     if unit_kind == "images":
         return round(0.04 * units, 6)
     if unit_kind in {"tokens_in", "tokens_out", "tokens"}:

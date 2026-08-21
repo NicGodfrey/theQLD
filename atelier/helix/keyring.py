@@ -66,6 +66,14 @@ class Keyring:
         return (stored.get("base_url") or DEFAULT_HOSTS.get(provider) or "").rstrip("/")
 
     def put(self, provider: str, key: str = "", base_url: str = "") -> dict:
+        provider = (provider or "").strip().lower()
+        if base_url and provider in ALLOWED_HOST_SUFFIXES:
+            from .spokes.base import SpokeError, assert_official_host
+
+            try:
+                assert_official_host(base_url, ALLOWED_HOST_SUFFIXES[provider])
+            except SpokeError as exc:
+                raise ValueError(str(exc)) from exc
         data = self._load()
         providers = data.setdefault("providers", {})
         entry = providers.get(provider, {})

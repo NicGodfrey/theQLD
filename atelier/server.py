@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import base64
 import json
 import mimetypes
 import os
@@ -19,9 +20,13 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
 from atelier.helix.catalog import public as catalog_public
-from atelier.helix.conductor import Conductor
+from atelier.helix.conductor import Conductor, ConductorError
+from atelier.helix.exportzip import export_project_zip
 from atelier.helix.keyring import Keyring
+from atelier.helix.loom import ext_for_mime, write_bytes
+from atelier.helix.quote import quote_run
 from atelier.helix.store import Memory
+from atelier.helix.usage import BudgetExceeded
 
 
 def runtime_dir() -> Path:
@@ -49,6 +54,27 @@ class App:
                 },
             )
             self.memory.create_thread(project["id"], topic="First cloth", mode="fast")
+
+
+APP: App | None = None
+
+
+def get_app() -> App:
+    global APP
+    if APP is None:
+        APP = App()
+    return APP
+
+
+def reset_app() -> App:
+    global APP
+    if APP is not None:
+        try:
+            APP.memory.close()
+        except Exception:
+            pass
+    APP = App()
+    return APP
 
 
 APP = App()
@@ -91,13 +117,37 @@ def _send_file(handler: BaseHTTPRequestHandler, path: Path, download_name: str |
     handler.wfile.write(data)
 
 
+def _send_bytes(handler: BaseHTTPRequestHandler, data: bytes, mime: str, download_name: str) -> None:
+    handler.send_response(200)
+    handler.send_header("Content-Type", mime)
+    handler.send_header("Content-Length", str(len(data)))
+    handler.send_header("Content-Disposition", f'attachment; filename="{download_name}"')
+    handler.end_headers()
+    handler.wfile.write(data)
+
+
+def _sse_result(handler: BaseHTTPRequestHandler, result: dict) -> None:
+    handler.send_response(200)
+    handler.send_header("Content-Type", "text/event-stream; charset=utf-8")
+    handler.send_header("Cache-Control", "no-store")
+    handler.end_headers()
+    for ev in result.get("events") or []:
+        handler.wfile.write(f"event: {ev.get('kind', 'message')}\n".encode())
+        handler.wfile.write(f"data: {json.dumps(ev, ensure_ascii=False, default=str)}\n\n".encode())
+    handler.wfile.write(b"event: result\n")
+    handler.wfile.write(f"data: {json.dumps(result, ensure_ascii=False, default=str)}\n\n".encode())
+    handler.wfile.flush()
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, fmt: str, *args) -> None:
         sys.stderr.write("atelier %s - %s\n" % (self.address_string(), fmt % args))
 
     def do_GET(self) -> None:
+        app = get_app()
         parsed = urlparse(self.path)
         path = parsed.path
+        query = parse_qs(parsed.query)
         if path in {"/", "/index.html"}:
             _send_file(self, WEB / "index.html")
             return
@@ -111,41 +161,68 @@ class Handler(BaseHTTPRequestHandler):
             _send_file(self, WEB / path.lstrip("/"))
             return
         if path == "/api/health":
-            _json(self, 200, {"ok": True, "name": "atelier", "architecture": "helix"})
+            _json(
+                self,
+                200,
+                {
+                    "ok": True,
+                    "name": "atelier",
+                    "architecture": "helix",
+                    "evolve_rounds": 20,
+                },
+            )
             return
         if path == "/api/keys":
-            _json(self, 200, APP.keyring.public_status())
+            _json(self, 200, app.keyring.public_status())
             return
         if path == "/api/projects":
-            _json(self, 200, {"projects": APP.memory.list_projects()})
+            _json(self, 200, {"projects": app.memory.list_projects()})
             return
         if path == "/api/catalog":
             _json(self, 200, catalog_public())
             return
         if path == "/api/usage":
-            _json(self, 200, {"events": APP.memory.list_usage(), "totals": APP.memory.usage_totals()})
+            _json(self, 200, {"events": app.memory.list_usage(), "totals": app.memory.usage_totals()})
             return
         parts = [p for p in path.split("/") if p]
         if parts[:2] == ["api", "projects"] and len(parts) == 3:
-            project = APP.memory.get_project(parts[2])
+            project = app.memory.get_project(parts[2])
             _json(self, 200 if project else 404, project or {"error": "missing project"})
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "threads":
-            _json(self, 200, {"threads": APP.memory.list_threads(parts[2])})
+            _json(self, 200, {"threads": app.memory.list_threads(parts[2])})
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "board":
-            nodes = APP.memory.list_nodes(parts[2])
-            _json(self, 200, {"nodes": nodes})
+            project = app.memory.get_project(parts[2])
+            nodes = app.memory.list_nodes(parts[2])
+            _json(self, 200, {"nodes": nodes, "camera": (project or {}).get("camera") or {"x": 0, "y": 0, "zoom": 1}})
+            return
+        if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "camera":
+            project = app.memory.get_project(parts[2])
+            if not project:
+                _json(self, 404, {"error": "missing project"})
+                return
+            _json(self, 200, {"camera": project.get("camera")})
+            return
+        if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "export":
+            try:
+                data = export_project_zip(app.memory, app.artifacts, parts[2])
+            except ValueError as exc:
+                _json(self, 404, {"error": str(exc)})
+                return
+            _send_bytes(self, data, "application/zip", f"atelier-{parts[2][:8]}.zip")
             return
         if parts[:2] == ["api", "threads"] and len(parts) == 4 and parts[3] == "messages":
-            _json(self, 200, {"messages": APP.memory.list_messages(parts[2])})
+            _json(self, 200, {"messages": app.memory.list_messages(parts[2])})
             return
         if parts[:2] == ["api", "artifacts"] and len(parts) == 3:
-            art = APP.memory.get_artifact(parts[2])
+            art = app.memory.get_artifact(parts[2])
             if not art:
                 _json(self, 404, {"error": "missing artifact"})
                 return
-            _send_file(self, Path(art["path"]), download_name=f"{art['id']}.bin")
+            name = f"{art['id']}{ext_for_mime(art.get('mime') or '')}"
+            force = query.get("download", ["0"])[0] in {"1", "true", "yes"}
+            _send_file(self, Path(art["path"]), download_name=name if force else None)
             return
         if path.startswith("/api/"):
             _json(self, 404, {"error": "unknown GET"})
@@ -157,8 +234,10 @@ class Handler(BaseHTTPRequestHandler):
         _json(self, 404, {"error": "not found"})
 
     def do_POST(self) -> None:
+        app = get_app()
         parsed = urlparse(self.path)
         path = parsed.path
+        query = parse_qs(parsed.query)
         try:
             body = _read_json(self)
         except json.JSONDecodeError:
@@ -167,23 +246,41 @@ class Handler(BaseHTTPRequestHandler):
         parts = [p for p in path.split("/") if p]
 
         if path == "/api/keys":
+            try:
+                _json(
+                    self,
+                    200,
+                    app.keyring.put(
+                        body.get("provider", ""),
+                        key=body.get("key") or "",
+                        base_url=body.get("base_url") or "",
+                    ),
+                )
+            except ValueError as exc:
+                _json(self, 400, {"error": str(exc), "code": "unofficial_host"})
+            return
+        if path == "/api/quote":
             _json(
                 self,
                 200,
-                APP.keyring.put(
-                    body.get("provider", ""),
-                    key=body.get("key") or "",
-                    base_url=body.get("base_url") or "",
+                quote_run(
+                    provider=body.get("provider") or "demo",
+                    model=body.get("model") or "",
+                    prompt=body.get("prompt") or "",
+                    count=int(body.get("count") or body.get("variants") or 1),
+                    capability=body.get("capability") or "image",
+                    memory=app.memory,
+                    thread_id=body.get("thread_id"),
                 ),
             )
             return
         if path == "/api/projects":
-            project = APP.memory.create_project(body.get("name") or "Untitled")
-            APP.memory.create_thread(project["id"], topic="New thread", mode=body.get("mode") or "fast")
+            project = app.memory.create_project(body.get("name") or "Untitled")
+            app.memory.create_thread(project["id"], topic="New thread", mode=body.get("mode") or "fast")
             _json(self, 201, project)
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "threads":
-            thread = APP.memory.create_thread(
+            thread = app.memory.create_thread(
                 parts[2],
                 topic=body.get("topic") or "",
                 mode=body.get("mode") or "fast",
@@ -191,32 +288,112 @@ class Handler(BaseHTTPRequestHandler):
             _json(self, 201, thread)
             return
         if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "brand":
-            _json(self, 200, APP.memory.update_brand_kit(parts[2], body.get("brand_kit") or body))
+            _json(self, 200, app.memory.update_brand_kit(parts[2], body.get("brand_kit") or body))
+            return
+        if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "camera":
+            project = app.memory.set_camera(parts[2], body.get("camera") or body)
+            _json(self, 200 if project else 404, project or {"error": "missing project"})
+            return
+        if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "undo":
+            _json(self, 200, app.memory.undo(parts[2]))
+            return
+        if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "nodes":
+            node = app.memory.add_node(
+                project_id=parts[2],
+                type=body.get("type") or "text",
+                text=body.get("text") or "",
+                x=body.get("x", 80),
+                y=body.get("y", 80),
+                w=body.get("w", 280),
+                h=body.get("h", 120),
+                meta=body.get("meta") or {"layer": "text"},
+            )
+            _json(self, 201, node)
+            return
+        if parts[:2] == ["api", "projects"] and len(parts) == 4 and parts[3] == "upload":
+            project = app.memory.get_project(parts[2])
+            if not project:
+                _json(self, 404, {"error": "missing project"})
+                return
+            raw_b64 = body.get("data") or body.get("content") or ""
+            try:
+                blob = base64.b64decode(raw_b64)
+            except Exception:
+                _json(self, 400, {"error": "invalid base64"})
+                return
+            if len(blob) > 5_000_000:
+                _json(self, 413, {"error": "upload too large"})
+                return
+            mime = body.get("mime") or "application/octet-stream"
+            filename = body.get("filename") or "upload.bin"
+            art = app.memory.add_artifact(
+                project_id=parts[2],
+                kind="upload",
+                mime=mime,
+                prompt=filename,
+                provider="local",
+                model="upload",
+            )
+            path = write_bytes(app.artifacts, art["id"], blob, mime)
+            app.memory.conn.execute("UPDATE artifacts SET path=? WHERE id=?", (str(path), art["id"]))
+            app.memory.conn.commit()
+            art["path"] = str(path)
+            existing = len(app.memory.list_nodes(parts[2]))
+            node = app.memory.add_node(
+                project_id=parts[2],
+                type="image" if mime.startswith("image/") else "note",
+                artifact_id=art["id"],
+                text=filename,
+                x=72 + (existing % 3) * 360,
+                y=72 + (existing // 3) * 280,
+            )
+            _json(self, 201, {"artifact": art, "node": node})
             return
         if parts[:2] == ["api", "threads"] and len(parts) == 4 and parts[3] == "run":
-            thread = APP.memory.get_thread(parts[2])
+            thread = app.memory.get_thread(parts[2])
             if not thread:
                 _json(self, 404, {"error": "missing thread"})
                 return
+            stream = query.get("stream", ["0"])[0] in {"1", "true", "yes"}
             try:
-                result = APP.conductor.run(
+                result = app.conductor.run(
                     project_id=thread["project_id"],
                     thread_id=thread["id"],
                     prompt=body.get("prompt") or "",
                     mode=body.get("mode") or thread.get("mode") or "fast",
                     provider=body.get("provider") or "demo",
                     model=body.get("model") or "",
+                    variants=int(body.get("variants") or 0),
+                    parent_artifact_id=body.get("parent_artifact_id") or body.get("spot_artifact_id"),
                 )
+            except BudgetExceeded as exc:
+                _json(self, 402, {"error": str(exc), "code": "budget_exceeded", "ok": False})
+                return
+            except ConductorError as exc:
+                _json(self, 422, {"error": str(exc), "code": exc.code, "ok": False})
+                return
             except Exception as exc:
-                _json(self, 500, {"error": str(exc)})
+                _json(self, 500, {"error": str(exc), "ok": False})
+                return
+            if stream:
+                _sse_result(self, result)
                 return
             _json(self, 200, result)
             return
         if parts[:2] == ["api", "nodes"] and len(parts) == 3:
-            node = APP.memory.update_node(parts[2], **{k: body[k] for k in body})
+            node = app.memory.update_node(parts[2], **{k: body[k] for k in body})
             _json(self, 200, node)
             return
         _json(self, 404, {"error": "unknown POST"})
+
+    def do_DELETE(self) -> None:
+        app = get_app()
+        parts = [p for p in urlparse(self.path).path.split("/") if p]
+        if parts[:2] == ["api", "nodes"] and len(parts) == 3:
+            ok = app.memory.delete_node(parts[2])
+            _json(self, 200 if ok else 404, {"ok": ok})
+            return
+        _json(self, 404, {"error": "unknown DELETE"})
 
     def do_PATCH(self) -> None:
         self.do_POST()

@@ -48,6 +48,12 @@
       <button class="btn" id="saveBrand">Save brand kit</button>
     </aside>
     <main class="board-wrap" id="boardWrap">
+      <div class="board-tools">
+        <button class="btn ghost" id="undoBtn" type="button">Undo</button>
+        <button class="btn ghost" id="textLayer" type="button">Text layer</button>
+        <button class="btn ghost" id="exportZip" type="button">Export zip</button>
+        <span class="cam-readout" id="camReadout">100%</span>
+      </div>
       <div class="board" id="board"></div>
     </main>
     <section class="dock">
@@ -65,15 +71,20 @@
           <option value="thinking">thinking</option>
         </select>
       </div>
+      <label class="check"><input type="checkbox" id="variants"> 4-up variants</label>
+      <div id="planCard" class="plan-card hidden"></div>
       <div class="messages" id="messages"></div>
       <div class="composer">
         <textarea id="prompt" placeholder="Describe the cloth: poster, logo system, campaign board…"></textarea>
         <div class="row">
           <button class="btn primary" id="run">Weave</button>
+          <button class="btn" id="quoteBtn">Quote</button>
           <button class="btn ghost" id="openCatalog">TOP100 catalog</button>
         </div>
       </div>
       <div class="status" id="runStatus"></div>
+      <input id="filePick" type="file" accept="image/*,.svg,.png,.jpg,.webp" hidden>
+      <div class="hint">Drop a reference image onto the board, or wheel to zoom / drag empty space to pan.</div>
     </section>
   </div>
   <script src="/app.js"></script>
