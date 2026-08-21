@@ -26,10 +26,19 @@ def ext_for_mime(mime: str) -> str:
 def download_filename(artifact: dict) -> str:
     """ASCII filename from the brief, not the hex id."""
     prompt = (artifact.get("prompt") or "").strip()
-    slug = re.sub(r"[^a-zA-Z0-9]+", "-", prompt).strip("-").lower()[:32]
+    mime = artifact.get("mime") or ""
+    ext = ext_for_mime(mime)
+    stem = prompt
+    lower = stem.lower()
+    for candidate in sorted(set(MIME_EXT.values()) | {".jpeg"}, key=len, reverse=True):
+        if lower.endswith(candidate):
+            stem = stem[: -len(candidate)]
+            break
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", stem).strip("-").lower()
+    slug = slug[:32].rstrip("-_")
     if not slug:
         slug = (artifact.get("id") or "artifact")[:12]
-    return f"{slug}{ext_for_mime(artifact.get('mime') or '')}"
+    return f"{slug}{ext}"
 
 
 def _hex_color(value: str, fallback: str) -> str:

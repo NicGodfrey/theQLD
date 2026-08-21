@@ -7,7 +7,7 @@ Odd rounds are Fable-shaped (expose a gap with a test). Even rounds are Opus-sha
 | 1 | Fail-closed | Paid `SpokeError` no longer mints demo SVG |
 | 2 | Quote | `POST /api/quote` + quote attached to plan |
 | 3 | Progress | `run.events` phases; `?stream=1` SSE |
-| 4 | Download | `?download=1` + mime extension filename |
+| 4 | Download | `?download=1` brief slug; CSP on SVG; nosniff on export |
 | 5 | Upload | `POST /api/projects/:id/upload` base64 drop |
 | 6 | Camera | Project `camera` + board pan/zoom |
 | 7 | Plan card | Plan stored on assistant message; dock card |

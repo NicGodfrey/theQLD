@@ -123,18 +123,29 @@ def _send_web(handler: BaseHTTPRequestHandler, rel: str) -> None:
     _send_file(handler, safe)
 
 
-def _send_file(handler: BaseHTTPRequestHandler, path: Path, download_name: str | None = None) -> None:
+def _send_file(
+    handler: BaseHTTPRequestHandler,
+    path: Path,
+    download_name: str | None = None,
+    mime: str | None = None,
+) -> None:
     if not path.exists() or not path.is_file():
         _json(handler, 404, {"error": "not found"})
         return
     data = path.read_bytes()
-    mime = mimetypes.guess_type(str(path))[0] or "application/octet-stream"
+    guessed = mimetypes.guess_type(str(path))[0] or "application/octet-stream"
     if path.suffix == ".svg":
-        mime = "image/svg+xml"
+        guessed = "image/svg+xml"
+    mime = (mime or guessed).split(";")[0].strip() or guessed
     handler.send_response(200)
     handler.send_header("Content-Type", mime)
     handler.send_header("Content-Length", str(len(data)))
     handler.send_header("X-Content-Type-Options", "nosniff")
+    if mime.startswith("image/svg"):
+        handler.send_header(
+            "Content-Security-Policy",
+            "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        )
     if download_name:
         handler.send_header("Content-Disposition", f'attachment; filename="{download_name}"')
     handler.end_headers()
@@ -146,6 +157,7 @@ def _send_bytes(handler: BaseHTTPRequestHandler, data: bytes, mime: str, downloa
     handler.send_header("Content-Type", mime)
     handler.send_header("Content-Length", str(len(data)))
     handler.send_header("Content-Disposition", f'attachment; filename="{download_name}"')
+    handler.send_header("X-Content-Type-Options", "nosniff")
     handler.end_headers()
     handler.wfile.write(data)
 
@@ -251,12 +263,12 @@ class Handler(BaseHTTPRequestHandler):
                 _json(self, 404, {"error": "missing artifact"})
                 return
             name = download_filename(art)
-            force = query.get("download", ["0"])[0] in {"1", "true", "yes"}
+            force = query.get("download", ["0"])[0].strip().lower() in {"1", "true", "yes", "on"}
             safe = safe_under(app.artifacts, Path(art["path"]))
             if not safe:
                 _json(self, 404, {"error": "not found"})
                 return
-            _send_file(self, safe, download_name=name if force else None)
+            _send_file(self, safe, download_name=name if force else None, mime=art.get("mime"))
             return
         if path.startswith("/api/"):
             _json(self, 404, {"error": "unknown GET"})
