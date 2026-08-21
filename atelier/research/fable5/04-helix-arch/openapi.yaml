@@ -1,0 +1,1588 @@
+openapi: 3.0.3
+
+info:
+  title: Atelier Helix — Local API
+  version: 1.0.0
+  description: |
+    REST API served by the Atelier local server (the "hub" of the Helix
+    architecture) on the loopback interface only. It fronts the six modules:
+
+    * **Keyring** — BYOK secret storage. Secrets go in, only *refs* come out.
+    * **Spokes**  — provider configurations (registry rows; secrets stay in Keyring).
+    * **Conductor** — the design agent; turns stream progress over SSE.
+    * **Board**   — infinite canvas: boards, layers, nodes.
+    * **Loom**    — media pipeline runs.
+    * **Memory**  — projects, threads, messages, artifacts, brand kits, usage.
+
+    Conventions:
+    * ids are prefixed ULIDs (`prj_…`, `thr_…`, `msg_…`, `art_…`, `brd_…`,
+      `lyr_…`, `nod_…`, `bkt_…`, `pcf_…`, `run_…`, `stp_…`, `use_…`).
+    * timestamps are unix epoch **milliseconds**.
+    * money is integer micro-USD (`cost_micros`).
+    * Streaming endpoints use `text/event-stream` (SSE).
+
+servers:
+  - url: http://127.0.0.1:8787/v1
+    description: Local hub (loopback only; never bound to a public interface)
+
+security:
+  - localToken: []
+
+tags:
+  - name: Projects
+  - name: Threads
+    description: Intent strand — conversations inside a project.
+  - name: Messages
+    description: Append-only intent ledger, plus rungs (provenance links).
+  - name: Artifacts
+    description: Matter strand — content-addressed, immutable media.
+  - name: Board
+    description: Infinite canvas — mutable projection of the helix.
+  - name: Brand kits
+  - name: Providers
+    description: Spoke registry (BYOK provider configs; key refs only).
+  - name: Keyring
+    description: Write-only secret storage. Secrets are never returned.
+  - name: Usage
+    description: Append-only metering ledger.
+  - name: Loom
+    description: Media pipeline runs.
+  - name: Conductor
+    description: Agent turns.
+
+paths:
+
+  # ==========================================================================
+  # Projects
+  # ==========================================================================
+  /projects:
+    get:
+      tags: [Projects]
+      operationId: listProjects
+      summary: List projects
+      parameters:
+        - name: include_archived
+          in: query
+          schema: { type: boolean, default: false }
+      responses:
+        "200":
+          description: Projects, most recently updated first.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Project" }
+    post:
+      tags: [Projects]
+      operationId: createProject
+      summary: Create a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: { type: string, maxLength: 200 }
+                description: { type: string }
+                meta: { type: object, additionalProperties: true }
+      responses:
+        "201":
+          description: Created.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Project" }
+        "422": { $ref: "#/components/responses/Invalid" }
+
+  /projects/{projectId}:
+    parameters:
+      - $ref: "#/components/parameters/projectId"
+    get:
+      tags: [Projects]
+      operationId: getProject
+      summary: Get a project
+      responses:
+        "200":
+          description: The project.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Project" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    patch:
+      tags: [Projects]
+      operationId: updateProject
+      summary: Update name / description / meta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                description: { type: string }
+                meta: { type: object, additionalProperties: true }
+      responses:
+        "200":
+          description: Updated project.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Project" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /projects/{projectId}/archive:
+    post:
+      tags: [Projects]
+      operationId: archiveProject
+      summary: Archive (never hard-delete) a project
+      parameters:
+        - $ref: "#/components/parameters/projectId"
+      responses:
+        "200":
+          description: Archived project.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Project" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /projects/{projectId}/snapshot:
+    get:
+      tags: [Projects]
+      operationId: exportProjectSnapshot
+      summary: Export the whole project (helix-snapshot/1)
+      parameters:
+        - $ref: "#/components/parameters/projectId"
+      responses:
+        "200":
+          description: Full project export (no artifact bytes; use content URLs).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProjectSnapshot" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  # ==========================================================================
+  # Threads & messages (intent strand)
+  # ==========================================================================
+  /projects/{projectId}/threads:
+    parameters:
+      - $ref: "#/components/parameters/projectId"
+    get:
+      tags: [Threads]
+      operationId: listThreads
+      summary: List threads in a project
+      parameters:
+        - name: status
+          in: query
+          schema: { $ref: "#/components/schemas/ThreadStatus" }
+      responses:
+        "200":
+          description: Threads, most recently active first.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Thread" }
+    post:
+      tags: [Threads]
+      operationId: createThread
+      summary: Start a thread
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string, default: Untitled thread }
+      responses:
+        "201":
+          description: Created.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Thread" }
+
+  /threads/{threadId}:
+    parameters:
+      - $ref: "#/components/parameters/threadId"
+    get:
+      tags: [Threads]
+      operationId: getThread
+      summary: Get a thread
+      responses:
+        "200":
+          description: The thread.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Thread" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    patch:
+      tags: [Threads]
+      operationId: updateThread
+      summary: Rename or change status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                status: { $ref: "#/components/schemas/ThreadStatus" }
+      responses:
+        "200":
+          description: Updated thread.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Thread" }
+
+  /threads/{threadId}/messages:
+    parameters:
+      - $ref: "#/components/parameters/threadId"
+    get:
+      tags: [Messages]
+      operationId: listMessages
+      summary: List messages (ordered by seq)
+      parameters:
+        - name: after_seq
+          in: query
+          description: Return only messages with seq greater than this.
+          schema: { type: integer, default: -1 }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 1000, maximum: 5000 }
+      responses:
+        "200":
+          description: Messages in sequence order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Message" }
+    post:
+      tags: [Messages]
+      operationId: appendMessage
+      summary: Append a message (immutable once written)
+      description: |
+        There is no PATCH or DELETE for messages — the intent strand is
+        append-only (invariant I3).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [role, content]
+              properties:
+                role: { $ref: "#/components/schemas/MessageRole" }
+                content: { type: string }
+                payload: { type: object, additionalProperties: true }
+      responses:
+        "201":
+          description: Appended message with its assigned seq.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Message" }
+
+  /messages/{messageId}/rungs:
+    parameters:
+      - name: messageId
+        in: path
+        required: true
+        schema: { type: string }
+    post:
+      tags: [Messages]
+      operationId: createRung
+      summary: Link a message to an artifact (provenance)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [artifact_id]
+              properties:
+                artifact_id: { type: string }
+                relation:
+                  $ref: "#/components/schemas/RungRelation"
+      responses:
+        "201":
+          description: The rung (idempotent per message+artifact+relation).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Rung" }
+
+  # ==========================================================================
+  # Artifacts (matter strand)
+  # ==========================================================================
+  /projects/{projectId}/artifacts:
+    parameters:
+      - $ref: "#/components/parameters/projectId"
+    get:
+      tags: [Artifacts]
+      operationId: listArtifacts
+      summary: List artifacts in a project
+      parameters:
+        - name: kind
+          in: query
+          schema: { $ref: "#/components/schemas/ArtifactKind" }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 100 }
+        - name: offset
+          in: query
+          schema: { type: integer, default: 0 }
+      responses:
+        "200":
+          description: Artifacts, newest first.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Artifact" }
+    post:
+      tags: [Artifacts]
+      operationId: createArtifact
+      summary: Upload bytes or register an external URL
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [kind, mime, file]
+              properties:
+                file: { type: string, format: binary }
+                kind: { $ref: "#/components/schemas/ArtifactKind" }
+                mime: { type: string }
+                title: { type: string }
+                parent_id:
+                  type: string
+                  description: Derivation parent (same project only).
+                meta:
+                  type: string
+                  description: JSON object, form-encoded.
+          application/json:
+            schema:
+              type: object
+              required: [kind, mime, uri]
+              description: Register an external artifact by URL.
+              properties:
+                uri: { type: string, format: uri }
+                kind: { $ref: "#/components/schemas/ArtifactKind" }
+                mime: { type: string }
+                title: { type: string }
+                sha256: { type: string }
+                byte_size: { type: integer }
+                parent_id: { type: string }
+                meta: { type: object, additionalProperties: true }
+      responses:
+        "201":
+          description: Registered artifact (blob bytes are deduplicated by sha256).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Artifact" }
+        "422": { $ref: "#/components/responses/Invalid" }
+
+  /artifacts/{artifactId}:
+    parameters:
+      - $ref: "#/components/parameters/artifactId"
+    get:
+      tags: [Artifacts]
+      operationId: getArtifact
+      summary: Get artifact metadata
+      responses:
+        "200":
+          description: The artifact.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Artifact" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    patch:
+      tags: [Artifacts]
+      operationId: annotateArtifact
+      summary: Update annotations (title, meta) — the only legal mutation
+      description: |
+        Content and provenance columns are frozen (invariant I4); attempts to
+        change them are rejected by the store's triggers.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                meta: { type: object, additionalProperties: true }
+      responses:
+        "200":
+          description: Annotated artifact.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Artifact" }
+
+  /artifacts/{artifactId}/content:
+    get:
+      tags: [Artifacts]
+      operationId: getArtifactContent
+      summary: Download artifact bytes
+      parameters:
+        - $ref: "#/components/parameters/artifactId"
+      responses:
+        "200":
+          description: Raw bytes, Content-Type = artifact mime.
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        "409":
+          description: Artifact is external; fetch its `uri` directly.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /artifacts/{artifactId}/lineage:
+    get:
+      tags: [Artifacts]
+      operationId: getArtifactLineage
+      summary: Derivation ancestors and descendants
+      parameters:
+        - $ref: "#/components/parameters/artifactId"
+      responses:
+        "200":
+          description: Lineage in both directions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  artifact_id: { type: string }
+                  ancestors:
+                    type: array
+                    items: { $ref: "#/components/schemas/Artifact" }
+                  descendants:
+                    type: array
+                    items: { $ref: "#/components/schemas/Artifact" }
+
+  # ==========================================================================
+  # Board (infinite canvas)
+  # ==========================================================================
+  /projects/{projectId}/boards:
+    parameters:
+      - $ref: "#/components/parameters/projectId"
+    get:
+      tags: [Board]
+      operationId: listBoards
+      summary: List boards
+      responses:
+        "200":
+          description: Boards in creation order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Board" }
+    post:
+      tags: [Board]
+      operationId: createBoard
+      summary: Create a board
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string, default: Board }
+                viewport: { $ref: "#/components/schemas/Viewport" }
+      responses:
+        "201":
+          description: Created.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Board" }
+
+  /boards/{boardId}:
+    parameters:
+      - $ref: "#/components/parameters/boardId"
+    get:
+      tags: [Board]
+      operationId: getBoard
+      summary: Get a board
+      responses:
+        "200":
+          description: The board.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Board" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    patch:
+      tags: [Board]
+      operationId: updateBoard
+      summary: Rename or move the viewport
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                viewport: { $ref: "#/components/schemas/Viewport" }
+      responses:
+        "200":
+          description: Updated board.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Board" }
+
+  /boards/{boardId}/scene:
+    get:
+      tags: [Board]
+      operationId: getBoardScene
+      summary: Full render list in paint order (layer z, then node z)
+      parameters:
+        - $ref: "#/components/parameters/boardId"
+      responses:
+        "200":
+          description: Everything a renderer needs in one round trip.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/SceneNode" }
+
+  /boards/{boardId}/layers:
+    post:
+      tags: [Board]
+      operationId: createLayer
+      summary: Add a layer (defaults to top of the stack)
+      parameters:
+        - $ref: "#/components/parameters/boardId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string, default: Layer }
+                z_index: { type: integer }
+      responses:
+        "201":
+          description: Created.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Layer" }
+
+  /layers/{layerId}:
+    parameters:
+      - name: layerId
+        in: path
+        required: true
+        schema: { type: string }
+    patch:
+      tags: [Board]
+      operationId: updateLayer
+      summary: Rename, reorder, show/hide, lock/unlock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                z_index: { type: integer }
+                visible: { type: boolean }
+                locked: { type: boolean }
+      responses:
+        "200":
+          description: Updated layer.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Layer" }
+    delete:
+      tags: [Board]
+      operationId: deleteLayer
+      summary: Delete a layer (cascades to its nodes; artifacts survive)
+      responses:
+        "204": { description: Deleted. }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /boards/{boardId}/nodes:
+    post:
+      tags: [Board]
+      operationId: createNode
+      summary: Place a node on the canvas
+      description: |
+        `kind: artifact` requires `artifact_id`, and the artifact must belong
+        to the board's own project (invariants I5, I7).
+      parameters:
+        - $ref: "#/components/parameters/boardId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [layer_id, kind]
+              properties:
+                layer_id: { type: string }
+                kind: { $ref: "#/components/schemas/NodeKind" }
+                artifact_id: { type: string, nullable: true }
+                x: { type: number, default: 0 }
+                y: { type: number, default: 0 }
+                w: { type: number, default: 100 }
+                h: { type: number, default: 100 }
+                rotation: { type: number, default: 0 }
+                opacity: { type: number, minimum: 0, maximum: 1, default: 1 }
+                z: { type: number }
+                props: { type: object, additionalProperties: true }
+      responses:
+        "201":
+          description: Placed node.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Node" }
+        "422": { $ref: "#/components/responses/Invalid" }
+
+  /nodes/{nodeId}:
+    parameters:
+      - name: nodeId
+        in: path
+        required: true
+        schema: { type: string }
+    patch:
+      tags: [Board]
+      operationId: updateNode
+      summary: Move, resize, restyle, restack or relayer a node
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                x: { type: number }
+                y: { type: number }
+                w: { type: number }
+                h: { type: number }
+                rotation: { type: number }
+                opacity: { type: number, minimum: 0, maximum: 1 }
+                z: { type: number }
+                layer_id: { type: string, description: Same board only. }
+                props: { type: object, additionalProperties: true }
+      responses:
+        "200":
+          description: Updated node.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Node" }
+    delete:
+      tags: [Board]
+      operationId: deleteNode
+      summary: Remove a node (the artifact behind it is untouched)
+      responses:
+        "204": { description: Deleted. }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  # ==========================================================================
+  # Brand kits
+  # ==========================================================================
+  /projects/{projectId}/brand-kits:
+    parameters:
+      - $ref: "#/components/parameters/projectId"
+    get:
+      tags: [Brand kits]
+      operationId: listBrandKits
+      summary: List brand kits (assets included)
+      responses:
+        "200":
+          description: Brand kits in creation order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/BrandKit" }
+    post:
+      tags: [Brand kits]
+      operationId: createBrandKit
+      summary: Create a brand kit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: { type: string }
+                palette:
+                  type: array
+                  items: { $ref: "#/components/schemas/PaletteEntry" }
+                typography: { type: object, additionalProperties: true }
+                voice: { type: object, additionalProperties: true }
+                activate: { type: boolean, default: false }
+      responses:
+        "201":
+          description: Created.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BrandKit" }
+
+  /brand-kits/{brandKitId}:
+    get:
+      tags: [Brand kits]
+      operationId: getBrandKit
+      summary: Get a brand kit with its assets
+      parameters:
+        - $ref: "#/components/parameters/brandKitId"
+      responses:
+        "200":
+          description: The brand kit.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BrandKit" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /brand-kits/{brandKitId}/activate:
+    post:
+      tags: [Brand kits]
+      operationId: activateBrandKit
+      summary: Make this the project's single active kit (atomic swap)
+      parameters:
+        - $ref: "#/components/parameters/brandKitId"
+      responses:
+        "200":
+          description: Now-active brand kit (invariant I6 — at most one per project).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BrandKit" }
+
+  /brand-kits/{brandKitId}/assets:
+    post:
+      tags: [Brand kits]
+      operationId: addBrandAsset
+      summary: Attach an artifact from the same project
+      parameters:
+        - $ref: "#/components/parameters/brandKitId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [artifact_id]
+              properties:
+                artifact_id: { type: string }
+                role: { $ref: "#/components/schemas/BrandAssetRole" }
+      responses:
+        "201":
+          description: Brand kit including the new asset.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BrandKit" }
+
+  # ==========================================================================
+  # Providers (Spokes) & Keyring (BYOK)
+  # ==========================================================================
+  /providers:
+    get:
+      tags: [Providers]
+      operationId: listProviderConfigs
+      summary: List provider configs
+      parameters:
+        - name: spoke
+          in: query
+          schema: { type: string }
+        - name: enabled_only
+          in: query
+          schema: { type: boolean, default: false }
+      responses:
+        "200":
+          description: Provider configs (key refs only — never secrets).
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ProviderConfig" }
+    post:
+      tags: [Providers]
+      operationId: upsertProviderConfig
+      summary: Create or update (by label) a provider config
+      description: |
+        BYOK contract (invariant I1/I2): `key_ref` is a Keyring handle such as
+        `openai.personal`. Any field containing a raw API key, token, JWT,
+        PEM block or URL userinfo is rejected with 422 before it reaches disk.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [spoke, label]
+              properties:
+                spoke:
+                  type: string
+                  description: Provider family, lowercase (openai, anthropic, replicate, fal, local, …).
+                label: { type: string, description: Unique display name / upsert key. }
+                key_ref:
+                  type: string
+                  pattern: "^[a-z][a-z0-9_.:-]{2,63}$"
+                base_url: { type: string, format: uri }
+                capabilities:
+                  type: array
+                  items: { type: string }
+                  example: [text.generate, image.generate]
+                defaults: { type: object, additionalProperties: true }
+                enabled: { type: boolean, default: true }
+      responses:
+        "200":
+          description: Upserted provider config.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProviderConfig" }
+        "422": { $ref: "#/components/responses/Invalid" }
+
+  /providers/{providerConfigId}:
+    parameters:
+      - name: providerConfigId
+        in: path
+        required: true
+        schema: { type: string }
+    get:
+      tags: [Providers]
+      operationId: getProviderConfig
+      summary: Get a provider config
+      responses:
+        "200":
+          description: The provider config.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProviderConfig" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    patch:
+      tags: [Providers]
+      operationId: setProviderEnabled
+      summary: Enable or disable
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [enabled]
+              properties:
+                enabled: { type: boolean }
+      responses:
+        "200":
+          description: Updated provider config.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProviderConfig" }
+
+  /providers/{providerConfigId}/verify:
+    post:
+      tags: [Providers]
+      operationId: verifyProviderConfig
+      summary: Live health check via the spoke (resolves key_ref through Keyring)
+      parameters:
+        - name: providerConfigId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Verification result. The secret itself never appears.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  latency_ms: { type: integer }
+                  detail: { type: string, example: "authenticated; 42 models visible" }
+
+  /keyring:
+    get:
+      tags: [Keyring]
+      operationId: listKeyRefs
+      summary: List stored key refs (names only)
+      responses:
+        "200":
+          description: Key refs and creation times. Secret values are never returned by any endpoint.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    key_ref: { type: string, example: openai.personal }
+                    created_at: { type: integer, format: int64 }
+
+  /keyring/{keyRef}:
+    parameters:
+      - name: keyRef
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: "^[a-z][a-z0-9_.:-]{2,63}$"
+    put:
+      tags: [Keyring]
+      operationId: putKey
+      summary: Store or replace a secret (write-only)
+      description: |
+        The secret goes to the OS keychain or the encrypted local keyfile —
+        never to the SQLite database, logs, or any GET response.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [secret]
+              properties:
+                secret: { type: string, format: password, writeOnly: true }
+      responses:
+        "204": { description: Stored. There is no way to read it back. }
+    delete:
+      tags: [Keyring]
+      operationId: deleteKey
+      summary: Forget a secret
+      responses:
+        "204": { description: Deleted. }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  # ==========================================================================
+  # Usage
+  # ==========================================================================
+  /usage/events:
+    get:
+      tags: [Usage]
+      operationId: listUsageEvents
+      summary: List usage events (newest first)
+      parameters:
+        - name: project_id
+          in: query
+          schema: { type: string }
+        - name: since
+          in: query
+          description: Unix epoch milliseconds.
+          schema: { type: integer, format: int64 }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 500 }
+      responses:
+        "200":
+          description: Usage events.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/UsageEvent" }
+    post:
+      tags: [Usage]
+      operationId: recordUsageEvent
+      summary: Append a usage event (no update or delete exists — invariant I8)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UsageEventInput" }
+      responses:
+        "201":
+          description: Recorded event.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/UsageEvent" }
+
+  /usage/summary:
+    get:
+      tags: [Usage]
+      operationId: getUsageSummary
+      summary: Totals grouped by spoke and operation
+      parameters:
+        - name: project_id
+          in: query
+          schema: { type: string }
+        - name: since
+          in: query
+          schema: { type: integer, format: int64 }
+      responses:
+        "200":
+          description: Aggregates, most expensive first.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/UsageSummaryRow" }
+
+  # ==========================================================================
+  # Loom
+  # ==========================================================================
+  /loom/runs:
+    post:
+      tags: [Loom]
+      operationId: createLoomRun
+      summary: Queue a pipeline run
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [project_id, steps]
+              properties:
+                project_id: { type: string }
+                thread_id: { type: string, nullable: true }
+                name: { type: string, default: run }
+                plan:
+                  type: object
+                  additionalProperties: true
+                  description: Optional DAG metadata (edges between step indices, etc.).
+                steps:
+                  type: array
+                  minItems: 1
+                  items: { $ref: "#/components/schemas/LoomStepInput" }
+      responses:
+        "201":
+          description: Queued run with materialized steps.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LoomRun" }
+        "422": { $ref: "#/components/responses/Invalid" }
+
+  /loom/runs/{runId}:
+    get:
+      tags: [Loom]
+      operationId: getLoomRun
+      summary: Get a run with steps and their artifact I/O
+      parameters:
+        - $ref: "#/components/parameters/runId"
+      responses:
+        "200":
+          description: The run.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LoomRun" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /loom/runs/{runId}/cancel:
+    post:
+      tags: [Loom]
+      operationId: cancelLoomRun
+      summary: Cancel a queued or running run
+      parameters:
+        - $ref: "#/components/parameters/runId"
+      responses:
+        "200":
+          description: Cancelled run.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LoomRun" }
+        "409":
+          description: Run is already terminal (invariant I9).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /loom/runs/{runId}/events:
+    get:
+      tags: [Loom]
+      operationId: streamLoomRunEvents
+      summary: Live run progress (SSE)
+      parameters:
+        - $ref: "#/components/parameters/runId"
+      responses:
+        "200":
+          description: |
+            `text/event-stream`. Event types: `run.status`, `step.status`,
+            `step.output` (carries artifact ids), `usage` and `done`.
+          content:
+            text/event-stream:
+              schema: { type: string }
+
+  # ==========================================================================
+  # Conductor
+  # ==========================================================================
+  /conductor/turns:
+    post:
+      tags: [Conductor]
+      operationId: startConductorTurn
+      summary: Ask the agent to act on a thread
+      description: |
+        The Conductor reads the thread, the active brand kit and the board,
+        plans (optionally weaving a Loom run), calls Spokes, writes artifacts
+        and messages back through Memory, and links them with rungs.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [thread_id, instruction]
+              properties:
+                thread_id: { type: string }
+                instruction: { type: string }
+                board_id:
+                  type: string
+                  nullable: true
+                  description: If set, the Conductor may place results on this board.
+                constraints:
+                  type: object
+                  additionalProperties: true
+                  description: 'Budget / provider constraints, e.g. {"max_cost_micros": 500000}.'
+      responses:
+        "202":
+          description: Turn accepted; follow the SSE stream.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  turn_id: { type: string, example: trn_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+                  events_url:
+                    type: string
+                    example: /v1/conductor/turns/trn_01J8ZQ4T9NV2X5H0C3M7K1R6WD/events
+
+  /conductor/turns/{turnId}/events:
+    get:
+      tags: [Conductor]
+      operationId: streamConductorTurnEvents
+      summary: Live turn progress (SSE)
+      parameters:
+        - name: turnId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: |
+            `text/event-stream`. Event types: `plan`, `message.appended`,
+            `artifact.created`, `node.placed`, `usage`, `error`, `done`.
+          content:
+            text/event-stream:
+              schema: { type: string }
+
+# ============================================================================
+components:
+
+  securitySchemes:
+    localToken:
+      type: http
+      scheme: bearer
+      description: |
+        Per-install token generated at first launch and stored in the Keyring;
+        defends the loopback port against other local processes.
+
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      required: true
+      schema: { type: string }
+    threadId:
+      name: threadId
+      in: path
+      required: true
+      schema: { type: string }
+    artifactId:
+      name: artifactId
+      in: path
+      required: true
+      schema: { type: string }
+    boardId:
+      name: boardId
+      in: path
+      required: true
+      schema: { type: string }
+    brandKitId:
+      name: brandKitId
+      in: path
+      required: true
+      schema: { type: string }
+    runId:
+      name: runId
+      in: path
+      required: true
+      schema: { type: string }
+
+  responses:
+    NotFound:
+      description: The referenced resource does not exist.
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Invalid:
+      description: Validation failed (including secret-leak refusals).
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+
+  schemas:
+
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string, example: not_found }
+        detail:
+          type: string
+          example: "provider_config.defaults.api_key looks like a raw secret (I1)"
+
+    ThreadStatus:
+      type: string
+      enum: [open, pinned, resolved, archived]
+
+    MessageRole:
+      type: string
+      enum: [user, conductor, spoke, system, note]
+
+    RungRelation:
+      type: string
+      enum: [prompted, produced, referenced, approved, rejected]
+      default: produced
+
+    ArtifactKind:
+      type: string
+      enum: [image, video, audio, vector, text, font, model3d, archive, other]
+
+    NodeKind:
+      type: string
+      enum: [artifact, text, shape, frame, sticky, connector]
+
+    BrandAssetRole:
+      type: string
+      enum: [logo_primary, logo_mark, wordmark, texture, reference, other]
+      default: reference
+
+    Project:
+      type: object
+      properties:
+        id: { type: string, example: prj_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        name: { type: string }
+        slug: { type: string, example: nova-coffee-rebrand }
+        description: { type: string }
+        meta: { type: object, additionalProperties: true }
+        archived_at: { type: integer, format: int64, nullable: true }
+        created_at: { type: integer, format: int64 }
+        updated_at: { type: integer, format: int64 }
+
+    Thread:
+      type: object
+      properties:
+        id: { type: string, example: thr_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        project_id: { type: string }
+        title: { type: string }
+        status: { $ref: "#/components/schemas/ThreadStatus" }
+        created_at: { type: integer, format: int64 }
+        updated_at: { type: integer, format: int64 }
+
+    Message:
+      type: object
+      properties:
+        id: { type: string, example: msg_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        thread_id: { type: string }
+        seq: { type: integer, description: Per-thread, gap-free, starts at 0. }
+        role: { $ref: "#/components/schemas/MessageRole" }
+        content: { type: string }
+        payload: { type: object, additionalProperties: true }
+        created_at: { type: integer, format: int64 }
+
+    Rung:
+      type: object
+      properties:
+        id: { type: string, example: rng_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        message_id: { type: string }
+        artifact_id: { type: string }
+        relation: { $ref: "#/components/schemas/RungRelation" }
+        created_at: { type: integer, format: int64 }
+
+    Artifact:
+      type: object
+      properties:
+        id: { type: string, example: art_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        project_id: { type: string }
+        kind: { $ref: "#/components/schemas/ArtifactKind" }
+        mime: { type: string, example: image/png }
+        storage: { type: string, enum: [blob, external] }
+        uri:
+          type: string
+          description: Blob-relative path (content-addressed) or external URL.
+        sha256: { type: string, nullable: true }
+        byte_size: { type: integer, nullable: true }
+        width: { type: integer, nullable: true }
+        height: { type: integer, nullable: true }
+        duration_ms: { type: integer, nullable: true }
+        title: { type: string }
+        meta: { type: object, additionalProperties: true }
+        parent_id:
+          type: string
+          nullable: true
+          description: Derivation parent (upscale-of, variation-of, …).
+        created_at: { type: integer, format: int64 }
+
+    Viewport:
+      type: object
+      properties:
+        x: { type: number, default: 0 }
+        y: { type: number, default: 0 }
+        zoom: { type: number, default: 1 }
+
+    Board:
+      type: object
+      properties:
+        id: { type: string, example: brd_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        project_id: { type: string }
+        name: { type: string }
+        viewport: { $ref: "#/components/schemas/Viewport" }
+        created_at: { type: integer, format: int64 }
+        updated_at: { type: integer, format: int64 }
+
+    Layer:
+      type: object
+      properties:
+        id: { type: string, example: lyr_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        board_id: { type: string }
+        name: { type: string }
+        z_index: { type: integer }
+        visible: { type: integer, enum: [0, 1] }
+        locked: { type: integer, enum: [0, 1] }
+        created_at: { type: integer, format: int64 }
+        updated_at: { type: integer, format: int64 }
+
+    Node:
+      type: object
+      properties:
+        id: { type: string, example: nod_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        board_id: { type: string }
+        layer_id: { type: string }
+        kind: { $ref: "#/components/schemas/NodeKind" }
+        artifact_id: { type: string, nullable: true }
+        x: { type: number }
+        y: { type: number }
+        w: { type: number }
+        h: { type: number }
+        rotation: { type: number }
+        opacity: { type: number }
+        z: { type: number, description: Fractional stacking order within the layer. }
+        props: { type: object, additionalProperties: true }
+        created_at: { type: integer, format: int64 }
+        updated_at: { type: integer, format: int64 }
+
+    SceneNode:
+      type: object
+      description: Denormalized render row (node + layer + artifact reference).
+      properties:
+        node_id: { type: string }
+        board_id: { type: string }
+        layer_id: { type: string }
+        layer_name: { type: string }
+        layer_z: { type: integer }
+        layer_visible: { type: integer, enum: [0, 1] }
+        layer_locked: { type: integer, enum: [0, 1] }
+        node_z: { type: number }
+        kind: { $ref: "#/components/schemas/NodeKind" }
+        x: { type: number }
+        y: { type: number }
+        w: { type: number }
+        h: { type: number }
+        rotation: { type: number }
+        opacity: { type: number }
+        artifact_id: { type: string, nullable: true }
+        artifact_kind: { type: string, nullable: true }
+        artifact_mime: { type: string, nullable: true }
+        artifact_uri: { type: string, nullable: true }
+        props: { type: object, additionalProperties: true }
+
+    PaletteEntry:
+      type: object
+      properties:
+        name: { type: string, example: ember }
+        hex: { type: string, example: "#E8590C" }
+
+    BrandKit:
+      type: object
+      properties:
+        id: { type: string, example: bkt_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        project_id: { type: string }
+        name: { type: string }
+        is_active: { type: integer, enum: [0, 1] }
+        palette:
+          type: array
+          items: { $ref: "#/components/schemas/PaletteEntry" }
+        typography:
+          type: object
+          additionalProperties: true
+          example: { display: Archivo Black, body: Inter }
+        voice:
+          type: object
+          additionalProperties: true
+          example: { adjectives: [bold, warm], avoid: [corporate] }
+        assets:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              role: { $ref: "#/components/schemas/BrandAssetRole" }
+              artifact_id: { type: string }
+              kind: { type: string }
+              mime: { type: string }
+              uri: { type: string }
+              title: { type: string }
+              created_at: { type: integer, format: int64 }
+        created_at: { type: integer, format: int64 }
+        updated_at: { type: integer, format: int64 }
+
+    ProviderConfig:
+      type: object
+      description: A Spoke registry row. Never contains a secret — only key_ref.
+      properties:
+        id: { type: string, example: pcf_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        spoke: { type: string, example: openai }
+        label: { type: string, example: OpenAI (personal) }
+        base_url: { type: string, nullable: true }
+        key_ref: { type: string, nullable: true, example: openai.personal }
+        enabled: { type: integer, enum: [0, 1] }
+        capabilities:
+          type: array
+          items: { type: string }
+        defaults: { type: object, additionalProperties: true }
+        created_at: { type: integer, format: int64 }
+        updated_at: { type: integer, format: int64 }
+
+    UsageEventInput:
+      type: object
+      required: [spoke, operation]
+      properties:
+        spoke: { type: string }
+        operation: { type: string, example: image.generate }
+        project_id: { type: string, nullable: true }
+        thread_id: { type: string, nullable: true }
+        run_id: { type: string, nullable: true }
+        step_id: { type: string, nullable: true }
+        provider_config_id: { type: string, nullable: true }
+        model: { type: string, nullable: true }
+        unit_type:
+          type: string
+          enum: [tokens, pixels, seconds, characters, requests]
+          default: requests
+        input_units: { type: integer, default: 0 }
+        output_units: { type: integer, default: 0 }
+        cost_micros: { type: integer, default: 0, description: Integer micro-USD. }
+        latency_ms: { type: integer, nullable: true }
+        status: { type: string, enum: [ok, error, cancelled], default: ok }
+        error: { type: string, nullable: true }
+        meta: { type: object, additionalProperties: true }
+
+    UsageEvent:
+      allOf:
+        - $ref: "#/components/schemas/UsageEventInput"
+        - type: object
+          properties:
+            id: { type: string, example: use_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+            created_at: { type: integer, format: int64 }
+
+    UsageSummaryRow:
+      type: object
+      properties:
+        spoke: { type: string }
+        operation: { type: string }
+        events: { type: integer }
+        input_units: { type: integer }
+        output_units: { type: integer }
+        cost_micros: { type: integer }
+        avg_latency_ms: { type: number, nullable: true }
+
+    LoomStepInput:
+      type: object
+      required: [spoke_op]
+      properties:
+        name: { type: string }
+        spoke_op: { type: string, example: image.generate }
+        provider_config_id: { type: string, nullable: true }
+        params: { type: object, additionalProperties: true }
+
+    LoomStep:
+      type: object
+      properties:
+        id: { type: string, example: stp_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        run_id: { type: string }
+        idx: { type: integer }
+        name: { type: string }
+        spoke_op: { type: string }
+        provider_config_id: { type: string, nullable: true }
+        params: { type: object, additionalProperties: true }
+        status:
+          type: string
+          enum: [queued, running, succeeded, failed, cancelled, skipped]
+        error: { type: string, nullable: true }
+        started_at: { type: integer, format: int64, nullable: true }
+        finished_at: { type: integer, format: int64, nullable: true }
+        inputs:
+          type: array
+          items: { type: string }
+          description: Artifact ids consumed.
+        outputs:
+          type: array
+          items: { type: string }
+          description: Artifact ids produced.
+
+    LoomRun:
+      type: object
+      properties:
+        id: { type: string, example: run_01J8ZQ4T9NV2X5H0C3M7K1R6WD }
+        project_id: { type: string }
+        thread_id: { type: string, nullable: true }
+        name: { type: string }
+        plan: { type: object, additionalProperties: true }
+        status:
+          type: string
+          enum: [queued, running, succeeded, failed, cancelled]
+        error: { type: string, nullable: true }
+        created_at: { type: integer, format: int64 }
+        started_at: { type: integer, format: int64, nullable: true }
+        finished_at: { type: integer, format: int64, nullable: true }
+        steps:
+          type: array
+          items: { $ref: "#/components/schemas/LoomStep" }
+
+    ProjectSnapshot:
+      type: object
+      properties:
+        format: { type: string, example: helix-snapshot/1 }
+        exported_at: { type: integer, format: int64 }
+        project: { $ref: "#/components/schemas/Project" }
+        threads:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Thread"
+              - type: object
+                properties:
+                  messages:
+                    type: array
+                    items: { $ref: "#/components/schemas/Message" }
+        artifacts:
+          type: array
+          items: { $ref: "#/components/schemas/Artifact" }
+        boards:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/Board"
+              - type: object
+                properties:
+                  layers:
+                    type: array
+                    items: { $ref: "#/components/schemas/Layer" }
+                  nodes:
+                    type: array
+                    items: { $ref: "#/components/schemas/SceneNode" }
+        brand_kits:
+          type: array
+          items: { $ref: "#/components/schemas/BrandKit" }
+        runs:
+          type: array
+          items: { $ref: "#/components/schemas/LoomRun" }
+        usage_summary:
+          type: array
+          items: { $ref: "#/components/schemas/UsageSummaryRow" }
