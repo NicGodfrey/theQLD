@@ -94,10 +94,32 @@ def _json(handler: BaseHTTPRequestHandler, code: int, payload: Any) -> None:
     handler.wfile.write(body)
 
 
+# Upload bodies are base64 JSON; 5 MB of raw bytes is ~6.7 MB encoded.
+# Anything past this is rejected before json/base64 work touches it.
+MAX_JSON_BODY = 8_000_000
+
+# Mimes we serve back verbatim from /api/artifacts. Anything else (notably
+# text/html) is stored as octet-stream so an upload can never execute
+# on the app origin. SVG stays allowed: _send_file sandboxes it via CSP.
+UPLOAD_MIME_OK = {"application/pdf", "text/plain", "application/json"}
+
+
+class BodyTooLarge(ValueError):
+    pass
+
+
 def _read_json(handler: BaseHTTPRequestHandler) -> dict:
     length = int(handler.headers.get("Content-Length") or 0)
     if not length:
         return {}
+    if length > MAX_JSON_BODY:
+        remaining = length
+        while remaining > 0:
+            chunk = handler.rfile.read(min(65536, remaining))
+            if not chunk:
+                break
+            remaining -= len(chunk)
+        raise BodyTooLarge(f"body exceeds {MAX_JSON_BODY} bytes")
     raw = handler.rfile.read(length)
     if not raw:
         return {}
@@ -288,6 +310,9 @@ class Handler(BaseHTTPRequestHandler):
         query = parse_qs(parsed.query)
         try:
             body = _read_json(self)
+        except BodyTooLarge as exc:
+            _json(self, 413, {"error": str(exc)})
+            return
         except json.JSONDecodeError:
             _json(self, 400, {"error": "invalid json"})
             return
@@ -364,15 +389,27 @@ class Handler(BaseHTTPRequestHandler):
                 _json(self, 404, {"error": "missing project"})
                 return
             raw_b64 = body.get("data") or body.get("content") or ""
+            if not isinstance(raw_b64, str) or not raw_b64.strip():
+                _json(self, 400, {"error": "empty upload"})
+                return
+            if len(raw_b64) > 6_800_000:  # > 5 MB once decoded; skip the decode
+                _json(self, 413, {"error": "upload too large"})
+                return
+            raw_b64 = "".join(raw_b64.split())  # tolerate wrapped base64
             try:
-                blob = base64.b64decode(raw_b64)
+                blob = base64.b64decode(raw_b64, validate=True)
             except Exception:
                 _json(self, 400, {"error": "invalid base64"})
+                return
+            if not blob:
+                _json(self, 400, {"error": "empty upload"})
                 return
             if len(blob) > 5_000_000:
                 _json(self, 413, {"error": "upload too large"})
                 return
-            mime = body.get("mime") or "application/octet-stream"
+            mime = (body.get("mime") or "application/octet-stream").split(";")[0].strip().lower()
+            if not (mime.startswith("image/") or mime in UPLOAD_MIME_OK):
+                mime = "application/octet-stream"
             filename = body.get("filename") or "upload.bin"
             art = app.memory.add_artifact(
                 project_id=parts[2],

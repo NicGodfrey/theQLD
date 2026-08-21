@@ -45,6 +45,17 @@ class UploadWiring(unittest.TestCase):
         self.assertIn("await uploadFile(file)", app_js)
         self.assertIn('e.key === "u"', app_js)
 
+    def test_project_switch_and_create_clear_last_upload(self):
+        # Claim 5: both the project-list click and #newProject reset the ref.
+        app_js = (WEB / "app.js").read_text(encoding="utf-8")
+        self.assertGreaterEqual(app_js.count("state.lastUploadId = null"), 2)
+
+    def test_spot_prompt_prefers_last_artifact(self):
+        # Claim 4: /spot|局部|edit this/i routes to lastArtifactId, else lastUploadId.
+        app_js = (WEB / "app.js").read_text(encoding="utf-8")
+        self.assertIn("/spot|局部|edit this/i", app_js)
+        self.assertIn("spot ? state.lastArtifactId : (state.lastUploadId || undefined)", app_js)
+
 
 class UploadRoute(unittest.TestCase):
     @classmethod
@@ -115,6 +126,56 @@ class UploadRoute(unittest.TestCase):
         self.assertEqual(status, 413)
         self.assertIn("too large", body["error"])
 
+    def test_garbage_base64_is_400_not_an_empty_artifact(self):
+        _, project = self._post("/api/projects", {"name": "R5-garbage"})
+        status, body = self._post(
+            f"/api/projects/{project['id']}/upload",
+            {"filename": "bad.png", "mime": "image/png", "data": "!!!!"},
+        )
+        self.assertEqual(status, 400)
+        self.assertIn("base64", body["error"])
+
+    def test_empty_data_is_400(self):
+        _, project = self._post("/api/projects", {"name": "R5-empty"})
+        for payload in ("", "   ", None):
+            status, body = self._post(
+                f"/api/projects/{project['id']}/upload",
+                {"filename": "empty.png", "mime": "image/png", "data": payload},
+            )
+            self.assertEqual(status, 400)
+            self.assertIn("empty", body["error"])
+
+    def test_html_mime_is_stored_as_octet_stream(self):
+        # An upload must never come back as text/html from /api/artifacts,
+        # or a dropped .html file would execute on the app origin.
+        _, project = self._post("/api/projects", {"name": "R5-html"})
+        payload = base64.b64encode(b"<script>fetch('/api/keys')</script>").decode()
+        status, uploaded = self._post(
+            f"/api/projects/{project['id']}/upload",
+            {"filename": "evil.html", "mime": "text/html", "data": payload},
+        )
+        self.assertEqual(status, 201)
+        self.assertEqual(uploaded["artifact"]["mime"], "application/octet-stream")
+        self.assertEqual(uploaded["node"]["type"], "note")
+        req = urllib.request.Request(self.base + f"/api/artifacts/{uploaded['artifact']['id']}")
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            self.assertEqual(resp.status, 200)
+            self.assertNotIn("text/html", resp.headers.get("Content-Type", ""))
+
+    def test_giant_json_body_is_413_before_decode(self):
+        _, project = self._post("/api/projects", {"name": "R5-giant"})
+        # 6.5 MB raw -> ~8.7 MB base64: over MAX_JSON_BODY, drained and refused.
+        blob = b"x" * 6_500_000
+        status, body = self._post(
+            f"/api/projects/{project['id']}/upload",
+            {
+                "filename": "giant.bin",
+                "mime": "application/octet-stream",
+                "data": base64.b64encode(blob).decode(),
+            },
+        )
+        self.assertEqual(status, 413)
+
     def test_uploaded_reference_is_the_next_weave_parent(self):
         _, project = self._post("/api/projects", {"name": "R5-parent"})
         _, thread = self._post(f"/api/projects/{project['id']}/threads", {"topic": "r5"})
@@ -131,6 +192,21 @@ class UploadRoute(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertEqual(result["artifacts"][0]["parent_id"], parent_id)
         self.assertEqual(result["plan"]["spot_edit"]["parent_id"], parent_id)
+
+    def test_bogus_parent_id_is_persisted_dangling_CURRENT_BEHAVIOR(self):
+        # Known hole, pinned on purpose: the conductor skips the spot-edit
+        # prompt when the parent does not resolve, but still writes the bogus
+        # id into artifacts.parent_id. If a future round fixes this to store
+        # NULL instead, flip this assertion.
+        _, project = self._post("/api/projects", {"name": "R5-dangling"})
+        _, thread = self._post(f"/api/projects/{project['id']}/threads", {"topic": "r5"})
+        status, result = self._post(
+            f"/api/threads/{thread['id']}/run",
+            {"prompt": "hello", "provider": "demo", "parent_artifact_id": "no-such-artifact"},
+        )
+        self.assertEqual(status, 200)
+        self.assertNotIn("spot_edit", result["plan"])
+        self.assertEqual(result["artifacts"][0]["parent_id"], "no-such-artifact")
 
 
 if __name__ == "__main__":
