@@ -18,7 +18,7 @@ from atelier.helix.conductor import Conductor, extract_json, fallback_plan
 from atelier.helix.keyring import Keyring
 from atelier.helix.loom import demo_svg, write_bytes
 from atelier.helix.store import Memory
-from atelier.helix.usage import estimate_usd, record
+from atelier.helix.usage import BudgetExceeded, estimate_usd, record
 
 
 class StoreTests(unittest.TestCase):
@@ -97,6 +97,10 @@ class LoomUsageCatalogTests(unittest.TestCase):
         record(mem, provider="demo", model="demo-svg", unit_kind="images", units=1)
         totals = mem.usage_totals()
         self.assertEqual(totals[0]["provider"], "demo")
+        self.assertEqual(estimate_usd("openai", "gpt-5.6-luna", "tokens_in", 1_000_000), 0.2)
+        mem.add_usage(provider="openai", model="dall-e-3", unit_kind="images", units=1, estimated_usd=3.0, thread_id="t1")
+        with self.assertRaises(BudgetExceeded):
+            record(mem, provider="openai", model="dall-e-3", unit_kind="images", units=1, thread_id="t1")
         mem.close()
         tmp.cleanup()
 
