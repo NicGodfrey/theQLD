@@ -446,6 +446,11 @@ class Round17to20Meta(unittest.TestCase):
         self.assertTrue(card["gates"]["fail_closed"])
         self.assertEqual(len(card["rounds"]), 20)
         self.assertTrue(all(r.get("pass") for r in card["rounds"]))
+        self.assertFalse(card.get("lovart_complete"))
+        self.assertFalse(card.get("paid_loop_proven"))
+        self.assertTrue(card.get("demo_loop"))
+        self.assertTrue(card.get("honest"))
+        self.assertTrue(card.get("remaining_product_holes"))
 
 
 class HttpRounds(unittest.TestCase):
