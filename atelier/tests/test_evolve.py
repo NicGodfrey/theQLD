@@ -421,12 +421,17 @@ class Round17to20Meta(unittest.TestCase):
     def test_ci_workflow_exists(self):
         wf = ROOT / ".github" / "workflows" / "atelier.yml"
         text = wf.read_text()
+        self.assertIn("name: atelier", text)
+        self.assertIn("runs-on: ubuntu-latest", text)
+        self.assertIn('python-version: "3.11"', text)
         self.assertIn("atelier.tests.test_helix", text)
         self.assertIn("atelier.tests.test_evolve", text)
         self.assertIn("unittest discover -s atelier/tests/evolve", text)
         self.assertIn("pyproject.toml", text)
+        self.assertIn(".github/workflows/atelier.yml", text)
         self.assertNotIn("OPENAI_API_KEY", text)
         self.assertNotIn("GEMINI_API_KEY", text)
+        self.assertNotIn("secrets.", text)
 
     def test_live_contract_notes_exist(self):
         text = (ROOT / "atelier" / "research" / "evolve" / "CONTRACT.md").read_text()
