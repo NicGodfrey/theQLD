@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import sqlite3
 import threading
 import time
@@ -155,10 +156,14 @@ class Memory:
         cam = camera if isinstance(camera, dict) else {}
 
         def _num(value, default: float) -> float:
+            # NaN / ±Infinity round-trip through json.loads but json.dumps writes
+            # them as bare tokens, which is not JSON: one such write would make
+            # every later /api/projects response unparseable in the browser.
             try:
-                return float(value)
+                out = float(value)
             except (TypeError, ValueError):
                 return default
+            return out if math.isfinite(out) else default
 
         zoom = _num(cam.get("zoom"), 1.0)
         if zoom <= 0:

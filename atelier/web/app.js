@@ -48,6 +48,7 @@ function applyCamera() {
 }
 
 let persistCameraTimer = null;
+let pendingCamera = null;
 
 function clampCamera(camera) {
   const zoom = Number(camera && camera.zoom);
@@ -59,17 +60,25 @@ function clampCamera(camera) {
 }
 
 async function flushCamera() {
-  if (!state.projectId) return;
+  clearTimeout(persistCameraTimer);
+  persistCameraTimer = null;
+  const pending = pendingCamera;
+  pendingCamera = null;
+  if (!pending) return;
   try {
-    await api(`/api/projects/${state.projectId}/camera`, {
+    await api(`/api/projects/${pending.projectId}/camera`, {
       method: "POST",
-      body: { camera: state.camera },
+      body: { camera: pending.camera },
     });
   } catch { /* camera persist is best-effort */ }
 }
 
+// Project and camera are captured when the write is scheduled, not when it
+// fires: switching projects inside the debounce window must still land the
+// move on the board that actually moved.
 function persistCamera() {
   if (!state.projectId) return;
+  pendingCamera = { projectId: state.projectId, camera: clampCamera(state.camera) };
   clearTimeout(persistCameraTimer);
   persistCameraTimer = setTimeout(flushCamera, 180);
 }
@@ -124,6 +133,7 @@ async function refreshProjects() {
       class: "item" + (p.id === state.projectId ? " active" : ""),
       text: p.name,
       onclick: async () => {
+        await flushCamera();
         state.projectId = p.id;
         state.threadId = null;
         state.lastUploadId = null;
@@ -453,6 +463,7 @@ document.getElementById("openCatalog").onclick = async () => {
 document.getElementById("camHome").onclick = resetCamera;
 document.getElementById("camFit").onclick = fitCamera;
 document.getElementById("camReadout").onclick = resetCamera;
+window.addEventListener("pagehide", flushCamera);
 
 document.getElementById("uploadBtn").onclick = () => {
   document.getElementById("filePick").click();

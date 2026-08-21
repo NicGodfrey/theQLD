@@ -169,6 +169,12 @@ class Round06to12Board(unittest.TestCase):
         self.assertEqual(clamped["camera"]["zoom"], 3.0)
         zeroed = self.mem.set_camera(self.project["id"], {"zoom": 0})
         self.assertEqual(zeroed["camera"]["zoom"], 1.0)
+        # non-finite would serialise as a bare NaN / Infinity token and make
+        # every later /api/projects response unparseable in the browser
+        finite = self.mem.set_camera(
+            self.project["id"], {"x": float("inf"), "y": float("nan"), "zoom": 2}
+        )
+        self.assertEqual((finite["camera"]["x"], finite["camera"]["y"]), (0.0, 0.0))
 
     def test_plan_visible_on_message(self):
         result = self.cond.run(
