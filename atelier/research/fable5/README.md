@@ -6,6 +6,7 @@ Completed and copied:
 
 - `01-product-spec/` — Lovart public feature matrix, UX flows, acceptance
 - `02-top100/` — live GitHub GraphQL TOP100, MVP 15, Helix integration map
+- `03-keyring-spokes/` — BYOK contract, official-host lock, 68 fixture tests, Anthropic/Ollama/compat spokes
 - `04-helix-arch/` — Memory invariants, OpenAPI hub, content-addressed store prototype
 - `08-security-quota/` — threat model, keyring notes, 2026-08-21 cost table
 - `05-conductor/` — plan/critique/manifest protocol, three-lane routing, 36 offline tests

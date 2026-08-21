@@ -1,0 +1,21 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Local llama reporting in.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1755700000,
+  "id": "chatcmpl-ollama-1",
+  "model": "llama3.1:8b",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 6,
+    "prompt_tokens": 15,
+    "total_tokens": 21
+  }
+}

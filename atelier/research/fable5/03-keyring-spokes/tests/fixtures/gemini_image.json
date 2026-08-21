@@ -1,0 +1,28 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Here is your image."
+          },
+          {
+            "inlineData": {
+              "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC",
+              "mimeType": "image/png"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "modelVersion": "gemini-2.5-flash-image",
+  "usageMetadata": {
+    "candidatesTokenCount": 1290,
+    "promptTokenCount": 8,
+    "totalTokenCount": 1298
+  }
+}

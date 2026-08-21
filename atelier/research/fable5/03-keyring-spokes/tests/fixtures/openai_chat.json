@@ -1,0 +1,21 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "A muted palette of ochre and slate.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1755700000,
+  "id": "chatcmpl-fixture001",
+  "model": "gpt-4o-mini-2024-07-18",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 12,
+    "prompt_tokens": 42,
+    "total_tokens": 54
+  }
+}
