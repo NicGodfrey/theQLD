@@ -210,9 +210,16 @@ class Round06to12Board(unittest.TestCase):
         self.assertFalse(any(n["id"] == node["id"] for n in self.mem.list_nodes(self.project["id"])))
 
     def test_brand_kit_tints_demo_svg(self):
+        from atelier.helix.loom import style_lock
+
         svg = demo_svg("logo", title="Helix", palette=["#112233", "#f5c211"])
         self.assertIn("#112233", svg)
         self.assertIn("#f5c211", svg)
+        locked = style_lock("navy mark", palette=["#112233", "#f5c211"], title="Helix")
+        self.assertIn("[StyleLock", locked)
+        self.assertIn("#112233", locked)
+        self.assertIn("ground=#112233", locked)
+        self.assertTrue(locked.endswith("navy mark"))
 
     def test_spot_edit_sets_parent(self):
         first = self.cond.run(

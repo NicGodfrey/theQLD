@@ -68,6 +68,9 @@ class OpenAISpoke(Spoke):
         )
 
     def image(self, prompt: str, model: str = "gpt-image-1", **kwargs) -> ImageResult:
+        from atelier.helix.loom import style_lock
+
+        prompt = style_lock(prompt, palette=kwargs.get("palette"), title=kwargs.get("title"))
         size = kwargs.get("size", "1024x1024")
         # gpt-image-1 and dall-e-3 share the images generations endpoint.
         body = {"model": model, "prompt": prompt, "n": 1, "size": size}

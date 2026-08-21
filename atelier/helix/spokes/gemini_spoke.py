@@ -79,6 +79,9 @@ class GeminiSpoke(Spoke):
         )
 
     def image(self, prompt: str, model: str = "gemini-2.5-flash-image", **kwargs) -> ImageResult:
+        from atelier.helix.loom import style_lock
+
+        prompt = style_lock(prompt, palette=kwargs.get("palette"), title=kwargs.get("title"))
         body = {
             "contents": [{"role": "user", "parts": [{"text": prompt}]}],
             "generationConfig": {"responseModalities": ["IMAGE", "TEXT"]},

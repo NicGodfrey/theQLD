@@ -41,6 +41,31 @@ def download_filename(artifact: dict) -> str:
     return f"{slug}{ext}"
 
 
+def style_lock(prompt: str, palette=None, title: str | None = None) -> str:
+    """Prefix a paid image prompt with brand name + hex palette.
+
+    Official image APIs have no structured style token, so the lock has to
+    ride in the prompt text. Demo SVG still tints fills directly.
+    """
+    colors = []
+    for item in palette or []:
+        if isinstance(item, str) and item.strip():
+            colors.append(item.strip())
+        if len(colors) >= 6:
+            break
+    bits = []
+    name = (title or "").strip()
+    if name:
+        bits.append(f"brand={name}")
+    if colors:
+        bits.append("palette=" + ",".join(colors))
+        if len(colors) >= 2:
+            bits.append(f"ground={colors[0]} ink={colors[1]}")
+    if not bits:
+        return prompt
+    return f"[StyleLock {' '.join(bits)}]\n{prompt}"
+
+
 def _hex_color(value: str, fallback: str) -> str:
     raw = (value or "").strip()
     if raw.startswith("#") and len(raw) in {4, 7}:

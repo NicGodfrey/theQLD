@@ -1,7 +1,12 @@
-# Opus-05 · R10 brand kit (conductor fill — agent slot full)
+# Opus-05 · R10 brand kit — awaiting live agent
 
-**Pass.** `loom.demo_svg(..., palette=)` tints fill/ink/gradient. Conductor passes project `brand_kit.palette` into DemoSpoke.image. Planner system prompt includes brand JSON.
+Live leftovers now in the tree:
 
-## Remaining
-- Paid OpenAI/Gemini image models only receive brand as text in the prompt, not a structured style token.
-- No ΔE / contrast gate.
+- Demo SVG still tints from `brand_kit.palette`.
+- Paid OpenAI / Gemini image calls prefix the prompt with
+  `[StyleLock brand=… palette=#… ground=… ink=…]` via `loom.style_lock`.
+  Official APIs have no structured style token; this is the lock they can
+  actually carry.
+
+Verifier: one blocking `claude-opus-5-thinking-high-fast` agent. Do not start
+R11 until this note is replaced with the agent's own evidence.
