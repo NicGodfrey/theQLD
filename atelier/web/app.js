@@ -138,6 +138,8 @@ async function refreshProjects() {
         state.projectId = p.id;
         state.threadId = null;
         state.lastUploadId = null;
+        state.selectedArtifactId = null;
+        state.lastArtifactId = null;
         await bootProject();
       },
     }));
@@ -400,6 +402,8 @@ document.getElementById("newProject").onclick = async () => {
   state.projectId = project.id;
   state.threadId = null;
   state.lastUploadId = null;
+  state.selectedArtifactId = null;
+  state.lastArtifactId = null;
   await bootProject();
 };
 

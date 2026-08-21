@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import tempfile
 import threading
@@ -35,6 +36,29 @@ class SpotWiring(unittest.TestCase):
         self.assertIn(".node.selected", css)
         self.assertIn("larger type", app_js)
         self.assertIn("parent_artifact_id: parent", app_js)
+
+    def test_run_body_parent_priority_order(self):
+        app_js = (WEB / "app.js").read_text(encoding="utf-8")
+        priority = re.search(
+            r"const parent = state\.selectedArtifactId\s*"
+            r"\|\|\s*\(spotWords \? state\.lastArtifactId : undefined\)\s*"
+            r"\|\|\s*state\.lastUploadId",
+            app_js,
+        )
+        self.assertIsNotNone(priority, "runBody() must prefer selection, then spot-word fallback, then upload")
+        spot = re.search(r"const spotWords = /(.+?)/i\.test\(prompt\)", app_js)
+        self.assertIsNotNone(spot)
+        for word in ("spot", "局部", "edit this", "refine", "larger type", "bigger type"):
+            self.assertIn(word, spot.group(1))
+
+    def test_selection_clears_when_the_project_changes(self):
+        app_js = (WEB / "app.js").read_text(encoding="utf-8")
+        resets = app_js.count("state.selectedArtifactId = null")
+        self.assertGreaterEqual(
+            resets, 2, "project switch and new-project must clear the selected parent"
+        )
+        for chunk in re.findall(r"state\.projectId = (?:p\.id|project\.id);[^}]+", app_js):
+            self.assertIn("state.selectedArtifactId = null", chunk)
 
 
 class SpotRoute(unittest.TestCase):
@@ -94,6 +118,41 @@ class SpotRoute(unittest.TestCase):
                 "prompt": "make the type larger",
                 "provider": "demo",
                 "parent_artifact_id": parent_id,
+            },
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(second["artifacts"][0]["parent_id"], parent_id)
+        self.assertEqual(second["plan"]["spot_edit"]["parent_id"], parent_id)
+
+    def test_unknown_parent_is_ignored_not_fatal(self):
+        _, project = self._post("/api/projects", {"name": "R11-ghost"})
+        _, thread = self._post(f"/api/projects/{project['id']}/threads", {"topic": "r11"})
+        status, result = self._post(
+            f"/api/threads/{thread['id']}/run",
+            {
+                "prompt": "refine the crest",
+                "provider": "demo",
+                "parent_artifact_id": "art-does-not-exist",
+            },
+        )
+        self.assertEqual(status, 200)
+        self.assertIsNone(result["artifacts"][0].get("parent_id"))
+        self.assertNotIn("spot_edit", result["plan"])
+
+    def test_spot_artifact_id_alias_still_accepted(self):
+        _, project = self._post("/api/projects", {"name": "R11-alias"})
+        _, thread = self._post(f"/api/projects/{project['id']}/threads", {"topic": "r11"})
+        _, first = self._post(
+            f"/api/threads/{thread['id']}/run",
+            {"prompt": "base mark", "provider": "demo"},
+        )
+        parent_id = first["artifacts"][0]["id"]
+        status, second = self._post(
+            f"/api/threads/{thread['id']}/run",
+            {
+                "prompt": "bigger type",
+                "provider": "demo",
+                "spot_artifact_id": parent_id,
             },
         )
         self.assertEqual(status, 200)
