@@ -273,6 +273,11 @@ Ran 68 tests — OK
 Full tree (`unittest discover -s atelier/tests`): 350 tests, OK
 (1 expected failure, pre-existing).
 
+## Folded after this note (conductor close)
+
+No further contract rows. The unknown-provider keyring write is a
+keyring defect, not a documentation miss.
+
 ## Remaining holes
 
 - The two-way set comparison is between the table and an **AST reduction**, not
