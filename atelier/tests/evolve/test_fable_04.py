@@ -37,6 +37,16 @@ class PlanWiring(unittest.TestCase):
         self.assertIn("class: \"plan-critic\"", app_js)
         self.assertIn(".plan-step.done", css)
         self.assertIn(".plan-critic", css)
+        # the card must render on both entry points: right after a run and on
+        # every message refresh (rehydrated from the stored assistant plan)
+        self.assertIn("renderPlan(result.plan)", app_js)
+        self.assertIn("renderPlan(lastPlan)", app_js)
+        self.assertIn("if (m.plan) lastPlan = m.plan;", app_js)
+        # dock card caps at four weave steps
+        self.assertIn("weave.slice(0, 4)", app_js)
+        # step click loads the step prompt into the composer, never innerHTML
+        self.assertIn('document.getElementById("prompt")', app_js)
+        self.assertIn("box.value = w.prompt || \"\";", app_js)
 
 
 class PlanRoute(unittest.TestCase):
@@ -101,6 +111,29 @@ class PlanRoute(unittest.TestCase):
         assistant = [m for m in payload["messages"] if m["role"] == "assistant"][-1]
         self.assertTrue(assistant.get("plan"))
         self.assertEqual(assistant["plan"].get("intent"), result["plan"].get("intent"))
+        # the critique must survive the round-trip so a page refresh still
+        # shows the .plan-critic card, not just the immediate run response
+        self.assertEqual(assistant["plan"].get("critique"), result["plan"].get("critique"))
+        route = assistant["plan"].get("route") or {}
+        self.assertEqual(route.get("provider"), "demo")
+        self.assertTrue(assistant["plan"].get("weave"))
+
+    def test_fast_run_stores_plan_without_forcing_a_critique(self):
+        _, project = self._post("/api/projects", {"name": "R7-fast"})
+        _, thread = self._post(f"/api/projects/{project['id']}/threads", {"topic": "r7f"})
+        status, result = self._post(
+            f"/api/threads/{thread['id']}/run",
+            {"prompt": "fast logo pass", "provider": "demo", "mode": "fast"},
+        )
+        self.assertEqual(status, 200)
+        self.assertIn("intent", result["plan"])
+        self.assertTrue(result["plan"].get("weave"))
+        _, payload = self._get(f"/api/threads/{thread['id']}/messages")
+        assistant = [m for m in payload["messages"] if m["role"] == "assistant"][-1]
+        self.assertTrue(assistant.get("plan"))
+        self.assertEqual(assistant["plan"].get("mode"), "fast")
+        # fast mode skips the critic phase; the dock must not fake one
+        self.assertFalse((assistant["plan"].get("critique") or "").strip())
 
 
 if __name__ == "__main__":
