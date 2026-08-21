@@ -4,10 +4,14 @@ Local **Helix** design studio: Lovart-class ChatCanvas + design agent, but every
 
 ```bash
 python3 -m atelier
+# or, after `pip install -e .` from the repo root:
+atelier --port 8765
 # or, from any working directory:
 python3 /path/to/theQLD/atelier/__main__.py
 # http://127.0.0.1:8765
 ```
+
+`--host` / `--port` override `ATELIER_HOST` / `ATELIER_PORT`. `atelier --help` prints the flags without binding.
 
 GitHub Pages cannot host this backend. Demo mode weaves SVG with zero spend.
 Paid-provider failures are **fail-closed** (no silent demo SVG). Quote before weave.

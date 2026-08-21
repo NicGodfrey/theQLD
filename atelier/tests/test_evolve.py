@@ -311,6 +311,20 @@ class Round14Launcher(unittest.TestCase):
         self.assertTrue((root / "atelier" / "server.py").exists())
         self.assertEqual(ensure_sys_path(), root)
 
+    def test_pyproject_exposes_the_console_script(self):
+        text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+        self.assertIn('atelier = "atelier.launch:main"', text)
+        self.assertIn("requires-python", text)
+
+    def test_help_exits_without_binding(self):
+        from atelier.launch import parse_args
+
+        with self.assertRaises(SystemExit) as ctx:
+            parse_args(["--help"])
+        self.assertEqual(ctx.exception.code, 0)
+        args = parse_args(["--host", "127.0.0.1", "--port", "9999"])
+        self.assertEqual((args.host, args.port), ("127.0.0.1", 9999))
+
 
 class Round15HostPin(unittest.TestCase):
     def test_keyring_rejects_unofficial_openai_host(self):

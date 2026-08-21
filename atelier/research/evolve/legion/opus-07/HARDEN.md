@@ -1,7 +1,11 @@
-# Opus-07 · R14 launcher (conductor fill — agent slot full)
+# Opus-07 · R14 launcher — awaiting live agent
 
-**Pass.** `atelier/__main__.py` inserts repo root on `sys.path` before import. `atelier/launch.py` `repo_root()` / `ensure_sys_path()` let `python3 /abs/path/atelier/__main__.py` start from any cwd. Web assets resolve via `Path(__file__)`.
+Live leftovers now in the tree:
 
-## Remaining
-- No `pyproject.toml` console_script.
-- `python3 -m atelier` still needs the package on `PYTHONPATH` (repo root or installed).
+- `pyproject.toml` console script `atelier = atelier.launch:main`
+- `atelier --help` / `python3 -m atelier --help` print flags and do not bind
+- `--host` / `--port` override `ATELIER_HOST` / `ATELIER_PORT`
+- `__main__.py` still inserts repo root on `sys.path` so an absolute path works
+
+Verifier: one blocking `claude-opus-5-thinking-high-fast` agent. Do not start
+R15 until this note is replaced with the agent's own evidence.

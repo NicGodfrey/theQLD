@@ -20,7 +20,7 @@ R14 launcher → R15 host-pin → R17 CI → R18 contract → R19 eval → R20 s
 | fable-06 | claude-fable-5-thinking-high | 11 | spot-edit | done `bc-218c832a-ac0d-5cf7-9b4e-f097beaead07` |
 | opus-06 | claude-opus-5-thinking-high-fast | 12 | text layer | done `bc-8a0798e1-f1c8-5be7-acef-6143bc5bcfb1` |
 | fable-07 | claude-fable-5-thinking-high | 13 | export zip | done `bc-4b7db339-3319-5f0b-9c98-d2194a4820a9` |
-| opus-07 | claude-opus-5-thinking-high-fast | 14 | launcher | conductor fill |
+| opus-07 | claude-opus-5-thinking-high-fast | 14 | launcher | awaiting live agent |
 | fable-08 | claude-fable-5-thinking-high | 15 | host-pin | conductor fill |
 | opus-08 | claude-opus-5-thinking-high-fast | 16 | budget 402 | done `bc-127658e9-1325-5838-be73-fee8d341a8ec` |
 | fable-09 | claude-fable-5-thinking-high | 17 | CI | conductor fill |

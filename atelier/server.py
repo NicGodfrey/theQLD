@@ -531,9 +531,9 @@ class Handler(BaseHTTPRequestHandler):
         self.do_POST()
 
 
-def main() -> None:
-    host = os.environ.get("ATELIER_HOST", "127.0.0.1")
-    port = int(os.environ.get("ATELIER_PORT", "8765"))
+def main(host: str | None = None, port: int | None = None) -> None:
+    host = host or os.environ.get("ATELIER_HOST", "127.0.0.1")
+    port = int(port if port is not None else os.environ.get("ATELIER_PORT", "8765"))
     server = ThreadingHTTPServer((host, port), Handler)
     print(f"Atelier Helix on http://{host}:{port}", flush=True)
     print("BYOK: OPENAI_API_KEY / GEMINI_API_KEY or Settings panel", flush=True)
