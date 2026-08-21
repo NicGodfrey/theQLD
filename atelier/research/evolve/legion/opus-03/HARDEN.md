@@ -1,8 +1,10 @@
-# Opus-03 · R6 camera (conductor fill — agent slot full)
+# Opus-03 · R6 camera — awaiting live agent
 
-**Pass.** `projects.camera` JSON `{x,y,zoom}` persisted via `POST /api/projects/:id/camera`. Board GET returns camera. Wheel zoom 0.25–3; empty-space pan; node drag divides by zoom.
+Live leftovers now in the tree:
 
-## Remaining
-- No pinch / trackpad-precision pan.
-- No fit-to-content or home-view.
-- Persist is best-effort (errors swallowed).
+- `POST /api/projects/:id/camera` persists `{x,y,zoom}`; zoom clamped to 0.25–3.
+- Home / Fit buttons and click-to-reset on the readout.
+- Persist is debounced (180 ms) so wheel zoom does not write every tick.
+
+Verifier: one blocking `claude-opus-5-thinking-high-fast` agent. Do not start
+R7 until this note is replaced with the agent's own evidence.

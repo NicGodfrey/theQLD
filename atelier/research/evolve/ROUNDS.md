@@ -9,7 +9,7 @@ Odd rounds are Fable-shaped (expose a gap with a test). Even rounds are Opus-sha
 | 3 | Progress | `run.events` phases; `?stream=1` SSE |
 | 4 | Download | `?download=1` brief slug; CSP on SVG; nosniff on export |
 | 5 | Upload | JSON upload + `#filePick` + last upload as weave parent |
-| 6 | Camera | Project `camera` + board pan/zoom |
+| 6 | Camera | Persist + clamp; Home / Fit; debounced write |
 | 7 | Plan card | Plan stored on assistant message; dock card |
 | 8 | 4-up | `variants=4` / “four variants” → 2×2 |
 | 9 | Undo | `undo_log` + `POST .../undo` |

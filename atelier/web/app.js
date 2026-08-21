@@ -47,7 +47,18 @@ function applyCamera() {
   if (readout) readout.textContent = Math.round(zoom * 100) + "%";
 }
 
-async function persistCamera() {
+let persistCameraTimer = null;
+
+function clampCamera(camera) {
+  const zoom = Number(camera && camera.zoom);
+  return {
+    x: Number(camera && camera.x) || 0,
+    y: Number(camera && camera.y) || 0,
+    zoom: Math.min(3, Math.max(0.25, zoom > 0 ? zoom : 1)),
+  };
+}
+
+async function flushCamera() {
   if (!state.projectId) return;
   try {
     await api(`/api/projects/${state.projectId}/camera`, {
@@ -55,6 +66,51 @@ async function persistCamera() {
       body: { camera: state.camera },
     });
   } catch { /* camera persist is best-effort */ }
+}
+
+function persistCamera() {
+  if (!state.projectId) return;
+  clearTimeout(persistCameraTimer);
+  persistCameraTimer = setTimeout(flushCamera, 180);
+}
+
+function resetCamera() {
+  state.camera = { x: 0, y: 0, zoom: 1 };
+  applyCamera();
+  persistCamera();
+}
+
+function fitCamera() {
+  const cards = [...document.querySelectorAll("#board .node")];
+  if (!cards.length) {
+    resetCamera();
+    return;
+  }
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  cards.forEach((card) => {
+    const x = parseFloat(card.style.left) || 0;
+    const y = parseFloat(card.style.top) || 0;
+    const w = parseFloat(card.style.width) || 280;
+    const h = parseFloat(card.style.height) || 200;
+    minX = Math.min(minX, x);
+    minY = Math.min(minY, y);
+    maxX = Math.max(maxX, x + w);
+    maxY = Math.max(maxY, y + h);
+  });
+  const wrap = document.getElementById("boardWrap");
+  const vw = wrap.clientWidth || 800;
+  const vh = wrap.clientHeight || 600;
+  const pad = 64;
+  const spanX = Math.max(1, maxX - minX);
+  const spanY = Math.max(1, maxY - minY);
+  const zoom = Math.min(3, Math.max(0.25, Math.min((vw - pad * 2) / spanX, (vh - pad * 2) / spanY)));
+  state.camera = {
+    x: (vw - (maxX + minX) * zoom) / 2,
+    y: (vh - (maxY + minY) * zoom) / 2,
+    zoom,
+  };
+  applyCamera();
+  persistCamera();
 }
 
 async function refreshProjects() {
@@ -120,7 +176,7 @@ function renderPlan(plan) {
 async function refreshBoard() {
   if (!state.projectId) return;
   const data = await api(`/api/projects/${state.projectId}/board`);
-  if (data.camera) state.camera = data.camera;
+  if (data.camera) state.camera = clampCamera(data.camera);
   applyCamera();
   const board = document.getElementById("board");
   board.innerHTML = "";
@@ -175,7 +231,10 @@ function enableBoardCamera() {
   wrap.addEventListener("wheel", (e) => {
     e.preventDefault();
     const factor = e.deltaY > 0 ? 0.92 : 1.08;
-    state.camera.zoom = Math.min(3, Math.max(0.25, (state.camera.zoom || 1) * factor));
+    state.camera = clampCamera({
+      ...state.camera,
+      zoom: (state.camera.zoom || 1) * factor,
+    });
     applyCamera();
     persistCamera();
   }, { passive: false });
@@ -390,6 +449,10 @@ document.getElementById("openCatalog").onclick = async () => {
   const names = (data.mvp_wire || []).join(", ");
   alert(`Helix catalog: ${data.count} repos. MVP wire: ${names}`);
 };
+
+document.getElementById("camHome").onclick = resetCamera;
+document.getElementById("camFit").onclick = fitCamera;
+document.getElementById("camReadout").onclick = resetCamera;
 
 document.getElementById("uploadBtn").onclick = () => {
   document.getElementById("filePick").click();

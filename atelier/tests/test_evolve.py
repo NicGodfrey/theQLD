@@ -165,6 +165,10 @@ class Round06to12Board(unittest.TestCase):
         updated = self.mem.set_camera(self.project["id"], {"x": 40, "y": -12, "zoom": 1.5})
         self.assertEqual(updated["camera"]["zoom"], 1.5)
         self.assertEqual(self.mem.get_project(self.project["id"])["camera"]["x"], 40)
+        clamped = self.mem.set_camera(self.project["id"], {"x": 0, "y": 0, "zoom": 99})
+        self.assertEqual(clamped["camera"]["zoom"], 3.0)
+        zeroed = self.mem.set_camera(self.project["id"], {"zoom": 0})
+        self.assertEqual(zeroed["camera"]["zoom"], 1.0)
 
     def test_plan_visible_on_message(self):
         result = self.cond.run(

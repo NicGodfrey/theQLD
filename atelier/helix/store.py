@@ -152,10 +152,21 @@ class Memory:
         return self._hydrate_project(row)
 
     def set_camera(self, project_id: str, camera: dict) -> Optional[dict]:
+        cam = camera if isinstance(camera, dict) else {}
+
+        def _num(value, default: float) -> float:
+            try:
+                return float(value)
+            except (TypeError, ValueError):
+                return default
+
+        zoom = _num(cam.get("zoom"), 1.0)
+        if zoom <= 0:
+            zoom = 1.0
         payload = {
-            "x": float((camera or {}).get("x") or 0),
-            "y": float((camera or {}).get("y") or 0),
-            "zoom": float((camera or {}).get("zoom") or 1),
+            "x": _num(cam.get("x"), 0.0),
+            "y": _num(cam.get("y"), 0.0),
+            "zoom": min(3.0, max(0.25, zoom)),
         }
         self.conn.execute(
             "UPDATE projects SET camera=? WHERE id=?",
