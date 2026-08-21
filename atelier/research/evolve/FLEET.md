@@ -13,7 +13,7 @@ R7 plan → R10 brand → R11 spot-edit → R12 text → R13 export → R14 laun
 | opus-02 | claude-opus-5-thinking-high-fast | 4 | download | done `bc-824042df-b2ae-521f-9de9-294a0d45e785` |
 | fable-03 | claude-fable-5-thinking-high | 5 | upload | done `bc-1e3f17cc-b34e-5c43-95f0-bce5b0c4f942` |
 | opus-03 | claude-opus-5-thinking-high-fast | 6 | camera | done `bc-d732bcab-e09d-5d4c-a2d4-6fac24eeecd2` |
-| fable-04 | claude-fable-5-thinking-high | 7 | plan visible | conductor fill |
+| fable-04 | claude-fable-5-thinking-high | 7 | plan visible | awaiting live agent |
 | opus-04 | claude-opus-5-thinking-high-fast | 8 | 4-up variants | done `bc-59bb5fa8-982e-506a-83b3-4ba25bb29d26` |
 | fable-05 | claude-fable-5-thinking-high | 9 | undo | done `bc-8275a8f7-781f-5d18-bca1-feba9f3df131` |
 | opus-05 | claude-opus-5-thinking-high-fast | 10 | brand kit | conductor fill |

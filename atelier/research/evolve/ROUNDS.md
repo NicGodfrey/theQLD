@@ -10,7 +10,7 @@ Odd rounds are Fable-shaped (expose a gap with a test). Even rounds are Opus-sha
 | 4 | Download | `?download=1` brief slug; CSP on SVG; nosniff on export |
 | 5 | Upload | JSON upload + `#filePick` + last upload as weave parent |
 | 6 | Camera | Persist + clamp; Home / Fit; debounced write |
-| 7 | Plan card | Plan stored on assistant message; dock card |
+| 7 | Plan card | Clickable steps + separate critic card |
 | 8 | 4-up | `variants=4` / “four variants” → 2×2 |
 | 9 | Undo | `undo_log` + `POST .../undo` |
 | 10 | Brand kit | Demo SVG + planner consume palette |
